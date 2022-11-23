@@ -1,0 +1,131 @@
+<template>
+        <lightning-card title="Real Estate" class="slds-var-m-around_medium">
+                <div class="slds-grid slds-gutters">
+                        <div class="slds-col">
+                                <lightning-combobox name="Projects" label="Project" value={value}
+                                        placeholder="Select Project" options={projectOptionList}
+                                        onchange={handleChangeProject} class="slds-m-left_medium"> </lightning-combobox>
+                        </div>
+                        <div class="slds-col">
+                                <lightning-combobox name="Sector" label="Sector" value={value}
+                                        placeholder="Select Sector" options={sectorOptionList}
+                                        onchange={handleSectorChange} class="slds-m-left_medium"> </lightning-combobox>
+                        </div>
+                        <div class="slds-col">
+                                <lightning-combobox name="Tower" label="Tower" value={value} placeholder="Select Tower"
+                                        options={towerOptionList} onchange={handleTowerChange}
+                                        class="slds-m-left_medium"> </lightning-combobox> <br><br>
+                        </div>
+                </div>
+                <table>
+                        <tbody>
+                                <template for:each={data} for:item="key" for:index="ind">
+                                        <tr key={key}>
+                                                <td>
+                                                        <div class="container slds-box red" title="Floor">{key.Floor__c}
+                                                        </div>
+                                                </td>
+                                                <template for:each={valueOptionList} for:item="key" for:index="index1">
+                                                        <td key={key}>
+                                                                <template for:each={key.value} for:item="mapVal"
+                                                                        for:index="index1">
+                                                        <td key={mapVal}>
+                                                                <div class="slds-box yellow slds-scrollable_x"
+                                                                        title="Units"> {mapVal.Name} |
+                                                                        {mapVal.Status__c} </div>
+                                                        </td>
+                                                </template>
+                                                <!--<div class="slds-box yellow slds-scrollable_x" title="Units"> {mapVal.Name} | {mapVal.Status__c} </div> -->
+                                                </td>
+                                </template>
+                                </tr>
+</template>
+
+<template for:each={valueOptionList} for:item="mapKey" for:index="index">
+                                        <tr key={mapKey.value}>
+                                                <td scope="col"> 
+                                                        
+                                                        <div class="container slds-box red" title="key">{mapKey.Name}</div>
+                                                </td>                                                
+                                                <template for:each={mapKey.value} for:item="mapVal" for:index="index1">
+                                                        <td key={mapVal}>
+                                                                <div class="slds-box yellow slds-scrollable_x" title="Units"> {mapVal.Name} | {mapVal.Status__c} </div>                                                                                
+                                                        </td>
+                                                </template>
+                                        </tr>
+                                </template> 
+</tbody>
+</table>
+</lightning-card>
+</template>
+<!-- Tried Variations-->
+
+<!--<template for:each={unitOptionList} for:item="mapKey">
+                                        
+                                        <tr key={mapKey.data}>
+                                                <td>
+                                                        <div title={mapKey.Fno}>Floor Number {mapKey.value}</div>
+                                                </td>
+                                                <td>
+                                                        <template for:each={mapkey.value} for:item="mapval" for:index="index1">
+                                                                <div key={mapval}>{mapval}</div>
+                                                        </template>
+                                                </td>
+                                        </tr>
+                                </template> 
+                                <template for:each={value} for:item="name">
+                                        <tr key={value.value}>
+                                                <th>
+                                                        <div title={name.value}> {name.value} </div>
+                                                </th>
+                                        </tr>
+                                </template>-->
+
+<!--<thead>
+                                <tr class="slds-text-title_caps">
+                                        <th scope="col">
+                                                <div title="value">Floor Number</div>
+                                        </th>
+                                        <th scope="col">
+                                                <div title="label">Unit Name</div>
+                                        </th>
+                                </tr>
+                        </thead>-->
+<!--<p key={mapKey.value} > {mapKey.value}{mapKey.label.Id} </p>-->
+<!--<template for:each={unitOptionList} for:item="unit">
+                        <li key={unit.value}>
+                                {unit.value},{unit.label}
+                        </li>
+                </template>
+                <template iterator:it={unitOptionList.data}>
+                        <p key={it.value.value}> {unit.value.value}</p>
+                        <p key={it.value.label}> {unit.value.label}</p> 
+                </template>
+                        <div style="height: 300px;">
+                                <lightning-datatable
+                                        key-field="id"
+                                        data={data}
+                                        columns={columns}>
+                                </lightning-datatable>
+                        </div>  
+                            
+                
+                                <table>
+                                        <tr>
+                                                <td>
+                                                        
+                                                </td>
+                                                <td>
+                                                        Units
+                                                </td>
+                                        </tr>
+                                        <template for:each={columns} for:item="unit">
+                                                <tr key={unit.id}>
+                                                        <td> {unit.unitOptionList} </td>
+                                                </tr>
+                                        </template>
+                                </table>
+                <lightning-datatable key-field="id" 
+                                data={unitOptionList}
+                                columns={columns}
+                                onchange={handleUnitChange}> </lightning-datatable>-->
