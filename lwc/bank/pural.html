@@ -1,0 +1,20 @@
+<template>
+    <lightning-card >
+        <div>
+            <lightning-input class="slds-m-horizontal_xx-small" type="checkbox" label="Credit Card" title="SignIn" onclick={clickHandler}></lightning-input>
+            <lightning-input class="slds-m-horizontal_xx-small" type="checkbox" label="Debit Card" title="SignIn" onclick={clickHandler}></lightning-input>
+            <lightning-input class="slds-m-horizontal_xx-small" type="checkbox" label="EMI" title="SignIn" onclick={clickHandler}></lightning-input>
+            <lightning-input class="slds-m-horizontal_xx-small" type="checkbox" label="Pay By Points" title="SignIn" onclick={clickHandler}></lightning-input>
+
+        </div>    
+        <lightning-button class="slds-m-horizontal_xx-small" variant="success" label="Next" title="SignIn" onclick={handleNext} ></lightning-button>
+
+        <lightning-button
+            class="slds-m-horizontal_xx-small"
+            variant="destructive"
+            label="Cancel">
+            onclick={clickHandlerr}
+        </lightning-button>
+    </lightning-card>
+    
+</template>

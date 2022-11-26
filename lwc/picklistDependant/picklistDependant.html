@@ -1,0 +1,47 @@
+<template>
+    <lightning-card>
+        <lightning-button onclick={handleClick} variant="brand" label=pluralGateway>
+
+        </lightning-button>
+
+    </lightning-card>
+    <template if:true={cardVisible}>
+        <lightning-card>
+            <lightning-button onclick={handleClick} variant="brand" label=creditcard>
+            </lightning-button>
+<template if:true={creditCard}>
+<lightning-card>
+    <lightning-button onclick={handleClick} variant="brand" label=rupay>
+
+    </lightning-button>
+    <lightning-button onclick={handleClick} variant="brand" label=visa>
+
+    </lightning-button>
+</lightning-card>
+</template>
+            
+            <lightning-button onclick={handleClick} variant="brand" label=debitcard>
+
+            </lightning-button>
+            <lightning-button onclick={handleClick} variant="brand" label=emi>
+
+            </lightning-button>
+            <lightning-button onclick={handleClick} variant="brand" label=debitcardemi>
+
+            </lightning-button>
+            <lightning-button onclick={handleClick} variant="brand" label=upi>
+
+            </lightning-button>
+            <lightning-button onclick={handleClick} variant="brand" label=wallet>
+
+            </lightning-button>
+            <lightning-button onclick={handleClick} variant="brand" label=netbanking>
+
+            </lightning-button>
+            <lightning-button onclick={handleClick} variant="brand" label=paybypoints>
+
+            </lightning-button>
+
+        </lightning-card>
+    </template>
+</template>

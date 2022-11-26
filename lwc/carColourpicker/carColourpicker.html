@@ -1,0 +1,61 @@
+<template>
+   
+  <lightning-layout multiple-rows>
+      <template for:each={properties} for:item="prop">
+          <lightning-layout-item key={prop.Id} size="6" padding="around-small">
+              <lightning-layout key={prop.Id} multiple-rows>
+                  <div key={prop.Id} class="slds-box" style="width: 100%;background-color:white;">
+                      <lightning-layout>
+                          <lightning-layout-item size="4" padding="around-small">
+                              <lightning-formatted-rich-text class="propImage" value={prop.Property_Main_Image__c}>
+                              </lightning-formatted-rich-text>
+                          </lightning-layout-item>
+                          <lightning-layout-item size="8" padding="around-small">
+                              <lightning-card key={prop.Id} title={prop.Furnished_Type__c}>
+                                  <lightning-layout-item key={prop.Id} style="color:red" padding="around-small" size="12"
+                                      small-device-size="6" large-device-size="6" medium-device-size="6">
+                                      INR: {prop.Rent__c}
+                                  </lightning-layout-item><br>
+                                  <lightning-layout-item key={prop.Id} padding="around-small" size="12"
+                                      small-device-size="6" large-device-size="6" medium-device-size="6">
+                                      {prop.No_Of_Bed_Room__c} BHK House for Rent {prop.Coverd_area_sqft__c} sqft.
+                                  </lightning-layout-item><br>
+                                  <lightning-layout-item key={prop.Id} padding="around-small" size="12"
+                                      small-device-size="6" large-device-size="6" medium-device-size="6">
+                                      {prop.Area__c}
+                                  </lightning-layout-item><br>
+                                  <lightning-layout-item key={prop.Id} padding="around-small" size="12"
+                                      small-device-size="6" large-device-size="6" medium-device-size="6">
+                                      {prop.No_Of_Bed_Room__c} Room {prop.No_Of_Bath_Room__c} BathRoom
+                                      {prop.Furnished_Type__c}
+                                  </lightning-layout-item>
+                              </lightning-card>
+                              <div class="slds-p-top_small">
+                                  <lightning-button-group>
+                                      <lightning-button variant="success" label="Owner Details"
+                                          class="slds-m-left_x-small" value={prop.Property_Owner__c}
+                                          onclick={ownerDetailsClick}></lightning-button>
+                                      <lightning-button variant="success" label="Enquiery" class="slds-m-left_x-small"
+                                          value={prop.Id} onclick={feedbackClicked}></lightning-button>
+                                      <lightning-button variant="success" label="Property Details"
+                                          class="slds-m-left_x-small" value={prop.Id} onclick={NavigateToPropDetails}>
+                                      </lightning-button>
+                                  </lightning-button-group>
+                              </div>
+                          </lightning-layout-item>
+                      </lightning-layout>
+                  </div>
+  
+              </lightning-layout>
+          </lightning-layout-item>
+      </template>
+  </lightning-layout>
+
+<template if:false={propertiesFound} >
+  <div class="slds-align_absolute-center" style="color:chartreuse">
+      No Properties defined. Please stay tune for listing out the properties soon..
+  </div>
+</template> 
+
+
+</template>

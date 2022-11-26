@@ -1,0 +1,22 @@
+<template>
+    <lightning-card title="Driver" icon-name="standard:people">
+        <div class="slds-var-m-around_medium">
+
+
+
+            <template if:true={drivers.data}>
+            <lightning-record-form object-api-name="Contact" record-id={driverId} layout-type="Compact">
+
+
+            </lightning-record-form>
+        </template>
+
+
+        <template if:true={drivers.error}>
+error occured
+        </template>
+        </div>
+
+
+    </lightning-card>
+</template>

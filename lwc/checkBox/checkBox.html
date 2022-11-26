@@ -1,0 +1,528 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <lightning-card>
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered"
+            aria-label="Example default base table of Opportunities">
+            <thead>
+                <tr class="slds-line-height_reset">
+
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Account Name"><b>Product Information</b></div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Close Date"></div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Stage"></div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Confidence"></div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Amount"></div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Contact"></div>
+                    </th>
+                </tr>
+            </thead>
+            <thead>
+                <tr class="slds-line-height_reset">
+
+                    <td >
+                        <div class="slds-truncate" title="Cloudhub"><b>Level 0</b></div>
+                    </td>
+                    <td data-label="Close Date">
+                        <div class="slds-truncate" title="4/14/2015"><b>Payment mode</b></div>
+                    </td>
+                    <td data-label="Prospecting">
+                        <div class="slds-truncate" title="Prospecting"><b>schemes/Issuers</b></div>
+                    </td>
+                    <td data-label="Confidence">
+                        <div class="slds-truncate" title="20%"><b>If/Else</b></div>
+                    </td>
+                    <td data-label="Amount">
+                        <div class="slds-truncate" title="$25k">Product Config</div>
+                    </td>
+                    <td data-label="Amount">
+                        <div class="slds-truncate" title="$25k">
+                            <div class="slds-box slds-box_small">
+                                <p>output from backend</p>
+                            </div>
+                        </div>
+                    </td>
+
+                </tr>
+                <tr class="slds-hint-parent">
+
+                    <td data-label="Account Name">
+                        <div class="slds-truncate" title="Cloudhub">Plural Gateway</div>
+                    </td>
+                    <td data-label="Close Date">
+                        <div class="slds-truncate" title="4/14/2015">Debit</div>
+                    </td>
+                    <td data-label="Prospecting">
+                        <div class="slds-truncate" title="Prospecting">Visa Debit card</div>
+                    </td>
+                    <td data-label="Confidence" type="checkbox">
+                        <div  title="20%">Acquirer</div>
+                    </td>
+                    <td data-label="Amount">
+                        <div class="slds-truncate" title="$25k">Deduction source</div>
+                    </td>
+                    <td data-label="Amount">
+                        <div class="slds-truncate" title="$25k">
+                            <div class="slds-box slds-box_small">
+                                <p>output from backend</p>
+                            </div>
+                        </div>
+                    </td>
+
+                </tr>
+            </thead>
+
+
+
+
+
+
+
+        </table>
+
+        <!--
+        <h3><b>Product Information</b></h3>
+        <br>
+
+
+
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col">
+                <span><b>Level 0</b></span>
+            </div>
+            <div class="slds-col">
+                <span><b>Payment mode</b></span>
+            </div>
+            <div class="slds-col">
+                <span><b>schemes/Issuers</b></span>
+            </div>
+            <div class="slds-col">
+                <span><b>If/Else</b></span>
+            </div>
+            <div class="slds-col">
+                <span>Product Config</span>
+            </div>
+            <div class="slds-col">
+                <span><div class="slds-box slds-box_small">
+                    <p>output from backend</p>
+                    </div></span>
+            </div>
+
+
+
+
+        </div>
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col">
+                <span>Plural Gateway</span>
+            </div>
+            <div class="slds-col">
+                <span>Debit</span>
+            </div>
+            <div class="slds-col">
+                <span>Visa Debit card</span>
+            </div>
+            <div class="slds-col">
+                <span>Acquirer</span>
+            </div>
+            <div class="slds-col">
+                <span>Deduction source</span>
+            </div>
+            <div class="slds-col">
+                <span><div class="slds-box slds-box_small">
+                    <p>output from backend</p>
+                    </div></span>
+            </div>
+
+
+        </div>-->
+
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped"
+            aria-label="Example table of Opportunities with striped rows">
+            <thead>
+                <tr class="slds-line-height_reset">
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Opportunity Name"><b>Pricing Information</b></div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Account Name"></div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Close Date"><b>
+                                <div class="slds-truncate" title="Stage">
+                                    <div class="slds-form-element">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-checkbox">
+                                                <input type="checkbox" name="options" id="checkbox-unique-id-80"
+                                                    value="checkbox-unique-id-80" onclick={ePrice} checked={chCheck} />
+                                                <label class="slds-checkbox__label" for="checkbox-unique-id-80">
+                                                    <span class="slds-checkbox_faux"></span>
+                                                    <span class="slds-form-element__label"><b>Edit price</b></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </b></div>
+                    </th>
+                    <th class="" scope="col">
+
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Confidence"></div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Amount"></div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Contact"></div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="slds-hint-parent">
+                    <td data-label="Account Name">
+                        <div class="slds-truncate" title="Cloudhub">
+                            <div class="slds-checkbox">
+                                <input type="checkbox" name="options" id="cb3"
+                                    value="cb3" disabled={bdTon} onclick={inOut} />
+                                <label class="slds-checkbox__label" for="cb3">
+                                    <span class="slds-checkbox_faux"></span>
+                                    <span class="slds-form-element__label">Percentage</span>
+                                </label>
+                            </div>
+                        </div>
+                    </td>
+                    <td data-label="Account Name">
+                        <div class="slds-truncate" title="Cloudhub">
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="text-input-id-46"></label>
+                                <div class="slds-form-element__control">
+                                    <input type="text" id="text-input-id-46" disabled={inField} class="slds-input" />
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+
+                </tr>
+                <tr class="slds-hint-parent">
+
+                    <td data-label="Account Name">
+                        <div class="slds-truncate" title="Cloudhub">
+                            <div class="slds-checkbox">
+                                <input type="checkbox" name="options" id="checkbox-unique-id-83"
+                                    value="checkbox-unique-id-83" disabled={bTon} onchange={seCond} />
+                                <label class="slds-checkbox__label" for="checkbox-unique-id-83">
+                                    <span class="slds-checkbox_faux"></span>
+                                    <span class="slds-form-element__label">Flat Fee</span>
+                                </label>
+                            </div>
+                        </div>
+                    </td>
+                    <td data-label="Close Date">
+                        <div class="slds-truncate" title="4/14/2015">
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="text-input-id-47"></label>
+                                <div class="slds-form-element__control">
+                                    <input type="text" id="text-input-id-47" disabled={outField} class="slds-input" />
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+
+                </tr>
+                <tr class="slds-hint-parent">
+
+                    <td data-label="Account Name">
+                        <div class="slds-truncate" title="Cloudhub">
+                            <div class="slds-checkbox">
+                                <input type="checkbox" name="options" id="checkbox-unique-id-84"
+                                    value="checkbox-unique-id-84" disabled={bTon} />
+                                <label class="slds-checkbox__label" for="checkbox-unique-id-84">
+                                    <span class="slds-checkbox_faux"></span>
+                                    <span class="slds-form-element__label">Hybrid</span>
+                                </label>
+                            </div>
+                        </div>
+                    </td>
+
+                </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </tbody>
+        </table>
+
+
+
+
+
+
+        <br>
+        <br>
+
+        <!--111111111111111111111111111111111111111111111111111111111111111111111111111111111111-->
+
+
+
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped"
+        aria-label="Example table of Opportunities with striped rows">
+        <thead>
+            <tr class="slds-line-height_reset">
+                <th class="" scope="col">
+                    <div class="slds-truncate" title="Opportunity Name"><b>Conveniance Fee</b></div>
+                </th>
+                <th class="" scope="col">
+                    <div class="slds-truncate" title="Account Name"></div>
+                </th>
+                <th class="" scope="col">
+                    <div class="slds-truncate" title="Close Date">
+                        <div class="slds-checkbox">
+                            <input type="checkbox" name="options" id="checkbox-unique-id-85"
+                                value="checkbox-unique-id-85" onclick={newPrice} />
+                            <label class="slds-checkbox__label" for="checkbox-unique-id-85">
+                                <span class="slds-checkbox_faux"></span>
+                                <span class="slds-form-element__label"><b>Edit Fee</b></span>
+                            </label>
+                        </div>
+                    </div>
+                </th>
+                <th class="" scope="col">
+                    <div class="slds-truncate" title="Stage"></div>
+                </th>
+                <th class="" scope="col">
+                    <div class="slds-truncate" title="Confidence"></div>
+                </th>
+                <th class="" scope="col">
+                    <div class="slds-truncate" title="Amount"></div>
+                </th>
+                <th class="" scope="col">
+                    <div class="slds-truncate" title="Contact"></div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="slds-hint-parent">
+
+                <td data-label="Account Name">
+                    <div class="slds-truncate" title="Cloudhub">
+                        <div class="slds-checkbox">
+                            <input type="checkbox" name="options" id="checkbox-unique-id-89"
+                                value="checkbox-unique-id-89" disabled={nextTon} onchange={nextOut} />
+                            <label class="slds-checkbox__label" for="checkbox-unique-id-89">
+                                <span class="slds-checkbox_faux"></span>
+                                <span class="slds-form-element__label">Percentage</span>
+                            </label>
+                        </div>
+                    </div>
+                </td>
+                <td data-label="Close Date">
+                    <div class="slds-truncate" title="4/14/2015">
+                        <div class="slds-form-element">
+                            <label class="slds-form-element__label" for="text-input-id-49"></label>
+                            <div class="slds-form-element__control">
+                                <input type="text" id="text-input-id-49" disabled={textField} class="slds-input" />
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td data-label="Prospecting">
+                    <div class="slds-truncate" title="Prospecting"></div>
+                </td>
+                <td data-label="Confidence">
+                    <div class="slds-truncate" title="20%"></div>
+                </td>
+                <td data-label="Amount">
+                    <div class="slds-truncate" title="$25k"></div>
+                </td>
+
+            </tr>
+            <tr class="slds-hint-parent">
+
+                <td data-label="Account Name">
+                    <div class="slds-truncate" title="Cloudhub">
+                        <div class="slds-checkbox">
+                            <input type="checkbox" name="options" id="cb1"
+                                value="checkbox-unique-id-88" disabled={neTon} onclick={sCond} />
+                            <label class="slds-checkbox__label" for="checkbox-unique-id-88">
+                                <span class="slds-checkbox_faux"></span>
+                                <span class="slds-form-element__label">Flat Fee</span>
+                            </label>
+                        </div>
+                    </div>
+                </td>
+                <td data-label="Close Date">
+                    <div class="slds-truncate" title="4/14/2015">
+                        <div class="slds-form-element">
+                            <label class="slds-form-element__label" for="text-input-id-50"></label>
+                            <div class="slds-form-element__control">
+                                <input type="text" id="text-input-id-50" disabled={teField} class="slds-input" />
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td data-label="Prospecting">
+                    <div class="slds-truncate" title="Prospecting"></div>
+                </td>
+                <td data-label="Confidence">
+                    <div class="slds-truncate" title="20%"></div>
+                </td>
+                <td data-label="Amount">
+                    <div class="slds-truncate" title="$25k"></div>
+                </td>
+                
+            </tr>
+            <tr class="slds-hint-parent">
+
+                <td data-label="Account Name">
+                    <div class="slds-truncate" title="Cloudhub">
+                        <div class="slds-checkbox">
+
+                            <input type="checkbox" name="options" id="cb2"
+                                value="checkbox-unique-id-90" disabled={capAmo} onchange={tCon} />
+                            <label class="slds-checkbox__label" for="checkbox-unique-id-90">
+                                <span class="slds-checkbox_faux"></span>
+                                <span class="slds-form-element__label">Capital <br>Amount</span>
+                            </label>
+                        </div>
+                    </div>
+                </td>
+                <td data-label="Close Date">
+                    <div class="slds-truncate" title="4/14/2015">
+                        <div class="slds-form-element">
+                            <label class="slds-form-element__label" for="text-input-id-51"></label>
+                            <div class="slds-form-element__control">
+                                <input type="text" id="text-input-id-51" disabled={tField} class="slds-input" />
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td data-label="Prospecting">
+                    <div class="slds-truncate" title="Prospecting"></div>
+                </td>
+                <td data-label="Confidence">
+                    <div class="slds-truncate" title="20%"></div>
+                </td>
+                <td data-label="Amount">
+                    <div class="slds-truncate" title="$25k"></div>
+                </td>
+                
+
+
+
+
+            </tr>
+
+
+            <tr class="slds-hint-parent">
+
+                <td data-label="Account Name">
+                    <div class="slds-truncate" title="Cloudhub">
+                        <div class="slds-checkbox">
+
+                            <input type="checkbox" name="options" id="checkbox-unique-id-91" value="checkbox-unique-id-91"
+                                disabled={addAmo} onchange={tddCon} />
+                            <label class="slds-checkbox__label" for="checkbox-unique-id-91">
+                                <span class="slds-checkbox_faux"></span>
+                                <span class="slds-form-element__label">Additional <br> Amount</span>
+                            </label>
+                        </div>
+                    </div>
+                </td>
+                <td data-label="Close Date">
+                    <div class="slds-truncate" title="4/14/2015">
+                        <div class="slds-form-element">
+                            <label class="slds-form-element__label" for="text-input-id-52"></label>
+                            <div class="slds-form-element__control">
+                                <input type="text" id="text-input-id-52" disabled={tddField} class="slds-input" />
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td data-label="Prospecting">
+                    <div class="slds-truncate" title="Prospecting"></div>
+                </td>
+                <td data-label="Confidence">
+                    <div class="slds-truncate" title="20%"></div>
+                </td>
+                <td data-label="Amount">
+                    <div class="slds-truncate" title="$25k"></div>
+                </td>
+                <td data-label="Contact">
+                    
+                </td>
+
+
+
+
+            </tr>
+
+
+
+
+        </tbody>
+
+
+
+    </table>
+
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col">
+                <span></span>
+            </div>
+            <div class="slds-col">
+                <span>
+                    <lightning-button label="Save" variant="brand" onclick={buttonHandler}></lightning-button>
+                </span>
+            </div>
+            <div class="slds-col">
+                <span></span>
+            </div>
+            <div class="slds-col">
+                <span>
+                    <lightning-button label="Cancel" variant="brand"></lightning-button>
+                </span>
+            </div>
+            <div class="slds-col">
+                <span></span>
+            </div>
+            <div class="slds-col">
+                <span></span>
+            </div>
+
+
+        </div>
+
+
+
+
+    </lightning-card>
+
+
+
+
+
+</template>
