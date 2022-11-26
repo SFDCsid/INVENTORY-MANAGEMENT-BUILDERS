@@ -1,0 +1,10 @@
+.blocked{
+    --sds-c-card-color-background: green;
+}
+
+.sold{
+    --sds-c-card-color-background: red;
+}
+.vacant{
+    --sds-c-card-color-background: blue;
+}

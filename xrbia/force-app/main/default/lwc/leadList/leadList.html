@@ -1,0 +1,47 @@
+
+    <template>
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+          <thead>
+            <tr class="slds-line-height_reset">
+              <th class="" scope="col">
+                <div class="slds-truncate" title="First Name">First Name</div>
+              </th>
+              <th class="" scope="col">
+                <div class="slds-truncate" title="Last Name">Last Name</div>
+              </th>
+              <th class="" scope="col">
+                <div class="slds-truncate" title="Company">Company</div>
+              </th>
+              <th class="" scope="col">
+                <div class="slds-truncate" title="LeadStatus">LeadStatus</div>
+              </th>
+      
+            </tr>
+          </thead>
+      
+          <tbody>
+      
+            <template for:each={leadlist.data} for:item="led" key={led.Id}>
+      
+              <tr key={led.Id}>
+                <th scope="row">
+                  <div class="slds-truncate" title="First Name">{led.FirstName}</div>
+                </th>
+                <th scope="row">
+                  <div class="slds-truncate" title="Last Name">{led.LastName}</div>
+                </th>
+                <th scope="row">
+                  <div class="slds-truncate" title="Company">{led.Company}</div>
+                </th>
+                <th scope="row">
+                  <c-lead-status-colour leadstatus={led.Status}></c-lead-status-colour>
+      
+                </th>
+      
+              </tr>
+      
+            </template>
+          </tbody>
+        </table>
+      
+      </template>
