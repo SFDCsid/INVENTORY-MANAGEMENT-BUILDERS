@@ -15,6 +15,7 @@ import listSort from '@salesforce/apex/PRACTICECLASS.listSort';
 import temList from '@salesforce/apex/PRACTICECLASS.temList';
 import carpetHtml from '@salesforce/apex/PRACTICECLASS.carpetHtml';
 import unitHtml2 from '@salesforce/apex/PRACTICECLASS.unitHtml2';
+
 import { NavigationMixin } from "lightning/navigation";
 
 
@@ -46,6 +47,10 @@ export default class PractiseLwc extends NavigationMixin(LightningElement) {
 
 
     error;
+
+
+    
+
 
 
 
@@ -254,7 +259,18 @@ export default class PractiseLwc extends NavigationMixin(LightningElement) {
         }
     }
 
- 
+
+    leadlist
+    @wire(unt, { Id: '$tower' }) 
+    lead({error,data}){
+      if(data){
+        this.leadlist = data;
+       // console.log('this.leadlist'+JSON.stringify(this.leadlist));
+      }
+      else if(error){
+        this.leadlist = undefined;
+      }
+    }
     
 
 
@@ -263,7 +279,7 @@ export default class PractiseLwc extends NavigationMixin(LightningElement) {
         let valueray = [];
         if (data) {
             this.valueray = data;
-            console.log('valueray' + JSON.stringify(this.valueray));
+          //  console.log('valueray' + JSON.stringify(this.valueray));
           // this.template.style.backgroundColor = "red";
 
         } else if (error) {

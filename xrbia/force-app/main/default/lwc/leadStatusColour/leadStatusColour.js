@@ -1,20 +1,23 @@
 import { LightningElement,api } from 'lwc';
 
 export default class leadstatusColour extends LightningElement {
-    @api leadstatus;
+   @api leadstatus;
+  
     @api color;
     @api FirstName;
     get getColor() { 
 
-
-
+            
+          
       
         if (this.leadstatus != undefined) {
-             var leadstatusLowerCase = this.leadstatus.toLowerCase();
-             var cOrange = 'open - not contacted';
-             var cYellow = 'working - contacted';
-             var cPink = 'closed - converted';
-             var cLightGreen = 'closed - not converted';
+          
+          console.log('leadus'+this.leadstatus);
+             var leadstatusLowerCase = this.leadstatus.toUpperCase();
+             var cOrange = 'BLOCKED';
+             var cYellow = 'SOLD';
+             var cPink = 'VACANT';
+             
             
                 if (cOrange.indexOf(leadstatusLowerCase) != -1) {
                     this.color='orange';
@@ -27,11 +30,8 @@ export default class leadstatusColour extends LightningElement {
                      this.color='pink';
               
                     }
-                else if (cLightGreen.indexOf(leadstatusLowerCase) != -1) {
-              
-                     this.color='LightGreen';
-                    }
-           return this.color + ' slds-badge';
+               
+           return this.color + ' slds-theme_success';
       
 
     }

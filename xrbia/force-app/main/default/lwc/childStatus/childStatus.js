@@ -24,7 +24,7 @@ export default class leadstatusColour extends LightningElement {
               
                     }
              
-           return this.color + 'orange';
+           return this.color + 'slds-theme_success';
       
 
     }

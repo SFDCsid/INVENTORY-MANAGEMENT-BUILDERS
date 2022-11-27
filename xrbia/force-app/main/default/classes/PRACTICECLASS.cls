@@ -88,6 +88,8 @@ public with sharing class PRACTICECLASS {
        return htmlmap2;
     }
    
+    
+
 /*
     @AuraEnabled (cacheable=true)
     public static map<Decimal , list<Unit__c>> unitHtml(string Id){
@@ -225,7 +227,7 @@ public with sharing class PRACTICECLASS {
 
         @AuraEnabled(cacheable=true)
         public static list<Unit__c> unt(String Id){
-           return [select Floor__c,Name from Unit__c where Tower__r.Id=:Id];  
+           return [select Floor__c,Name,Status__c from Unit__c where Tower__r.Id=:Id];  
         }
 
 
@@ -235,7 +237,7 @@ public with sharing class PRACTICECLASS {
         @AuraEnabled (cacheable=true)
         public static map<Decimal , string> keyvalueMap(string Id){
             map<Decimal , string> keyvalueMap = new map<Decimal , string>(); 
-            list<Unit__c> kValue = [SELECT Id,Name ,Floor__c  FROM Unit__c  WHERE Tower__r.Id =: Id  ];
+            list<Unit__c> kValue = [SELECT Id,Name ,Floor__c ,Status__c FROM Unit__c  WHERE Tower__r.Id =: Id  ];
             for(Unit__c m:kValue){
                 keyvalueMap.put(m.Floor__c , m.Name);
              }
@@ -256,7 +258,7 @@ public with sharing class PRACTICECLASS {
 
         @AuraEnabled (cacheable=true) 
         public static list<Unit__c> temList (string Id){
-            list<Unit__c> kValue = [SELECT Id,Name ,Floor__c,Carpet_Area__c,Status__c  FROM Unit__c  WHERE Tower__r.Id =: Id AND Status__c= 'BLOCKED'];
+            list<Unit__c> kValue = [SELECT Id,Name ,Floor__c,Carpet_Area__c,Status__c  FROM Unit__c  WHERE Tower__r.Id =: Id ];
             return kValue;
         }
 

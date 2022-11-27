@@ -1,6 +1,18 @@
 import { LightningElement, track, wire, api } from 'lwc';
-import getLeadList from '@salesforce/apex/GetLeadRecords.getLeadList';
+
+import unt from '@salesforce/apex/PRACTICECLASS.unt';
 export default class LeadList extends LightningElement {
 
-    @wire(getLeadList) leadlist;
+    leadlist
+    @wire(unt, { Id: '$tower' }) 
+    lead({error,data}){
+      if(data){
+        this.leadlist = data;
+        console.log('this.leadlist'+JSON.stringify(this.leadlist));
+      }
+      else if(error){
+        this.leadlist = undefined;
+      }
+    }
+    
 }
