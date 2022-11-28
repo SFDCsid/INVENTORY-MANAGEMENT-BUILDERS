@@ -76,7 +76,7 @@ public with sharing class PRACTICECLASS {
     @AuraEnabled (cacheable=true)
     public static map<Decimal , list<Unit__c>> unitHtml2(string Id){
     map<Decimal , list<Unit__c>> htmlmap2 = new map<Decimal , list<Unit__c>>(); 
-    list<Unit__c> unitList = [SELECT Id,Name ,Floor__c,Carpet_Area__c,	Status__c  FROM Unit__c  WHERE Tower__r.Id =: Id ORDER BY Name ASC ];
+    list<Unit__c> unitList = [SELECT Id,Name ,Floor__c,Carpet_Area__c,	Status__c,	Salable_Area__c  FROM Unit__c  WHERE Tower__r.Id =: Id ORDER BY Name ASC ];
     for(Unit__c p:unitList){
         if(!htmlmap2.containskey(p.Floor__c)){
             htmlmap2.put(p.Floor__c , new list<Unit__c>());

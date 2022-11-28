@@ -1,14 +1,34 @@
 <template>
+
+    
+    
+        <lightning-card title="Record Form Account Details">
+                <lightning-layout>
+                    <lightning-layout-item>
+                        <lightning-record-form
+                            record-id={recordId}
+                            object-api-name="User"
+                            fields={selectedFields}
+                            columns="2"
+                            mode="edit">
+                        </lightning-record-form>
+                    </lightning-layout-item>
+                </lightning-layout>
+        </lightning-card>
+
+   
+
+        <!--
     <div class="slds-form-element">
         <label class="slds-checkbox_toggle slds-grid">
             <span class="slds-form-element__label slds-m-bottom_none">Toggle Label</span>
-            <input type="checkbox" name="checkbox-toggle-15" value="checkbox-toggle-15" onchange={handleChange}
-                aria-describedby="checkbox-toggle-15" checked="" />
+            <input type="checkbox" name="checkbox-toggle-15" value="checkbox-toggle-15" 
+                aria-describedby="checkbox-toggle-15" checked={checkUncheck} />
             <span id="checkbox-toggle-15" class="slds-checkbox_faux_container" aria-live="assertive">
                 <span class="slds-checkbox_faux"></span>
-                <span class="slds-checkbox_on">Enabled</span>
-                <span class="slds-checkbox_off">Disabled</span>
+             <span class="slds-checkbox_on">Enabled</span>
+                <span class="slds-checkbox_off">Disabled</span> 
             </span>
         </label>
-    </div>
+    </div>-->
 </template>
