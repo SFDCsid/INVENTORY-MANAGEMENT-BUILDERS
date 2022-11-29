@@ -1,0 +1,32 @@
+<template>
+    
+        <div class="slds-m-top_medium slds-m-bottom_x-large">
+            <h2 class="slds-text-heading_medium slds-m-bottom_medium">
+                PROJECTS:
+            </h2>
+    
+            <!-- With an icon -->
+            <div class="slds-p-around_medium lgc-bg">
+                
+                    <template if:true={datarecords}>
+                        <template for:each={datarecords} for:item="project">
+                            <div key={project.Id} class="slds-m-top_medium slds-m-bottom_x-large">
+                            <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                            <lightning-tile class={project.className} label={project.Name} type="media">
+                            <lightning-icon slot="media" icon-name="standard:groups"></lightning-icon>
+                             <p class="slds-truncate"><strong>Project Name:</strong>{project.Name}</p>
+                             <p class="slds-truncate"><strong>Project Status:</strong>{project.Status}</p>
+                            </lightning-tile>
+                            </div>
+                            </div>
+                            </div>
+                        </template>
+    
+                    </template>
+                    
+                
+            </div>
+        </div> 
+    
+</template>

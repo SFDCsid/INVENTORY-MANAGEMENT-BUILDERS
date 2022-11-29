@@ -224,30 +224,56 @@ export default class PractiseLwc extends NavigationMixin(LightningElement) {
 
     @track objectList;
     @track staTus;
+    @track datarecords=[];
+
 
     @wire(unitHtml2, { Id: '$tower' })
     retriveUnits({ error, data }) {
         let keyRay = [];
-
+       
         if (data) {
 
+            this.record=data;
 
-
-
+            for(var i=0;i<this.record.length;i++){
+                console.log('Inside for loop!!');
+                let obj={
+                    
+                    "Status":this.record[i].Status__c
+                    
+               }
+               if(this.record[i].Status__c=='Sold'){
+                obj.className = 'sold'
+            }
+            else if(this.record[i].Status__c=='Available'){
+                obj.className = 'avail'
+            }
+            else if(this.record[i].Status__c=='Booked'){
+                obj.className = 'book'
+            }
+              this.datarecords.push(obj);
+              console.log('Inside for loop!!'+JSON.stringify(obj));
+            }
+            
             for (let key in data) {
+
+              
+
 
                 // .sort(function(a, b){return a - b})
                 keyRay.push({ FLOOR: key, Value: data[key]  });
                 this.objectList = keyRay.sort(function (a, b) { return a.FLOOR - b.FLOOR }).reverse();
 
 
-                /*  console.log( JSON.stringify(this.objectList.Value.Status__c));
-                for (var i=1 ; i<this.objectList ; i++){
-                   
-              }*/
+                var index = this.objectList.findIndex(item => item.id === this.Value);
+
+                 console.log('colour'+JSON.stringify(this.index));
+
+                 
+                
             }
 
-
+            
             // console.log(JSON.stringify(this.objectList));
             //  console.log('eyray'+JSON.stringify(this.objectList[0].Value[0].Status__c));
 

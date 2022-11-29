@@ -8,8 +8,10 @@ import USERACTIVE_FIELD from '@salesforce/schema/User.lwcActive__c';
 //import { updateRecord } from "lightning/uiRecordApi";
 
 export default class Toggle extends LightningElement {
-    recordId = UserInfo.getUserId();
-    selectedFields = [USERACTIVE_FIELD];
+
+  
+   // recordId = UserInfo.getUserId();
+   // selectedFields = [USERACTIVE_FIELD];
 
 
 
@@ -59,7 +61,7 @@ export default class Toggle extends LightningElement {
 
 
     /* ====================== TO GET CHECKBOX VALUE FRO SALESFORCE ======================= */
-    /*
+    
     userData;
     @wire(userAPEX)
     getuser({ error, data }) {
@@ -89,7 +91,7 @@ export default class Toggle extends LightningElement {
         }
 
 
-    }*/
+    }
 
 
 
