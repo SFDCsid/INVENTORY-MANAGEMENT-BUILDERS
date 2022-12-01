@@ -76,7 +76,8 @@ public with sharing class PRACTICECLASS {
     @AuraEnabled (cacheable=true)
     public static map<Decimal , list<Unit__c>> unitHtml2(string Id){
     map<Decimal , list<Unit__c>> htmlmap2 = new map<Decimal , list<Unit__c>>(); 
-    list<Unit__c> unitList = [SELECT Id,Name ,Floor__c,Carpet_Area__c,	Status__c,	Salable_Area__c  FROM Unit__c  WHERE Tower__r.Id =: Id ORDER BY Name ASC ];
+    list<Unit__c> unitList = [SELECT Id,Name ,Floor__c,Carpet_Area__c,	Status__c,	configuration__c,	Type__c,	Salable_Area__c  FROM Unit__c  WHERE Tower__r.Id =: Id ORDER BY Name ASC ];
+    
     for(Unit__c p:unitList){
         if(!htmlmap2.containskey(p.Floor__c)){
             htmlmap2.put(p.Floor__c , new list<Unit__c>());
@@ -227,8 +228,15 @@ public with sharing class PRACTICECLASS {
 
         @AuraEnabled(cacheable=true)
         public static list<Unit__c> unt(String Id){
-           return [select Floor__c,Name,Status__c from Unit__c where Tower__r.Id=:Id];  
+           return [select Floor__c,Name,Status__c, configuration__c,Type__c,Salable_Area__c from Unit__c where Tower__r.Id=:Id];  
         }
+
+        /* List<test> tet = [query];
+            if(floor__c=1)
+            unt.add(tet);
+            ret unt;
+
+         */
 
 
 
@@ -262,7 +270,7 @@ public with sharing class PRACTICECLASS {
             return kValue;
         }
 
-   
+       
 
     }
     

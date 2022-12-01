@@ -2,7 +2,7 @@ import { LightningElement,api } from 'lwc';
 
 export default class leadstatusColour extends LightningElement {
    @api leadstatus;
-  
+   @api objectList;
     @api color;
     @api FirstName;
     get getColor() { 
@@ -35,5 +35,9 @@ export default class leadstatusColour extends LightningElement {
       
 
     }
+
+
     }
+
+    
 }

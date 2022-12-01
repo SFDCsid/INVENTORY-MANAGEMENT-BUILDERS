@@ -19,8 +19,8 @@
 
 
 
-
         <!--
+       
         <table>
             <tbody>
 
@@ -48,39 +48,165 @@
                 </template>
 
             </tbody>
+        </table>-->
+
+
+
+        <table>
+            <tbody>
+
+
+
+                <template for:each={objectList} for:item="acc">
+
+                    <tr key={acc.Name}>
+                        <th class="slds-box">
+                            {acc.FLOOR}
+                            <br>
+                        </th>
+
+
+
+                        <template for:each={acc.Value} for:item="map">
+
+                            <th key={map.Name}>
+
+                                <div class={map.Status__c} data-id="divblock" onclick={handlerecordClick}
+                                    value={map.Id}>
+
+                                   
+                                   <!--<br>
+                                    <c-lead-status-colour leadstatus={map.Status__c}> </c-lead-status-colour> </br>
+                                    <br>--> 
+                                    <br> {map.Name} | {map.configuration__c} |</br>
+                                    <br>{map.Salable_Area__c} | {map.Type__c} {map.Status__c}</br> </br>
+                                    <lightning-button variant="brand" label={map.Name} onclick={handlerecordClick}
+                                        value={map.Id} class="slds-m-left_x-large">
+                                    </lightning-button>
+                                </div>
+
+
+
+
+
+
+                            </th>
+
+
+                        </template>
+
+                    </tr>
+
+
+                </template>
+
+
+
+
+            </tbody>
         </table>
 
+
+ <!--
+        <table>
+            <tbody>
+                <template for:each={objectList} for:item="acc">
+
+                    <tr key={acc.FLOOR}>
+                        <th class="slds-box">
+                            {acc.FLOOR}
+                            <br>
+                        </th>
+
+
+                        
+                        <template for:each={allRecord} for:item="map">
+
+                            <th key={map.Status}>
+
+                                <div class={map.Status}  onclick={handlerecordClick}
+                                    value={map.Id}>
+                                    <br> {map.Name} | {map.configuration__c} |</br>
+                                    <br>{map.Salable_Area__c} | {map.Type__c} {map.Status}</br> </br>
+                                   
+                                </div>
+
+
+
+
+
+                            </th>
+
+
+                        </template>
+                    </tr>
+
+
+
+                </template>
+            </tbody>
+        </table>
 -->
+        <!--
+        <div class="slds-m-top_medium slds-m-bottom_x-large">
+            <h2 class="slds-text-heading_medium slds-m-bottom_medium">
+                PROJECTS:
+            </h2>
+    
+          
+            <div class="slds-p-around_medium lgc-bg">
+                
+                    <template if:true={datarecords}>
+                        <template for:each={datarecords} for:item="project">
+                            <div key={project.Id} class="slds-m-top_medium slds-m-bottom_x-large">
+                            <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                            <div class={project.className} label={project.Name} type="media">
+                            <lightning-icon slot="media" icon-name="standard:groups"></lightning-icon>
+                             <p class="slds-truncate"><strong>Project Name:</strong>{project.Name}</p>
+                             <p class="slds-truncate"><strong>Project Status:</strong>{project.Status}</p>
+                             <p class="slds-truncate"><strong>Project className:</strong>{project.className}</p>
+                            </div>
+                            </div>
+                            </div>
+                            </div>
+                        </template>
+    
+                    </template>
+                    
+                
+            </div>
+        </div>  -->
+
+        <!--222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
 
         <table>
             <tbody>
 
               
 
-                <template for:each={objectList} for:item="acc">
+                <template for:each={datarecords} for:item="acc">
 
-                    <tr key={acc.Value}>
+                    <tr key={acc.obj}>
                         <th>
                             {acc.FLOOR}
                         </th>
 
 
                        
-                        <template for:each={acc.Value} for:item="map">
+                        <template for:each={acc.obj} for:item="map">
                             
-                            <th key={map.Name} class={textColorClass}>
-                                <br> <p class="slds-box"></br>
-                                    <!--data.id="myDiv"-->
-                                    <br>
-                                     <c-lead-status-colour leadstatus={map.Status__c}></c-lead-status-colour> </br> 
-                                      <br>
+                            <th key={map.Name} >
+                                <br> <p class={map.className}></br>
+                    
+                                    
                                      Salable_Area__c={map.Salable_Area__c} </br>
                                     <lightning-button variant="brand" label={map.Name} onclick={handlerecordClick}
                                         value={map.Id} class="slds-m-left_x-large" >
                                     </lightning-button>
-                                    <!--  <div class="container slds-box red" onclick={handlerecordClick} value={map.Id}>
+                                     <div class="container slds-box red" onclick={handlerecordClick} value={map.Id}>
                                         div click
-                                    </div>-->
+                                    </div>
 
 
                                 </p>
@@ -103,7 +229,54 @@
 
 
         
-        <!--
+        <table>
+            <tbody>
+
+              
+
+                <template for:each={datarecords} for:item="ac">
+
+                    <tr key={ac.Floor__c}>
+                        <th>
+                            {ac.Floor__c}
+                        </th>
+
+
+                       
+                        <template for:each={datarecords} for:item="map">
+                            
+                            <th key={map.Name} class={textColorClass}>
+                                <br> <p class="slds-box"></br>
+                                   data.id="myDiv"
+                                    {map.Status}
+                                     Salable_Area__c={map.Salable_Area__c} </br>
+                                    <lightning-button variant="brand" label={map.Name} onclick={handlerecordClick}
+                                        value={map.Id} class="slds-m-left_x-large" >
+                                    </lightning-button>
+                                    <div class="container slds-box red" onclick={handlerecordClick} value={map.Id}>
+                                        div click
+                                    </div>
+
+
+                                </p>
+
+                            </th>
+
+
+                        </template>
+
+                    </tr>
+
+
+                </template>
+
+            
+
+
+            </tbody>
+        </table>
+   
+       
         <table>
             <tr>
                 <td>

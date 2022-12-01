@@ -1,12 +1,31 @@
 .pink{
     
-    background-color: green;
+    background-color:green;
+    color: green;
+    box-sizing: border-box;
+    padding: 27px  52px ;
+    border: 1px;
+    margin: 20px auto 60px;
+    width:250px;
 }
 .orange{
-    background-color: black;
+    background-color:red;
+    color: red;
+    box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 27px  60px ;
+    border: 1px;
+    margin: 20px auto 60px;
+    width:250px;
 }
 .yellow{
-    background-color: red;
+    background-color:yellow;
+    color: yellow;
+        box-sizing: border-box;
+        padding: 27px  56px ;
+        border: 1px;
+        margin: 20px auto 60px;
+        width:250px;
 }
 .LightGreen{
     background-color: lightgreen;

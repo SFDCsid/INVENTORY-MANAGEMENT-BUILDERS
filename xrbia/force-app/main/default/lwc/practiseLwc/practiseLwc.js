@@ -16,6 +16,8 @@ import temList from '@salesforce/apex/PRACTICECLASS.temList';
 import carpetHtml from '@salesforce/apex/PRACTICECLASS.carpetHtml';
 import unitHtml2 from '@salesforce/apex/PRACTICECLASS.unitHtml2';
 
+
+
 import { NavigationMixin } from "lightning/navigation";
 
 
@@ -49,28 +51,11 @@ export default class PractiseLwc extends NavigationMixin(LightningElement) {
     error;
 
 
-    
 
 
 
 
-    renderedCallback() {
 
-        var elements;
-        elements = this.template.querySelectorAll('p');
-        
-        //console.log('ery' + (elements.getAttribute("p[BLOCKED]")));
-
-        for (let i = 0; i < elements.length; i++) {
-
-            
-            console.log('query' + JSON.stringify((elements[i].innerHTML)));
-
-            elements[i].style.backgroundColor = "white";
-            console.log(elements[i]);
-
-        }
-    }
 
 
     @wire(projectMethod)
@@ -221,62 +206,63 @@ export default class PractiseLwc extends NavigationMixin(LightningElement) {
 
 
 
+    @track classHandler;
 
     @track objectList;
     @track staTus;
-    @track datarecords=[];
+    @track datarecords = [];
 
 
     @wire(unitHtml2, { Id: '$tower' })
     retriveUnits({ error, data }) {
+        let colourRay = [];
         let keyRay = [];
-       
+
         if (data) {
 
-            this.record=data;
 
-            for(var i=0;i<this.record.length;i++){
-                console.log('Inside for loop!!');
-                let obj={
-                    
-                    "Status":this.record[i].Status__c
-                    
-               }
-               if(this.record[i].Status__c=='Sold'){
-                obj.className = 'sold'
-            }
-            else if(this.record[i].Status__c=='Available'){
-                obj.className = 'avail'
-            }
-            else if(this.record[i].Status__c=='Booked'){
-                obj.className = 'book'
-            }
-              this.datarecords.push(obj);
-              console.log('Inside for loop!!'+JSON.stringify(obj));
-            }
-            
+
             for (let key in data) {
 
-              
+
 
 
                 // .sort(function(a, b){return a - b})
-                keyRay.push({ FLOOR: key, Value: data[key]  });
+                keyRay.push({ FLOOR: key, Value: data[key] });
+
+                for (var i = 0; i < data[key].length; i++) {
+                    console.log('data[key]' + JSON.stringify(data[key][i].Status__c));
+                    if (data[key][i].Status__c == 'BLOCKED') {
+                        //     console.log('data[key][i].Status__c'+JSON.stringify(data[key][i].Status__c)); 
+                        
+
+                    }
+                    if (data[key][i].Status__c == 'SOLD') {
+                        //     console.log('data[key][i].Status__c'+JSON.stringify(data[key][i].Status__c)); 
+
+                    }
+                }
+
+
+
                 this.objectList = keyRay.sort(function (a, b) { return a.FLOOR - b.FLOOR }).reverse();
 
 
                 var index = this.objectList.findIndex(item => item.id === this.Value);
 
-                 console.log('colour'+JSON.stringify(this.index));
+                console.log('colour' + JSON.stringify(this.index));
 
-                 
-                
+
+
+
+
             }
 
-            
-            // console.log(JSON.stringify(this.objectList));
+
+            console.log('OBJLIST'+JSON.stringify(this.objectList));
             //  console.log('eyray'+JSON.stringify(this.objectList[0].Value[0].Status__c));
 
+            // console.log('objvalue'+JSON.stringify(this.objectList[0].Value[0].Status__c));
 
 
         }
@@ -285,37 +271,85 @@ export default class PractiseLwc extends NavigationMixin(LightningElement) {
         }
     }
 
+    //  @track datarecords=[];
+    leadlist = [];
+    @wire(unitDisplay, { Id: '$tower' })
+    lead({ error, data }) {
+        if (data) {
+            this.leadlist = data;
+            //   console.log('this.leadlist'+JSON.stringify(this.leadlist));
 
-    leadlist
-    @wire(unt, { Id: '$tower' }) 
-    lead({error,data}){
-      if(data){
-        this.leadlist = data;
-       // console.log('this.leadlist'+JSON.stringify(this.leadlist));
-      }
-      else if(error){
-        this.leadlist = undefined;
-      }
+            for (var i = 0; i < this.leadlist.length; i++) {
+                let obj = {
+                    "Id": this.leadlist[i].Id,
+                    "Name": this.leadlist[i].Name,
+                    "Status": this.leadlist[i].Status__c,
+                    "Floor": this.leadlist[i].Floor__c,
+                    "Tower": this.leadlist[i].Tower__c
+                }
+                if (this.leadlist[i].Status__c == 'sold') {
+                    obj.className = 'unavai'
+                }
+                else if (this.leadlist[i].Status__c == 'blocked') {
+                    obj.className = 'booked'
+                }
+                else if (this.leadlist[i].Status__c == 'vacant') {
+                    obj.className = 'open'
+                }
+                //        this.datarecords.push(obj);
+
+            }
+        }
+        else if (error) {
+            this.leadlist = undefined;
+        }
+
+        //  console.log('datarecords'+JSON.stringify(this.datarecords));
     }
-    
 
 
-    @wire(temList, { Id: '$tower' })
+    @track allRecord = [];
+    @wire(unt, { Id: '$tower' })
     retriveFloor({ error, data }) {
         let valueray = [];
         if (data) {
             this.valueray = data;
-          //  console.log('valueray' + JSON.stringify(this.valueray));
-          // this.template.style.backgroundColor = "red";
+            console.log('valueray' + JSON.stringify(this.valueray));
+            for (var i = 0; i < this.valueray.length; i++) {
+                let obj = {
+                    "Id": this.valueray[i].Id,
+                    "Name": this.valueray[i].Name,
+                    "Status": this.valueray[i].Status__c,
+                    "Floor": this.valueray[i].Floor__c,
+                    "Tower": this.valueray[i].Tower__c,
+                    "configuration__c": this.valueray[i].configuration__c,
+                    "Type__c": this.valueray[i].Type__c,
+                    "Salable_Area__c": this.valueray[i].Salable_Area__c
+                }
+                if (this.valueray[i].Status__c == 'sold') {
+                    obj.className = 'sold'
+                }
+                else if (this.valueray[i].Status__c == 'blocked') {
+                    obj.className = 'blocked'
+                }
+                else if (this.valueray[i].Status__c == 'vacant') {
+                    obj.className = 'vacant'
+                }
+                this.allRecord.push(obj.Floor , obj);
+
+            }
+            console.log('ALLRECORDS' + JSON.stringify(this.allRecord));
+
+          
 
         } else if (error) {
-            this.data = undefined;
+            this.valueray = undefined;
         }
-        // let typ = this.template.querySelectorall("[Status__c='BLOCKED']");
-        //console.log('typ'+JSON.stringify(this.typ));
 
-        
+
     }
+    ///333333333333333333333333333333333333333333333333333333333333
+  
 
 
 
@@ -373,8 +407,49 @@ export default class PractiseLwc extends NavigationMixin(LightningElement) {
 
     }
 
+    @track record = []
+    @wire(unitHtml2, { Id: '$tower' })
+    getunit({ error, data }) {
+
+        let unitarray = [];
+        if (data) {
+            this.record = data;
+            for (var i = 0; i < this.record.length; i++) {
+                let obj = {
+                    "Id": this.record[i].Id,
+                    "Name": this.record[i].Name,
+                    "Status": this.record[i].Status__c,
+                    "Floor__c": this.record[i].Floor__c,
+                    "Carpet_Area__c": this.record[i].Carpet_Area__c,
+                }
+                if (this.record[i].Status__c == 'SOLD') {
+                    obj.className = 'sold'
+                }
+                else if (this.record[i].Status__c == 'VACANT') {
+                    obj.className = 'avail'
+                }
+                else if (this.record[i].Status__c == 'BOOKED') {
+                    obj.className = 'book'
+                }
+                //  { FLOOR: key, Value: data[key] }
+                this.datarecords.push({ FLOOR: obj.Floor__c, obj });
 
 
+
+            }
+            console.log('this.datarecords' + this.datarecords);
+            console.log('this.datarecords' + JSON.stringify(this.datarecords));
+
+
+
+
+        }
+        else if (error) {
+            this.error = undefined;
+        }
+
+
+    }
 
 
 
@@ -587,6 +662,25 @@ export default class PractiseLwc extends NavigationMixin(LightningElement) {
             }
         }
     */
+
+    /*
+renderedCallback() {
+
+    var elements;
+    elements = this.template.querySelectorAll('p');
+    
+    //console.log('ery' + (elements.getAttribute("p[BLOCKED]")));
+
+    for (let i = 0; i < elements.length; i++) {
+
+        
+        console.log('query' + JSON.stringify((elements[i].innerHTML)));
+
+        elements[i].style.backgroundColor = "white";
+        console.log(elements[i]);
+
+    }
+}*/
 
 
 }
