@@ -1,21 +1,53 @@
 <template>
+   
+       
     <lightning-card>
+
         <lightning-record-view-form record-id={recordId} object-api-name="Unit__c">
             <div class="slds-grid">
                 <div class="slds-col slds-size_1-of-2">
                     <lightning-output-field field-name="Name"></lightning-output-field>
                     <lightning-output-field field-name="Floor__c"></lightning-output-field>
+                    <lightning-output-field field-name="Salable_Area__c"></lightning-output-field>
                 </div>
                 <div class="slds-col slds-size_1-of-2">
-                    <lightning-output-field field-name="Tower.Name"></lightning-output-field>
+                    <lightning-output-field field-name="Tower__c"></lightning-output-field>
                     <lightning-output-field field-name="Status__c"></lightning-output-field>
+                    <lightning-output-field field-name="Type__c"></lightning-output-field>
                 </div>
             </div>
         </lightning-record-view-form>
 
 
+        <lightning-record-edit-form object-api-name={accountObject} onsuccess={handleAccountCreated}>
+            <lightning-messages></lightning-messages>
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name={aggrementvalueField}></lightning-input-field>
+                    <lightning-input-field field-name={gstpercentageField}></lightning-input-field>
+                    <lightning-input-field field-name={otherchargesgstField}></lightning-input-field>
+                    <lightning-input-field field-name={stampdutypercentageField}></lightning-input-field>
+                  <!--  <lightning-input-field field-name={grandtotalField}></lightning-input-field>  -->
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <!-- More lightning-input-field components here -->
+                    <lightning-input-field field-name={registerationchargesField}></lightning-input-field>
+                   <!--   <lightning-input-field field-name={gstamountField}></lightning-input-field> -->
+                   <!-- <lightning-input-field field-name={otherchargesField}></lightning-input-field>-->
+                   <!--  <lightning-input-field field-name={stampdutyamountField}></lightning-input-field>-->
+                    <lightning-input-field field-name={unitqutField} value="a095g000004NtFgAAK" disabled="true"></lightning-input-field>
+                </div>
+             </div>
+            <lightning-button type="submit" variant="brand" label="Create Quotation"></lightning-button>
+        </lightning-record-edit-form>
+       
 
-        <lightning-record-form object-api-name={accountObject} fields={myFields} onsuccess={handleAccountCreated}>
-        </lightning-record-form>
-    </lightning-card>
+          <button class="slds-button slds-button_neutral" onclick={hideModalBox}>Cancel</button>
+
+        </lightning-card>
+
+
+   
+      
+    
 </template>

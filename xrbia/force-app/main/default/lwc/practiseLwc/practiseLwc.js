@@ -15,8 +15,19 @@ import listSort from '@salesforce/apex/PRACTICECLASS.listSort';
 import temList from '@salesforce/apex/PRACTICECLASS.temList';
 import carpetHtml from '@salesforce/apex/PRACTICECLASS.carpetHtml';
 import unitHtml2 from '@salesforce/apex/PRACTICECLASS.unitHtml2';
-
-
+///////////////////////
+import ACCOUNT_OBJECT from '@salesforce/schema/QUOTATION__c';
+import AGGREMENT_VALUE from '@salesforce/schema/QUOTATION__c.Aggrement_Value__c';
+//import GRAND_TOTAL from '@salesforce/schema/QUOTATION__c.Grand_Total__c';
+//import GST_AMOUNT from '@salesforce/schema/QUOTATION__c.GST_AMO__c';
+import GST_PERCENTAGE from '@salesforce/schema/QUOTATION__c.Gst_Percentage__c';
+//import OTHER_CHARGES from '@salesforce/schema/QUOTATION__c.Other_Charges1__c';
+import OTHERCHARGES_GST from '@salesforce/schema/QUOTATION__c.Other_Charges_Gst__c';
+import REGISTERATION_CHARGES from '@salesforce/schema/QUOTATION__c.Registeration_Charges__c';
+//import STAMPDUTY_AMOUNT from '@salesforce/schema/QUOTATION__c.Stamp_Duty_Amount__c';
+import STAMPDUTY_PERCENTAGE from '@salesforce/schema/QUOTATION__c.Stamp_Duty_Percentage__c';
+import UNIT_QUT from '@salesforce/schema/QUOTATION__c.Unit__c';
+import NAME_QUT from '@salesforce/schema/QUOTATION__c.Name';
 
 import { NavigationMixin } from "lightning/navigation";
 
@@ -25,10 +36,70 @@ import { NavigationMixin } from "lightning/navigation";
 import loop from '@salesforce/apex/PRACTICECLASS.loop';
 
 export default class PractiseLwc extends NavigationMixin(LightningElement) {
+
+
+    //////////////////////////////////////////////
+    @api recordId;
+    
+    areDetailsVisible=false;
+
+    handleClick(event) {
+        var rdValue = event.target.value;
+        this.recordId = rdValue;
+        this.areDetailsVisible = true;
+        console.log(this.recordId);
+        // console.log('work'+event.target.value);
+        // console.log('wk'+rdValue);
+        //console.log('wk'+this.storeIdfornav);
+
+
+        /*
+             this[NavigationMixin.Navigate]({
+                type: "standard__recordPage",
+                attributes: {
+                    recordId: this.storeIdfornav,
+        
+                    objectApiName: "Unit__c",
+                    actionName: "view"
+        
+                }
+            });*/
+    }
+
+    accountObject = ACCOUNT_OBJECT;
+    aggrementvalueField = AGGREMENT_VALUE;
+    //grandtotalField = GRAND_TOTAL;
+    //gstamountField = GST_AMOUNT;
+    gstpercentageField = GST_PERCENTAGE;
+    //otherchargesField = OTHER_CHARGES;
+    otherchargesgstField = OTHERCHARGES_GST;
+    registerationchargesField = REGISTERATION_CHARGES;
+    //stampdutyamountField = STAMPDUTY_AMOUNT;
+    stampdutypercentageField = STAMPDUTY_PERCENTAGE;
+    unitqutField = UNIT_QUT;
+    namequtField = NAME_QUT;
+
+
+
+    _title = 'Sample Title';
+    message = 'Sample Message';
+    variant = 'error';
+
+    handleAccountCreated(event){
+        const toast = new ShowToastEvent({
+            title: 'Toast message',
+            message: 'Toast Message',
+            variant: 'success',
+            mode: 'dismissable'
+        });
+        this.dispatchEvent(toast);
+    }
+
+    /////////////////////////////////////////////////////
     @api project;
     @api sector;
     @api tower;
-    @api recordId;
+    // @api recordId;
 
 
     sectorOptionList;
@@ -202,7 +273,7 @@ export default class PractiseLwc extends NavigationMixin(LightningElement) {
                     console.log('data[key]' + JSON.stringify(data[key][i].Status__c));
                     if (data[key][i].Status__c == 'BLOCKED') {
                         //     console.log('data[key][i].Status__c'+JSON.stringify(data[key][i].Status__c)); 
-                        
+
 
                     }
                     if (data[key][i].Status__c == 'SOLD') {
@@ -227,7 +298,7 @@ export default class PractiseLwc extends NavigationMixin(LightningElement) {
             }
 
 
-            console.log('OBJLIST'+JSON.stringify(this.objectList));
+            console.log('OBJLIST' + JSON.stringify(this.objectList));
             //  console.log('eyray'+JSON.stringify(this.objectList[0].Value[0].Status__c));
 
             // console.log('objvalue'+JSON.stringify(this.objectList[0].Value[0].Status__c));
@@ -303,12 +374,12 @@ export default class PractiseLwc extends NavigationMixin(LightningElement) {
                 else if (this.valueray[i].Status__c == 'vacant') {
                     obj.className = 'vacant'
                 }
-                this.allRecord.push(obj.Floor , obj);
+                this.allRecord.push(obj.Floor, obj);
 
             }
             console.log('ALLRECORDS' + JSON.stringify(this.allRecord));
 
-          
+
 
         } else if (error) {
             this.valueray = undefined;
@@ -316,34 +387,34 @@ export default class PractiseLwc extends NavigationMixin(LightningElement) {
 
 
     }
-   
-/*
-    navButton;
-    handlerecordClick(event) {
-       
-        //  alert('inside event');
-        //   console.log('event'+Json.stringify(event.detail.FLOOR));
-        this.navButton = event.currentTarget.value;
-        console.log('event'+Json.stringify( this.navButton ));
-        
 
-
-
-
-
-
-        this[NavigationMixin.Navigate]({
-            type: "standard__recordPage",
-            attributes: {
-                recordId: this.navButton,
-
-                objectApiName: "Unit__c",
-                actionName: "view"
-
-            }
-        });
-
-    }*/ 
+    /*
+        navButton;
+        handlerecordClick(event) {
+           
+            //  alert('inside event');
+            //   console.log('event'+Json.stringify(event.detail.FLOOR));
+            this.navButton = event.currentTarget.value;
+            console.log('event'+Json.stringify( this.navButton ));
+            
+    
+    
+    
+    
+    
+    
+            this[NavigationMixin.Navigate]({
+                type: "standard__recordPage",
+                attributes: {
+                    recordId: this.navButton,
+    
+                    objectApiName: "Unit__c",
+                    actionName: "view"
+    
+                }
+            });
+    
+        }*/
 
     //------------------------------------------------------------------------------------
 
@@ -353,40 +424,40 @@ export default class PractiseLwc extends NavigationMixin(LightningElement) {
     /*   changeColour(){
            this.template.querySelector('[data.id = "myDiv"]').classList.add('redColour');
        }  */
-/*
-    navButton;
-    colourHtml;
-
-
-
-
-
-
-
-    handlerecordClick(event) {
-        //  alert('inside event');
-        //   console.log('event'+Json.stringify(event.detail.FLOOR));
-        this.navButton = event.currentTarget.value;
-        this.colourHtml = event.target.status;
-        console.log('nav' + this.colourHtml);
-
-
-
-
-
-
-        this[NavigationMixin.Navigate]({
-            type: "standard__recordPage",
-            attributes: {
-                recordId: this.navButton,
-
-                objectApiName: "Unit__c",
-                actionName: "view"
-
-            }
-        });
-
-    }*/
+    /*
+        navButton;
+        colourHtml;
+    
+    
+    
+    
+    
+    
+    
+        handlerecordClick(event) {
+            //  alert('inside event');
+            //   console.log('event'+Json.stringify(event.detail.FLOOR));
+            this.navButton = event.currentTarget.value;
+            this.colourHtml = event.target.status;
+            console.log('nav' + this.colourHtml);
+    
+    
+    
+    
+    
+    
+            this[NavigationMixin.Navigate]({
+                type: "standard__recordPage",
+                attributes: {
+                    recordId: this.navButton,
+    
+                    objectApiName: "Unit__c",
+                    actionName: "view"
+    
+                }
+            });
+    
+        }*/
 
     @track record = []
     @wire(unitHtml2, { Id: '$tower' })
@@ -432,289 +503,270 @@ export default class PractiseLwc extends NavigationMixin(LightningElement) {
 
     }
 
-     storeIdfornav;
-    
-    handleClick(event){
-        var rdValue = event.target.value;
-        this.storeIdfornav = rdValue;
-     // console.log('work'+event.target.value);
-     // console.log('wk'+rdValue);
-     //console.log('wk'+this.storeIdfornav);
+   
 
-
-
-     this[NavigationMixin.Navigate]({
-        type: "standard__recordPage",
-        attributes: {
-            recordId: this.storeIdfornav,
-
-            objectApiName: "Unit__c",
-            actionName: "view"
-
-        }
-    });
-    }
+   
 
 
 
 
 }
 
+/*
+   @wire(loop, { Id: '$tower' })
+   filteredLoop;*/
+/*
+    @wire(keyvalueMap, { Id: '$tower' }) 
+    retriveFloor({ error, data }) {
+        let valueray = [];
+        if (data) {
+            for (let key in data) {
+                valueray.push({ key: key, Value: data[key] });
+                this.ValueList = valueray;
+                console.log('ValueList' + JSON.stringify(this.ValueList));
+            }
+        } else if (error) {
+            this.data = undefined;
+        }
+        
+    }
+*/
+/*
+    @wire(valuekeyMap, { Id: '$tower' })
+    retriveFloor({ error, data }) {
+        let valueray = [];
+        if (data) {
+            for (let key in data) {
+                valueray.push({ key: key, Value: data[key] });
+                this.ValueList = valueray;
+ 
+            }
+            console.log('Vt' + JSON.stringify(this.ValueList));
+        } else if (error) {
+            this.data = undefined;
+        }
+ 
+    }
+ 
+ 
+   @track valay;
+    @wire(temList, { Id: '$tower' })
+    retriveFloor({ error, data }) {
+        if (data) {
+            this.valay = data;
+            console.log('valay' + JSON.stringify(this.valay));
+        } else if (error) {
+            this.valay = undefined;
+        }
+ 
+    }
+ 
+    @wire(dataTable, { Id: '$tower' })
+    dataLoop;
+ 
+   
+ 
     /*
-       @wire(loop, { Id: '$tower' })
-       filteredLoop;*/
-    /*
-        @wire(keyvalueMap, { Id: '$tower' }) 
+    reverseListfloor;
+        @wire(listSort, { Id: '$tower' }) 
         retriveFloor({ error, data }) {
-            let valueray = [];
+            let rf = [];
             if (data) {
-                for (let key in data) {
-                    valueray.push({ key: key, Value: data[key] });
-                    this.ValueList = valueray;
-                    console.log('ValueList' + JSON.stringify(this.ValueList));
-                }
-            } else if (error) {
-                this.data = undefined;
-            }
-            
-        }
-    */
-    /*
-        @wire(valuekeyMap, { Id: '$tower' })
-        retriveFloor({ error, data }) {
-            let valueray = [];
-            if (data) {
-                for (let key in data) {
-                    valueray.push({ key: key, Value: data[key] });
-                    this.ValueList = valueray;
-    
-                }
-                console.log('Vt' + JSON.stringify(this.ValueList));
-            } else if (error) {
-                this.data = undefined;
-            }
-    
-        }
-    
-    
-       @track valay;
-        @wire(temList, { Id: '$tower' })
-        retriveFloor({ error, data }) {
-            if (data) {
-                this.valay = data;
-                console.log('valay' + JSON.stringify(this.valay));
-            } else if (error) {
-                this.valay = undefined;
-            }
-    
-        }
-    
-        @wire(dataTable, { Id: '$tower' })
-        dataLoop;
-    
-       
-    
-        /*
-        reverseListfloor;
-            @wire(listSort, { Id: '$tower' }) 
-            retriveFloor({ error, data }) {
-                let rf = [];
-                if (data) {
-                  /*  for(var i=1 ; i>data.length ; i++){
-                        data[i];
-                        rf.push( data[i] );
-                    }*/
+              /*  for(var i=1 ; i>data.length ; i++){
+                    data[i];
+                    rf.push( data[i] );
+                }*/
 
-    /* 
-                for (let key in data) {
-                    rf.push({ key: key[data] });
-                    this.reverseListfloor = rf;
-                   
-                } 
-                console.log('Vt' + this.reverseListfloor);
-            } else if (error) {
-                this.data = undefined;
-            }
-            
-        }
-    */
-
-
-
-    /*
-        @AuraEnabled (cacheable=true)
-        public static map<string , Decimal> unitMap(string Id){
-        map<string , Decimal> finalmap = new map<string , Decimal>(); 
-        system.debug(finalmap) ; 
-        list<Unit__c> unitList = [SELECT Id,Name ,Floor__c  FROM Unit__c  WHERE Tower__r.Id =: Id ORDER BY Floor__c DESC ];
-        for(Unit__c m:unitList){
-           finalmap.put(m.Name , m.Floor__c);
-        }
-             return   finalmap; 
-        }  */
-    /*
-        @wire(unt, { Id: '$tower' }) 
-        retriveFloor({ error, data }) {
-            if (data) {
-                
-                this.unitsonly = data;
-               console.log('uo1'+JSON.stringify(this.unitsonly));
-                //alert(data);
-            } else if (error) {
-                this.error = error;
-            }
-        }
-    
-         temploop;
-    
-        @wire(unitMap, { Id: '$tower' }) 
-        Floor({ error, data }) {
-            if (data) {
-            this.temploop = data;
-            console.log('uo'+JSON.stringify(this.temploop));
+/*
+            for (let key in data) {
+                rf.push({ key: key[data] });
+                this.reverseListfloor = rf;
                
-            } else if (error) {
-                this.error = error;
-            }
+            } 
+            console.log('Vt' + this.reverseListfloor);
+        } else if (error) {
+            this.data = undefined;
         }
-    
-    
-    /*
-        @wire(getUnits, { Id: '$tower' }) retriveUnits( data) {
-            let valueArray = [];
-    
-            if (data) {
-                for (let key in data) {
-                    //alert(key);
-                    valueArray.push({value: data[key] });
-                    //console.log(valueArray);
-                    this.nextList = valueArray;
-                    console.log('NEXT'+JSON.stringify(this.nextList));
-                }
-            }
-          
+        
+    }
+*/
+
+
+
+/*
+    @AuraEnabled (cacheable=true)
+    public static map<string , Decimal> unitMap(string Id){
+    map<string , Decimal> finalmap = new map<string , Decimal>(); 
+    system.debug(finalmap) ; 
+    list<Unit__c> unitList = [SELECT Id,Name ,Floor__c  FROM Unit__c  WHERE Tower__r.Id =: Id ORDER BY Floor__c DESC ];
+    for(Unit__c m:unitList){
+       finalmap.put(m.Name , m.Floor__c);
+    }
+         return   finalmap; 
+    }  */
+/*
+    @wire(unt, { Id: '$tower' }) 
+    retriveFloor({ error, data }) {
+        if (data) {
             
+            this.unitsonly = data;
+           console.log('uo1'+JSON.stringify(this.unitsonly));
+            //alert(data);
+        } else if (error) {
+            this.error = error;
         }
-    
-    
+    }
+ 
+     temploop;
+ 
+    @wire(unitMap, { Id: '$tower' }) 
+    Floor({ error, data }) {
+        if (data) {
+        this.temploop = data;
+        console.log('uo'+JSON.stringify(this.temploop));
+           
+        } else if (error) {
+            this.error = error;
+        }
+    }
+ 
+ 
+/*
+    @wire(getUnits, { Id: '$tower' }) retriveUnits( data) {
+        let valueArray = [];
+ 
+        if (data) {
+            for (let key in data) {
+                //alert(key);
+                valueArray.push({value: data[key] });
+                //console.log(valueArray);
+                this.nextList = valueArray;
+                console.log('NEXT'+JSON.stringify(this.nextList));
+            }
+        }
       
-    
-    /*
-        @wire(getFloor, { Id: '$tower' }) retriveFloor({ error, data }) {
-            if (data) {
-                this.data = data;
-                console.log('FLOOR'+ JSON.stringify(this.data));
-            } else if (error) {
-                this.error = error;
-            }
+        
+    }
+ 
+ 
+  
+ 
+/*
+    @wire(getFloor, { Id: '$tower' }) retriveFloor({ error, data }) {
+        if (data) {
+            this.data = data;
+            console.log('FLOOR'+ JSON.stringify(this.data));
+        } else if (error) {
+            this.error = error;
         }
-    
-    */
+    }
+ 
+*/
 
-    /*employeeColumns = [
-        { label: 'FLOOR ', fieldName: 'floor' },
-        { label: 'UNIT 1', fieldName: 'unit1' },
-        { label: 'UNIT 2', fieldName: 'unit2' },
-        { label: 'UNIT 3', fieldName: 'unit3' },
-        { label: 'UNIT 4', fieldName: 'unit4' }
-    ];
-    
-    employeeData = [
-        {
-            floor: '1',
-            unit1: '101,102,103,104'
-            
-        },
-        {
-            floor: '2',
-            unit1: '201',
-            unit2: '202',
-            unit3: '203',
-            unit4: '204'
-        },
-        {
-            floor: '3',
-            unit1: '301',
-            unit2: '302',
-            unit3: '303',
-            unit4: '304'
-        },
-        {
-            floor: '4',
-            unit1: '401',
-            unit2: '402',
-            unit3: '403',
-            unit4: '404'
+/*employeeColumns = [
+    { label: 'FLOOR ', fieldName: 'floor' },
+    { label: 'UNIT 1', fieldName: 'unit1' },
+    { label: 'UNIT 2', fieldName: 'unit2' },
+    { label: 'UNIT 3', fieldName: 'unit3' },
+    { label: 'UNIT 4', fieldName: 'unit4' }
+];
+ 
+employeeData = [
+    {
+        floor: '1',
+        unit1: '101,102,103,104'
+        
+    },
+    {
+        floor: '2',
+        unit1: '201',
+        unit2: '202',
+        unit3: '203',
+        unit4: '204'
+    },
+    {
+        floor: '3',
+        unit1: '301',
+        unit2: '302',
+        unit3: '303',
+        unit4: '304'
+    },
+    {
+        floor: '4',
+        unit1: '401',
+        unit2: '402',
+        unit3: '403',
+        unit4: '404'
+    }
+];*/
+
+
+
+/*
+    @track htmldata;
+    @track columns = [{ label: 'Floor', fieldName: 'Floor__c', type: 'text' },
+    { label: 'Name', fieldName: 'Name', type: 'text' }];
+ 
+    @wire(unitHtml, { Id: '$tower' })
+    unrecords({ error, data }) {
+        if (data) {
+            this.htmldata = data;
+            console.log(this.htmldata);
+            // console.log('htmltable'+JSON.stringify(this.htmldata));
         }
-    ];*/
-
-
-
-    /*
-        @track htmldata;
-        @track columns = [{ label: 'Floor', fieldName: 'Floor__c', type: 'text' },
-        { label: 'Name', fieldName: 'Name', type: 'text' }];
-    
-        @wire(unitHtml, { Id: '$tower' })
-        unrecords({ error, data }) {
-            if (data) {
-                this.htmldata = data;
-                console.log(this.htmldata);
-                // console.log('htmltable'+JSON.stringify(this.htmldata));
-            }
-            if (error) {
-                this.data = undefined;
-            }
+        if (error) {
+            this.data = undefined;
         }
-    */
+    }
+*/
 
-    /*
+/*
 renderedCallback() {
 
-    var elements;
-    elements = this.template.querySelectorAll('p');
+var elements;
+elements = this.template.querySelectorAll('p');
+ 
+//console.log('ery' + (elements.getAttribute("p[BLOCKED]")));
+
+for (let i = 0; i < elements.length; i++) {
+
     
-    //console.log('ery' + (elements.getAttribute("p[BLOCKED]")));
+    console.log('query' + JSON.stringify((elements[i].innerHTML)));
 
-    for (let i = 0; i < elements.length; i++) {
+    elements[i].style.backgroundColor = "white";
+    console.log(elements[i]);
 
-        
-        console.log('query' + JSON.stringify((elements[i].innerHTML)));
-
-        elements[i].style.backgroundColor = "white";
-        console.log(elements[i]);
-
-    }
+}
 }*/
 
-    /* ------------------------ important------------------
+/* ------------------------ important------------------
  
-     @wire(unitHtml, { Id: '$tower' })
-     retriveUnits({ error, data }) {
-        
-         let keyArray = [];
-         let valueArray = [];
-         if (data) {
-             for (let key in data) {
-                 keyArray.push(data[key]);
-                 valueArray.push({ key: key, Value: data[key]  });
-                 this.ValueOptionList = valueArray
-                 //[0].Value;
-                 //console.log( this.ValueOptionList);
-                 //  console.log('new'+this.ValueOptionList);
-                 this.OnlyUnits = keyArray.sort(function(a, b){return a - b});
-               //  console.log( 'sort'+this.OnlyUnits);
-             }
-         //    console.log('valoptions' + JSON.stringify(this.ValueOptionList));
-          //   console.log('OnlyUnits' + JSON.stringify(this.OnlyUnits));
-          //   console.log('valarray' + this.ValueOptionList[0].Value);
-             this.ValueOptionList = this.ValueOptionList.reverse();
-             //console.log('key' + JSON.stringify(this.OnlyUnits));
-             console.log('ValueOptionList' + JSON.stringify(this.ValueOptionList));
+ @wire(unitHtml, { Id: '$tower' })
+ retriveUnits({ error, data }) {
+    
+     let keyArray = [];
+     let valueArray = [];
+     if (data) {
+         for (let key in data) {
+             keyArray.push(data[key]);
+             valueArray.push({ key: key, Value: data[key]  });
+             this.ValueOptionList = valueArray
+             //[0].Value;
+             //console.log( this.ValueOptionList);
+             //  console.log('new'+this.ValueOptionList);
+             this.OnlyUnits = keyArray.sort(function(a, b){return a - b});
+           //  console.log( 'sort'+this.OnlyUnits);
          }
-         else if (error) {
-             this.data = undefined;
-         }
-   
+     //    console.log('valoptions' + JSON.stringify(this.ValueOptionList));
+      //   console.log('OnlyUnits' + JSON.stringify(this.OnlyUnits));
+      //   console.log('valarray' + this.ValueOptionList[0].Value);
+         this.ValueOptionList = this.ValueOptionList.reverse();
+         //console.log('key' + JSON.stringify(this.OnlyUnits));
+         console.log('ValueOptionList' + JSON.stringify(this.ValueOptionList));
      }
-     ----------------------------------------------------------------------------------*/
+     else if (error) {
+         this.data = undefined;
+     }
+ 
+ }
+ ----------------------------------------------------------------------------------*/
