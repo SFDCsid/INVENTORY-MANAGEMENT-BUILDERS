@@ -1,4 +1,5 @@
 <template>
+    <template if:true={towerProject}>
     <lightning-card>
         <div class="slds-grid slds-gutters">
             <div class="slds-col">
@@ -26,7 +27,7 @@
                         <template for:each={acc.Value} for:item="map">
                             <th key={map.Name}>  
 
-                                <button class={map.Status__c} onclick={andleClick} value={map.Id}>
+                                <button class={map.Status__c} onclick={handleClick} value={map.Id}>
                                    <!--<br>
                                     <c-lead-status-colour leadstatus={map.Status__c}> </c-lead-status-colour> </br>
                                     <br>--> 
@@ -44,23 +45,11 @@
             </tbody>
         </table>
     </lightning-card>
-
-
+</template>
+    
     <template if:true={areDetailsVisible}>
        
-      <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
-            <div class="slds-modal__container">
-            
-               <header class="slds-modal__header">
-                  <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideModalBox}>
-                     <lightning-icon icon-name="utility:close"
-                        alternative-text="close"
-                        variant="inverse"
-                        size="small" ></lightning-icon>
-                     <span class="slds-assistive-text">Close</span>
-                  </button>
-                  <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">NEW QUOTATION</h2>
-               </header>
+      
 <lightning-card>
 
         <lightning-record-view-form record-id={recordId} object-api-name="Unit__c">
@@ -79,7 +68,7 @@
         </lightning-record-view-form>
 
 
-        <lightning-record-edit-form object-api-name={accountObject} onsuccess={handleAccountCreat}>
+        <lightning-record-edit-form object-api-name={accountObject} >
             <lightning-messages></lightning-messages>
             <div class="slds-grid">
                 <div class="slds-col slds-size_1-of-2">
@@ -95,18 +84,18 @@
                    <!--   <lightning-input-field field-name={gstamountField}></lightning-input-field> -->
                    <!-- <lightning-input-field field-name={otherchargesField}></lightning-input-field>-->
                    <!--  <lightning-input-field field-name={stampdutyamountField}></lightning-input-field>-->
-                    <lightning-input-field field-name={unitqutField} value={recordId} disabled="true"></lightning-input-field>
+                    <lightning-input-field field-name={unitqutField} value={recordId} ></lightning-input-field>
+                   
                 </div>
              </div>
-            <lightning-button type="submit" variant="brand" label="Create Quotation" onclick={handleAccountCreated}></lightning-button>
+             <lightning-button type="submit" variant="brand" label="Create Account"  onclick={handleAccountCreated} ></lightning-button>
         </lightning-record-edit-form>
        
 
-          <button class="slds-button slds-button_neutral" onclick={hideModalBox}>Cancel</button>
+         
 
         </lightning-card>
-    </div>
-</section>
+  
 
 </template>
 

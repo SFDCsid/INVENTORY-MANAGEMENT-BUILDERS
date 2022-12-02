@@ -29,6 +29,8 @@ import STAMPDUTY_PERCENTAGE from '@salesforce/schema/QUOTATION__c.Stamp_Duty_Per
 import UNIT_QUT from '@salesforce/schema/QUOTATION__c.Unit__c';
 import NAME_QUT from '@salesforce/schema/QUOTATION__c.Name';
 
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+
 import { NavigationMixin } from "lightning/navigation";
 
 
@@ -40,14 +42,15 @@ export default class PractiseLwc extends NavigationMixin(LightningElement) {
 
     //////////////////////////////////////////////
     @api recordId;
-    
-    areDetailsVisible=false;
+    towerProject = true;
+    //areDetailsVisible=false;
 
     handleClick(event) {
         var rdValue = event.target.value;
         this.recordId = rdValue;
         this.areDetailsVisible = true;
         console.log(this.recordId);
+        this.towerProject = false;
         // console.log('work'+event.target.value);
         // console.log('wk'+rdValue);
         //console.log('wk'+this.storeIdfornav);
@@ -85,14 +88,15 @@ export default class PractiseLwc extends NavigationMixin(LightningElement) {
     message = 'Sample Message';
     variant = 'error';
 
-    handleAccountCreated(event){
+    handleAccountCreated(){
         const toast = new ShowToastEvent({
-            title: 'Toast message',
-            message: 'Toast Message',
+            title: 'Quotation Created',
+            message: 'success',
             variant: 'success',
             mode: 'dismissable'
         });
         this.dispatchEvent(toast);
+        this.areDetailsVisible = false;
     }
 
     /////////////////////////////////////////////////////
