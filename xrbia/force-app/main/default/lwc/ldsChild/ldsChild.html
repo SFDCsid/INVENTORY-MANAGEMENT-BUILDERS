@@ -1,0 +1,21 @@
+<template>
+    <lightning-card>
+        <lightning-record-view-form record-id={recordId} object-api-name="Unit__c">
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-output-field field-name="Name"></lightning-output-field>
+                    <lightning-output-field field-name="Floor__c"></lightning-output-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-output-field field-name="Tower.Name"></lightning-output-field>
+                    <lightning-output-field field-name="Status__c"></lightning-output-field>
+                </div>
+            </div>
+        </lightning-record-view-form>
+
+
+
+        <lightning-record-form object-api-name={accountObject} fields={myFields} onsuccess={handleAccountCreated}>
+        </lightning-record-form>
+    </lightning-card>
+</template>

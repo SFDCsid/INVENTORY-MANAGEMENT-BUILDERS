@@ -168,38 +168,6 @@ export default class PractiseLwc extends NavigationMixin(LightningElement) {
 
 
 
-    /* ------------------------ important------------------
- 
-     @wire(unitHtml, { Id: '$tower' })
-     retriveUnits({ error, data }) {
-        
-         let keyArray = [];
-         let valueArray = [];
-         if (data) {
-             for (let key in data) {
-                 keyArray.push(data[key]);
-                 valueArray.push({ key: key, Value: data[key]  });
-                 this.ValueOptionList = valueArray
-                 //[0].Value;
-                 //console.log( this.ValueOptionList);
-                 //  console.log('new'+this.ValueOptionList);
-                 this.OnlyUnits = keyArray.sort(function(a, b){return a - b});
-               //  console.log( 'sort'+this.OnlyUnits);
-             }
-         //    console.log('valoptions' + JSON.stringify(this.ValueOptionList));
-          //   console.log('OnlyUnits' + JSON.stringify(this.OnlyUnits));
-          //   console.log('valarray' + this.ValueOptionList[0].Value);
-             this.ValueOptionList = this.ValueOptionList.reverse();
-             //console.log('key' + JSON.stringify(this.OnlyUnits));
-             console.log('ValueOptionList' + JSON.stringify(this.ValueOptionList));
-         }
-         else if (error) {
-             this.data = undefined;
-         }
-   
-     }
-     ----------------------------------------------------------------------------------*/
-
 
 
 
@@ -348,24 +316,34 @@ export default class PractiseLwc extends NavigationMixin(LightningElement) {
 
 
     }
-    ///333333333333333333333333333333333333333333333333333333333333
-  
-
-
-
-    //--------------------------------------------------------------------------
-
-    @track options = [];
-    @track textColorClass;
-
-    handle_Green_Text_Click(event) {
-        this.textColorClass = 'green';
-    }
+   
+/*
+    navButton;
+    handlerecordClick(event) {
+       
+        //  alert('inside event');
+        //   console.log('event'+Json.stringify(event.detail.FLOOR));
+        this.navButton = event.currentTarget.value;
+        console.log('event'+Json.stringify( this.navButton ));
+        
 
 
 
 
 
+
+        this[NavigationMixin.Navigate]({
+            type: "standard__recordPage",
+            attributes: {
+                recordId: this.navButton,
+
+                objectApiName: "Unit__c",
+                actionName: "view"
+
+            }
+        });
+
+    }*/ 
 
     //------------------------------------------------------------------------------------
 
@@ -375,9 +353,12 @@ export default class PractiseLwc extends NavigationMixin(LightningElement) {
     /*   changeColour(){
            this.template.querySelector('[data.id = "myDiv"]').classList.add('redColour');
        }  */
-
+/*
     navButton;
     colourHtml;
+
+
+
 
 
 
@@ -405,7 +386,7 @@ export default class PractiseLwc extends NavigationMixin(LightningElement) {
             }
         });
 
-    }
+    }*/
 
     @track record = []
     @wire(unitHtml2, { Id: '$tower' })
@@ -451,9 +432,33 @@ export default class PractiseLwc extends NavigationMixin(LightningElement) {
 
     }
 
+     storeIdfornav;
+    
+    handleClick(event){
+        var rdValue = event.target.value;
+        this.storeIdfornav = rdValue;
+     // console.log('work'+event.target.value);
+     // console.log('wk'+rdValue);
+     //console.log('wk'+this.storeIdfornav);
 
 
 
+     this[NavigationMixin.Navigate]({
+        type: "standard__recordPage",
+        attributes: {
+            recordId: this.storeIdfornav,
+
+            objectApiName: "Unit__c",
+            actionName: "view"
+
+        }
+    });
+    }
+
+
+
+
+}
 
     /*
        @wire(loop, { Id: '$tower' })
@@ -682,5 +687,34 @@ renderedCallback() {
     }
 }*/
 
-
-}
+    /* ------------------------ important------------------
+ 
+     @wire(unitHtml, { Id: '$tower' })
+     retriveUnits({ error, data }) {
+        
+         let keyArray = [];
+         let valueArray = [];
+         if (data) {
+             for (let key in data) {
+                 keyArray.push(data[key]);
+                 valueArray.push({ key: key, Value: data[key]  });
+                 this.ValueOptionList = valueArray
+                 //[0].Value;
+                 //console.log( this.ValueOptionList);
+                 //  console.log('new'+this.ValueOptionList);
+                 this.OnlyUnits = keyArray.sort(function(a, b){return a - b});
+               //  console.log( 'sort'+this.OnlyUnits);
+             }
+         //    console.log('valoptions' + JSON.stringify(this.ValueOptionList));
+          //   console.log('OnlyUnits' + JSON.stringify(this.OnlyUnits));
+          //   console.log('valarray' + this.ValueOptionList[0].Value);
+             this.ValueOptionList = this.ValueOptionList.reverse();
+             //console.log('key' + JSON.stringify(this.OnlyUnits));
+             console.log('ValueOptionList' + JSON.stringify(this.ValueOptionList));
+         }
+         else if (error) {
+             this.data = undefined;
+         }
+   
+     }
+     ----------------------------------------------------------------------------------*/
