@@ -74,19 +74,22 @@
                     <div class="slds-col slds-size_1-of-2">
                         <lightning-input-field field-name={aggrementvalueField} onchange={agrementOnchange}>
                         </lightning-input-field>
+                        <lightning-input-field field-name={registerationchargesField}></lightning-input-field>
+                        <lightning-input-field field-name={otherchargesField} onchange={otherchargesOnchange} ></lightning-input-field>
                         <lightning-input-field field-name={gstpercentageField} onchange={gstpercentOnchange}>
                         </lightning-input-field>
-                        <lightning-input-field field-name={otherchargesgstField}></lightning-input-field>
+                        <lightning-input-field field-name={otherchargesgstField}  onchange={otherchargesgstOnchange}></lightning-input-field>
                         <lightning-input-field field-name={stampdutypercentageField}></lightning-input-field>
                         <!--  <lightning-input-field field-name={grandtotalField}></lightning-input-field>  -->
                     </div>
                     <div class="slds-col slds-size_1-of-2">
                         <!-- More lightning-input-field components here -->
-                        <lightning-input-field field-name={registerationchargesField}></lightning-input-field>
-                        <lightning-input-field field-name={gstamountField} disabled value={gstamountOutput} ></lightning-input-field>
-                        <lightning-input-field field-name={otherchargesField}></lightning-input-field>
-                        <lightning-input-field field-name={stampdutyamountField}></lightning-input-field>
                         <lightning-input-field field-name={unitqutField} value={recordId}></lightning-input-field>
+                        <lightning-input-field field-name={gstamountField} disabled value={gstamountOutput} ></lightning-input-field>
+                        <lightning-input-field field-name={totalotherchargesField} disabled value={totalothercharges} ></lightning-input-field>
+                        <lightning-input-field field-name={stampdutyamountField} disabled value={stampdutyamountFieldOutput}></lightning-input-field>
+                        <lightning-input-field field-name={grandtotalField} disabled value={grandtotalFieldOutput} ></lightning-input-field>
+                       
 
                     </div>
                 </div>

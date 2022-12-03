@@ -29,6 +29,7 @@ import STAMPDUTY_AMOUNT from '@salesforce/schema/QUOTATION__c.StampDuty__c';
 import STAMPDUTY_PERCENTAGE from '@salesforce/schema/QUOTATION__c.Stamp_Duty_Percentage__c';
 import UNIT_QUT from '@salesforce/schema/QUOTATION__c.Unit__c';
 import NAME_QUT from '@salesforce/schema/QUOTATION__c.Name';
+import TOTAL_OC from '@salesforce/schema/QUOTATION__c.Other_Charges_Total__c';
 
 
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
@@ -41,12 +42,29 @@ import loop from '@salesforce/apex/PRACTICECLASS.loop';
 
 export default class TestComp extends NavigationMixin(LightningElement) {
 
-    gstamountOutput;
+   
+    
+    totalothercharges;
+    otherchargesOnchangeval;
+    otherchargesgstOnchangeval; 
 
+    gstamountOutput;
     gstpercentval;
     agrementval;
 
-    
+    otherchargesOnchange(event) {
+        this.otherchargesOnchangeval = event.target.value;
+        this.totalotherchargesOutput();
+    }
+
+    otherchargesgstOnchange(event) {
+        this.otherchargesgstOnchangeval = event.target.value;
+        this.totalotherchargesOutput();
+    }
+
+    totalotherchargesOutput(){
+        this.totalothercharges =  Number(this.otherchargesOnchangeval * this.otherchargesgstOnchangeval/100) + Number(this.otherchargesOnchangeval);
+    }
 
     gstpercentOnchange(event) {
         this.gstpercentval = event.target.value;
@@ -59,12 +77,12 @@ export default class TestComp extends NavigationMixin(LightningElement) {
         this.gstamountOutputmethod();
     }
 
-    gstamountOutputmethod(){
-       this.gstamountOutput =  this.agrementval * this.gstpercentval/100;
-    
+    gstamountOutputmethod() {
+        this.gstamountOutput = this.agrementval * this.gstpercentval / 100;
+
     }
 
-   
+
 
 
     //////////////////////////////////////////////
@@ -110,6 +128,7 @@ export default class TestComp extends NavigationMixin(LightningElement) {
     stampdutypercentageField = STAMPDUTY_PERCENTAGE;
     unitqutField = UNIT_QUT;
     namequtField = NAME_QUT;
+    totalotherchargesField = TOTAL_OC;
 
 
 
