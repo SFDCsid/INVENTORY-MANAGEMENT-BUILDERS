@@ -1,109 +1,112 @@
 <template>
     <template if:true={towerProject}>
-    <lightning-card>
-        <div class="slds-grid slds-gutters">
-            <div class="slds-col">
-                <lightning-combobox name="Projects" label="Project" value={value} placeholder="Select Project"
-                    options={projectOptionList} onchange={handleChangeProject}> </lightning-combobox>
+        <lightning-card>
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col">
+                    <lightning-combobox name="Projects" label="Project" value={value} placeholder="Select Project"
+                        options={projectOptionList} onchange={handleChangeProject}> </lightning-combobox>
+                </div>
+                <div class="slds-col">
+                    <lightning-combobox name="sectors" label="Sectors" value={value} placeholder="Select Sector"
+                        options={sectorOptionList} onchange={handleChangeSector}> </lightning-combobox>
+                </div>
+                <div class="slds-col">
+                    <lightning-combobox name="Tower" label="Tower" value={value} placeholder="Select Tower"
+                        options={towerOptionList} onchange={handleTowerChange}> </lightning-combobox>
+                </div>
             </div>
-            <div class="slds-col">
-                <lightning-combobox name="sectors" label="Sectors" value={value} placeholder="Select Sector"
-                    options={sectorOptionList} onchange={handleChangeSector}> </lightning-combobox>
-            </div>
-            <div class="slds-col">
-                <lightning-combobox name="Tower" label="Tower" value={value} placeholder="Select Tower"
-                    options={towerOptionList} onchange={handleTowerChange}> </lightning-combobox>
-            </div>
-        </div>
 
-        <table>
-            <tbody>
-                <template for:each={objectList} for:item="acc">
-                    <tr key={acc.Name}>
-                        <th class="slds-box custom-background">
-                            {acc.FLOOR}
-                            <br>
-                        </th>
-                        <template for:each={acc.Value} for:item="map">
-                            <th key={map.Name}>  
-
-                                <button class={map.Status__c} onclick={handleClick} value={map.Id}>
-                                   <!--<br>
-                                    <c-lead-status-colour leadstatus={map.Status__c}> </c-lead-status-colour> </br>
-                                    <br>--> 
-                                    <br> {map.Name} | {map.configuration__c} |</br>
-                                    <br>{map.Salable_Area__c} | {map.Type__c} </br> </br>
-                                  <!--  <lightning-button variant="brand" label={map.Name} onclick={handlerecordClick}
-                                        value={map.Id} class="slds-m-left_x-large" >
-                                    </lightning-button>--> 
-                                </button>
-
+            <table>
+                <tbody>
+                    <template for:each={objectList} for:item="acc">
+                        <tr key={acc.Name}>
+                            <th class="slds-box custom-background">
+                                {acc.FLOOR}
+                                <br>
                             </th>
-                        </template>
-                    </tr>
-                </template>
-            </tbody>
-        </table>
-    </lightning-card>
-</template>
-    
+                            <template for:each={acc.Value} for:item="map">
+                                <th key={map.Name}>
+
+                                    <button class={map.Status__c} onclick={handleClick} value={map.Id}>
+                                        <!--<br>
+                                    <c-lead-status-colour leadstatus={map.Status__c}> </c-lead-status-colour> </br>
+                                    <br>-->
+                                        <br> {map.Name} | {map.configuration__c} |</br>
+                                        <br>{map.Salable_Area__c} | {map.Type__c} </br> </br>
+                                        <!--  <lightning-button variant="brand" label={map.Name} onclick={handlerecordClick}
+                                        value={map.Id} class="slds-m-left_x-large" >
+                                    </lightning-button>-->
+                                    </button>
+
+                                </th>
+                            </template>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </lightning-card>
+    </template>
+
     <template if:true={areDetailsVisible}>
-       
-      
-<lightning-card>
-
-        <lightning-record-view-form record-id={recordId} object-api-name="Unit__c">
-            <div class="slds-grid">
-                <div class="slds-col slds-size_1-of-2">
-                    <lightning-output-field field-name="Name"></lightning-output-field>
-                    <lightning-output-field field-name="Floor__c"></lightning-output-field>
-                    <lightning-output-field field-name="Salable_Area__c"></lightning-output-field>
-                </div>
-                <div class="slds-col slds-size_1-of-2">
-                    <lightning-output-field field-name="Tower__c"></lightning-output-field>
-                    <lightning-output-field field-name="Status__c"></lightning-output-field>
-                    <lightning-output-field field-name="Type__c"></lightning-output-field>
-                </div>
-            </div>
-        </lightning-record-view-form>
 
 
-        <lightning-record-edit-form object-api-name={accountObject} >
-            <lightning-messages></lightning-messages>
-            <div class="slds-grid">
-                <div class="slds-col slds-size_1-of-2">
-                    <lightning-input-field field-name={aggrementvalueField}></lightning-input-field>
-                    <lightning-input-field field-name={gstpercentageField}></lightning-input-field>
-                    <lightning-input-field field-name={otherchargesgstField}></lightning-input-field>
-                    <lightning-input-field field-name={stampdutypercentageField}></lightning-input-field>
-                  <!--  <lightning-input-field field-name={grandtotalField}></lightning-input-field>  -->
-                </div>
-                <div class="slds-col slds-size_1-of-2">
-                    <!-- More lightning-input-field components here -->
-                    <lightning-input-field field-name={registerationchargesField}></lightning-input-field>
-                   <!--   <lightning-input-field field-name={gstamountField}></lightning-input-field> -->
-                   <!-- <lightning-input-field field-name={otherchargesField}></lightning-input-field>-->
-                   <!--  <lightning-input-field field-name={stampdutyamountField}></lightning-input-field>-->
-                    <lightning-input-field field-name={unitqutField} value={recordId} ></lightning-input-field>
-                   
-                </div>
-             </div>
-             <lightning-button type="submit" variant="brand" label="Create Quotation"  onclick={handleAccountCreated} ></lightning-button>
-             
-        </lightning-record-edit-form>
-       
+        <lightning-card>
 
-         
+            <lightning-record-view-form record-id={recordId} object-api-name="Unit__c">
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Name"></lightning-output-field>
+                        <lightning-output-field field-name="Floor__c"></lightning-output-field>
+                        <lightning-output-field field-name="Salable_Area__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Tower__c"></lightning-output-field>
+                        <lightning-output-field field-name="Status__c"></lightning-output-field>
+                        <lightning-output-field field-name="Type__c"></lightning-output-field>
+                    </div>
+                </div>
+            </lightning-record-view-form>
+
+
+            <lightning-record-edit-form object-api-name={accountObject}>
+                <lightning-messages></lightning-messages>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name={aggrementvalueField} onchange={agrementOnchange}>
+                        </lightning-input-field>
+                        <lightning-input-field field-name={gstpercentageField} onchange={gstpercentOnchange}>
+                        </lightning-input-field>
+                        <lightning-input-field field-name={otherchargesgstField}></lightning-input-field>
+                        <lightning-input-field field-name={stampdutypercentageField}></lightning-input-field>
+                        <!--  <lightning-input-field field-name={grandtotalField}></lightning-input-field>  -->
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <!-- More lightning-input-field components here -->
+                        <lightning-input-field field-name={registerationchargesField}></lightning-input-field>
+                        <lightning-input-field field-name={gstamountField} disabled value={gstamountOutput} ></lightning-input-field>
+                        <lightning-input-field field-name={otherchargesField}></lightning-input-field>
+                        <lightning-input-field field-name={stampdutyamountField}></lightning-input-field>
+                        <lightning-input-field field-name={unitqutField} value={recordId}></lightning-input-field>
+
+                    </div>
+                </div>
+                <lightning-button type="submit" variant="brand" label="Create Quotation" onclick={handleAccountCreated}>
+                </lightning-button>
+
+            </lightning-record-edit-form>
+
+
+
 
         </lightning-card>
-  
+
+
+    </template>
 
 </template>
 
-</template>
 
-
- <!--
+<!--
        
         <table>
             <tbody>
@@ -173,7 +176,7 @@
             </tbody>
         </table>
 -->
-        <!--
+<!--
         <div class="slds-m-top_medium slds-m-bottom_x-large">
             <h2 class="slds-text-heading_medium slds-m-bottom_medium">
                 PROJECTS:
@@ -204,7 +207,7 @@
             </div>
         </div>  -->
 
-        <!--222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
+<!--222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
 
         <table>
             <tbody>
@@ -331,7 +334,7 @@
 
 
 
-        <!--
+<!--
 <table>
     <tr>
         <td>
@@ -360,7 +363,7 @@
 
 
 
-        <!--
+<!--
         <table>
             <tr >
                 <td>
@@ -386,7 +389,7 @@
     -->
 
 
-        <!--
+<!--
         <table>
             <tr>
                 <td>
@@ -408,7 +411,7 @@
             </tr>
         </table>
     -->
-        <!--
+<!--
         <table>
             <tbody>
                 <template for:each={ValueList} for:item="key">
@@ -426,7 +429,7 @@
             </tbody>
         </table>
 -->
-        <!--
+<!--
         <table>
             <tbody>
                 <template for:each={ValueList}  for:item="key" >
@@ -449,7 +452,7 @@
              </tbody>
         </table> 
 -->
-        <!--
+<!--
 
         <table>
             <tbody>
