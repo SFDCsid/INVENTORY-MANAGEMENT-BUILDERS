@@ -42,7 +42,10 @@ import loop from '@salesforce/apex/PRACTICECLASS.loop';
 
 export default class TestComp extends NavigationMixin(LightningElement) {
 
-  
+
+   
+
+
     totalothercharges;
     otherchargesOnchangeval;
     otherchargesgstOnchangeval;
@@ -105,6 +108,8 @@ export default class TestComp extends NavigationMixin(LightningElement) {
         this.grandTotalCalculation();
     }
 
+
+
     grandTotalCalculation() {
         this.grandtotalFieldOutput = `${Number(this.stampdutyamountFieldOutput) + Number(this.gstamountOutput) + Number(this.totalothercharges) + Number(this.registerationchargesAmount) + Number(this.agrementval)}`;
     }
@@ -114,7 +119,7 @@ export default class TestComp extends NavigationMixin(LightningElement) {
         this.grandTotalCalculation();
     }
 
-    
+
 
 
     //////////////////////////////////////////////
