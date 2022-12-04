@@ -42,47 +42,77 @@ import loop from '@salesforce/apex/PRACTICECLASS.loop';
 
 export default class TestComp extends NavigationMixin(LightningElement) {
 
-   
-    
+
+
     totalothercharges;
     otherchargesOnchangeval;
-    otherchargesgstOnchangeval; 
+    otherchargesgstOnchangeval;
 
     gstamountOutput;
     gstpercentval;
     agrementval;
 
+    receivestampdutyEv;
+    stampdutyamountFieldOutput;
+
+    grandtotalFieldOutput;
+
+    registerationchargesAmount;
+
     otherchargesOnchange(event) {
         this.otherchargesOnchangeval = event.target.value;
         this.totalotherchargesOutput();
+        this.grandTotalCalculation();
     }
 
     otherchargesgstOnchange(event) {
         this.otherchargesgstOnchangeval = event.target.value;
         this.totalotherchargesOutput();
+        this.grandTotalCalculation();
     }
 
-    totalotherchargesOutput(){
-        this.totalothercharges =  Number(this.otherchargesOnchangeval * this.otherchargesgstOnchangeval/100) + Number(this.otherchargesOnchangeval);
+    totalotherchargesOutput() {
+        this.totalothercharges = Number(this.otherchargesOnchangeval * this.otherchargesgstOnchangeval / 100) + Number(this.otherchargesOnchangeval);
+        this.grandTotalCalculation();
     }
 
     gstpercentOnchange(event) {
         this.gstpercentval = event.target.value;
         this.gstamountOutputmethod(); //call other funtion 
+        this.grandTotalCalculation();
     }
 
 
     agrementOnchange(event) {
         this.agrementval = event.target.value;
         this.gstamountOutputmethod();
+        this.grandTotalCalculation();
     }
 
     gstamountOutputmethod() {
         this.gstamountOutput = this.agrementval * this.gstpercentval / 100;
-
+        this.grandTotalCalculation();
     }
 
+    stampdutypercentageFieldOnchange(event) {
+        this.receivestampdutyEv = event.target.value;
+        this.stampdutyCalculation();
+        this.grandTotalCalculation();
+    }
 
+    stampdutyCalculation() {
+        this.stampdutyamountFieldOutput = this.agrementval * this.receivestampdutyEv / 100;
+        this.grandTotalCalculation();
+    }
+
+    grandTotalCalculation() {
+        this.grandtotalFieldOutput = Number(this.stampdutyamountFieldOutput + this.gstamountOutput + this.totalothercharges) + Number(this.registerationchargesAmount) + Number(this.agrementval);
+    }
+
+    registerationchargesFieldOnchange(event) {
+        this.registerationchargesAmount = event.target.value;
+        this.grandTotalCalculation();
+    }
 
 
     //////////////////////////////////////////////
