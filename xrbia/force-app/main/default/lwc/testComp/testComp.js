@@ -42,8 +42,7 @@ import loop from '@salesforce/apex/PRACTICECLASS.loop';
 
 export default class TestComp extends NavigationMixin(LightningElement) {
 
-
-
+  
     totalothercharges;
     otherchargesOnchangeval;
     otherchargesgstOnchangeval;
@@ -55,7 +54,7 @@ export default class TestComp extends NavigationMixin(LightningElement) {
     receivestampdutyEv;
     stampdutyamountFieldOutput;
 
-    grandtotalFieldOutput;
+    @api grandtotalFieldOutput;
 
     registerationchargesAmount;
 
@@ -86,6 +85,7 @@ export default class TestComp extends NavigationMixin(LightningElement) {
     agrementOnchange(event) {
         this.agrementval = event.target.value;
         this.gstamountOutputmethod();
+        this.stampdutyCalculation();
         this.grandTotalCalculation();
     }
 
@@ -106,13 +106,15 @@ export default class TestComp extends NavigationMixin(LightningElement) {
     }
 
     grandTotalCalculation() {
-        this.grandtotalFieldOutput = Number(this.stampdutyamountFieldOutput + this.gstamountOutput + this.totalothercharges) + Number(this.registerationchargesAmount) + Number(this.agrementval);
+        this.grandtotalFieldOutput = `${Number(this.stampdutyamountFieldOutput) + Number(this.gstamountOutput) + Number(this.totalothercharges) + Number(this.registerationchargesAmount) + Number(this.agrementval)}`;
     }
 
     registerationchargesFieldOnchange(event) {
         this.registerationchargesAmount = event.target.value;
         this.grandTotalCalculation();
     }
+
+    
 
 
     //////////////////////////////////////////////
@@ -852,3 +854,4 @@ for (let i = 0; i < elements.length; i++) {
  
  }
  ----------------------------------------------------------------------------------*/
+
