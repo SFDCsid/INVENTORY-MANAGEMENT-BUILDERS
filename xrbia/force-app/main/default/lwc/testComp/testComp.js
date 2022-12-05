@@ -43,7 +43,7 @@ import loop from '@salesforce/apex/PRACTICECLASS.loop';
 export default class TestComp extends NavigationMixin(LightningElement) {
 
 
-   
+
 
 
     totalothercharges;
@@ -130,15 +130,25 @@ export default class TestComp extends NavigationMixin(LightningElement) {
 
 
     handleClick(event) {
+       if (event.target.name == 'vacant') {
+           this.areDetailsVisible = true;
+            this.towerProject = false;
+         } 
         var rdValue = event.target.value;
         this.recordId = rdValue;
-        this.areDetailsVisible = true;
-        console.log(this.recordId);
-        this.towerProject = false;
+
+        //---------uncomment for all click-----------
+      //  this.areDetailsVisible = true; 
+      //  this.towerProject = false;
+         //---------uncomment for all click-----------
+
+
+        var rName = event.target.name;
         // console.log('work'+event.target.value);
-        // console.log('wk'+rdValue);
+        //console.log('wk' + rName);
         //console.log('wk'+this.storeIdfornav);
 
+        
 
         /*
              this[NavigationMixin.Navigate]({

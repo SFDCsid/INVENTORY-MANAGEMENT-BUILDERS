@@ -42,7 +42,10 @@ import loop from '@salesforce/apex/PRACTICECLASS.loop';
 
 export default class TestComp extends NavigationMixin(LightningElement) {
 
-  
+
+
+
+
     totalothercharges;
     otherchargesOnchangeval;
     otherchargesgstOnchangeval;
@@ -54,7 +57,7 @@ export default class TestComp extends NavigationMixin(LightningElement) {
     receivestampdutyEv;
     stampdutyamountFieldOutput;
 
-    grandtotalFieldOutput;
+    @api grandtotalFieldOutput;
 
     registerationchargesAmount;
 
@@ -105,8 +108,10 @@ export default class TestComp extends NavigationMixin(LightningElement) {
         this.grandTotalCalculation();
     }
 
+
+
     grandTotalCalculation() {
-        this.grandtotalFieldOutput = Number(this.stampdutyamountFieldOutput) + Number(this.gstamountOutput) + Number(this.totalothercharges) + Number(this.registerationchargesAmount) + Number(this.agrementval);
+        this.grandtotalFieldOutput = `${Number(this.stampdutyamountFieldOutput) + Number(this.gstamountOutput) + Number(this.totalothercharges) + Number(this.registerationchargesAmount) + Number(this.agrementval)}`;
     }
 
     registerationchargesFieldOnchange(event) {
@@ -114,7 +119,7 @@ export default class TestComp extends NavigationMixin(LightningElement) {
         this.grandTotalCalculation();
     }
 
-    
+
 
 
     //////////////////////////////////////////////
@@ -125,15 +130,25 @@ export default class TestComp extends NavigationMixin(LightningElement) {
 
 
     handleClick(event) {
+       if (event.target.name == 'vacant') {
+           this.areDetailsVisible = true;
+            this.towerProject = false;
+         } 
         var rdValue = event.target.value;
         this.recordId = rdValue;
-        this.areDetailsVisible = true;
-        console.log(this.recordId);
-        this.towerProject = false;
+
+        //---------uncomment for all click-----------
+      //  this.areDetailsVisible = true; 
+      //  this.towerProject = false;
+         //---------uncomment for all click-----------
+
+
+        var rName = event.target.name;
         // console.log('work'+event.target.value);
-        // console.log('wk'+rdValue);
+        //console.log('wk' + rName);
         //console.log('wk'+this.storeIdfornav);
 
+        
 
         /*
              this[NavigationMixin.Navigate]({

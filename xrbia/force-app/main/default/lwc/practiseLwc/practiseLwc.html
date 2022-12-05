@@ -27,7 +27,7 @@
                             <template for:each={acc.Value} for:item="map">
                                 <th key={map.Name}>
 
-                                    <button class={map.Status__c} onclick={handleClick} value={map.Id}>
+                                    <button class={map.Status__c} onclick={handleClick} value={map.Id} name={map.Status__c} >
                                         <!--<br>
                                     <c-lead-status-colour leadstatus={map.Status__c}> </c-lead-status-colour> </br>
                                     <br>-->
