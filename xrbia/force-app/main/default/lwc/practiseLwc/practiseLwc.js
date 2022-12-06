@@ -16,6 +16,7 @@ import listSort from '@salesforce/apex/PRACTICECLASS.listSort';
 import temList from '@salesforce/apex/PRACTICECLASS.temList';
 import carpetHtml from '@salesforce/apex/PRACTICECLASS.carpetHtml';
 import unitHtml2 from '@salesforce/apex/PRACTICECLASS.unitHtml2';
+import quotationMethod from '@salesforce/apex/PRACTICECLASS.quotationMethod';
 ///////////////////////
 import ACCOUNT_OBJECT from '@salesforce/schema/QUOTATION__c';
 import AGGREMENT_VALUE from '@salesforce/schema/QUOTATION__c.Aggrement_Value__c';
@@ -39,6 +40,7 @@ import { NavigationMixin } from "lightning/navigation";
 
 
 import loop from '@salesforce/apex/PRACTICECLASS.loop';
+import { createRecord } from 'lightning/uiRecordApi';
 
 export default class TestComp extends NavigationMixin(LightningElement) {
 
@@ -58,6 +60,8 @@ export default class TestComp extends NavigationMixin(LightningElement) {
     stampdutyamountFieldOutput;
 
     @api grandtotalFieldOutput;
+    
+
 
     registerationchargesAmount;
 
@@ -130,17 +134,17 @@ export default class TestComp extends NavigationMixin(LightningElement) {
 
 
     handleClick(event) {
-       if (event.target.name == 'vacant') {
-           this.areDetailsVisible = true;
+        if (event.target.name == 'vacant') {
+            this.areDetailsVisible = true;
             this.towerProject = false;
-         } 
+        }
         var rdValue = event.target.value;
         this.recordId = rdValue;
 
         //---------uncomment for all click-----------
-      //  this.areDetailsVisible = true; 
-      //  this.towerProject = false;
-         //---------uncomment for all click-----------
+        //  this.areDetailsVisible = true; 
+        //  this.towerProject = false;
+        //---------uncomment for all click-----------
 
 
         var rName = event.target.name;
@@ -148,7 +152,7 @@ export default class TestComp extends NavigationMixin(LightningElement) {
         //console.log('wk' + rName);
         //console.log('wk'+this.storeIdfornav);
 
-        
+
 
         /*
              this[NavigationMixin.Navigate]({
@@ -178,12 +182,15 @@ export default class TestComp extends NavigationMixin(LightningElement) {
     totalotherchargesField = TOTAL_OC;
 
 
+    contacts;
+    @track error;
+
 
     _title = 'Sample Title';
     message = 'Sample Message';
     variant = 'error';
 
-    handleAccountCreated() {
+    handleAccountCreated(event) {
         const toast = new ShowToastEvent({
             title: 'Quotation Created',
             message: 'success',
@@ -192,6 +199,42 @@ export default class TestComp extends NavigationMixin(LightningElement) {
         });
         this.dispatchEvent(toast);
         this.areDetailsVisible = false;
+
+        setTimeout(() => {
+            this.gotolatestRecord();
+        }, 500);
+      
+       
+    }
+
+
+
+    gotolatestRecord() {
+
+        quotationMethod()
+        .then(result => {
+            this.contacts = result.Id;
+            console.log(' this.contacts'+JSON.stringify(this.contacts));
+        })
+        .catch(error => {
+            this.error = error;
+        });
+
+        setTimeout(() => {
+            this.navMethod();
+        }, 500);
+    
+    }
+
+    navMethod(){
+        this[NavigationMixin.Navigate]({
+            type: "standard__recordPage",
+            attributes: {
+                objectApiName: "QUOTATION__c",
+                actionName: "view",
+                recordId: this.contacts
+            }
+        });
     }
 
     /////////////////////////////////////////////////////
@@ -222,6 +265,9 @@ export default class TestComp extends NavigationMixin(LightningElement) {
 
 
 
+
+
+  
 
 
 
@@ -601,6 +647,9 @@ export default class TestComp extends NavigationMixin(LightningElement) {
 
 
     }
+
+
+
 
 
 

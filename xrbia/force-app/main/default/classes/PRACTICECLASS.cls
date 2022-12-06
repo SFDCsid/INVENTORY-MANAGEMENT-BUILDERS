@@ -2,6 +2,28 @@ public with sharing class PRACTICECLASS {
     public PRACTICECLASS() {
 
     }
+    /*
+    @AuraEnabled (cacheable=true)
+    public static List<QUOTATION__c> getQuotation(List<QUOTATION__c> newQuotrecords){
+      //  string rcId;
+        List<QUOTATION__c> quoLis = new List<QUOTATION__c>();
+         for(List<QUOTATION__c> quo:newQuotrecords){
+            quoLis.add(quo.Id);
+        // rcId = quo.Id;
+        // system.debug(rcId);
+         }
+         return quoLis;
+    }*/
+
+    @AuraEnabled (cacheable=true)
+    public static QUOTATION__c quotationMethod(){
+        list<QUOTATION__c> quotationlist = [SELECT Id  FROM  QUOTATION__c ORDER BY CreatedDate DESC];
+      return quotationlist[0];
+     
+    }
+
+
+
     @AuraEnabled (cacheable=true)
     public static map<Id , string> projectMethod(){
     map<Id , string> projectmap= new map<Id , string>();
@@ -11,6 +33,9 @@ public with sharing class PRACTICECLASS {
     }
     return projectmap;
     }
+
+
+  
 
     @AuraEnabled (cacheable=true)
     public static map<Id , string> sectorMethod(string Id){
