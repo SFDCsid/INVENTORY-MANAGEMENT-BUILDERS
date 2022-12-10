@@ -190,6 +190,7 @@ export default class TestComp extends NavigationMixin(LightningElement) {
     message = 'Sample Message';
     variant = 'error';
 
+
     handleAccountCreated(event) {
         const toast = new ShowToastEvent({
             title: 'Quotation Created',
@@ -200,42 +201,19 @@ export default class TestComp extends NavigationMixin(LightningElement) {
         this.dispatchEvent(toast);
         this.areDetailsVisible = false;
 
-        setTimeout(() => {
-            this.gotolatestRecord();
-        }, 1000);
-      
-       
-    }
 
-
-
-    gotolatestRecord() {
-
-        quotationMethod()
-        .then(result => {
-            this.contacts = result.Id;
-            console.log(' this.contacts'+JSON.stringify(this.contacts));
-        })
-        .catch(error => {
-            this.error = error;
-        });
-
-        setTimeout(() => {
-            this.navMethod();
-        }, 1000);
-    
-    }
-
-    navMethod(){
         this[NavigationMixin.Navigate]({
             type: "standard__recordPage",
             attributes: {
                 objectApiName: "QUOTATION__c",
                 actionName: "view",
-                recordId: this.contacts
+                recordId: "a0A5g000006MAKNEA4"
             }
         });
+
     }
+
+  
 
     /////////////////////////////////////////////////////
     @api project;
@@ -918,4 +896,50 @@ for (let i = 0; i < elements.length; i++) {
  
  }
  ----------------------------------------------------------------------------------*/
+ /* 
+   handleAccountCreated(event) {
+        const toast = new ShowToastEvent({
+            title: 'Quotation Created',
+            message: 'success',
+            variant: 'success',
+            mode: 'dismissable'
+        });
+        this.dispatchEvent(toast);
+        this.areDetailsVisible = false;
 
+        setTimeout(() => {
+            this.gotolatestRecord();
+        }, 1000);
+      
+       
+    }
+
+
+
+    gotolatestRecord() {
+
+        quotationMethod()
+        .then(result => {
+            this.contacts = result.Id;
+            console.log(' this.contacts'+JSON.stringify(this.contacts));
+        })
+        .catch(error => {
+            this.error = error;
+        });
+
+        setTimeout(() => {
+            this.navMethod();
+        }, 1000);
+    
+    }
+
+    navMethod(){
+        this[NavigationMixin.Navigate]({
+            type: "standard__recordPage",
+            attributes: {
+                objectApiName: "QUOTATION__c",
+                actionName: "view",
+                recordId: this.contacts
+            }
+        });
+    } */
