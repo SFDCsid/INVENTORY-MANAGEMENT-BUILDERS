@@ -1,8 +1,8 @@
 <template>
     <lightning-card title="Lead Disposition Form">
 
-        <lightning-button-group  >
-            <lightning-button  label="Open" onclick={openClick}  ></lightning-button> 
+     <!--   <lightning-button-group  >
+            <lightning-button  label="Open" onclick={openClick}  class="yesBtn" ></lightning-button> 
             <lightning-button label="Follow-up" onclick={followClick}  ></lightning-button>
             <lightning-button label="Call Back" onclick={callClick} ></lightning-button>
             <lightning-button label="Visit Scheduled" onclick={visitClick} ></lightning-button>
@@ -18,9 +18,20 @@
             <lightning-button label="Lost" onclick={lostClick}></lightning-button>
             <lightning-button label="Others" onclick={othersClick}></lightning-button>
 
-        </lightning-button-group>
+        </lightning-button-group>-->
 
-
+        <lightning-combobox name="Call Stage" label="Call Stage" value={value} placeholder="Select Progress"
+        options={options} onchange={handleChange}></lightning-combobox>
+       
+        <!--
+        <template for:each={PicklistValues.data.values} for:item="item"> 
+            <tr key={item.value} label={item.label} data-value={item.value} type="checkbox">      
+                <th class=" slds-box custom-background red">  
+                        <p> {data.label}</p>                        
+                </th>
+                
+            </tr>
+        </template>-->
         <!--
         <table>
             <tr>
@@ -74,21 +85,22 @@
         
 
         <template if:true={areDetailsVisible}>
-        <div>
+        <div class="slds-modal__container"><br>
+            <lightning-card>
         <!--  <lightning-combobox name="Call Stage" label="Call Stage" value={value} placeholder="Select Progress"
                 options={options} onchange={handleChange}></lightning-combobox>  --> 
             <div>
-                <h2>Call Stage</h2>
-                <lightning-input type="text"  value={newpicklistValue} onchange={handleChange}></lightning-input>
-                <h2>Proposed Date Of Visit</h2>
-                <lightning-input type="datetime" onchange={visitdateChange}  class="dateCmp"  ></lightning-input>
+              <!--  <h2>Call Stage</h2>
+                <lightning-input type="text"  value={newpicklistValue} onchange={handleChange}></lightning-input> --> 
+                <h2>Proposed Date Of Visit</h2> 
+                <lightning-input type="datetime" onchange={visitdateChange}  class="dateCmp"  ></lightning-input> <br>
                 <h2>Next Followup Date</h2>
-                <lightning-input type="datetime" onchange={followupdateChange}  class="dateFoll"></lightning-input>
+                <lightning-input type="datetime" onchange={followupdateChange}  class="dateFoll"></lightning-input><br>
             </div>
-            <lightning-input label="Description" onchange={descriptionChange}> </lightning-input>
-            <lightning-button label="Next" variant="brand" onclick={onUpdateRecord}> </lightning-button>
-            <lightning-button label="cancel" variant="brand" onclick={cancelRecord}> </lightning-button>
-
+            <lightning-input label="Description" onchange={descriptionChange}> </lightning-input> <br>
+            <lightning-button label="Save" variant="brand" onclick={onUpdateRecord} > </lightning-button> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            <lightning-button label="Cancel" variant="neutral" onclick={cancelRecord}> </lightning-button>
+        </lightning-card>
         </div>
     </template>
 

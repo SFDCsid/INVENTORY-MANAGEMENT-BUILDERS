@@ -1,6 +1,16 @@
 import { LightningElement, wire, track, api } from 'lwc';
 import updateTask from '@salesforce/apex/leadformRoswaltclass.updateTask';
+import getStage from '@salesforce/apex/leadformRoswaltclass.getStage';
+import { getPicklistValues } from 'lightning/uiObjectInfoApi';
+import Stage__c from '@salesforce/schema/Task.Stage__c';
 export default class LeadFormroswalt extends LightningElement {
+
+    @wire(getPicklistValues,{
+        recordTypeId : '0129D000001ZNCxQAO',
+        fieldApiName : Stage__c
+    })
+    PicklistValues;
+    
 
     @api recordId;
 
@@ -43,6 +53,8 @@ export default class LeadFormroswalt extends LightningElement {
         }
         dateCmp.reportValidity();
 
+        this.template.querySelector('.yesBtn').classList.add('dynamicCSS'); this.template.querySelector('.noBtn').classList.remove('dynamicCSS');
+
     }
 
 
@@ -59,6 +71,15 @@ export default class LeadFormroswalt extends LightningElement {
             dateFoll.setCustomValidity("");
         }
         dateFoll.reportValidity();
+        let dateCmp = this.template.querySelector(".dateCmp");
+        let dtValue = dateCmp.value;
+
+        if (!dtValue) {
+            dateCmp.setCustomValidity("");
+        } else {
+            dateCmp.setCustomValidity("");
+        }
+        dateCmp.reportValidity();
     }
 
 
@@ -75,6 +96,15 @@ export default class LeadFormroswalt extends LightningElement {
             dateFoll.setCustomValidity("");
         }
         dateFoll.reportValidity();
+        let dateCmp = this.template.querySelector(".dateCmp");
+        let dtValue = dateCmp.value;
+
+        if (!dtValue) {
+            dateCmp.setCustomValidity("");
+        } else {
+            dateCmp.setCustomValidity("");
+        }
+        dateCmp.reportValidity();
 
     }
 
@@ -96,7 +126,7 @@ export default class LeadFormroswalt extends LightningElement {
         let dfValue = dateFoll.value;
 
         if (!dfValue) {
-            dateFoll.setCustomValidity("");
+            dateFoll.setCustomValidity("Date value is required");
         } else {
             dateFoll.setCustomValidity("");
         }
@@ -451,11 +481,41 @@ export default class LeadFormroswalt extends LightningElement {
             .catch(error => {
                 console.log('error' + JSON.stringify(error));
             })
-
-
-
-
-
-
     }
+
+    @track occStage = [];
+    @track value = '';
+    @track taskStage = [];
+
+    get options() {
+        return this.occStage;
+    }
+
+
+    connectedCallback() {
+        getStage({activityId: this.recordId})
+        
+            .then(result => {
+                let arr = [];
+               let newarr = [];
+
+                for (var i = 0; i < result.length; i++) {
+                    arr.push({ label: result[i].Stage__c, value: result[i].Id })
+                }
+                this.occStage = arr;
+                console.log('occ' + JSON.stringify(this.occStage));
+                console.log('picl'+JSON.stringify(this.PicklistValues.data.values[0].label));
+
+                for(var i=0 ; i<this.PicklistValues.data.values.length ; i++){
+                    console.log(this.PicklistValues.data.values[i].label);
+                    newarr.push({ label: this.PicklistValues.data.values[i].label })
+                }
+               this.taskStage = newarr;
+               console.log('taskStage' + JSON.stringify(this.taskStage));
+
+            })
+    }
+
+    
+
 }
