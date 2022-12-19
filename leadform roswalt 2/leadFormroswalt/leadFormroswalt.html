@@ -1,0 +1,108 @@
+<template>
+    <lightning-card title="Lead Disposition Form">
+
+     <!--   <lightning-button-group  >
+            <lightning-button  label="Open" onclick={openClick}  class="yesBtn" ></lightning-button> 
+            <lightning-button label="Follow-up" onclick={followClick}  ></lightning-button>
+            <lightning-button label="Call Back" onclick={callClick} ></lightning-button>
+            <lightning-button label="Visit Scheduled" onclick={visitClick} ></lightning-button>
+            <lightning-button label="Visit Done" onclick={doneClick}></lightning-button>
+            <lightning-button label="Booked" onclick={bookedClick}></lightning-button>
+            <lightning-button label="Switched Off" onclick={switchoffClick}></lightning-button>
+            <lightning-button label="Not Reachable" onclick={notreachableClick}></lightning-button>
+            <lightning-button label="Busy" onclick={busyClick}></lightning-button>
+            <lightning-button label="Ringing" onclick={ringingClick}></lightning-button>
+            <lightning-button label="Out of Network" onclick={ofnClick}></lightning-button>
+            <lightning-button label="Not Interested" onclick={niClick}></lightning-button>
+            <lightning-button label="Already Visited" onclick={avClick}></lightning-button>
+            <lightning-button label="Lost" onclick={lostClick}></lightning-button>
+            <lightning-button label="Others" onclick={othersClick}></lightning-button>
+
+        </lightning-button-group>-->
+
+        <lightning-combobox name="Call Stage" label="Call Stage" value={value} placeholder="Select Progress"
+        options={options} onchange={handleChange}></lightning-combobox>
+       
+        <!--
+        <template for:each={PicklistValues.data.values} for:item="item"> 
+            <tr key={item.value} label={item.label} data-value={item.value} type="checkbox">      
+                <th class=" slds-box custom-background red">  
+                        <p> {data.label}</p>                        
+                </th>
+                
+            </tr>
+        </template>-->
+        <!--
+        <table>
+            <tr>
+                <th> <lightning-button class="slds-box custom-background" label="Open" title="Non-primary action" onclick={handleClick1}
+                        ></lightning-button></th>
+                <th> <lightning-button class="slds-box custom-background" label="Follow-up" title="Non-primary action" onclick={handleClick}
+                      ></lightning-button></th>
+                <th> <lightning-button class="slds-box custom-background" label="Call Back" title="Non-primary action" onclick={handleClick}
+                      ></lightning-button></th>
+                <th><lightning-button class="slds-box custom-background" label="Visit Scheduled" title="Non-primary action" onclick={handleClick}
+                        ></lightning-button></th>
+                <th> <lightning-button class="slds-box custom-background" label="Visit Done" title="Non-primary action" onclick={handleClick}
+                        ></lightning-button></th>
+                <th> <lightning-button class="slds-box custom-background" label="Booked" title="Non-primary action" onclick={handleClick}
+                   ></lightning-button></th>
+                <th> <lightning-button class="slds-box custom-background" label="Switched Off" title="Non-primary action" onclick={handleClick}
+                    ></lightning-button></th>
+                <th><lightning-button class="slds-box custom-background" label="Not Reachable" title="Non-primary action" onclick={handleClick}
+                    ></lightning-button></th>
+                <th> <lightning-button class="slds-box custom-background" label="Busy" title="Non-primary action" onclick={handleClick}
+                    ></lightning-button></th>
+                <th> <lightning-button class="slds-box custom-background" label="Ringing" title="Non-primary action" onclick={handleClick}
+                    ></lightning-button></th>
+                <th> <lightning-button class="slds-box custom-background" label="Out of Network" title="Non-primary action" onclick={handleClick}
+                    ></lightning-button></th>
+                <th> <lightning-button class="slds-box custom-background" label="Not Interested" title="Non-primary action" onclick={handleClick}
+                   ></lightning-button></th>
+                <th> <lightning-button class="slds-box custom-background" label="Already Visited" title="Non-primary action" onclick={handleClick}
+                    ></lightning-button></th>
+                <th> <lightning-button class="slds-box custom-background" label="Lost" title="Non-primary action" onclick={handleClick}
+                    ></lightning-button></th>
+                <th><lightning-button class="slds-box custom-background" label="Others" title="Non-primary action" onclick={handleClick}
+                    ></lightning-button></th>
+            </tr>
+        </table>
+-->
+
+
+
+
+
+       
+       
+        
+       
+       
+       
+       
+       
+       
+        
+
+        <template if:true={areDetailsVisible}>
+        <div class="slds-modal__container"><br>
+            <lightning-card>
+        <!--  <lightning-combobox name="Call Stage" label="Call Stage" value={value} placeholder="Select Progress"
+                options={options} onchange={handleChange}></lightning-combobox>  --> 
+            <div>
+              <!--  <h2>Call Stage</h2>
+                <lightning-input type="text"  value={newpicklistValue} onchange={handleChange}></lightning-input> --> 
+                <h2>Proposed Date Of Visit</h2> 
+                <lightning-input type="datetime" onchange={visitdateChange}  class="dateCmp"  ></lightning-input> <br>
+                <h2>Next Followup Date</h2>
+                <lightning-input type="datetime" onchange={followupdateChange}  class="dateFoll"></lightning-input><br>
+            </div>
+            <lightning-input label="Description" onchange={descriptionChange}> </lightning-input> <br>
+            <lightning-button label="Save" variant="brand" onclick={onUpdateRecord} > </lightning-button> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            <lightning-button label="Cancel" variant="neutral" onclick={cancelRecord}> </lightning-button>
+        </lightning-card>
+        </div>
+    </template>
+
+    </lightning-card>
+</template>
