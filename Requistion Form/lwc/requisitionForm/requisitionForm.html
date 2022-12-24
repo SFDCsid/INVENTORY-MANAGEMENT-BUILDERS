@@ -1,85 +1,51 @@
 <template>
 
-    <lightning-button variant="brand" label="Create Requisition" title="Primary action" onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
-
-
-    <template if:true={areDetailsVisible}>
-    <lightning-card>            
-        <!--
-        <lightning-input type="text" label="Milestone Name" value={Namemile} disabled> </lightning-input>   
-        <lightning-input type="text" label="Start Date" value={StartDate} disabled> </lightning-input>  
-        <lightning-input type="text" label="End Date" value={EndDate} disabled> </lightning-input> 
-        <lightning-input type="text" label="Project Manager" value={ProjectManager} disabled> </lightning-input>   
-        <lightning-input type="text" label="Duration" value={Duration} > </lightning-input>   
-        
-         
-    
-
-      
-        <lightning-record-form record-id="a0A2w00000gv1s0EAA" object-api-name="Milestone__c"
-            fields={fields} columns="2"   mode="view">onsubmit={handleSubmit}>
-        </lightning-record-form>  -->
+    <lightning-button variant="brand" label="Create Requisition" title="Primary action" onclick={handleClick}
+        class="slds-m-left_x-small"></lightning-button>
 
 
 
-        <lightning-card title="MileStone">  </lightning-card>
-            <div class="acc-container">
-                <lightning-record-view-form record-id={recordId} object-api-name="Milestone__c">
-                    <div class="slds-grid">
-                        <div class="slds-col slds-size_1-of-2">
-                            <lightning-output-field field-name="Name"></lightning-output-field>
-                            <lightning-output-field field-name="Project_Manager__c"></lightning-output-field>
-                            <lightning-output-field field-name="Duration__c"></lightning-output-field>
-                        </div>
-                        <div class="slds-col slds-size_1-of-2">
-                            <lightning-output-field field-name="Start_Date__c"></lightning-output-field>
-                            <lightning-output-field field-name="End_Date__c"></lightning-output-field>
-                        </div>
-                        
+    <lightning-card>
+
+
+
+
+        <lightning-card title="MileStone"> </lightning-card>
+        <div class="acc-container">
+            <lightning-record-view-form record-id={recordId} object-api-name="Milestone__c">
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Name"></lightning-output-field>
+                        <lightning-output-field field-name="Project_Manager__c"></lightning-output-field>
+                        <lightning-output-field field-name="Duration__c"></lightning-output-field>
                     </div>
-                </lightning-record-view-form>
-            </div>
-
-            <!--
-            <lightning-card title="Bill of Materials">  </lightning-card>
-            <div class="acc-container">
-                <lightning-record-view-form record-id="a022w00000hfXg5AAE" object-api-name="Bill_Of_Material__c">
-                    <div class="slds-grid">
-                        <div class="slds-col slds-size_1-of-2">
-                            <lightning-output-field field-name="Name"></lightning-output-field>
-                            <lightning-output-field field-name="Description__c"></lightning-output-field>
-                            <lightning-output-field field-name="Important_Specification__c"></lightning-output-field>
-                            <lightning-output-field field-name="Material__c"></lightning-output-field>
-                            <lightning-output-field field-name="Milestone__c"></lightning-output-field>
-                        </div>
-                        <div class="slds-col slds-size_1-of-2">
-                            <lightning-output-field field-name="Issued_Quantity__c"></lightning-output-field>
-                            <lightning-output-field field-name="Lead_Time_Days__c"></lightning-output-field>
-                            <lightning-output-field field-name="Required_Quantity__c"></lightning-output-field>
-                            <lightning-output-field field-name="Requisition_Quantity__c"></lightning-output-field>
-                            <lightning-output-field field-name="UOM__c"></lightning-output-field>
-                        </div>
-                        
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Start_Date__c"></lightning-output-field>
+                        <lightning-output-field field-name="End_Date__c"></lightning-output-field>
                     </div>
-                </lightning-record-view-form>-->
-                <lightning-card title="Bill of Materials">  </lightning-card>
-                <template if:true={billdata}>
-                    <template for:each={billdata} for:item="acc">
-                        <p key={acc.Id}>{acc.Material__r.Name}</p>
-                    </template>
-                </template>
-          <!--   </div>-->
 
-           
+                </div>
+            </lightning-record-view-form>
+        </div>
 
-          <!-- <lightning-button label="New Requisition" onclick={navigateToNewAccountPage}></lightning-button> --> 
 
-          <lightning-card title="Requisition">  </lightning-card>
+        <template for:each={billdata} for:item="acc">
+            <p key={acc.Id}>
+                <lightning-button label={acc.Name} variant="Base" value={acc.Id}  onclick={handleChange} data-id="Green_Button" ></lightning-button>
+                <lightning-input label="Requisition Quantity" onchange={handleChange}></lightning-input>
+                <lightning-input label="Issued Quantity" onchange={handleChange}></lightning-input>
+                <lightning-input label="Store" onchange={handleChange}></lightning-input>
+                <lightning-input label="Material" onchange={handleChange}></lightning-input>
+                <lightning-button label="Create Record" variant="brand" onclick={createContact}></lightning-button>
+                <br>
+            </p>
+        </template>
 
-            <lightning-record-form object-api-name="Requisition_Entry__c" layout-type="Full" columns="2" mode="edit"
 
-            onsuccess={handleSuccess}></lightning-record-form>
-        
+
     </lightning-card>
-</template>
+
+
+
+
 </template>

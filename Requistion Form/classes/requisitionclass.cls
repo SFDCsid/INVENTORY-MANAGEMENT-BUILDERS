@@ -8,7 +8,7 @@ public with sharing class requisitionclass {
 
     @AuraEnabled (cacheable=true)
     public static  list<Bill_Of_Material__c> BillMethod(string Id){
-        list<Bill_Of_Material__c> billList = [SELECT Id, Name , Milestone__c , Material__r.Name  FROM Bill_Of_Material__c WHERE Milestone__c =:Id ];
+        list<Bill_Of_Material__c> billList = [SELECT   Id, Name , Milestone__c , Material__r.Name  FROM Bill_Of_Material__c  WHERE Milestone__c =:Id ];
       return billList;
      
     }
