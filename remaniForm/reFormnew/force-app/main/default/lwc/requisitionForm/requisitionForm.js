@@ -22,7 +22,17 @@ import { NavigationMixin } from 'lightning/navigation';
 
 export default class RequisitionForm extends NavigationMixin(LightningElement) {
 
+    @track fields=[REQUISITION_BILL,REQUISITION_QUANTITY,REQUISITION_ISSUED];
 
+    handleSuccess(){
+        if(this.recordId !== null){
+            this.dispatchEvent(new ShowToastEvent({
+                    title: "SUCCESS!",
+                    message: "New record has been created.",
+                   variant: "success",
+                }),  
+           );    
+         }}
 
     fieldValue;
     billofMaterials;
