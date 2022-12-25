@@ -1,0 +1,157 @@
+<template>
+    <lightning-card>
+        <div class="slds-p-horizontal_small">
+            <lightning-record-edit-form object-api-name="Bill_Of_Material__c" id="first">
+                <lightning-layout multiple-rows>
+                    <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="6" padding="around-small">
+                        <lightning-input-field field-name="Milestone__c" onchange={handleMasterId}></lightning-input-field>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-record-edit-form>
+        </div>
+        <div>
+            
+            <lightning-datatable class="slds-table slds-table_ slds-table_bordered slds-table_col-bordered" 
+                columns= {columns}
+                data={contactDataWrp}
+                key-field="Id">
+
+            </lightning-datatable>
+        </div>
+        <div>
+            <template if:true={selectedMaster} for:each={itemList} for:item="item" for:index="index">
+                <lightning-record-edit-form key={item.id} object-api-name="Bill_Of_Material__c" >
+                    <lightning-messages> </lightning-messages>
+                    <lightning-layout multiple-rows>
+                        <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                            padding="around-small">
+                            <lightning-input-field field-name="Milestone__c" variant="label-stacked" value={selectedMaster} >
+                            </lightning-input-field>
+                        </lightning-layout-item> 
+                        <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                            padding="around-small">
+                            <lightning-input-field field-name="Material__c" variant="label-stacked" >
+                            </lightning-input-field>
+                        </lightning-layout-item> 
+        
+                        <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                            padding="around-small">
+                            <lightning-input-field field-name="Description__c" variant="label-stacked" >
+                            </lightning-input-field>
+                        </lightning-layout-item>
+        
+                        <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                            padding="around-small">
+                            <lightning-input-field field-name="Required_Quantity__c" variant="label-stacked" required>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+        
+                        <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2" padding="around-small">
+                            <div class="slds-p-top_medium">
+                                <lightning-icon icon-name="action:new" access-key={item.id} id={index}
+                                alternative-text="Add Row" size="small" title="Add Row" onclick={addRow}>
+                                </lightning-icon>
+                                 &nbsp; &nbsp;
+                                <lightning-icon icon-name="action:delete" access-key={item.id} id={index}
+                                    alternative-text="Delete Row" size="small" title="Delete Row" onclick={removeRow}>
+                                </lightning-icon>
+                            </div>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-record-edit-form>
+            </template>
+            </br>
+            <lightning-layout>
+                <div class="slds-align_absolute-center">
+                    <lightning-button variant="success" onclick={handleSubmit} name="submit" label="Submit">
+                    </lightning-button>&nbsp;&nbsp;
+                    
+                </div> &nbsp;&nbsp;
+                
+            </lightning-layout>
+        </div>
+        <!--<div>
+            <template if:true={selectedMaster}>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                Select
+                            </th>
+                            <th>
+                                Material
+                            </th>
+                            <th>
+                                Milestone
+                            </th>
+                            <th>
+                                Important Specification
+                            </th>
+                            <th>
+                                Description
+                            </th>
+                            <th>
+                                Required Quantity
+                            </th>
+                            <th>
+                                UOM
+                            </th>
+                            <th>
+                                Lead Time (Days)
+                            </th>
+                            <th>
+                                Requisition Quantity
+                            </th>
+                            <th>
+                                Issued Quantity
+                            </th>
+                            <th>
+                                Action
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template if:true={contactDataWrp}>
+                            <template for:each={contactDataWrp} for:item="con" for:index="index">
+                                <tr class="slds-hint-parent" key={con.Id}>
+                                    <td data-label="Select BOM">
+                                        <div class="slds-truncate" title="Select Plan">
+                                            <lightning-input type="checkbox" disabled={disabledCheckbox} name="input1"></lightning-input>
+                                        </div>
+                                    </td>
+                                    <td> 
+                                        <div class="slds-truncate" title="Material">{con.Material__c} </div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate" title="Milestone">{con.Milestone__c}</div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate" title="Important Specification">{con.Important_Specification__c}</div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate" title="Description">{con.Description__c}</div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate" title="Required Quantity">{con.Required_Quantity__c}</div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate" title="UOM">{con.UOM__c}</div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate" title="Lead Time">{con.Lead_Time_Days__c}</div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate" title="Requisition Quantity">{con.Requisition_Quantity__c}</div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate" title="Issued Quantity">{con.Issued_Quantity__c}</div>
+                                    </td>
+                                </tr>
+                            </template>
+                        </template>
+                    </tbody>
+                </table>
+            </template>
+        </div>-->
+    </lightning-card>
+</template>

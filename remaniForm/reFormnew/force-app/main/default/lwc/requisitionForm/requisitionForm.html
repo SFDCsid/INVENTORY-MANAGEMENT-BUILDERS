@@ -1,0 +1,75 @@
+<template>
+
+    <lightning-button variant="brand" label="Create Requisition" title="Primary action" onclick={handleClick}
+        class="slds-m-left_x-small"></lightning-button>
+
+
+
+    <lightning-card>
+
+
+
+
+        <lightning-card title="MileStone"> </lightning-card>
+        <div class="acc-container">
+            <lightning-record-view-form record-id={recordId} object-api-name="Milestone__c">
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Name"></lightning-output-field>
+                        <lightning-output-field field-name="Project_Manager__c"></lightning-output-field>
+                        <lightning-output-field field-name="Duration__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Start_Date__c"></lightning-output-field>
+                        <lightning-output-field field-name="End_Date__c"></lightning-output-field>
+                    </div>
+
+                </div>
+            </lightning-record-view-form>
+        </div>
+
+
+        <template if:true={billdata} >
+            <lightning-layout multiple-rows="false" >
+                <template for:each={billdata} for:item="acc">
+                    <lightning-layout-item size="2" key={acc.Id} >
+                       
+                        <lightning-button label={acc.Name} variant="Base" value={acc.Id}  onclick={handleChange} data-id="Green_Button" ></lightning-button>
+                     <!--  <lightning-input label="Bill Of Material" value={acc.Id} onchange={handleChange}></lightning-input> --> 
+                        <!--   <lightning-input type="checkbox" label="Bill Of Material" value={acc.Id} onchange={handleChange}></lightning-input>--> 
+                        <lightning-input label="Requisition Quantity" onchange={handleChange}></lightning-input>
+                        <lightning-input label="Issued Quantity" onchange={handleChange}></lightning-input>
+                        <lightning-input label="Store" onchange={handleChange}></lightning-input>
+                        <lightning-input label="Material" onchange={handleChange} value={acc.Material__c}></lightning-input>
+                      <lightning-button label="Create" variant="brand" onclick={createContact}></lightning-button>
+                        <br> 
+                    </lightning-layout-item>
+                </template>
+              <!--    <lightning-button label="Multipe" variant="brand" onclick={createContact}></lightning-button>--> 
+            </lightning-layout>
+         
+        </template>
+
+
+
+        <!--
+        <template for:each={billdata} for:item="acc">
+            <p key={acc.Id}>
+                <lightning-button label={acc.Name} variant="Base" value={acc.Id}  onclick={handleChange} data-id="Green_Button" ></lightning-button>
+                <lightning-input label="Bill Of Material" onchange={handleChange}></lightning-input>
+                <lightning-input label="Requisition Quantity" onchange={handleChange}></lightning-input>
+                <lightning-input label="Issued Quantity" onchange={handleChange}></lightning-input>
+                <lightning-input label="Store" onchange={handleChange}></lightning-input>
+                <lightning-input label="Material" onchange={handleChange}></lightning-input>
+                <lightning-button label="Create Record" variant="brand" onclick={createContact}></lightning-button>
+                <br>
+            </p>
+        </template>
+-->
+
+    </lightning-card>
+
+
+
+
+</template>
