@@ -45,20 +45,24 @@
                       <lightning-button label="Create" variant="brand" onclick={createContact}></lightning-button>
                         <br> -->
                         <lightning-layout-item padding="around-small">
-                            <lightning-record-edit-form object-api-name="Requisition_Entry__c" onsuccess={handleSuccess}>
+                            <lightning-record-edit-form object-api-name="Requisition_Entry__c" onsuccess={handleSuccess}
+                                data-id="accountForm">
                                 <!-- We can use this simple version like designing of indivisual input field -->
-                                <lightning-input-field field-name="Bill_Of_Material__c" value={acc.Id}></lightning-input-field>
+                                <lightning-input-field field-name="Bill_Of_Material__c"
+                                    value={acc.Id}></lightning-input-field>
                                 <lightning-input-field field-name="Requisition_Quantity__c"></lightning-input-field>
                                 <lightning-input-field field-name="Issued_Quantity__c"></lightning-input-field>
-                                <lightning-input-field field-name="Material__c" value={acc.Material__c}></lightning-input-field>
-                                <lightning-input-field field-name="Store__c" ></lightning-input-field>
+                                <lightning-input-field field-name="Material__c"
+                                    value={acc.Material__c}></lightning-input-field>
+                                <lightning-input-field field-name="Store__c"></lightning-input-field>
                                 <lightning-button variant="brand" type="submit" name="save"
-                                    label="Save"></lightning-button>
+                                    label="Save"></lightning-button>  
                             </lightning-record-edit-form>
                         </lightning-layout-item>
                     </lightning-layout-item>
                 </template>
-                <!--    <lightning-button label="Multipe" variant="brand" onclick={createContact}></lightning-button>-->
+             
+                  <lightning-button label="Multipe" variant="brand" onclick={multipleRec}></lightning-button>
             </lightning-layout>
 
         </template>

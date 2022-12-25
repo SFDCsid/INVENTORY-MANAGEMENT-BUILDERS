@@ -18,13 +18,22 @@ import REQUISITION_QUANTITY from '@salesforce/schema/Requisition_Entry__c.Requis
 import REQUISITION_ISSUED from '@salesforce/schema/Requisition_Entry__c.Issued_Quantity__c';
 
 
+
 import { NavigationMixin } from 'lightning/navigation';
 
 export default class RequisitionForm extends NavigationMixin(LightningElement) {
 
     @track fields=[REQUISITION_BILL,REQUISITION_QUANTITY,REQUISITION_ISSUED];
 
+    multipleRec(){
+        this.template.querySelectorAll('lightning-record-edit-form').forEach(element => {
+            element.submit();
+        });
+    }
+   
+
     handleSuccess(){
+       
         if(this.recordId !== null){
             this.dispatchEvent(new ShowToastEvent({
                     title: "SUCCESS!",
