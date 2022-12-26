@@ -1,36 +1,42 @@
 import { LightningElement, track, wire, api} from 'lwc';
-import bomRecords from '@salesforce/apex/Ex_createBOMController.bomRecords';
+import recRecords from '@salesforce/apex/ReqClass.recRecords';
 import { getRecord } from 'lightning/uiRecordApi';
+import BillMethod from '@salesforce/apex/ReqClass.BillMethod';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { NavigationMixin } from 'lightning/navigation';
 
 const columns = [
-    { label: 'BOM Name', fieldName: 'recordLink', type: 'url',
+    { label: 'Requisition Name', fieldName: 'recordLink', type: 'url',
         typeAttributes: {label: { fieldName: 'Name' },  
         target: '_blank'},
         sortable: true },
     {
-        label: 'Milestone Name', fieldName: 'milestoneLink', type: 'url',
-        typeAttributes: {label: { fieldName: 'Milestone_Name__c' },  
+        label: 'Milestone Name', fieldName: 'Milestone__c', type: 'url',
+        typeAttributes: {label: { fieldName: 'milestone_name__c' },  
         target: '_blank'},
         sortable: true  
     },  
+    { label: 'Bill Of Material', fieldName: 'MaterialLink', type: 'url',
+        typeAttributes: {label: { fieldName: 'bill__c' },  
+        target: '_blank'},
+        sortable: true 
+    },
     { label: 'Material', fieldName: 'MaterialLink', type: 'url',
         typeAttributes: {label: { fieldName: 'Material_Name__c' },  
         target: '_blank'},
         sortable: true 
     },
-    { label: 'Important Specification', fieldName: 'Important_Specification__c'},
-    { label: 'Description', fieldName: 'Description__c'},
-    { label: 'Required Quantity', fieldName: 'Required_Quantity__c'},
-    { label: 'UOM', fieldName: 'UOM__c'},
-    { label: 'Lead Time Days', fieldName: 'Lead_Time_Days__c'},
     { label: 'Requisition Quantity', fieldName: 'Requisition_Quantity__c'},
+    { label: 'Store', fieldName: 'Store__c'},
     { label: 'Issued Quantity', fieldName: 'Issued_Quantity__c'}
+  
 ];
 
-export default class CreateBOM extends NavigationMixin(LightningElement) {
-
+export default class MilestoneForm extends NavigationMixin(LightningElement) {
+    
+    @track bomId;
+    @track wireId;
+    @track billdata;
     @track selectedMaster;
     @track contactDataWrp;
     columns = columns;
@@ -42,19 +48,21 @@ export default class CreateBOM extends NavigationMixin(LightningElement) {
     savedRecordIdWire({error,data}) {
         if(data){
             this.masterName = data.fields.Name.value;
+           
         }else if(error){
             window.alert(JSON.stringify(error));
         }
     }
 
     handleMasterId(event){
+        this.wireId = event.detail.value[0];
         let MasterId = event.detail.value[0];
         console.log('master id: '+ MasterId);
         
         if(MasterId !== undefined){
             this.selectedMaster = MasterId;
             this.contactDataWrp = [];
-            bomRecords({mpId : this.selectedMaster}).then(data => {
+            recRecords({mpId : this.selectedMaster}).then(data => {
                 var templeadList = [];  
                 for (var i = 0; i < data.length; i++) {  
                     let tempRecord = Object.assign({}, data[i]); //cloning object  
@@ -65,6 +73,7 @@ export default class CreateBOM extends NavigationMixin(LightningElement) {
                     templeadList.push(tempRecord);  
                 }  
                 this.contactDataWrp = templeadList;
+               
             }).catch(error => {
                 console.log(error);
             })
@@ -87,6 +96,8 @@ export default class CreateBOM extends NavigationMixin(LightningElement) {
     }
 
     handleSubmit() {
+       
+        
         /*var isVal = true;
         this.template.querySelectorAll('lightning-input-field').forEach(element => {
             isVal = isVal && element.reportValidity();
@@ -96,26 +107,25 @@ export default class CreateBOM extends NavigationMixin(LightningElement) {
                 if(element.id != 'first-46' && element.id == ''){
                     console.log('element id: '+element.id);
                     element.submit();
-                    
+                   
                  }
             });
-            this.navigateToViewMilestonePage();
+
+           
+           
+         //   this.navigateToViewMilestonePage();
+            
         //}
     }
-    navigateToViewMilestonePag() {
+    navigateToViewMilestonePage() {
         this[NavigationMixin.Navigate]({
             type: 'standard__objectPage',
             attributes: {
-                objectApiName: 'Milestone__c',
+                objectApiName: 'Requisition_Entry__c',
                 actionName: 'home'
             },
         });
     }
-
-    handleSucces(){
-       
-        this.navigateToViewMilestonePag(); 
-         }
     /*handleMasterId(event){
         let MasterId = event.detail.value[0];
         if(MasterId !== undefined){
@@ -133,4 +143,24 @@ export default class CreateBOM extends NavigationMixin(LightningElement) {
            this.contactDataWrp = [];
         }
     }*/
+    handleSuccess(){
+       this.navigateToViewMilestonePage(); 
+        }
+
+        @wire(BillMethod, { Id: '$selectedMaster' })
+        billDetails({ data, error }) {
+            if (data) {
+                this.billdata = data;
+                console.log('billdata'+JSON.stringify(this.billdata));
+                this.error = undefined;
+               
+               
+
+              
+            }
+            else if (error) {
+                this.error = error;
+                this.billdata = undefined;
+            }
+        }
 }
