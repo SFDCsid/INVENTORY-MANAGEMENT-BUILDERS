@@ -1,13 +1,19 @@
 import { LightningElement, track, wire, api } from 'lwc';
 import recRecords from '@salesforce/apex/storeFormClass.recRecords';
+import materialMethod from '@salesforce/apex/storeFormClass.materialMethod';
 import { getRecord } from 'lightning/uiRecordApi';
+import { NavigationMixin } from 'lightning/navigation';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 const columns = [
-    { label: 'Material', fieldName: 'materialName__c'},
-    { label: 'Available Stock', fieldName: 'Available_Stock__c'},
-    { label: 'Booked Quantity', fieldName: 'Booked_Quantity__c'},
-    { label: 'Issued Quantity', fieldName: 'Issued_Quantity__c'}];
-export default class StoreForm extends LightningElement {
+    { label: 'Material', fieldName: 'materialName__c' },
+    { label: 'Available Stock', fieldName: 'Available_Stock__c' },
+    { label: 'Booked Quantity', fieldName: 'Booked_Quantity__c' },
+    { label: 'Issued Quantity', fieldName: 'Issued_Quantity__c' }];
+export default class StoreForm extends NavigationMixin(LightningElement) {
 
+    @api materialId;
+    @api searchKey;
+    @track MasterId2;
     @track contactDataWrp;
     columns = columns;
     @track selectedMaster;
@@ -15,11 +21,57 @@ export default class StoreForm extends LightningElement {
     @track blankRow = [];
     @track index = 0;
     keyIndex = 0;
-    
+
+    materialchange(event) {
+        this.materialId = event.detail.value;
+        this.searchKey = event.target.value;
+        console.log('this.materialId' + this.searchKey);
+    }
+
+
+    speciVar;
+    leadVar;
+    uomVar;
+    materialDetails;
+    @wire(materialMethod, { accountName: '$searchKey' })
+    wiredContacts({ data, error }) {
+        if (data) {
+            this.materialDetails = data;
+            if (this.materialDetails.length !== 0) {
+                console.log("sr");
+
+                console.log('this.materialDetails' + JSON.stringify(this.materialDetails));
+                if (this.materialDetails[0].UOM__c !== undefined) { this.uomVar = this.materialDetails[0].UOM__c; }
+                else { this.uomVar = '' }
+
+                if (this.materialDetails[0].Specifications__c !== undefined) 
+                {  
+                    this.speciVar = this.materialDetails[0].Specifications__c; }
+                else { 
+                this.speciVar = '' }
+
+                if (this.materialDetails[0].Lead_Time_Days__c !== undefined) 
+                {  
+                    this.leadVar = this.materialDetails[0].Lead_Time_Days__c; }
+                else { 
+                this.leadVar = '' }
+                
+                
+                console.log('this.uomVar' + this.uomVar);
+            }
+
+
+        }
+        else if (error) {
+            this.error = error;
+            //  this.contacts = undefined;
+        }
+    }
 
     handleMasterId(event) {
 
         let MasterId = event.detail.value[0];
+        this.MasterId2 = event.detail.value[0];
         console.log('master id: ' + MasterId);
 
         if (MasterId !== undefined) {
@@ -63,7 +115,7 @@ export default class StoreForm extends LightningElement {
 
     handleSubmit() {
 
-       
+
         /*var isVal = true;
         this.template.querySelectorAll('lightning-input-field').forEach(element => {
             isVal = isVal && element.reportValidity();
@@ -84,14 +136,33 @@ export default class StoreForm extends LightningElement {
         //}
     }
     intendId;
-    handleSuccess(event){
-        console.log('intendid'+event.detail.id);
+    handleSuccess(event) {
+        console.log('intendid' + event.detail.id);
         this.intendId = event.detail.id;
-        
-      setTimeout(() => {
-         this.handleSubmit();
+        this.navigateToViewMilestonePage();
+        this.dispatchEvent(
+            new ShowToastEvent({
+                title: 'Success',
+                message: 'INDENT CREATED',
+                variant: 'success',
+            }),
+        );
+
+        setTimeout(() => {
+            this.handleSubmit();
         }, 1000);
-       
+
+    }
+
+
+    navigateToViewMilestonePage() {
+        this[NavigationMixin.Navigate]({
+            type: 'standard__objectPage',
+            attributes: {
+                objectApiName: 'Indent__c',
+                actionName: 'home'
+            },
+        });
     }
 
     /*
@@ -114,7 +185,9 @@ export default class StoreForm extends LightningElement {
         }
 
 
-    }*/ 
+    }*/
+
+
 }
 
 

@@ -20,10 +20,14 @@
 
 
         <!--1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111-->
+        
+           
+       
+  
         <template if:true={selectedMaster}>
             <lightning-card><b>Indent Details</b></lightning-card>
             <lightning-record-edit-form object-api-name="Indent__c" onsuccess={handleSuccess} id="first1">
-                <lightning-input-field field-name="Store__c">
+                <lightning-input-field field-name="Store__c" value={MasterId2} disabled>
                 </lightning-input-field>
                 <lightning-input-field field-name="Department__c">
                 </lightning-input-field>
@@ -46,18 +50,14 @@
                 <lightning-layout multiple-rows>
                     <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
                         padding="around-small">
-                        <lightning-input-field field-name="Indent__c" variant="label-stacked" value={intendId} required>
+                        <lightning-input-field field-name="Indent__c" variant="label-stacked" value={intendId} disabled required>
                         </lightning-input-field>
                     </lightning-layout-item>
-                    <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
-                        padding="around-small">
-                        <lightning-input-field field-name="Storelookup__c" variant="label-stacked" required>
-                        </lightning-input-field>
-                    </lightning-layout-item>
+ 
 
                     <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
                         padding="around-small">
-                        <lightning-input-field field-name="Requested_Quantity__c" variant="label-stacked">
+                        <lightning-input-field field-name="Requested_Quantity__c"  variant="label-stacked" required="">
                         </lightning-input-field>
                     </lightning-layout-item>
 
@@ -67,23 +67,24 @@
                         </lightning-input-field>
                     </lightning-layout-item> -->
 
+
                     <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
                         padding="around-small">
-                        <lightning-input-field field-name="Lead_Time_Days__c" variant="label-stacked"
-                            onchange={handlechange} value={Material__c}>
+                        <lightning-input-field field-name="Specification__c" variant="label-stacked" 
+                            value={speciVar} required disabled>
                         </lightning-input-field>
                     </lightning-layout-item>
 
                     <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
                         padding="around-small">
-                        <lightning-input-field field-name="Specifications__c" variant="label-stacked"
-                            value={selectedMaster} required>
+                        <lightning-input-field field-name="Lead_Time__c" variant="label-stacked"
+                            value={leadVar} required disabled>
                         </lightning-input-field>
                     </lightning-layout-item>
 
                     <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
                         padding="around-small">
-                        <lightning-input-field field-name="UOM__c" variant="label-stacked" required>
+                        <lightning-input-field field-name="UOM__c" variant="label-stacked" value={uomVar} required disabled>
                         </lightning-input-field>
                     </lightning-layout-item>
 
@@ -95,7 +96,7 @@
 
                     <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
                         padding="around-small">
-                        <lightning-input-field field-name="Material__c" variant="label-stacked" required>
+                        <lightning-input-field field-name="Material__c" variant="label-stacked"  onchange={materialchange} required>
                         </lightning-input-field>
                     </lightning-layout-item>
 
@@ -119,7 +120,7 @@
 
         <lightning-layout>
             <div class="slds-align_absolute-center">
-                <lightning-button variant="brand" onclick={handleSubmit} name="submit" label="Submit">
+                <lightning-button variant="brand" onclick={handleSubmit} name="submit" label="Submit" hidden>
                 </lightning-button>&nbsp;&nbsp;
 
             </div> &nbsp;&nbsp;

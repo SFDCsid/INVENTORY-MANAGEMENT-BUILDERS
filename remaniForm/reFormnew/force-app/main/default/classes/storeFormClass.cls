@@ -20,10 +20,17 @@ public with sharing class storeFormClass {
         }
     }
 
-    @AuraEnabled (cacheable=true)
+  /*  @AuraEnabled (cacheable=true)
     public static list<Requisition_Entry__c> materialMethod(string materialId){
         list<Requisition_Entry__c> materialList = [select Id,Material__c, Requisition_Quantity__c, Material_Name__c,Store__c  from Requisition_Entry__c where Material__c = 'a002w00000TRQRSAA5' and Store__c = 'a092w00001pYQ9cAAG' ];
       return materialList;
      
-    }
+    }*/
+
+    @AuraEnabled (cacheable=true)
+    public static list<Material__c> materialMethod(string accountName){
+        list<Material__c> materialList = [select Id,UOM__c, Specifications__c, Lead_Time_Days__c  from Material__c WHERE Id =: accountName];
+      return materialList;
+     
+    }   
 }
