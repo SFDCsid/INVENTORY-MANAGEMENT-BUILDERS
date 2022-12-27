@@ -56,15 +56,15 @@ export default class MilestoneForm extends NavigationMixin(LightningElement) {
     @track blankRow = [];
     @track index = 0;
     keyIndex = 0;
-    @wire(getRecord, { recordId: '$selectedMaster', fields: [MASTER_NAME_FIELD] })
+  /*  @wire(getRecord, { recordId: '$selectedMaster', fields: [MASTER_NAME_FIELD] })
     savedRecordIdWire({ error, data }) {
         if (data) {
             this.masterName = data.fields.Name.value;
-
+            console.log('this.masterName' + this.masterName);
         } else if (error) {
             window.alert(JSON.stringify(error));
         }
-    }
+    } */
 
     handleMasterId(event) {
 

@@ -5,18 +5,127 @@
                 <lightning-layout multiple-rows>
                     <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="6"
                         padding="around-small">
-                        <lightning-input-field field-name="Store__c"
-                            onchange={handleMasterId}></lightning-input-field>
+                        <lightning-input-field field-name="Store__c" onchange={handleMasterId}></lightning-input-field>
                     </lightning-layout-item>
                 </lightning-layout>
             </lightning-record-edit-form>
         </div>
 
         <div>
-
+            <lightning-card><b>Stock Details</b></lightning-card>
             <lightning-datatable class="slds-table slds-table_ slds-table_bordered slds-table_col-bordered"
                 columns={columns} data={contactDataWrp} key-field="Id">
             </lightning-datatable>
         </div>
+
+
+        <!--1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111-->
+        <template if:true={selectedMaster}>
+            <lightning-card><b>Indent Details</b></lightning-card>
+            <lightning-record-edit-form object-api-name="Indent__c" onsuccess={handleSuccess} id="first1">
+                <lightning-input-field field-name="Store__c">
+                </lightning-input-field>
+                <lightning-input-field field-name="Department__c">
+                </lightning-input-field>
+                <lightning-input-field field-name="Approved_Date__c">
+                </lightning-input-field>
+                <lightning-input-field field-name="Type__c">
+                </lightning-input-field>
+                <lightning-button class="slds-m-top_small" variant="brand" type="submit" name="update" label="Update"
+                    >
+                </lightning-button>
+            </lightning-record-edit-form>
+        </template>
+
+
+        <!--1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111-->
+        <template if:true={selectedMaster} for:each={itemList} for:item="item" for:index="index">
+            <lightning-record-edit-form key={item.id} object-api-name="Indent_Line_Item__c" onsuccess={handleSuccess}>
+                <lightning-messages> </lightning-messages>
+                <lightning-card><b>Indent Line Item Details</b></lightning-card>
+                <lightning-layout multiple-rows>
+                    <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                        padding="around-small">
+                        <lightning-input-field field-name="Indent__c" variant="label-stacked" value={intendId} required>
+                        </lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                        padding="around-small">
+                        <lightning-input-field field-name="Storelookup__c" variant="label-stacked" required>
+                        </lightning-input-field>
+                    </lightning-layout-item>
+
+                    <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                        padding="around-small">
+                        <lightning-input-field field-name="Requested_Quantity__c" variant="label-stacked">
+                        </lightning-input-field>
+                    </lightning-layout-item>
+
+                    <!--  <lightning-layout-item size="12" small-device-size="6" medium-device-size="4"
+                        large-device-size="2" padding="around-small">
+                        <lightning-input-field field-name="Issued_Quantity__c" variant="label-stacked" required>
+                        </lightning-input-field>
+                    </lightning-layout-item> -->
+
+                    <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                        padding="around-small">
+                        <lightning-input-field field-name="Lead_Time_Days__c" variant="label-stacked"
+                            onchange={handlechange} value={Material__c}>
+                        </lightning-input-field>
+                    </lightning-layout-item>
+
+                    <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                        padding="around-small">
+                        <lightning-input-field field-name="Specifications__c" variant="label-stacked"
+                            value={selectedMaster} required>
+                        </lightning-input-field>
+                    </lightning-layout-item>
+
+                    <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                        padding="around-small">
+                        <lightning-input-field field-name="UOM__c" variant="label-stacked" required>
+                        </lightning-input-field>
+                    </lightning-layout-item>
+
+                    <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                        padding="around-small">
+                        <lightning-input-field field-name="Cost_Center__c" variant="label-stacked" required>
+                        </lightning-input-field>
+                    </lightning-layout-item>
+
+                    <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                        padding="around-small">
+                        <lightning-input-field field-name="Material__c" variant="label-stacked" required>
+                        </lightning-input-field>
+                    </lightning-layout-item>
+
+                    <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                        padding="around-small">
+                        <div class="slds-p-top_medium">
+                            <lightning-icon icon-name="action:new" access-key={item.id} id={index}
+                                alternative-text="Add Row" size="small" title="Add Row" onclick={addRow}>
+                            </lightning-icon>
+                            &nbsp; &nbsp;
+                            <lightning-icon icon-name="action:delete" access-key={item.id} id={index}
+                                alternative-text="Delete Row" size="small" title="Delete Row" onclick={removeRow}>
+                            </lightning-icon>
+                        </div>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-record-edit-form>
+
+        </template>
+        </br>
+
+        <lightning-layout>
+            <div class="slds-align_absolute-center">
+                <lightning-button variant="brand" onclick={handleSubmit} name="submit" label="Submit">
+                </lightning-button>&nbsp;&nbsp;
+
+            </div> &nbsp;&nbsp;
+
+        </lightning-layout>
+
+
     </lightning-card>
 </template>
