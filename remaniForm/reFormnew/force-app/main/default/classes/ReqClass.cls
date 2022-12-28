@@ -33,5 +33,12 @@ public with sharing class ReqClass {
       return billList;
      
     }
+     @AuraEnabled (cacheable=true)
+    public static  list<Bill_Of_Material__c> getMaterial(string BillId){
+        list<Bill_Of_Material__c> getMa = [SELECT  Id,Material__c FROM Bill_Of_Material__c  WHERE Id =:BillId  AND Material__c!=null];
+        system.debug('Material__c='+getMa);
+      return getMa;
+     
+    }
 
 }

@@ -26,6 +26,7 @@ export default class StoreForm extends NavigationMixin(LightningElement) {
         this.materialId = event.detail.value;
         this.searchKey = event.target.value;
         console.log('this.materialId' + this.searchKey);
+
     }
 
 
@@ -70,6 +71,7 @@ export default class StoreForm extends NavigationMixin(LightningElement) {
 
     handleMasterId(event) {
 
+        console.log('this.itemList' + JSON.stringify(this.itemList));
         let MasterId = event.detail.value[0];
         this.MasterId2 = event.detail.value[0];
         console.log('master id: ' + MasterId);
@@ -189,5 +191,3 @@ export default class StoreForm extends NavigationMixin(LightningElement) {
 
 
 }
-
-

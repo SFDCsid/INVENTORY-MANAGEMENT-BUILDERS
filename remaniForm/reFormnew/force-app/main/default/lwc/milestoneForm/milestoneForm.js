@@ -2,6 +2,7 @@ import { LightningElement, track, wire, api } from 'lwc';
 import recRecords from '@salesforce/apex/ReqClass.recRecords';
 import { getRecord } from 'lightning/uiRecordApi';
 import BillMethod from '@salesforce/apex/ReqClass.BillMethod';
+import getMaterial from '@salesforce/apex/ReqClass.getMaterial';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { NavigationMixin } from 'lightning/navigation';
 
@@ -39,7 +40,7 @@ const columns = [
         sortable: true
     },
     { label: 'Requisition Quantity', fieldName: 'Requisition_Quantity__c' },
-    { label: 'Store', fieldName: 'Store__c' },
+    { label: 'Store', fieldName: 'Store_Name__c' },
     { label: 'Issued Quantity', fieldName: 'Issued_Quantity__c' }
 
 ];
@@ -177,4 +178,33 @@ export default class MilestoneForm extends NavigationMixin(LightningElement) {
             this.billdata = undefined;
         }
     }
+    @api BillOfMaterialId;
+    @api searchId;
+    BillOfMateialchange(event) {
+        this.BillOfMaterialId = event.detail.value;
+        this.searchId = event.target.value;
+       // console.log('BillOfMaterialId=' + this.searchId);
+    }
+
+
+    billOfMaterails;
+    materails ;
+    @wire(getMaterial, { BillId: '$searchId' })
+    getMaterialBill({ data, error }) {
+       let arra=[];
+        if (data) {
+            for(var i=0 ; i<=data.length ; i++){
+                arra.push({value : data[i].Material__c});
+                this.billOfMaterails = arra;
+                console.log('billOfMaterails=' +this.billOfMaterails);
+            //    if(this.billOfMaterails== undefined){
+                this.materails = this.billOfMaterails[0].value;
+                console.log('this.materails=' + this.materails);
+            }
+          
+        }
+    }
+       
+    
+
 }
