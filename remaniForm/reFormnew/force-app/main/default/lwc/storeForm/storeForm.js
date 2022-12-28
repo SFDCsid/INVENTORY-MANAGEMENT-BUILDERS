@@ -188,6 +188,73 @@ export default class StoreForm extends NavigationMixin(LightningElement) {
 
 
     }*/
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+    inputValue2;
+    inputValue3;
+    inputValue4;
+    inputValue5;
 
+    inputValue6;
 
+    handleCk() {
+        const userInputs2 = this.template.querySelectorAll('[data-type="user-input2"] ');
+        userInputs2.forEach(input => {
+            this.inputValue2 = input.value;
+            
+        })
+        const userInputs3 = this.template.querySelectorAll('[data-type="user-input3"] ');
+        userInputs3.forEach(input => {
+            this.inputValue3 = input.value;
+            
+        })
+        const userInputs4 = this.template.querySelectorAll('[data-type="user-input4"] ');
+        userInputs4.forEach(input => {
+            this.inputValue4 = input.value;
+            
+        })
+        const userInputs5 = this.template.querySelectorAll('[data-type="user-input5"] ');
+        userInputs5.forEach(input => {
+            this.inputValue5 = input.value;
+            
+        })
+        const userInputs6 = this.template.querySelectorAll('[data-type="user-input6"] ');
+        userInputs6.forEach(input => {
+            this.inputValue6 = input.value;
+            
+        })
+      
+
+        console.log(this.inputValue2);
+        console.log(this.inputValue3);
+        console.log(this.inputValue4);
+        console.log(this.inputValue5);
+        console.log(this.inputValue6);
+        console.log(this.inputValue7);
+////////////////////////////////////////////////////////////////////////// 
+
+        if(this.inputValue2 == null || this.inputValue3 == null || this.inputValue4 == null|| this.inputValue5 == null){
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error creating record',
+                    message: 'Please enter all the required fields',
+                    variant: 'error',
+                    }),
+                );
+        }
+        else if (this.inputValue6 == null || this.inputValue6 == 0 ) {
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error creating record',
+                    message: 'Please enter all the required fields',
+                    variant: 'error',
+                    }),
+                );
+        }
+        else{ 
+            this.template.querySelector('[data-id="Green_Button"]').click();
+        }
+
+          
+        
+    }
 }

@@ -212,7 +212,6 @@ export default class CreatePO extends NavigationMixin(LightningElement) {
                 );
         }
         else{ 
-            alert('j');
             this.template.querySelector('[data-id="Green_Button"]').click();
         }
 

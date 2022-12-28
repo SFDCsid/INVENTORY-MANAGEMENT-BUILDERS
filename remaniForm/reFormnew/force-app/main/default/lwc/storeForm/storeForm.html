@@ -31,15 +31,15 @@
                         <lightning-record-edit-form object-api-name="Indent__c" onsuccess={handleSuccess} id="first11">
                             <lightning-input-field field-name="Store__c" value={MasterId2} disabled required>
                             </lightning-input-field>
-                            <lightning-input-field field-name="Department__c" required>
+                            <lightning-input-field field-name="Department__c" required data-type="user-input2">
                             </lightning-input-field>
-                            <lightning-input-field field-name="Indent_Date__c" required>
+                            <lightning-input-field field-name="Indent_Date__c" required data-type="user-input3">
                             </lightning-input-field>
-                            <lightning-input-field field-name="Type__c" required>
+                            <lightning-input-field field-name="Type__c" required data-type="user-input4">
                             </lightning-input-field>
                             <br>
                             <lightning-button class="slds-m-top_small" variant="brand" type="submit"
-                                name="Create Indent" label="Create Indent">
+                                name="Create Indent" label="Create Indent" hidden data-id="Green_Button">
                             </lightning-button>
                         </lightning-record-edit-form>
                     </template>
@@ -72,14 +72,14 @@
                                 <lightning-layout-item size="12" small-device-size="6" medium-device-size="4"
                                     large-device-size="2" padding="around-small">
                                     <lightning-input-field field-name="Material__c" variant="label-stacked"
-                                        onchange={materialchange} required>
+                                         required data-type="user-input5">
                                     </lightning-input-field>
                                 </lightning-layout-item>
 
                                 <lightning-layout-item size="12" small-device-size="6" medium-device-size="4"
                                     large-device-size="2" padding="around-small">
                                     <lightning-input-field field-name="Requested_Quantity__c" variant="label-stacked"
-                                        required>
+                                        required data-type="user-input6">
                                     </lightning-input-field>
                                 </lightning-layout-item>
 
@@ -151,6 +151,7 @@
 
             </lightning-layout>
         </lightning-card>
-
+        <lightning-button class="slds-align_absolute-center" variant="brand" label="Save All" title="Begins the task" onclick={handleCk}>
+        </lightning-button>
     </lightning-card>
 </template>
