@@ -1,0 +1,45 @@
+<aura:component controller="apiClass" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="recordId"  type="String" ></aura:attribute>
+    <aura:attribute name="apiName"  type="String" ></aura:attribute>
+    <aura:attribute name="fieldApiName"  type="String" ></aura:attribute>
+    
+    <div class="new_Order slds-m-around--small">
+        <div class="slds-page-header slds-p-around--medium" style="background-color:#023246;border-radius: 25px;">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-has-flexi-truncate slds-align-middle">
+                            <div class="slds-media">
+                                <div class="slds-media__figure new_quote_icon">
+                                    <lightning:icon size="" varient="" iconName="action:quote" alternativeText="Order" />
+                                </div>
+                                <div class="slds-media__body slds-align-middle">
+                                    <div class="slds-page-header__name">
+                                        <div class="slds-page-header__name-title">
+                                            <h1>
+                                                <span class="slds-page-header__title slds-truncate" title="{!v.headerName}" style="color:#f6f6f6;">M-Cube Object Api Setup</span>
+                                            </h1>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slds-page-body slds-theme_default">
+            <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-m-topmedium quate-table">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <td><br/><br/>
+                            <lightning:input name="input1" value="{!v.apiName }" placeholder="Please enter the (Standard/Custom)Api Name of object to be assigned to Call Status record..." label="Enter Object API Name" />
+                            <lightning:input name="input1" value="{!v.fieldApiName }" placeholder="Enter API name of field to compare incoming mobile number..." label="Enter API Name of field" />
+                            <br/><br/> <lightning:button variant="success" label="Save" title="Save" onclick="{!c.handleClick}"/>
+                        </td>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>   
+</aura:component>

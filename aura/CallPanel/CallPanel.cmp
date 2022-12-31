@@ -1,0 +1,26 @@
+<aura:component controller="mCubeController" implements="flexipage:availableForAllPageTypes,lightning:utilityItem" access="global"  >
+    
+    <lightning:utilityBarAPI aura:id="utilitybar" />
+    <aura:attribute name="recordId" type="string" default="" />
+    <aura:attribute name="objectName" type="string" default="" />
+    
+     <aura:handler event="force:refreshView" action="{!c.doInit}" />
+    <lightning:empApi aura:id="empApi" />
+    
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+   <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+ 
+    <aura:attribute name="callstatus" type="object"  />
+    <div>
+              <lightning:recordForm aura:id="editform"
+                    recordId="{!v.recordId}"
+                    objectApiName="{!v.objectName}"
+                    layoutType="Compact"
+                    columns="2"
+                    mode="edit" onsuccess="{!c.onsuccess}" />    
+    
+    </div>
+   
+    
+      
+</aura:component>

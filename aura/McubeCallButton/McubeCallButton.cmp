@@ -1,0 +1,19 @@
+<aura:component controller="mCubeController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="recordId"  type="String" ></aura:attribute>
+    <aura:attribute name="selectedNumber"  type="String" ></aura:attribute>
+    <aura:attribute name="numbers"  type="String[]" ></aura:attribute>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <div class="callbutton">
+      
+         <lightning:select name="select1" label="Select Number" value="{!v.selectedNumber}">
+            <option value="">Choose one...</option>
+            <aura:iteration items="{!v.numbers}" var="number">
+             <option value="{!number}">{!number}</option>
+            </aura:iteration>  
+         </lightning:select>
+         <div class="dial">
+            <button class="slds-button slds-button_brand"  onclick="{!c.dialNumbers}">Call</button>
+         </div>
+    </div>
+</aura:component>

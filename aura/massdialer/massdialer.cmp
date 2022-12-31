@@ -1,0 +1,76 @@
+<aura:component controller="mCubeController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" /> 
+    <aura:attribute name="items" type="object[]" default="[]"/>
+    <aura:attribute name="recordId" type="string" default=""/>
+    <aura:attribute name="object" type="string" default="Lead"/>
+    <aura:attribute name="mode" type="string" default="outbound"/> 
+    <aura:attribute name="savetype" type="string" default=""/> 
+    <aura:attribute name="recordmode" type="string" default="view"/> 
+    <aura:attribute name="isedit" type="boolean" default="true"/> 
+    <div >
+       <div class="footer slds-p-around_small">   
+              <aura:if isTrue="{!v.mode == 'outbound' }">
+                     <button class="slds-button slds-button_brand" disabled="">Outbound Mode</button>
+                     <aura:if isTrue="{!v.recordId ==''}">
+                     <button class="slds-button slds-button_neutral"   onclick="{!c.onstart}">Start</button>
+                     </aura:if> 
+              </aura:if> 
+              <aura:if isTrue="{!v.mode =='inbound'}">
+                     <button class="slds-button slds-button_brand" disabled="">Inbound Mode</button>
+              </aura:if> 
+            
+         </div>
+       <div>
+           
+           <aura:if isTrue="{!v.mode == 'outbound'}">
+           
+              <div class="panel" id="panelcall" aur:id="panelcall"> 
+                    <table>
+                        <tr   ><td></td><td class="thead">Name</td><td class="thead">Phone</td><td> Re Que</td></tr>
+                         <aura:iteration items="{!v.items}" var="item" > 
+                             <tr  id="{!item.Id}" style="{!if( v.recordId ==  item.Id , 'background:#C3BBBB','' ) }" class="item"   >
+                                 <td>
+                                     <aura:if isTrue="{! ( v.recordId ==  item.Id)}"> 
+                                             <lightning:icon iconName="standard:call" size="small"  alternativeText="Approved" />                                  
+                                     </aura:if>
+                                 </td> 
+                                 <td class="itemtd"> {!item.Name}</td><td>{!item.Phone}</td>
+                                 <td  data-id="{!item.Id}"  onclick="{!c.onReque}">
+                                       <aura:if isTrue="{! ( v.recordId ==  item.Id)}"> 
+                                          <lightning:icon iconName="standard:call_history" size="small" style="cursor:pointer" alternativeText="Approved" />       
+                                     </aura:if>
+                                 
+                                 
+                                 
+                                 </td> </tr>
+                         </aura:iteration>
+                    </table>  
+               </div>
+           </aura:if>           
+           <aura:if  isTrue="{!v.recordId !=''}">
+              <div class="panel1"> 
+                <!--  <div> 
+                      <aura:if isTrue="{!v.recordmode == 'edit'}"> 
+                          <button class="slds-button slds-button_neutral"   onclick="{!c.cancelEdit}">Cancel</button>
+                          <button class="slds-button slds-button_brand"     onclick="{!c.handleSubmit}">Save</button> 
+                          <button class="slds-button slds-button_brand"     onclick="{!c.handleSubmitNext}">Save and Next</button>
+                      </aura:if> 
+                  </div>   -->
+                   <lightning:recordForm aura:id="editform" onload="{!c.onload}"
+                     recordId="{!v.recordId}"
+                     objectApiName="{!v.object}"
+                     layoutType="Compact"
+                     columns="2"
+                     mode="edit" onsuccess="{!c.onsuccess}" /> 
+                  
+                  
+                  
+            </div>  
+           </aura:if>
+           
+        </div> 
+  
+    </div>
+    
+</aura:component>
