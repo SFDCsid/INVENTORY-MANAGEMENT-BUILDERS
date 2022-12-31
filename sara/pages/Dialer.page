@@ -1,0 +1,3 @@
+<apex:page standardController="Lead" tabStyle="lead" recordSetVar="leads" extensions="Dialercontroller" action="{!direct}">  
+ 
+</apex:page>

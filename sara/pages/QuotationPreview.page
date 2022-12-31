@@ -1,0 +1,405 @@
+<apex:page controller="QuotationPreviewController" standardStylesheets="false" showHeader="false" applyBodyTag="false" applyHtmlTag="false" sidebar="false" docType="html-5.0" renderAs="pdf">
+    <head>
+        <style type="text/css">
+            body {
+                font-family: "Times New Roman", Times, serif;
+                font-size: 12px;
+            }
+            table, th, td {
+                border: 2px solid black;
+                border-collapse: collapse;
+            }
+            th, td {
+                padding: 2px;
+            }
+            th {
+                background-color: #F5F5F5;
+            }
+            @page {
+                margin: 0.3cm 0.2cm;
+                size: A4;
+                padding: 10px;
+            }
+            .center {
+            	display: block;
+                margin-left: auto;
+                margin-right: auto;
+                width: 50%;
+            }
+            .right {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                width: 50%;
+            }
+            .signatureBlock p.signed {
+                display: inline-block;
+                height: 50px;
+                width: 100%;
+                border: 1px solid;
+            }
+            .signatureBlock .col-md-4 {
+                text-align: center;
+            }
+            .row.saleMan div {
+            	text-align: right;
+            }
+            table.table.table-bordered{
+            	margin: 20px 0 !important;
+            	border: 2px solid black;
+            	border-collapse: collapse;
+            }
+        	.signblock {
+            	margin-top: 20px;
+            }
+            .signblock .block:nth-child(2) {
+   
+            }
+            .signblock .block {
+            	display: inline-block;
+            }
+            .signblock .inputText {
+            	border-bottom: 1px solid;
+            	margin-top: 20px;
+            }
+           .heading {
+            	text-align: left;
+           	}
+            #section {
+                background-color: black;
+                height: 5px;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <apex:form >
+            <apex:outputPanel rendered="{!q != null}">
+                <!--<div style="text-align:center;">
+                    <center>
+                        
+                    </center>
+                </div>-->
+
+                <div style="text-align:center;">
+                    <apex:outputText escape="false" value="{!q.Unit__r.Project__r.Project_Logo__c}" ></apex:outputText>
+                </div>
+                
+                <table border="1" style="border-collapse: collapse; width: 100%">
+                    <!--<tr>
+                        <td style="text-align:center;">
+                            <apex:outputField value="{!q.Unit__r.Project__r.Project_Logo__c}"/>
+                        </td>
+                    </tr>-->
+                    <tr>
+                        <td>
+                            <table border="1" style="border-collapse: collapse; width: 100%">
+                                <tr colspan="10">
+                                    <td colspan="10" style="text-align:center;background:#FFCA33;">{!q.Project__c} </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="10">
+                                        <div id="section">
+                                            <br/>    
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr colspan="10">
+                                    <td colspan="2" style="text-align:center;">Date</td>
+                                    <td colspan="8" style="text-align:center;">
+                                        <apex:outputtext value="{0, date, dd'-'MMM'-'yyyy}"> 
+                                            <apex:param value="{!q.CreatedDate}"/> 
+                                        </apex:outputtext> 
+                                    </td>
+                                </tr>
+                                <tr colspan="10">
+                                    <td colspan="2" style="text-align:center;">MahaRERA #</td>
+                                    <td colspan="8" style="text-align:center;">{!q.Unit__r.Tower__r.RERA_No__c}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="10">
+                                        <div id="section">
+                                            <b>  </b>    
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <tr colspan="10">
+                                    <td colspan="8" style="text-align:left;">Tower</td>
+                                    <td colspan="2" style="text-align:center;">{!q.Tower__c}</td>
+                                </tr>
+                                
+                                <tr colspan="10">
+                                    <td colspan="8" style="text-align:left;">Floor</td>
+                                    <td colspan="2" style="text-align:center;">{!q.Unit__r.Floor__c}</td>
+                                </tr>
+                                
+                                <tr colspan="10">
+                                    <td colspan="8" style="text-align:left;">Unit No</td>
+                                    <td colspan="2" style="text-align:center;">{!q.Unit__r.Name}</td>
+                                </tr>
+                                
+                                <tr colspan="10">
+                                    <td colspan="8" style="text-align:left;">Unit Type</td>
+                                    <td colspan="2" style="text-align:center;">{!q.Unit__r.Unit_Type__c}</td>
+                                </tr>
+                                
+                                <tr colspan="10">
+                                    <td colspan="8" style="text-align:left;">Unit Configuration </td>
+                                    <td colspan="2" style="text-align:center;">{!q.Unit__r.Configuration__c}</td>
+                                </tr>
+                                
+                                <tr colspan="10">
+                                    <td colspan="8" style="text-align:left;">RERA Carpet (Sq.m)</td>
+                                    <td colspan="2" style="text-align:center;">{!q.Unit__r.RERA_Carpet_Area_Sq_Mtr__c}</td>
+                                </tr>
+                                
+                                <tr colspan="10">
+                                    <td colspan="8" style="text-align:left;">Other Useable Area (Sq.m)</td>
+                                    <td colspan="2" style="text-align:center;">{!q.Unit__r.Other_Useable_Area_Sq_Mtr__c}</td>
+                                </tr>
+                                
+                                <tr colspan="10">
+                                    <td colspan="8" style="text-align:left;">Saleable Area</td>
+                                    <td colspan="2" style="text-align:center;">{!q.Unit__r.Saleable_Area__c}</td>
+                                </tr>
+                                
+                                  <!-- <tr colspan="10">
+                                    <td colspan="8" style="text-align:left;">Total Carpet Area (Sq.ft.)</td>
+                                    <td colspan="2" style="text-align:center;">{!q.Unit__r.Total_Carpet_Area_Sq_Ft__c}</td>
+                                </tr>-->
+                                
+                                <tr>
+                                    <td colspan="10">
+                                        <div id="section">
+                                            <b>  </b>    
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <tr colspan="10">
+                                	<td colspan="6" style="text-align:center;" rowspan="{!carParkReqList.size + 1}">Parking</td>
+                                    <apex:repeat value="{!carParkReqList}" var="cp">
+                                        <tr>
+                                            <td colspan="2" style="text-align:center;">{!cp.Car_Park_Type__c}</td>
+                                            <td colspan="2" style="text-align:center;">{!cp.Car_Park_Count__c}</td>
+                                        </tr>
+                                    </apex:repeat>
+                                </tr>
+                                            
+                                <tr colspan="10"> 
+                                    <td colspan="6" style="text-align:center;" rowspan="3">Agreement Value (INR)</td>
+                                    <td colspan="2" style="text-align:center;"> Quoted Agreement Value  </td>        
+                                    <td colspan="2" style="text-align:center;"> {!quoAgreementValueString} </td>
+                                </tr>   
+                        
+                                <tr colspan="10">   
+                                    <td colspan="2" style="text-align:center;"> Discounts Applied </td> 
+                                    <td colspan="2" style="text-align:center;"> {!totalDiscountString} </td>
+                                </tr>
+                            
+                                <tr colspan="10">      
+                                    <td colspan="2" style="text-align:center;"> Net Agreement Value (A) </td>
+                                    <td colspan="2" style="text-align:center;"> {!netAgreementValueString} </td>  
+                                </tr>
+                                
+                                <tr colspan="10">
+                                    <td colspan="8" style="text-align:center;"> GST On Agreement Value (B) </td>
+                                    <td colspan="2" style="text-align:center;"> {!netAgreementTaxValueString} </td>
+                                </tr> 
+                             
+                                <tr colspan="10"> 
+                                    <td colspan="6" style="text-align:center;" rowspan="{!statutoryChargeList.size + 1}">SDRF (INR)</td>
+                                    <apex:repeat value="{!statutoryChargeList}" var="st">
+                                        <tr> 
+                                            <td colspan="2" style="text-align:center;">{!st.chargeName} </td>
+                                            <td colspan="2" style="text-align:center;">{!st.chargeValueString}</td>
+                                        </tr>
+                                    </apex:repeat>
+                                </tr>
+                             
+                                <tr colspan="10">   
+                                    <td colspan="8" style="text-align:center;"> Total (C) </td> 
+                                    <td colspan="2" style="text-align:center;"> {!statutoryChargeValueString} </td>
+                                </tr>
+                    
+                                <tr>
+                                    <td colspan="10">
+                                        <div id="section">
+                                            <b>  </b>    
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <tr colspan="10">
+                                    <td colspan="8" style="text-align:center;"> Total Cost (A+B+C) </td>
+                                    <td colspan="2" style="text-align:center;"> {!grandTotalValueString} </td>
+                                </tr> 
+                                <tr>
+                                    <td colspan="10">
+                                        <div id="section">
+                                            <b>  </b>    
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr colspan="10">
+                                    <td colspan="8" style="text-align:left;" rowspan="{!discountList.size + 1}"> Schemes Applied If Any </td>
+                                    <apex:repeat value="{!discountList}" var="da" >
+                                        <tr>
+                                            <td colspan="2" style="text-align:center;">
+                                                <apex:outputText value="{!da.Discount_Reason__c}" />
+                                            </td>
+                                        </tr>
+                                    </apex:repeat>
+                                </tr>
+                                
+                                <tr colspan="10">
+                                    <td colspan="8" style="text-align:left;"> Cashbacks If Any</td>
+                                    <td colspan="2" style="text-align:center;"> {!cashbackAmountString} </td>
+                                </tr>
+                                
+                                <tr colspan="10">
+                                    <td colspan="8" style="text-align:left;"> Credit Notes If Any</td>
+                                    <td colspan="2" style="text-align:center;"> {!creditNoteAmountString} </td>
+                                </tr>
+                                
+                            </table>
+                            <div style="page-break-after:always;text-align:left;">
+                                <apex:outputText escape="false" value="{!q.Unit__r.Tower__r.Terms_Condition__c}" ></apex:outputText>
+                            </div>
+                            <!--<tr style="page-break-before:always;">
+                                <td colspan="10" style="page-break-before:always;text-align:left;border-collapse: collapse;">
+                                    <apex:outputField value="{!q.Unit__r.Tower__r.Terms_Condition__c}" style="height:200px; width:200px;"></apex:outputField>
+                                </td>
+                            </tr>-->
+                            
+                            <table border="1" width="100%" cellspacing="10" cellpadding="5" style="margin-bottom: 20px">
+                                <tr colspan="10" style="border-collapse: collapse;">                           
+                                    <td colspan="4" style="text-align:left;"> Project Name/Building Name </td>
+                                    <td colspan="5" style="text-align:center;"> {!q.Project__c} </td>
+                                </tr>
+                             
+                                <tr colspan="10">
+                                    <td colspan="4" style="text-align:left; "> Configuration </td>
+                                    <td colspan="5" style="text-align:center; "> {!q.Unit__r.Configuration__c} </td>
+                                </tr>
+                            
+                                <tr>
+                                    <td colspan="10">
+                                        <div id="section">
+                                            <b>  </b>    
+                                        </div>
+                                    </td>
+                                </tr>
+                            
+                                <tr colspan="10">
+                                    <td colspan="4" style="text-align:center;" rowspan="{!otherChargeList.size + 1}"> Other Charges (INR) </td>
+                                    <apex:repeat value="{!otherChargeList}" var="o" >
+                                        <tr>
+                                            <td colspan="1" style="text-align:left;"><apex:outputText value="{!o.chargeName}"/></td>
+                                            <td colspan="4" style="text-align:right;"><apex:outputText value="{!o.chargeValueString}"/></td>
+                                        </tr>
+                                    </apex:repeat>
+                                </tr>
+                                
+                                <tr colspan="10">
+                                    <td colspan="4" style="text-align:center;"><b> Total Other Charges (Without GST) </b></td> 
+                                    <td colspan="5" style="text-align:right;"> {!otherChargeValueString} </td>
+                                </tr>
+                               
+                                <tr colspan="10">
+                                    <td colspan="4" style="text-align:center;"> GST on Other Charges </td> 
+                                    <td colspan="5" style="text-align:right;"> {!otherChargeTaxValueString} </td>
+                                </tr>
+                                
+                                <tr colspan="10">
+                                    <td colspan="4" style="text-align:center;"> <b> Total Other Charges (with GST) </b> </td> 
+                                    <td colspan="5" style="text-align:right;"> {!totalOtherChargeValueString} </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td colspan="10">
+                                        <div id="section">
+                                            <b>  </b>    
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <tr colspan="10">
+                                    <td colspan="4" style="text-align:center;"><b> All Inclusive </b></td> 
+                                    <td colspan="5" style="text-align:right;"> {!allInclusiveValueString} </td>
+                                </tr>
+                            </table>
+                            
+                            <table border="1" width="100%" cellspacing="10" cellpadding="5" >
+                                <thead>
+                                    <tr colspan="10"></tr> 
+                                    <tr colspan="10">
+                                        <td colspan="4" style="text-align:center;"><b> Payment Schedule Of AV and GST </b></td>
+                                    </tr>
+                                    <tr>
+                                        <th><center>Payment Milestone</center></th>
+                                        <th><center>% Due</center></th> 
+                                        <th><center>Amount</center></th>
+                                        <th><center>GST</center></th>
+                                    </tr>
+                                </thead> 
+                                <tbody>
+                                    <apex:repeat value="{!pswList}" var="psw">
+                                        <tr>
+                                            <td>{!psw.milestoneName}</td>
+                                            <td style="text-align:right;">{!psw.percentDue}</td>
+                                            <td style="text-align:right;">{!psw.milestoneAmount}</td>
+                                            <td style="text-align:right;">{!psw.milestoneGST}</td>
+                                        </tr>
+                                    </apex:repeat>
+                                </tbody> 
+                            </table>
+                            <div class="block">
+                                <h4 style = " background-color: #F5F5F5;">DECLARATION &amp; SIGNATURE</h4>
+                                <p> I have read and understood the terms and conditions contained in this form and the same are acceptable to me and hereby agree to be bound by the same. 
+                                    I confirm that all the details on this page have been filled by me or at my instance and I have thereafter signed the Form. 
+                                    I hereby confirm that the details provided in this Form are true and accurate. 
+                                </p>
+                                
+                                <div class="signblock">
+                                    <div class="block"> 
+                                        <br/>
+                                        <div class="inputText"></div>
+                                        <label>Signature of Primary Applicant</label>
+                                    </div>
+                                    <div class="block" style="float: right;">
+                                        <br/>
+                                        <div class="inputText"></div>
+                                        <label>Signature of Channel Partner</label>
+                                    </div>
+                                </div>
+                                <div class="signblock">
+                                    <div class="block" style="float: left;">
+                                        <br/>
+                                        <div class="inputText"></div>
+                                        <label>Date Of Application</label>
+                                    </div>
+                                </div>
+                                <br/>    
+                            
+                                <div class="row saleMan">
+                                    <div class="col-md-8">
+                                        <p>Received By ________________________________________________on______________202__</p><br/>
+                                    	<div class="signblock">
+                                            <div class="block" style="float: left;"> 
+                                                <br/>
+                                                <span>(Signature of Sales Manager)</span>
+                                            </div>
+                                            <br/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </apex:outputPanel>
+        </apex:form>
+    </body>
+</apex:page>

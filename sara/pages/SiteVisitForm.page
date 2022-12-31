@@ -1,0 +1,644 @@
+<apex:page showHeader="false" sidebar="false" controller="SiteVisitFormController" standardStylesheets="true" docType="html-5.0">
+    <apex:form id="form">
+        <html>
+            <meta charset="utf-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+            <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet"/>
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"/>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+            <link href="https://fonts.googleapis.com/css?family=Acme&display=swap" rel="stylesheet"/>
+            <head>
+                <style>
+                    html, body {
+                        padding: 0px;
+                        margin: 0px;
+                        font-family: 'IBMPlexSansSemiBold', sans-serif;
+                        font-family: "Google Sans", Roboto, arial, sans-serif;
+                    }
+                    header {
+                        background:#FFF;
+                        position: sticky;
+                        top: 0px;
+                        width:100%;
+                        padding: 10px 20px;
+                        z-index:999;
+                    }
+                    #previousButton, #nextButton {
+                        outline: none;
+                        color: #fff;
+                    }                
+                    .nav-button {
+                        background: transparent;
+                        align-items: center;
+                        margin: 0 16px;
+                        border: none;
+                        outline: none;
+                        color: #263238;
+                        cursor: pointer;
+                        font-size: 16px;
+                    }
+                    .nav-button.hide {
+                        user-select: none;
+                        opacity: 0;
+                    }
+                    .nav-button *:first-child {
+                        margin-right: 16px;
+                    }
+                    .upload-btn-wrapper {
+                        position: relative;
+                        overflow: hidden;
+                        display: inline-block;
+                    }                
+                    h3{
+                        
+                        color:#556B2F;
+                    }
+                    .dateOnlyInput input {
+                        width: 10em;
+                        float: left;
+                    }
+                    .dateFormat {
+                        padding: 0 8px !important;
+                    }
+                    
+                    .col-form-label {    
+                        color: #292b33;
+                        font-size: 18px;
+                    }
+                    .form-control:focus {
+                        color: #292b33;
+                        background-color: #fff;
+                        border-color: #292b33;
+                        outline: 0;
+                        box-shadow: 0 0 0 0.07rem rgb(41, 43, 51);
+                    }
+                    p.borderdashed{
+                        color:#DE2A3B;
+                        width:50%;
+                        margin:auto;
+                        border-bottom:1px dashed #DE2A3B;
+                    }
+                    p.borderdashedWeekday{
+                        color:#DE2A3B;
+                        width:40%;
+                        margin:auto;
+                        border-bottom:1px dashed #DE2A3B;
+                    }
+                    p.borderdashedDR{
+                        color:#DE2A3B;
+                        width:80%;
+                        margin:auto;
+                        border-bottom:1px dashed #DE2A3B;
+                    }
+                    p.borderdashed2{
+                        color:#DE2A3B;
+                        width:80%;
+                        margin:auto;
+                        border-bottom:1px dashed #DE2A3B;
+                    }
+                    p.borderdashed3{
+                        color:#DE2A3B;
+                        width:45%;
+                        margin:auto;
+                        border-bottom:1px dashed #DE2A3B;
+                    }
+                    p.borderdashedAdd{
+                        color:#DE2A3B;
+                        width:15%;
+                        margin:auto;
+                        border-bottom:1px dashed #DE2A3B;
+                    }
+                    
+                    /*----------------------- Button CSS ---------------------------*/
+                    .btn{
+                        background:none !important;
+                        background-image:none !important;
+                        border:none !important;
+                    }
+                    .button1{
+                        width: 170px;
+                        padding:5px 12px !important;
+                        font-size: 18px;
+                        font-family: 'IBMPlexSansRegular';
+                        background-image:none;
+                        text-transform: uppercase;
+                        transition: all ease-in-out 0.2s;
+                        -moz-transition: all ease-in-out 0.2s;
+                        -webkit-transition: all ease-in-out 0.2s;
+                        z-index: 1;
+                        position:sticky;
+                        bottom:0px;
+                        right:30px;                
+                        color:#fff !important;
+                        background: #292b33 !important;
+                        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+                        transition: all 0.3s cubic-bezier(.25,.8,.25,1) !important;
+                    }               
+                    .btn:focus {
+                        box-shadow: 0 0 0 0.1rem rgb(41, 43, 51) !important;
+                    }  
+                    .button1:hover{
+                        background-image:none;
+                        background: #e74315 !important;
+                        color:#FFF !important;
+                        transition:.3s;                                
+                        box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);                
+                    }
+                    .container1{
+                        width:44%;
+                        margin:auto;
+                        background: #292b33 !important;
+                        color:#fff !important;
+                        padding:10px 0;
+                        margin:7% auto;
+                        border-radius:5px;
+                        -webkit-box-shadow: 1px 1px 15px 0px rgba(106,88,95,.8);
+                        -moz-box-shadow: 1px 1px 15px 0px rgba(106,88,95,.8);
+                        box-shadow: 1px 1px 15px 0px rgba(106,88,95,.8);
+                    }
+                    .container1 .col-form-label {    
+                        color: #FFF;
+                        font-size: 16px;
+                    }                
+                    .container1 h3{                
+                        font-size: 1.8rem;
+                        font-weight: 500;
+                        color: #DE1E42;
+                        letter-spacing:4px;
+                        font-family: 'verdana', sans-serif;
+                        text-transform: uppercase;
+                    }
+                    .container1 .form-group{                
+                        padding:8px 30px !important;
+                    }
+                    .container1 .buttonSearch{
+                        padding:5px 12px !important;
+                        font-size: 16px;      
+                        font-weight:bold;
+                        color:#fff !important;
+                        background: #292b33 !important;
+                        border:1px solid #fff !important;
+                        width:160px;
+                        margin-bottom: 8px;
+                    }
+                    .container1 .buttonSearch:hover{
+                        background-image:none;
+                        background: #DE1E42 !important;
+                        color:#FFF !important;
+                        transition:.3s;                                
+                        box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);                
+                    }
+                    .container1 .form-control {
+                        background-color: #292b33 ;
+                        border: 1px solid #ced4da;
+                        border-color:linear-gradient(to right top, #292b33, #595a60, #8d8d92, #c5c4c7, #ffffff);
+                        color:#FFF;
+                        border-radius: .25rem;
+                        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+                    }
+                    .container h3{
+                        font-family: verdana;
+                    }
+                    footer {
+                        position: sticky;
+                        bottom: 0px;
+                        width:100%;
+                        display: flex;
+                        padding: 5px 10px;
+                        background: #9bca3e !important;
+                        color:#fff;
+                        align-items: center;
+                        justify-content: space-between;
+                    }                
+                    .alert-dismissible .close {
+                        position: absolute;
+                        top: 5px;
+                    }
+                    .customPopup {
+                        //background: #9bca3e !important; 
+                        border: 1px solid black;           
+                        border-radius: 25px;
+                        left: 56%;
+                        padding: 60px;
+                        position: absolute;
+                        z-index: 999;
+                        width: 530px;
+                        margin-left: -250px;
+                        top: 28%;
+                        text-align: center;
+                        font-size: 12px;
+                        //color: white;
+                    }
+                    .customPopup .buttonSearch {
+                        padding: 5px 12px !important;
+                        font-size: 16px;
+                        font-weight: bold;
+                        color: #fff !important;
+                        background: #9bca3e !important;
+                        border: 1px solid #fff !important;
+                        margin-bottom: -20px;
+                        width: 150px;
+                    }
+                    .customPopup .buttonSearch:hover{
+                        background-image:none;
+                        background: #DE1E42 !important;
+                        color:#FFF !important;
+                        transition:.3s;                                
+                        box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);                
+                    }
+                    .form-group {
+                        margin-bottom: 0rem !important;
+                    }
+                    .form-control{
+                        margin-bottom: 14px;
+                        
+                    }
+                    .logo{
+                        width: 90px;
+                        text-align:right;
+                    }
+                    .actionStatusLoading{
+                        margin: 12% 44%;
+                    }
+                    .innerAction{
+                        display: inline-block;
+                        padding: 2px;
+                        background-color: #384862;
+                        width: 153px;
+                        text-align: center;
+                        color:white;
+                    }
+                    .innerAction img{
+                        float: left;
+                        height:130px;
+                        width:150px;
+                    }
+                    /* Hide all steps by default: */
+                    .container {
+                        display: none;
+                    }
+                </style>
+            </head>
+            <body>
+                <!------------------------------------------ Header ------------------------------------------------>
+                <header class="pt-3">
+                    <!--<center><a href="#"><apex:image url="{!$Resource.Logo}" styleClass="logo" /></a></center> -->
+                </header>
+                <hr/>
+                <!------------------------------------------ Header ------------------------------------------------>
+                
+                <!------------------------------------------- Basic Details -------------------------------------------->
+                <div class="container" id="first"> 
+                    <center><br/>
+                        <h3>Basic Details</h3>
+                    </center>
+                    <div class="form-group row mt-4">
+                        <label for="salutation" class="col-md-2 col-sm-12 col-form-label"><span style="color:red;">*</span>Salutation </label>
+                        <div class="col-md-10 col-sm-12">
+                            <apex:inputField value="{!sv.Salutation__c}" styleClass="form-control" id="salutation" />
+                        </div>
+                    </div>
+                    <div class="form-group row mt-4">
+                        <label for="Fname" class="col-md-2 col-sm-12 col-form-label"><span style="color:red;">*</span>First Name </label>
+                        <div class="col-md-4 col-sm-12">
+                            <apex:inputField value="{!sv.First_Name__c}" styleClass="form-control" id="Fname" />
+                        </div>
+                        <label for="Lname" class="col-md-2 col-sm-12 col-form-label"><span style="color:red;">*</span>Last Name </label>
+                        <div class="col-md-4 col-sm-12">
+                            <apex:inputField value="{!sv.Last_Name__c}" styleClass="form-control" id="Lname" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="mobNo" class="col-md-2 col-sm-12 col-form-label"><span style="color:red;">*</span>Mobile </label>
+                        <div class="col-md-4 col-sm-12">
+                            <apex:outputText value="{!sv.Mobile__c}" styleClass="form-control" id="mobNo" />
+                        </div> 
+                        <label for="emailId" class="col-md-2 col-sm-12 col-form-label">Email </label>
+                        <div class="col-md-4 col-sm-12">
+                            <apex:outputText value="{!sv.Email__c}" styleClass="form-control" id="emailId" />
+                        </div> 
+                        
+                        <label for="DOB" class="col-md-2 col-sm-12 col-form-label"> Birth Date </label>
+                        <div class="col-md-4 col-sm-12">
+                            <apex:input type="date" value="{!birthDate}" StyleClass="form-control"  />
+                        </div>
+                        
+                        <label for="MarriageAnniversary" class="col-md-2 col-sm-12 col-form-label">Marriage Anniversary </label>
+                        <div class="col-md-4 col-sm-12">
+                            <apex:input type="date" value="{!AnniversaryDate}" StyleClass="form-control" />
+                        </div>
+                        
+                        
+                        <label for="Age" class="col-md-2 col-sm-12 col-form-label"><span style="color:red;">*</span>Age Group </label>
+                        <div class="col-md-4 col-sm-12">
+                            <apex:inputField value="{!sv.Age_Group__c}" styleClass="form-control" id="Age" />
+                        </div>
+                        
+                        
+                        <label for="CompanyName" class="col-md-2 col-sm-12 col-form-label"> Company Name</label>
+                        <div class="col-md-4 col-sm-12">
+                            <apex:inputField value="{!sv.Company_Name__c}" styleClass="form-control" id="CompanyName" />
+                        </div>  
+                        
+                        <label for="Occupation" class="col-md-2 col-sm-12 col-form-label"><span style="color:red;">*</span>Occupation</label>
+                        <div class="col-md-4 col-sm-12">
+                            <apex:inputField value="{!sv.Occupation__c  }" styleClass="form-control" id="Occupation" />
+                        </div>
+                        
+                        <label for="Designation" class="col-md-2 col-sm-12 col-form-label"> Designation </label>
+                        <div class="col-md-4 col-sm-12">
+                            <apex:inputField value="{!sv.Designation__c }" styleClass="form-control" id="Designation" />
+                        </div>
+                    </div>
+                </div>
+                <!------------------------------------------- Basic Details -------------------------------------------->
+
+                        
+                <!------------------------------------------- Source Details -------------------------------------------->
+                <div class="container" id="Second"> 
+                    <center><br/>
+                        <h3>Property Informtion</h3> 
+                    </center>
+                    <br/>
+                    <div class="form-group row">
+                        <label for="ConfigurationRequired" class="col-md-2 col-sm-12 col-form-label"> <span style="color:red;">*</span>Please state the configuration you are interested in ? </label>
+                        <div class="col-md-4 col-sm-12">
+                            <apex:inputField value="{!sv.Configuration_Required__c}" styleClass="form-control" id="ConfigurationRequired" />
+                        </div>
+                        
+                        <label for="Budget" class="col-md-2 col-sm-12 col-form-label"><span style="color:red;">*</span>Budget (Approx) </label>
+                        <div class="col-md-4 col-sm-12">
+                            <apex:inputField value="{!sv.Budget__c}" styleClass="form-control" id="Budget" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="Income" class="col-md-2 col-sm-12 col-form-label"> Annual Family Income </label>
+                        <div class="col-md-4 col-sm-12">
+                            <apex:inputField value="{!sv.Household_Income_Annual__c}" styleClass="form-control" id="Income" />
+                        </div>
+                        
+                        <label for="Visit" class="col-md-2 col-sm-12 col-form-label"> Are you visiting ? </label>
+                        <div class="col-md-4 col-sm-12">
+                            <apex:inputField value="{!sv.Visit_For__c}" styleClass="form-control" id="Visit" />
+                        </div>
+                    </div>
+                    
+                    <apex:outputPanel rendered="{!NOT(isSourceNotEditable)}">
+                        <div class="form-group row">                    
+                            <label for="MasterSource" class="col-md-2 col-sm-12 col-form-label"><span style="color:red;">*</span>Master Source</label>
+                            <div class="col-md-4 col-sm-12">
+                                <apex:inputField value="{!sv.Master_Source__c}" styleClass="form-control" id="MasterSource" >
+                                    <!--<apex:actionSupport event="onchange" reRender="subInfo, subInfo1" status="statuss" />-->
+                                </apex:inputField>
+                            </div>
+                            
+                            <label for="LeadSource" class="col-md-2 col-sm-12 col-form-label"><span style="color:red;">*</span>Lead Source</label>
+                            <div class="col-md-4 col-sm-12">
+                                <apex:inputField value="{!sv.Lead_Source__c}" styleClass="form-control" id="LeadSource">
+                                    <apex:actionSupport event="onchange" reRender="subInfo, subInfo1, subInfo2" status="statuss" />
+                                </apex:inputField>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="LeadSubSource" class="col-md-2 col-sm-12 col-form-label">Lead Sub-Source</label>
+                            <div class="col-md-4 col-sm-12">
+                                <apex:inputField value="{!sv.Lead_Sub_Source__c}" styleClass="form-control" id="LeadSubSource" />
+                            </div>
+                            
+                            <label for="LeadSubSourceD" class="col-md-2 col-sm-12 col-form-label">Lead Sub Source Details</label>
+                            <div class="col-md-4 col-sm-12">
+                                <apex:inputField value="{!sv.Lead_Sub_Source_Details__c}" styleClass="form-control" id="LeadSubSourceD" />
+                            </div>
+                        </div>
+                        <apex:outputPanel id="subInfo">
+                            <apex:outputPanel rendered="{!sv.Lead_Source__c == 'Channel Partner'}">
+                                <div class="form-group row mt-4">                    
+                                    <label for="cpName" class="col-md-2 col-sm-12 col-form-label"><span style="color:red;">*</span>Channel Partner Name</label>
+                                    <div class="col-md-10 col-sm-12">
+                                        <apex:inputField value="{!sv.Channel_Partner_Name__c}" styleClass="form-control" id="cpName" />
+                                    </div>
+                                </div>
+                            </apex:outputPanel>
+                        </apex:outputPanel>
+                        
+                        <apex:outputPanel id="subInfo1">
+                            <apex:outputPanel rendered="{!sv.Lead_Source__c == 'Customers'}">
+                                <div class="form-group row mt-4">
+                                    <label for="ReferrerName" class="col-md-2 col-sm-12 col-form-label">Customer Referrer Name</label>
+                                    <div class="col-md-10 col-sm-12">
+                                        <apex:inputField value="{!sv.Reference_Name__c}" styleClass="form-control" id="ReferrerName"/>
+                                    </div>
+                                </div>
+                            </apex:outputPanel>
+                                
+                            <apex:outputPanel rendered="{!sv.Lead_Source__c == 'Employees'}">
+                                <div class="form-group row mt-4">
+                                    <label for="ReferrerName1" class="col-md-2 col-sm-12 col-form-label">Employee Referrer Name</label>
+                                    <div class="col-md-10 col-sm-12">
+                                        <apex:inputField value="{!sv.Reference_Name__c}" styleClass="form-control" id="ReferrerName1"/>
+                                    </div>
+                                </div>
+                            </apex:outputPanel>
+                        </apex:outputPanel>
+                        
+                        <apex:outputPanel id="subInfo2">
+                            <apex:outputPanel rendered="{!sv.Lead_Source__c == 'Other'}">
+                                <div class="form-group row mt-4">                    
+                                    <label for="otherSource" class="col-md-2 col-sm-12 col-form-label"><span style="color:red;">*</span>Other Source Details</label>
+                                    <div class="col-md-10 col-sm-12">
+                                        <apex:inputField value="{!sv.Other_Source_Details__c}" styleClass="form-control" id="otherSource" />
+                                    </div>
+                                </div>
+                            </apex:outputPanel>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                    
+                    <apex:outputPanel rendered="{!isSourceNotEditable}">
+                        <div class="form-group row">                    
+                            <label for="MasterSourceO" class="col-md-2 col-sm-12 col-form-label"><span style="color:red;">*</span>Master Source</label>
+                            <div class="col-md-4 col-sm-12">
+                                <apex:outputText value="{!sv.Master_Source__c}" styleClass="form-control" id="MasterSourceO" >
+                                    <!--<apex:actionSupport event="onchange" reRender="subInfo, subInfo1" status="statuss" />-->
+                                </apex:outputText>
+                            </div>
+                            
+                            <label for="LeadSourceO" class="col-md-2 col-sm-12 col-form-label"><span style="color:red;">*</span>Lead Source</label>
+                            <div class="col-md-4 col-sm-12">
+                                <apex:outputText value="{!sv.Lead_Source__c}" styleClass="form-control" id="LeadSourceO">
+                                    <!--<apex:actionSupport event="onchange" reRender="subInfo, subInfo1, subInfo2" status="statuss" />-->
+                                </apex:outputText>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="LeadSubSourceO" class="col-md-2 col-sm-12 col-form-label">Lead Sub-Source</label>
+                            <div class="col-md-4 col-sm-12">
+                                <apex:outputText value="{!sv.Lead_Sub_Source__c}" styleClass="form-control" id="LeadSubSourceO" />
+                            </div>
+                            
+                            <label for="LeadSubSourceA" class="col-md-2 col-sm-12 col-form-label">Lead Sub Source Details</label>
+                            <div class="col-md-4 col-sm-12">
+                                <apex:outputText value="{!sv.Lead_Sub_Source_Details__c}" styleClass="form-control" id="LeadSubSourceA" />
+                            </div>
+                        </div>
+                        
+                        <apex:outputPanel rendered="{!sv.Lead_Source__c == 'Channel Partner'}">
+                            <div class="form-group row mt-4">                    
+                                <label for="cpNameO" class="col-md-2 col-sm-12 col-form-label"><span style="color:red;">*</span>Channel Partner Name</label>
+                                <div class="col-md-10 col-sm-12">
+                                    <apex:outputText value="{!sv.Channel_Partner_Name__c}" styleClass="form-control" id="cpNameO" />
+                                </div>
+                            </div>
+                        </apex:outputPanel>
+                        
+                        <apex:outputPanel rendered="{!sv.Lead_Source__c == 'Customers'}">
+                            <div class="form-group row mt-4">
+                                <label for="ReferrerNameO" class="col-md-2 col-sm-12 col-form-label">Customer Referrer Name</label>
+                                <div class="col-md-10 col-sm-12">
+                                    <apex:outputText value="{!sv.Reference_Name__c}" styleClass="form-control" id="ReferrerNameO"/>
+                                </div>
+                            </div>
+                        </apex:outputPanel>
+                                
+                        <apex:outputPanel rendered="{!sv.Lead_Source__c == 'Employees'}">
+                            <div class="form-group row mt-4">
+                                <label for="ReferrerNameEO" class="col-md-2 col-sm-12 col-form-label">Employee Referrer Name</label>
+                                <div class="col-md-10 col-sm-12">
+                                    <apex:outputText value="{!sv.Reference_Name__c}" styleClass="form-control" id="ReferrerNameEO"/>
+                                </div>
+                            </div>
+                        </apex:outputPanel>
+                            
+                        <apex:outputPanel rendered="{!sv.Lead_Source__c == 'Other'}">
+                            <div class="form-group row mt-4">                    
+                                <label for="otherSourceO" class="col-md-2 col-sm-12 col-form-label"><span style="color:red;">*</span>Other Source Details</label>
+                                <div class="col-md-10 col-sm-12">
+                                    <apex:outputText value="{!sv.Other_Source_Details__c}" styleClass="form-control" id="otherSourceO" />
+                                </div>
+                            </div>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+        		</div>     
+                <!------------------------------------------- Source Details ------------------------------------------->
+                
+              
+                <!------------------------------------------- Footer --------------------------------------------->
+                <footer >
+                    <button class="nav-button" id="previousButton" onclick="previousPage();return false;">
+                        <div class="prev">Previous</div>
+                    </button>   
+                    <div class="col"></div>                    
+                    <div class="col"></div>
+                    <button class="nav-button" id="nextButton" onclick="nextPage(1);return false;">
+                        <div class="nxt">Next</div>
+                    </button>
+                </footer>
+                <!------------------------------------------- Footer --------------------------------------------->
+                
+                <!------------------------------------------- Action Function --------------------------------------------->
+                <apex:actionFunction name="validateInput" action="{!validateInput}" onComplete="onCompleteHandler({!valError},'{!message}')" reRender="none">
+                    <apex:param id="p" name="currentTab" value="" />
+                </apex:actionFunction>
+                <apex:actionFunction name="callSubmitMethod" action="{!submit}" onComplete="onCompleteHandler1({!isRunError},'{!message}' )" rerender="error" />
+                <!------------------------------------------- Action Function ---------------------------------------------->
+               	<html> 
+                    <body>
+                        <apex:outputPanel id="error">
+                            <apex:outputPanel rendered="{!isRunError || isSuccess}">
+                                <div style="position: fixed ; left: 0; top: 0; bottom: 0; right: 0; z-index: 1;">
+                                    <div class="customPopup">
+                                        <apex:outputText >{!message}</apex:outputText><br/><br/>
+                                        <apex:commandButton value="Close" action="{!closeForm}" rerender="" styleClass="btn buttonSearch" />
+                                    </div>
+                                </div>
+                            </apex:outputPanel>
+                        </apex:outputPanel>
+           			</body> 
+            
+                   	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" ></script>
+                   	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+                   	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+            
+                   	<script>
+                        var currentTab = 0; // Current tab is set to be the first tab (0)
+                    	showTab(currentTab); // Display the current tab
+                   
+                    	function showTab(n) {
+                            // This function will display the specified tab of the form...
+                           	var x = document.getElementsByClassName("container");
+                            x[n].style.display = "block";
+                            //... and fix the Previous/Next buttons:
+                            if (n == 0) {
+                                document.getElementById("previousButton").style.display = "none";
+                            } else {
+                                document.getElementById("previousButton").style.display = "inline";
+                            }
+                            if (n == (x.length - 1)) {
+                                //alert('In Condition');
+                                document.getElementById("nextButton").innerHTML = "Submit";
+                                document.getElementById("nextButton").style.display = "inline"; 
+                            } else {
+                                document.getElementById("nextButton").innerHTML = "Next";
+                            }
+                        }
+                    	function nextPage(n) {
+                           	// This function will figure out which tab to display
+                            var x = document.getElementsByClassName("container");
+                            var btnText = document.getElementById("nextButton").innerHTML;
+                            
+                            // Hide the current tab:
+                            x[currentTab].style.display = "none";    
+                            
+                            // Increase or decrease the current tab by 1:
+                            if(btnText == 'Next') {
+                                //alert('Test');
+                                validateInput(currentTab);
+                            }
+                            
+                            // if you have reached the end of the form.
+                            if (btnText == 'Submit') {
+                                validateInput(currentTab);
+                                document.getElementById('nextButton').style.display = 'none';
+                                document.getElementById('previousButton').style.display = 'none';
+                            }
+                            
+                            // Otherwise, display the correct tab:              
+                       	}
+                       	function previousPage() {
+                            // This function will figure out which tab to display
+                            var x = document.getElementsByClassName("container");
+                            
+                            // Hide the current tab:
+                            x[currentTab].style.display = "none";    
+                            
+                            //Display Previous tab
+                            currentTab--;
+                            showTab(currentTab);
+                       	}
+                       	function onCompleteHandler(error, msg) {
+                           	//alert('In onCompleteHandler: '+error);
+                            if(error == true) {
+                                //alert('currentTab: '+currentTab);
+                                showTab(currentTab);
+                                //stay on the same page.
+                                alert('Error : ' + msg);
+                            } else {
+                                var btnText = document.getElementById("nextButton").innerHTML;
+                                if(btnText == 'Submit') {
+                                    callSubmitMethod();
+                                }
+                                currentTab++;
+                                showTab(currentTab);
+                                //move to the next page
+                            }
+                       	}
+                    </script> 
+                </html>
+            </body>
+        </html>
+    </apex:form>
+</apex:page>

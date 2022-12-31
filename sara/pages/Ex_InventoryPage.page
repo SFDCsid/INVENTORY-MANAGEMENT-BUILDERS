@@ -1,0 +1,193 @@
+<apex:page sidebar="false" docType="html-5.0" controller="Ex_InventoryPageController" standardStylesheets="true" showHeader="false">
+    <head>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+        <link rel="stylesheet" href="{!URLFOR($Resource.Bootstrap_4,'/css/bootstrap.css')}" />
+
+       
+    
+        <style type="text/css">
+            #di{
+                //background-color: red;
+                height: 20%;
+                width: 100%;
+                font-size: 10px;
+                color: yellow;
+                margin: 4px;
+                transition: width 0.5s, height 0.5s;    
+            	
+            }
+            #di:hover {      
+                height: 20%;
+                width: 90%;
+                opacity: .8;
+            }
+            #pickSelect {
+                padding:5px;
+            }
+            #link {
+            }
+            #NoLink {
+                pointer-events: none;
+            }
+            /* basic positioning */
+            .legend { 
+                list-style: none; 
+            }
+            .legend li { 
+                float: left; 
+                margin-right: 10px; 
+            }
+            .legend span { 
+                border: 1px solid #ccc; 
+                float: left; 
+                width: 15px; 
+                height: 15px; 
+                margin: 2px; 
+            }
+            /* your colors */
+            .legend .Available { 
+                background-color: #008000; 
+            }
+            .legend .Booked { 
+                background-color: #FF0000; 
+            }
+            .legend .Blocked { 
+                background-color: #000000; 
+            }
+            .legend .Floor { 
+                background-color: #000000; 
+            }
+            .legend .Refuge { 
+                background-color: #A8A8A8; 
+            }
+            .legend .NotforSale { 
+                background-color: #FFCA33; 
+            }
+            #td1
+            {
+            	padding: 5px;
+            }
+            .btn.btn-primary
+            {
+            	background: #0d4d72;
+                color: #fff;
+                border-color: #0d4d72;
+            }
+        </style>
+    
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $("#inventoryTable div:contains('Available')").css('background-color','#008000');
+                $("#inventoryTable div:contains('Vacant')").css('background-color','#008000');
+                $("#inventoryTable div:contains('Booked')").css('background-color','#FF0000');
+                $("#inventoryTable div:contains('Blocked')").css('background-color','#000000');
+                $("#inventoryTable div:contains('Floor')").css('background-color','#000000');
+                $("#inventoryTable div:contains('Refuge')").css('background-color','#A8A8A8');
+                $("#inventoryTable div:contains('Not for Sale')").css('background-color','#FFCA33');
+                $("#inventoryTable div:contains('Requested For Block')").css('background-color','#FFCA33');
+            });
+        
+            function disableLink(val) {
+                alert(val);
+            }
+        </script>
+    </head>
+    <body> 
+        <div class="container">   
+            <apex:form >
+                <div class="row">
+                    <apex:outputPanel rendered="{!error}">
+                        <center><h2 style="color:red"> {!errorMsg} </h2></center>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!NOT(error)}">
+                        <table width ="100%">
+                            <tr>
+                                <td id="pickSelect">
+                                    <div class="dropdown">
+                                        <apex:selectList value="{!selectPro}" size="1" styleClass="form-control">
+                                            <apex:selectOptions value="{!getProjectList}" />
+                                            <apex:actionSupport event="onchange"  >
+                                                <apex:param name="selectPro" value="{!getProjectList}" assignTo="{!selectPro}" />
+                                            </apex:actionSupport>
+                                        </apex:selectList>
+                                    </div>
+                                </td>
+                                &nbsp;
+                                <td id="pickSelect">
+                                    <div class="dropdown">
+                                        <apex:selectList id="sector" value="{!selectSector}" size="1" styleClass="form-control">
+                                            <apex:selectOptions value="{!getSectorList}" />
+                                            <apex:actionSupport event="onchange" >
+                                                <apex:param name="selectSector" value="{!getSectorList}"  />
+                                            </apex:actionSupport>
+                                        </apex:selectList>
+                                    </div>
+                                </td>
+                                &nbsp;
+                                <td id="pickSelect">
+                                    <div class="dropdown">
+                                        <apex:selectList id="tower" value="{!selectTower}" size="1" styleClass="form-control">
+                                            <apex:selectOptions value="{!getTowerList}" />
+                                            <apex:actionSupport event="onchange" >
+                                                <apex:param name="selectTower" value="{!getTowerList}" assignTo="{!selectTower}" />
+                                            </apex:actionSupport>
+                                        </apex:selectList>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </apex:outputPanel>
+                </div>
+                <br/><br/>
+                <div>
+                    <ul class="legend">
+                        <li><span class="Available "></span> Available : {!Vacant}</li>
+                        <li><span class="Booked"></span> Booked : {!Booked}</li>
+                        <li><span class="Blocked"></span> Blocked : {!Blocked} </li>
+                        <li><span class="Refuge"></span> Refuge </li>
+                        <li><span class="NotforSale"></span> Not for Sale : {!NotSale} </li>
+                    </ul>
+                </div>
+                <br/><br/>
+                <div class="row">
+                    <table id="inventoryTable" border="0">
+                        <apex:repeat value="{!getUnit}" var="floor">
+                            <tr id="tr1">
+                                <td id="td1">
+                                    <div id="di" style="width: fit-content; font-size:14px; box-shadow: 10px 10px 5px grey;" class="thumbnail" onload="colorChange({!$Component.di})" > 
+                                        Floor - {!floor}
+                                    </div>
+                                </td>
+                                <apex:repeat value="{!unitFloorMap[floor]}" var="u">
+                                    <td id="td1">
+                                        <center>
+                                            <a href="/apex/Ex_QuotationGeneration?oppId={!oppId}&uId={!u.id}" id="{!IF(OR(u.Unit_Status__c == 'Available', u.Unit_Status__c == 'Vacant'),'link','NoLink')}">
+                                            <div id="di" style="font-size:12px;box-shadow: 10px 10px 5px grey;" class="thumbnail" onload="colorChange({!$Component.di})" > 
+                                                {!u.Name} / {!u.Configuration__c} /<br/> {!u.Total_Carpet_Area_Sq_Ft__c} / {!u.Custodian_Type__c} / <label style="display:none;">{!u.Unit_Status__c}</label>
+                                                <br/>
+                                                
+                                                <!--<apex:commandButton value="Quotation" onclick="window.open('/apex/Ex_QuotationGenerationV2?opid={!oppId}&uId={!u.id}','_blank')" rendered="{!IF(OR(u.Unit_Status__c == 'Available', u.Unit_Status__c == 'Vacant'),true,false)}" />
+                                                <apex:commandButton value="Block" onclick="window.open('/apex/SuccessPage?uId={!u.id}','_blank')" rendered="{!u.Unit_Status__c == 'Vacant'}" />
+                                                <apex:commandButton value="UnBlock" onclick="window.open('/apex/SuccessPage?uId={!u.id}','_blank')" rendered="{!AND(u.Unit_Status__c == 'Blocked by Sales', u.Blocking_Requested_By__c == $User.Id)}" />-->
+                                            </div>
+                                            </a>
+                                        </center>
+                                    </td>
+                                </apex:repeat>
+                            </tr>
+                        </apex:repeat>
+                    </table>
+                </div>
+            </apex:form>
+        </div>
+        <!--<div class="footer">
+            <div class="container">
+                <div class="copywrite">
+                    <p>© 2021 All Rights Reserved Design by www.excellerconsultancy.in </p>
+                </div>
+            </div>
+       </div>-->
+    </body>    
+</apex:page>

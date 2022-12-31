@@ -1,0 +1,547 @@
+<apex:page controller="Ex_QuotationGeneration" sidebar="false" showHeader="false" docType="html-5.0">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
+  		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>  
+  		<script type="text/javascript" src="./javascript.js"></script>
+  
+ 		<style>
+            div#mainBlock {
+            	margin: 20px 0;
+        	}
+            .hide{
+                display: none;
+            }
+            div#mainBlock .panel.panel-primary {
+                margin: 0 auto;
+                width: 90%;
+            }
+            #mainBlock .tab-content {
+                padding-top: 10px;
+            }
+            #accordion h4.panel-title {
+                position: relative;
+                display: block;
+            }
+            #selectedScheme {
+                position: relative;
+                display: hide;
+            }
+            #accordion h4.panel-title button.btn.btn-default {
+                position: absolute;
+                right: 0;
+                top: -6px;
+                /* width: 10px; */
+                padding: 3px 23px;
+                min-width: 21%;
+                background: rgb(221 217 216);
+                color: rgb(8 7 7);
+                border-color: rgb(62 62 60);
+            }
+        	div#mainTitle {
+                text-align: center;
+                font-size: 22px;
+                font-weight: bold;
+                padding: 15px 10px;
+            }
+            a[data-parent="#accordion"] {
+                text-decoration: none;
+            }
+            a[data-parent="#accordion"]:hover {
+                color: blue;
+                /* font-weight: bold; */
+            }
+            table.table.table-hover {
+                margin-bottom: 30px;
+            }
+            .block {
+                margin-bottom: 30px;
+            }
+            .custInfo li {
+                width: 47%;
+                text-align: center;
+            }
+            .custInfo .tab-content {
+                margin-top: 15px;
+            }
+            thead th {
+                background-color: #0d4d72;
+                color: #fff;
+                border-color: #0d4d72 !important;
+            }
+            ul.nav.nav-tabs li a {
+                font-size: 15px;
+            }
+            button.btn.btn-primary {
+                background: #0d4d72;
+                color: #fff;
+                border-color: #0d4d72;
+                width: 112px;
+                height: 34px;
+            }
+        	.btn.btn-primary {
+                background: #0d4d72;
+                color: #fff;
+                border-color: #0d4d72;
+                width: 112px;
+                height: 34px;
+                align: right;
+            }
+        	.btnDiv {
+                text-align: center;
+            }
+            .panel-primary>.panel-heading {
+                color: #fff;
+                background-color: #0d4d72;
+                border-color: #0d4d72;
+                text-align: center;
+                font-size: 18px;
+            }
+        	.ButtonRight {
+                text-align:right;
+            }
+            .modifiedDetail {
+                color: red;
+            }
+        
+        	@media screen and (max-width: 768px){
+          		div#mainBlock .panel.panel-primary {
+            		margin: 0 auto;
+            		width: 95%;
+        		}
+        		.custInfo li {
+            		width: 100%;
+            		text-align: center;
+        		}
+        	}
+		</style>
+        
+        <script >
+            function selectPlan() {
+            	//alert('in select plan');
+            	selectPlanFunction();
+            }   
+        </script>
+    </head>
+    
+    <body id="mainBody">
+        <apex:form >
+            <div id="mainBlock">
+                <div class="panel panel-primary">
+                    <div class="panel-heading" id="mainTitle">Generate Quotation</div>
+                    <apex:outputPanel rendered="{!error}" id="errorMsg">
+                       <center>
+                           <h4 style="color:red;"> {!errorMsg} </h4>
+                       </center>      
+                    </apex:outputPanel>
+                    <div class="panel-body">
+                        <apex:outputPanel rendered="{!NOT(page2) && NOT(error)}">
+                            <div class="block custInfo" id="customerBlock">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a data-toggle="tab" href="#customerInfo">Customer Information</a></li>
+                                    <li><a data-toggle="tab" href="#prodInfo">Product Information</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div id="customerInfo" class="tab-pane fade in active table-responsive">
+                                        <table class="table table-bordered table-hover">
+                                            <tbody>
+                                                <tr>
+                                                    <td>Customer Name</td>
+                                                    <td>{!opp.Name}</td>
+                                                    <td>Master Source</td>
+                                                    <td>{!opp.Master_Source__c}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Customer Mobile</td>
+                                                    <td>{!opp.Mobile__c}</td>
+                                                    <td>Lead Source</td>
+                                                    <td>{!opp.Lead_Source__c}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Customer Email</td>
+                                                    <td>{!opp.Email__c}</td>
+                                                    <td>Lead Sub Source</td>
+                                                    <td>{!opp.Lead_Sub_Source__c}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div id="prodInfo" class="tab-pane fade table-responsive">
+                                        <table class="table table-bordered table-hover">
+                                            <tbody>
+                                                <tr>
+                                                    <td>Unit Number</td>
+                                                    <td>{!u.Name}</td>
+                                                    <td>Project</td>
+                                                    <td>{!u.Project__r.Name}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Floor</td>
+                                                    <td>{!u.Floor__c}</td>
+                                                    <td>Tower</td>
+                                                    <td>{!u.Tower__r.Name}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Configuration</td>
+                                                    <td>{!u.Configuration__c}</td>
+                                                    <td>Carpet Area</td>
+                                                    <td>{!u.Total_Carpet_Area_Sq_Ft__c}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Enclosed Balcony</td>
+                                                    <td>{!u.Balcony_Area_Sq_Ft__c}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="btnDiv">
+                            		<apex:commandButton styleClass="btn btn-primary" value="Continue" action="{!continueMethod}" />
+                        		</div>
+                            </div>
+                        </apex:outputPanel>
+                        <hr/>
+                    
+                        <apex:actionFunction name="selectPlanFunction" action="{!schemeSelect}" status="status">
+                            <apex:param id="planId" value="" />
+                        </apex:actionFunction>
+
+                        <apex:actionFunction name="continue" action="{!continueMethod}"  status="status">
+                            <apex:param id="page2" value="" />
+                        </apex:actionFunction>
+                    
+                    	<apex:outputPanel rendered="{!page2}" >
+                        	<div>
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <table>
+                                            <tr>
+                                                <th>
+                                                    <a data-toggle="collapse" data-parent="#accordion" href="#paySum">Select Payment Scheme</a>
+                                                </th>
+                                            </tr>
+                                        </table>
+                                    </h4>
+                                </div>
+                                <div>
+                                    <apex:selectRadio value="{!selectedScheme}"  layout="pageDirection" onchange="selectPlan();return false;">
+                                        <apex:selectOptions value="{!paymentSchemeList}"/>
+                                    </apex:selectRadio>
+                                </div>
+                                <apex:outputPanel rendered="{!selectedScheme != Null && selectedScheme != ''}" id="show">
+                                    <ul class="nav nav-tabs">
+                                                 
+                    				</ul>
+                      				<div id="paymentBlockDiv">
+                      					<div id="selectedScheme" >
+                            				<div class="panel-group" id="accordion">
+                              					<!--<div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <h4 class="panel-title">
+                                                            <table width="100%">
+                                                                <td>
+                                                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Editable Rates</a>
+                                                                </td>
+                                                                <td class="ButtonRight">
+                                                                    <apex:commandButton value="Apply" action="{!applyNewRate}" styleclass="btn btn-primary" style="align: right;"/>
+                                                                </td>
+                                                            </table>
+                                                        </h4>
+                                                    </div>
+                                                    <div id="collapse1" class="panel-collapse collapse in">
+                                                        <div class="panel-body table-responsive">
+                                                            <table class="table table-bordered table-hover">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Charge Name</th>
+                                                                        <th>Quoted Rate</th>
+                                                                        <th>Applicable Rate</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <apex:repeat value="{!editPriceList}" var="ser">
+                                                                        <tr>
+                                                                            <td>{!ser.Charge_Name__c}</td>
+                                                                            <td>{!ROUND(ser.Charge_Rate__c,2)}</td>
+                                                                            <td><apex:inputText id="applicableRate" value="{!NewRate}"/></td>
+                                                                        </tr>
+                                                                    </apex:repeat>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>-->
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <h4 class="panel-title">
+                                                            <table width="100%">
+                                                                <td>
+                                                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Car Park Allotement</a>
+                                                                </td>
+                                                                <td class="ButtonRight">
+                                                                    <apex:commandButton value="Add" action="{!addCarPark}" styleclass="btn btn-primary" />
+                                                                </td>  
+                                                            </table>
+                                                        </h4>
+                                                    </div>
+                                                    <div id="collapse2" class="panel-collapse collapse in">
+                                                        <div class="panel-body table-responsive">
+                                                            <table class="table table-bordered table-hover">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Car Park Type</th>
+                                                                        <th>Available Count</th>
+                                                                        <th>Car Park Amount</th>
+                                                                        <th>Required Count</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <apex:repeat value="{!carParkList}" var="cp">
+                                                                        <tr>
+                                                                            <td><apex:outputText value="{!cp.carParkType}"/></td>
+                                                                            <td><apex:outputText value="{!cp.carParkAvailableCount}"/></td>
+                                                                            <td><apex:outputText value="{!cp.carParkAmountString}"/></td>
+                                                                            <td><apex:input value="{!cp.carParkRequiredCount}"/></td>
+                                                                        </tr>
+                                                                    </apex:repeat>
+                                                                    <tr>
+                                                                        <td colspan="2" style="text-align:center;"><b>Total Car Park Amount</b></td>
+                                                                        <td colspan="2" style="text-align:center;"><b>{!allPriceInfoFormattedMap['Total Car Park Price']}</b></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <h4 class="panel-title">
+                                                            <table width="100%">
+                                                                <td>
+                                                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Discounts</a>
+                                                                </td>
+                                                                <td class="ButtonRight">  
+                                                                    <apex:commandButton value="Apply Discount" action="{!applyDiscount}" styleclass="btn btn-primary" />
+                                                                </td>
+                                                            </table>  
+                                                        </h4>
+                                                    </div>
+                                    				<div id="collapse3" class="panel-collapse collapse in">
+                                                        <div class="panel-body table-responsive">
+                                                            <table class="table table-bordered table-hover">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Discount Reason</th>
+                                                                        <th>Discount Category</th>
+                                                                        <th>Lumpsum Amount</th>
+                                                                        <th>PSF</th>
+                                                                        <th>Percentage </th>
+                                                                        <th>Action</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <apex:repeat value="{!discountGroups}" var="group">
+                                                                        <tr>
+                                                                            <th colspan="6"><apex:outputText value="{!group}" /></th>
+                                                                        </tr>
+                                                                        <apex:repeat value="{!discountGroupMap[group]}" var="d">
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <apex:outputField value="{!d.Discount_Reason__c}"/>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <apex:outputField value="{!d.Discount_Category__c}"/>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <apex:outputField value="{!d.Amount__c}" rendered="{!d.Discount_Type__c == 'Lumpsum' && NOT(d.Editable__c)}"/>
+                                                                                    <apex:inputField value="{!d.Amount__c}" rendered="{!d.Discount_Type__c == 'Lumpsum' && d.Editable__c}"/>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <apex:outputField value="{!d.PSF_Amount__c}" rendered="{!d.Discount_Type__c == 'PSF' && NOT(d.Editable__c)}"/>
+                                                                                    <apex:inputField value="{!d.PSF_Amount__c}" rendered="{!d.Discount_Type__c == 'PSF' && d.Editable__c}"/>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <apex:outputField value="{!d.Percentage_of_AV__c}" rendered="{!d.Discount_Type__c == 'Percentage' && NOT(d.Editable__c)}"/>
+                                                                                    <apex:inputField value="{!d.Percentage_of_AV__c}" rendered="{!d.Discount_Type__c == 'Percentage' && d.Editable__c}"/>
+                                                                                </td>
+                                                                                <td style="text-align: center;">
+                                                                                    <apex:inputField value="{!d.Applied__c}"/>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </apex:repeat>
+                                                                    </apex:repeat> 
+                                                                    <tr>
+                                                                        <td colspan="3" style="text-align:center;"><b>Total Discount Applied</b></td>
+                                                                        <td colspan="3" style="text-align:center;"><b>{!allPriceInfoFormattedMap['Total Discount Price']}</b></td>
+                                                                    </tr>  
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <h4 class="panel-title">
+                                                            <a data-toggle="collapse" data-parent="#accordion" href="#paySum">Charges Pricing</a>
+                                                        </h4>
+                                                    </div>
+                                                    <div id="paySum" class="panel-collapse collapse in">
+                                                        <div class="panel-body table-responsive">
+                                                            <table class="table table-bordered table-hover">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th style="text-align:center;">
+                                                                            <apex:outputText value="Charge Group"/>
+                                                                        </th>
+                                                                        <th style="text-align:center;">
+                                                                            <apex:outputText value="Charge Name"/>
+                                                                        </th>
+                                                                        <th style="text-align:center;">
+                                                                            <apex:outputText value="Original Amount"/>
+                                                                        </th>
+                                                                        <th style="text-align:center;">
+                                                                            <apex:outputText value="Original Taxes"/>
+                                                                        </th>
+                                                                        <th style="text-align:center;">
+                                                                            <apex:outputText value="Modified Amount"/>
+                                                                        </th>
+                                                                        <th style="text-align:center;">
+                                                                            <apex:outputText value="Modified Taxes"/>
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <apex:repeat value="{!priceListGroupMap}" var="group">
+                                                                        <tr>
+                                                                            <td rowspan="{!allPriceInfoMap[group+' SIZE'] + 2}"> {!group} </td>
+                                                                            <apex:repeat value="{!priceListGroupMap[group]}" var="chargeName">
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <apex:outputText value="{!chargeName}" rendered="{!priceDifferenceMap[chargeName]}" styleClass="modifiedDetail"/>
+                                                                                        <apex:outputText value="{!chargeName}" rendered="{!NOT(priceDifferenceMap[chargeName])}"/>
+                                                                                    </td>
+                                                                                    <td style="text-align:right;">
+                                                                                        <apex:outputText value="{!allPriceOriginalInfoFormattedMap[chargeName]}"/>
+                                                                                    </td>
+                                                                                    <td style="text-align:right;">
+                                                                                        <apex:outputText value="{!allPriceOriginalInfoFormattedMap[chargeName+' TAX']}"/>
+                                                                                    </td>
+                                                                                    <td style="text-align:right;">
+                                                                                        <apex:outputText value="{!allPriceInfoFormattedMap[chargeName]}" rendered="{!priceDifferenceMap[chargeName]}" styleClass="modifiedDetail"/>
+                                                                                        <apex:outputText value="{!allPriceInfoFormattedMap[chargeName]}" rendered="{!NOT(priceDifferenceMap[chargeName])}"/>
+                                                                                    </td>
+                                                                                    <td style="text-align:right;">
+                                                                                        <apex:outputText value="{!allPriceInfoFormattedMap[chargeName+' TAX']}" rendered="{!priceDifferenceMap[chargeName]}" styleClass="modifiedDetail"/>
+                                                                                        <apex:outputText value="{!allPriceInfoFormattedMap[chargeName+' TAX']}" rendered="{!NOT(priceDifferenceMap[chargeName])}"/>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </apex:repeat>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <b><apex:outputText value="Total" rendered="{!priceDifferenceMap[group]}" styleClass="modifiedDetail"/></b>
+                                                                                <b><apex:outputText value="Total" rendered="{!NOT(priceDifferenceMap[group])}"/></b>
+                                                                            </td>
+                                                                            <td style="text-align:right;">
+                                                                                <b><apex:outputText value="{!allPriceOriginalInfoFormattedMap[group]}"/></b>
+                                                                            </td>
+                                                                            <td style="text-align:right;">
+                                                                                <b><apex:outputText value="{!allPriceOriginalInfoFormattedMap[group+' TAX']}"/></b>
+                                                                            </td>
+                                                                            <td style="text-align:right;">
+                                                                                <b><apex:outputText value="{!allPriceInfoFormattedMap[group]}" rendered="{!priceDifferenceMap[group]}" styleClass="modifiedDetail"/></b>
+                                                                                <b><apex:outputText value="{!allPriceInfoFormattedMap[group]}" rendered="{!NOT(priceDifferenceMap[group])}"/></b>
+                                                                            </td>
+                                                                            <td style="text-align:right;">
+                                                                                <b><apex:outputText value="{!allPriceInfoFormattedMap[group+' TAX']}" rendered="{!priceDifferenceMap[group]}" styleClass="modifiedDetail"/></b>
+                                                                                <b><apex:outputText value="{!allPriceInfoFormattedMap[group+' TAX']}" rendered="{!NOT(priceDifferenceMap[group])}"/></b>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </apex:repeat>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <h4 class="panel-title">
+                                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">Payment Schedule</a>
+                                                        </h4>
+                                                    </div>
+                                                    <div id="collapse4" class="panel-collapse collapse in">
+                                                        <div class="panel-body table-responsive">
+                                                            <table class="table table-bordered table-hover">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th style="text-align:center;">
+                                                                            <apex:outputText value="Milestone Name"/>
+                                                                        </th>
+                                                                        <th style="text-align:center;">
+                                                                            <apex:outputText value="Percentage"/>
+                                                                        </th>
+                                                                        <th style="text-align:center;">
+                                                                            <apex:outputText value="Milestone Due Date"/>
+                                                                        </th>
+                                                                        <th style="text-align:center;">
+                                                                            <apex:outputText value="Amount"/>
+                                                                        </th>
+                                                                        <th style="text-align:center;">
+                                                                            <apex:outputText value="Tax"/>
+                                                                        </th>
+                                                                        <th style="text-align:center;">
+                                                                            <apex:outputText value="Total Amount"/>
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <apex:repeat value="{!paymentMilestoneWrapperList}" var="pmw">
+                                                                        <tr style="{!pmw.completedMilestone}">
+                                                                            <td>
+                                                                                <apex:outputText value="{!pmw.milestoneName}"/>
+                                                                            </td>
+                                                                            <td style="text-align:right;">
+                                                                                <apex:outputText value="{!pmw.percentageString}"/>
+                                                                            </td>
+                                                                            <td style="text-align:center;">
+                                                                                <apex:outputField value="{!pmw.pm.Due_Date__c}" rendered="{!pmw.pm != null}"/>
+                                                                                <apex:outputText value="" rendered="{!pmw.pm == null}"/>
+                                                                            </td>
+                                                                            <td style="text-align:right;">
+                                                                                <apex:outputText value="{!pmw.amountString}"/>
+                                                                            </td>
+                                                                            <td style="text-align:right;">
+                                                                                <apex:outputText value="{!pmw.taxString}"/>
+                                                                            </td>
+                                                                            <td style="text-align:right;">
+                                                                                <apex:outputText value="{!pmw.totalString}"/>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </apex:repeat>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <apex:outputPanel rendered="{!error}" id="errorMsg1">
+                                                <center>
+                                                    <h4 style="color:red;"> {!errorMsg} </h4>
+                                                </center>      
+                                            </apex:outputPanel>
+                                            <div class="btnDiv">
+                                                <apex:commandButton value="Save" action="{!save}" styleClass="btn btn-primary" status="status" rendered="{!NOT(error)}"/> &nbsp;&nbsp;
+                                                <apex:commandButton value="Reset" action="{!resetQuote}" styleClass="btn btn-primary" status="status"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </apex:outputPanel>
+                            </div>
+                        </apex:outputPanel>
+                    </div>
+                </div>
+            </div>
+        </apex:form>
+    </body>
+</apex:page>

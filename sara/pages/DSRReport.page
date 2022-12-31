@@ -1,0 +1,121 @@
+<apex:page showHeader="false" sidebar="false" controller="DSRReportController" docType="html-5.0">
+    <head>
+        <title>Report</title>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+        <!--<link rel="stylesheet" href="{!URLFOR($Resource.bootstrap,'/css/bootstrap.css')}" />-->
+        <style type="text/css">
+        	body{
+            	font-size: 10px;
+            }
+            table, th, td {
+            //padding: auto;
+            //padding-right: 40px;
+			}
+            .btn.btn-primary {
+    			background: #0d4d72;
+    			color: #fff;
+    			border-color: #0d4d72;
+            	width: 112px;
+    			height: 34px;
+			}
+        </style>
+    </head>
+    
+     <body>
+        
+        <apex:form id="formid">
+            <table width ="100%">
+                <tr>
+                    <td align="center">
+                        <lable><b>Project Name:</b></lable>
+                        <div align="left" style="width:50%">
+                            <apex:selectList value="{!selectPro}" size="1" styleClass="form-control">
+                                <apex:selectOptions value="{!getProjectList}" />
+                                <apex:actionSupport event="onchange"  >
+                                    <apex:param name="selectPro" value="{!getProjectList}" assignTo="{!selectPro}" />
+                                </apex:actionSupport>
+                            </apex:selectList>
+                        </div>
+                    </td>
+                    <td align="center">
+                        <lable><b>Campaign Name:</b></lable>
+                        <div align="left" style="width:50%">
+                            <apex:selectList value="{!selectCam}" size="1" styleClass="form-control">
+                                <apex:selectOptions value="{!getCampaignList}" />
+                                <apex:actionSupport event="onchange"  >
+                                    <apex:param name="selectCam" value="{!getCampaignList}" assignTo="{!selectCam}" />
+                                </apex:actionSupport>
+                            </apex:selectList>
+                        </div>
+                    </td>
+                    
+                   <!--<td align="center">
+                        <lable><b>Select Date Filter:</b></lable>
+                        <apex:selectList value="{!datefilter}" size="1" styleClass="form-control">
+                            <apex:selectOptions value="{!getItems}" />
+                            <apex:actionSupport event="onchange"  >
+                                <apex:param name="datefilter" value="{!getProjectList}" assignTo="{!datefilter}" />
+                            </apex:actionSupport>
+                        </apex:selectList>
+                    </td>-->
+                    
+                    <td align="center">
+                        <apex:commandButton styleClass="btn btn-primary" value="Display Dashboard" action="{!displayResults}"/>
+                    </td>
+                </tr>
+            </table>
+            <br/>
+            <br/>
+            
+            <table  border="1px solid black" align="center" class="table table-responsive">
+                <tr>
+                    <th colspan ="11" style="background-color:yellow;">
+                        <center>Lead Details </center>
+                    </th>
+                </tr>
+                <tr>
+                    <th rowspan="2" style="background-color:#FFD580;width:18.25%">
+                        <center>Lead Owner</center>
+                    </th>
+                   
+                </tr>
+              
+                <tr style="background-color:#7EC0EE;">
+                    <th>Total Leads</th>
+                    <th>Connected Calls</th>
+                    <th>SV Done</th>
+                    <th>Incoming</th>
+                    <th>SNP</th>
+                    <th>Prospect</th>
+                    <th>Overdue Tasks</th>
+                    <th>Follow ups on next day</th>
+                    <th>% of Leads to Site visits</th>
+                    <th>% of SV to Booking</th>
+                    <th>Qualification Ratio</th>
+                </tr>
+               
+                <apex:repeat value="{!mapSMOppAgrList}" var="lpd">
+                    
+                    <apex:repeat value="{!mapSMOppAgrList[lpd]}" var="lpdVal">
+                        <tr>
+                            <td>{!lpd}</td>
+                            <td>
+                                <apex:outputText value="{0, number, integer}">
+                                	<apex:param value="{!lpdVal['lcount']}" />
+                                       </apex:outputText>
+                            </td>
+                            <td>
+                                <apex:outputText value="{0, number, integer}">
+                                	<apex:param value="{!lpdVal['ccount']}" />
+                                       </apex:outputText>
+                            </td>
+                            
+                         </tr>
+                    </apex:repeat>
+                </apex:repeat>
+            </table> 
+            </apex:form>
+   </body>  
+</apex:page>
