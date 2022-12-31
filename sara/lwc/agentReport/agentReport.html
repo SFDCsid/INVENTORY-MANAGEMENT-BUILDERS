@@ -1,0 +1,109 @@
+<template>
+    <lightning-card title="Manager Report" class="slds-var-m-around_medium">
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col" >
+                <lightning-combobox label="Projects"    
+                                    placeholder="Select Project"
+                                    options={projectOptionList}
+                                    class="slds-m-left_medium"
+                                    onchange={handleChangeProject}></lightning-combobox>
+            </div>
+            <div class="slds-col">
+                <lightning-input type="Date"  label="Start Date" placeholder="Select Start Date" onchange={handleStartDate} class="slds-m-left_medium"></lightning-input>
+            </div>
+            <div class="slds-col">                                                                                                                                                                                                                                                                                                                                  
+                <lightning-input type="Date"  label="End Date" placeholder="Select End Date" onchange={handleEndDate} class="slds-m-left_medium"></lightning-input>
+            </div>
+            <div class="slds-col" >
+                <lightning-combobox label="Campaigns"    
+                                    placeholder="Select Campaign"
+                                    options={campaignOptionList}
+                                    class="slds-m-left_medium"
+                                    onchange={handleChangeCampaign}></lightning-combobox>
+            </div>
+        </div>
+        <br>
+        <template if:true={keyOptionList}>
+            <table> 
+                <tr>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">SR.No.</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Executive Name</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Total Lead</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Connected Calls</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Site Visits Done</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Booking</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Incoming</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">SNP</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Hot Prospect</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Warm Prospect</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Regular Prospect</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Prospect NR</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Overdue Tasks</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Followup on next Day</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Site Visit%</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Booking%</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Qualification Ratio</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Rating Of TC</th>
+                </tr>
+                <template for:each={keyOptionList} for:item="data"> 
+                    <tr key={data} > 
+                        <th class=" slds-box custom-background red">  
+                            <p> {data.value.SLNO}</p>                        
+                    </th>     
+                        <th class=" slds-box custom-background red">  
+                                <p> {data.key}</p>                        
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p> {data.value.lCount} </p>
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p> {data.value.totalConnected} </p>
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p> {data.value.svCount} </p>
+                        </th> 
+                        <th class="slds-box custom-background red">
+                            <p> {data.value.bkCount} </p>
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p> {data.value.totalIncomingCount} </p>
+                        </th>
+                        <th class="slds-box custom-background red yellow">
+                            <p> {data.value.snpcount} </p>
+                        </th>
+                        <th class="slds-box custom-background red yellow">
+                            <p> {data.value.totalHotCount} </p>
+                        </th>
+                        <th class="slds-box custom-background red yellow">
+                            <p> {data.value.totalWarmCount} </p>
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p> {data.value.totalRegularCount} </p>
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p> {data.value.totalNoResponseCount} </p>
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p> {data.value.totalOverDueCount} </p>
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p> {data.value.totalTomorrowFollowupCount} </p>
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p> {data.value.svpCount}% </p>
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p> {data.value.bookingPercent}% </p>
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p> {data.value.qualificationRatio} </p>
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p> {data.value.ratingOfTC} </p>
+                        </th>   
+                    </tr>
+                </template>
+            </table>
+        </template>
+    </lightning-card>
+</template>

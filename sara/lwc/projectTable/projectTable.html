@@ -1,0 +1,185 @@
+<template>
+
+
+
+    <lightning-card>
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col">
+                <lightning-combobox name="Projects" label="Project" value={value} placeholder="Select Project"
+                    options={projectList} onchange={handleChangeProject}> </lightning-combobox>
+            </div>
+            <div class="slds-col">
+                <lightning-combobox name="Campaign" label="Campaign" value={value} placeholder="Select Campaign"
+                    options={CampaignOptionList} onchange={handleChangeCampaign}> </lightning-combobox>
+            </div>
+            <div class="slds-col">
+                <lightning-combobox name="Executive Name" label="Executive Name" value={value}
+                    placeholder="Select Executive Name" options={executiveList} onchange={handleExecutiveChange}>
+                </lightning-combobox>
+            </div>
+        </div>
+
+
+        <lightning-card>
+
+
+
+            <lightning-card>
+                <table>
+                    <tr>
+                        <th>Sr NO</th>
+                        <th>Executive name</th>
+                        <th>Total Leads</th>
+                        <th>Connected calls</th>
+                        <th>SV done</th>
+                        <th>SV Scheduled</th>
+                        <th>Incoming</th>
+                        <th>SNP</th>
+                        <th>Hot Prospect</th>
+                        <th>warm Prospect</th>
+                        <th>Regular prospect</th>
+                        <th>Prospect NR</th>
+                        <th>Overdue Tasks</th>
+                        <th>Follow ups on next day</th>
+                    </tr>
+
+                    <tr>
+                        <th>
+                            <div class="slds-m-around_medium">
+                                <template if:true={wrapperList}>
+                                    <template for:each={wrapperList} for:item="acc">
+                                        <p key={acc.Id}>
+                                            {acc.OwnerId}
+
+                                        </p>
+                                    </template>
+                                </template>
+
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="slds-m-around_medium">
+                                <template if:true={wrapperList}>
+                                    <template for:each={wrapperList} for:item="acc">
+                                        <p key={acc.Id}>
+                                            {acc.MobilePhone}
+
+                                        </p>
+                                    </template>
+                                </template>
+
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="slds-m-around_medium">
+                                <template if:true={wrapperList}>
+                                    <template for:each={wrapperList} for:item="acc">
+                                        <p key={acc.Id}>
+                                            {acc.MobilePhone}
+
+                                        </p>
+                                    </template>
+                                </template>
+
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="slds-m-around_medium">
+                                <template if:true={wrapperList}>
+                                    <template for:each={wrapperList} for:item="acc">
+                                        <p key={acc.Id}>
+                                            {acc.MobilePhone}
+
+                                        </p>
+                                    </template>
+                                </template>
+
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="slds-m-around_medium">
+                                <template if:true={wrapperList}>
+                                    <template for:each={wrapperList} for:item="acc">
+                                        <p key={acc.Id}>
+                                            {acc.MobilePhone}
+
+                                        </p>
+                                    </template>
+                                </template>
+
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="slds-m-around_medium">
+                                <template if:true={wrapperList}>
+                                    <template for:each={wrapperList} for:item="acc">
+                                        <p key={acc.Id}>
+                                            {acc.MobilePhone}
+
+                                        </p>
+                                    </template>
+                                </template>
+
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="slds-m-around_medium">
+                                <template if:true={wrapperList}>
+                                    <template for:each={wrapperList} for:item="acc">
+                                        <p key={acc.Id}>
+                                            {acc.MobilePhone}
+
+                                        </p>
+                                    </template>
+                                </template>
+
+                            </div>
+                        </th>
+
+                    </tr>
+                </table>
+
+
+            </lightning-card>
+
+        </lightning-card>
+
+
+
+
+
+    </lightning-card>
+</template>
+
+<!--
+<ul class="slds-m-around_medium">
+    <template for:each={wrapperList} for:item="wrap">
+        <li key={wrap.Id}>
+            {wrap.LastName}    
+            {wrap.MobilePhone}
+            {wrap.PhotoUrl}
+            {wrap.Status}
+            {wrap.CreatedDate}
+            {wrap.DoNotCall}
+        </li>
+    </template>
+
+ <lightning-card>
+            <div class="slds-m-around_medium">
+                <template if:true={wrapperList}>
+                    <template for:each={wrapperList} for:item="acc">
+                        <p key={acc.Id}>{acc.MobilePhone}</p>
+                    </template>
+                </template>
+
+            </div>
+        </lightning-card>
+
+
+-->
