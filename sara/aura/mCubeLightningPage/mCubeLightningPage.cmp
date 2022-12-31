@@ -1,0 +1,88 @@
+<aura:component controller="mCubeController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="recordId"  type="String" />
+    <aura:attribute name="ids"  type="String[]" />
+    <aura:attribute name="x1"  type="Integer" default="1" />
+    <aura:attribute name="callrecords"  type="object[]"   />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <div class="new_Order slds-m-around--small">
+        <div class="slds-page-header slds-p-around--medium" style="background-color:#023246;border-radius: 25px;">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-has-flexi-truncate slds-align-middle">
+                            <div class="slds-media">
+                                <div class="slds-media__figure new_quote_icon">
+                                    <lightning:icon size="" varient="" iconName="action:quote" alternativeText="Order" />
+                                </div>
+                                <div class="slds-media__body slds-align-middle">
+                                    <div class="slds-page-header__name">
+                                        <div class="slds-page-header__name-title">
+                                            <h1>
+                                                <span class="slds-page-header__title slds-truncate" title="{!v.headerName}" style="color:#f6f6f6;">𝘔-𝘊𝘶𝘣𝘦 𝘊𝘢𝘭𝘭 𝘚𝘵𝘢𝘵𝘶𝘴/𝘙𝘦𝘤𝘰𝘳𝘥𝘪𝘯𝘨𝘴 </span>
+                                            </h1>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slds-page-body slds-theme_default">
+            <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-m-topsmall quate-table">
+                <thead>
+                    <aura:if isTrue="{!v.ids}">
+                         <tr  >
+                                 <td colspan="3">
+                                   
+                                 </td>
+                        </tr>
+                        <aura:iteration items="{!v.callrecords}" var="item" indexVar="indx">                              
+                            <tr style=" background-color: #c1c1c1;margin-top:3px " >
+                                <td colspan="3"> 
+                                    Call Id: <a href="{!'/'+item.Id}">{!item.Name} </a> 
+                                 </td> 
+                                
+                            </tr> 
+                            <tr  style=" background-color: #c1c1c1 ">
+                                <td >
+                                   From:   {!item.Call_From__c} 
+                                 </td> 
+                                 <td > 
+                                   To:     {!item.Call_To__c}
+                                 </td>
+                                  
+                            </tr >
+                            <tr  style=" background-color: #c1c1c1;">
+                                 <td> 
+                                  Start:  <ui:outputDateTime aura:id="oDate" value="{!item.Start_Time__c}" /> 
+                                 </td>
+                                 <td>
+                                  End : <ui:outputDateTime aura:id="oDate" value="{!item.End_Time__c}" />  
+                                 </td>
+                                
+                            </tr>
+                             <tr  style=" background-color: #c1c1c1;">
+                                 <td>
+                                   Status:   {!item.Status__c}
+                                 </td> 
+                                 <td>
+                                     <a href="{!item.Recording_File__c}">Recording</a>
+                                 </td>
+                            </tr>
+                             <tr  >
+                                 <td colspan="3">
+                                   
+                                 </td>
+                             </tr>
+                        </aura:iteration>
+                    </aura:if>
+                </thead>
+            </table>
+        </div>
+    </div>   
+    
+</aura:component>

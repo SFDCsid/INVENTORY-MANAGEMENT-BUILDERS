@@ -1,0 +1,52 @@
+.THIS .panel {
+    width:20%;
+    height:400px;
+    overflow:scroll;
+    float:left;
+    background:white;
+   margin: 10px 0px;
+    border-radius:5px;
+}
+.THIS .panel1 {
+    width:70%;
+    float:left;
+    background:white;
+   margin:10px;
+    border-radius:5px;
+
+}.THIS .item {
+     
+   
+  border-bottom: solid 1px grey;
+    height: 40px;
+    padding: 15px;
+    margin: 10px;
+
+}
+
+.THIS .itemtd {
+     
+   
+  
+    padding: 15px;
+    margin: 10px;
+
+}
+.THIS .thead{
+     padding: 15px;
+    margin: 10px;
+    
+}
+.THIS .footer{
+    width: 100%;
+    height: 50px;
+    text-align: right;
+    background:white;
+
+}
+
+.THIS .extbutton{
+    position: absolute;
+    bottom: 0px;
+    left: 58%;
+}
