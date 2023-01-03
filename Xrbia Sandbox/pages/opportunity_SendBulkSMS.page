@@ -1,0 +1,16 @@
+<apex:page id="pageID" standardController="Opportunity__c" extensions="tdc_tsw.SendBulkSMSCOLightning" recordSetVar="testRecords" docType="html-5.0" standardStylesheets="false" sidebar="false" showHeader="false">
+<script>
+var ids = "{!ids}";
+var returnUrl = "{!returnUrl}";
+var parentId = "{!$CurrentPage.parameters.Id}";
+var retrnurl = "{!redirectURL}";
+if(returnUrl != "" && returnUrl != null && parentId != "" && parentId != null)
+{
+window.location.href = "/apex/tdc_tsw__SendBulkSMS_SLDS?ids="+ids+"&parentId="+parentId+"&retURL="+returnUrl+"&redirectURL="+retrnurl;
+}
+else if( returnUrl != "" && returnUrl != null)
+{
+window.location.href = "/apex/tdc_tsw__SendBulkSMS_SLDS?ids="+ids+"&retURL="+returnUrl;
+}
+</script>
+</apex:page>

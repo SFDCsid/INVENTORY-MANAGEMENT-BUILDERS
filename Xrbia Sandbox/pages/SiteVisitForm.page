@@ -1,0 +1,747 @@
+<apex:page showHeader="false" sidebar="false" controller="SiteVisitFormController" standardStylesheets="true" docType="html-5.0">
+    <apex:form id="form">
+        <html>
+            <meta charset="utf-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    		
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+            <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet"/>
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"/>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+            <link href="https://fonts.googleapis.com/css?family=Acme&display=swap" rel="stylesheet"/>
+            <head>
+                <style>
+                    html, body {
+                        padding: 0px;
+                        margin: 0px;
+                        font-family: 'IBMPlexSansSemiBold', sans-serif;
+                        font-family: "Google Sans", Roboto, arial, sans-serif;
+                    }
+                    header {
+                        background:#FFF;
+                        position: sticky;
+                        top: 0px;
+                        width:100%;
+                        padding: 5px 6px;
+                        z-index:999;
+                    }
+                    #previousButton, #nextButton {
+                        outline: none;
+                        color: #fff;
+                    }                
+                    .nav-button {
+                        background: transparent;
+                        align-items: center;
+                        margin: 0 16px;
+                        border: none;
+                        outline: none;
+                        color: #263238;
+                        cursor: pointer;
+                        font-size: 16px;
+                    }
+                    .nav-button.hide {
+                        user-select: none;
+                        opacity: 0;
+                    }
+                    .nav-button *:first-child {
+                        margin-right: 16px;
+                    }
+                    .upload-btn-wrapper {
+                        position: relative;
+                        overflow: hidden;
+                        display: inline-block;
+                    }                
+                    h3{
+                        
+                        color:#C5610F;
+                        
+                    }
+                    .dateOnlyInput input {
+                        width: 10em;
+                        float: left;
+                    }
+                    .dateFormat {
+                        padding: 0 8px !important;
+                    }
+                    
+                    .col-form-label {    
+                        color: #292b33;
+                        font-size: 18px;
+                    }
+                    .form-control:focus {
+                        color: #292b33;
+                        background-color: #fff;
+                        border-color: #292b33;
+                        outline: 0;
+                        box-shadow: 0 0 0 0.07rem rgb(41, 43, 51);
+                    }
+                    p.borderdashed{
+                        color:#DE2A3B;
+                        width:50%;
+                        margin:auto;
+                        border-bottom:1px dashed #DE2A3B;
+                    }
+                    p.borderdashedWeekday{
+                        color:#DE2A3B;
+                        width:40%;
+                        margin:auto;
+                        border-bottom:1px dashed #DE2A3B;
+                    }
+                    p.borderdashedDR{
+                        color:#DE2A3B;
+                        width:80%;
+                        margin:auto;
+                        border-bottom:1px dashed #DE2A3B;
+                    }
+                    p.borderdashed2{
+                        color:#DE2A3B;
+                        width:80%;
+                        margin:auto;
+                        border-bottom:1px dashed #DE2A3B;
+                    }
+                    p.borderdashed3{
+                        color:#DE2A3B;
+                        width:45%;
+                        margin:auto;
+                        border-bottom:1px dashed #DE2A3B;
+                    }
+                    p.borderdashedAdd{
+                        color:#DE2A3B;
+                        width:15%;
+                        margin:auto;
+                        border-bottom:1px dashed #DE2A3B;
+                    }
+                    
+                    /*----------------------- Button CSS ---------------------------*/
+                    .btn{
+                        background:none !important;
+                        background-image:none !important;
+                        border:none !important;
+                    }
+                    .button1{
+                        width: 170px;
+                        padding:5px 12px !important;
+                        font-size: 18px;
+                        font-family: 'IBMPlexSansRegular';
+                        background-image:none;
+                        text-transform: uppercase;
+                        transition: all ease-in-out 0.2s;
+                        -moz-transition: all ease-in-out 0.2s;
+                        -webkit-transition: all ease-in-out 0.2s;
+                        z-index: 1;
+                        position:sticky;
+                        bottom:0px;
+                        right:30px;                
+                        color:#fff !important;
+                        background: #292b33 !important;
+                        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+                        transition: all 0.3s cubic-bezier(.25,.8,.25,1) !important;
+                    }               
+                    .btn:focus {
+                        box-shadow: 0 0 0 0.1rem rgb(41, 43, 51) !important;
+                    }  
+                    .button1:hover{
+                        background-image:none;
+                        background: #e74315 !important;
+                        color:#FFF !important;
+                        transition:.3s;                                
+                        box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);                
+                    }
+                    .container1{
+                        width:44%;
+                        margin:auto;
+                        background: #292b33 !important;
+                        color:#fff !important;
+                        padding:10px 0;
+                        margin:7% auto;
+                        border-radius:5px;
+                        -webkit-box-shadow: 1px 1px 15px 0px rgba(106,88,95,.8);
+                        -moz-box-shadow: 1px 1px 15px 0px rgba(106,88,95,.8);
+                        box-shadow: 1px 1px 15px 0px rgba(106,88,95,.8);
+                    }
+                    .container1 .col-form-label {    
+                        color: #FFF;
+                        font-size: 16px;
+                    }                
+                    .container1 h3{                
+                        font-size: 1.8rem;
+                        font-weight: 500;
+                        color: #DE1E42;
+                        letter-spacing:4px;
+                        font-family: 'verdana', sans-serif;
+                        text-transform: uppercase;
+                    }
+                    .container1 .form-group{                
+                        padding:8px 30px !important;
+                    }
+                    .container1 .buttonSearch{
+                        padding:5px 12px !important;
+                        font-size: 16px;      
+                        font-weight:bold;
+                        color:#fff !important;
+                        background: #292b33 !important;
+                        border:1px solid #fff !important;
+                        width:160px;
+                        margin-bottom: 8px;
+                    }
+                    .container1 .buttonSearch:hover{
+                        background-image:none;
+                        background: #DE1E42 !important;
+                        color:#FFF !important;
+                        transition:.3s;                                
+                        box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);                
+                    }
+                    .container1 .form-control {
+                        background-color: #292b33 ;
+                        border: 1px solid #ced4da;
+                        border-color:linear-gradient(to right top, #292b33, #595a60, #8d8d92, #c5c4c7, #ffffff);
+                        color:#FFF;
+                        border-radius: .25rem;
+                        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+                    }
+                    .container h3{
+                        font-family: verdana;
+                    }
+                    footer {
+                        position: sticky;
+                        margin-top:52px;
+                        bottom:0px;
+                        width:100%;
+                        display: flex;
+                        padding: 5px 10px;
+                        background: #C5610F !important;
+                        color:#fff;
+                        align-items: center;
+                        justify-content: space-between;
+                    }                
+                    .alert-dismissible .close {
+                        position: absolute;
+                        top: 5px;
+                    }
+                    .customPopup {
+                        //background: #9bca3e !important; 
+                        border: 1px solid black;           
+                        border-radius: 25px;
+                        left: 50%;
+                        padding: 60px;
+                        position: absolute;
+                        z-index: 999;
+                        width: 530px;
+                        margin-left: -250px;
+                        top: 42%;
+                        text-align: center;
+                        font-size: 12px;
+                        //color: white;
+                    }
+                    .customPopup .buttonSearch {
+                        padding: 5px 12px !important;
+                        font-size: 16px;
+                        font-weight: bold;
+                        color: #fff !important;
+                        background: #9bca3e !important;
+                        border: 1px solid #fff !important;
+                        margin-bottom: -20px;
+                        width: 150px;
+                    }
+                    .customPopup .buttonSearch:hover{
+                        background-image:none;
+                        background: #DE1E42 !important;
+                        color:#FFF !important;
+                        transition:.3s;                                
+                        box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);                
+                    }
+                    .form-group {
+                        margin-bottom: 0rem !important;
+                    }
+                    .form-control{
+                        margin-bottom: 14px;
+                        
+                    }
+                    .logo{
+                        height:38%;
+                        width: 15%;
+                        text-align:right;
+                    }
+                    .actionStatusLoading{
+                        margin: 12% 44%;
+                    }
+                    .innerAction{
+                        display: inline-block;
+                        padding: 2px;
+                        background-color: #384862;
+                        width: 153px;
+                        text-align: center;
+                        color:white;
+                    }
+                    .innerAction img{
+                        float: left;
+                        height:130px;
+                        width:150px;
+                    }
+                    /* Hide all steps by default: */
+                    .container {
+                        display: none;
+                    }
+                </style>
+            </head>
+            <body>
+                <!------------------------------------------ Header ------------------------------------------------>
+                <header class="pt-3">
+                    <center><a href="#"><apex:image url="{!$Resource.Logo}" styleClass="logo" /></a></center> 
+                </header>
+                <hr/>
+                <!------------------------------------------ Header ------------------------------------------------>
+                
+                <!------------------------------------------- Basic Details -------------------------------------------->
+                <div class="container" id="first"> 
+                    <center><br/>
+                        <h3>Basic Details</h3>
+                    </center>
+                    <div class="form-group row mt-4">
+                        <label for="salutation" class="col-md-2 col-sm-12 col-form-label"><span style="color:red;">*</span>Salutation </label>
+                        <div class="col-md-10 col-sm-12">
+                            <apex:inputField value="{!sv.Salutation__c}" styleClass="form-control" id="salutation" />
+                        </div>
+                    </div>
+                    <div class="form-group row mt-4">
+                        <label for="Fname" class="col-md-2 col-sm-12 col-form-label"><span style="color:red;">*</span>First Name </label>
+                        <div class="col-md-4 col-sm-12">
+                            <apex:inputField value="{!sv.First_Name__c}" styleClass="form-control" id="Fname" />
+                        </div>
+                        <label for="Lname" class="col-md-2 col-sm-12 col-form-label"><span style="color:red;">*</span>Last Name </label>
+                        <div class="col-md-4 col-sm-12">
+                            <apex:inputField value="{!sv.Last_Name__c}" styleClass="form-control" id="Lname" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="mobNo" class="col-md-2 col-sm-12 col-form-label"><span style="color:red;">*</span>Mobile </label>
+                        <div class="col-md-4 col-sm-12">
+                            <apex:outputText value="{!sv.Mobile__c}" styleClass="form-control" id="mobNo" />
+                        </div> 
+                        <label for="emailId" class="col-md-2 col-sm-12 col-form-label">Email </label>
+                        <div class="col-md-4 col-sm-12">
+                            <apex:outputText value="{!sv.Email__c}" styleClass="form-control" id="emailId" />
+                        </div>
+                    </div>
+                </div>
+                <!------------------------------------------- Basic Details -------------------------------------------->
+                
+
+                <!-------------------------------------------Residential Address ---------------------------------------->
+                <div class="container" id="Second">
+                    <center><br/>
+                        <h3>Residential Address</h3>
+                    </center>
+                    <br/>
+                    <div class="form-group row">
+                        <label for="HouseNo" class="col-md-2 col-sm-12 col-form-label"> House No </label>
+                        <div class="col-md-4 col-sm-12">
+                            <apex:inputField value="{!sv.House_No__c}" styleClass="form-control" id="HouseNo" />
+                        </div>
+                        
+                        <label for="Street1" class="col-md-2 col-sm-12 col-form-label">Street 1</label>
+                        <div class="col-md-4 col-sm-12">
+                            <apex:inputField value="{!sv.Street_1__c}" styleClass="form-control" id="Street1" />
+                        </div>
+                        
+                        <label for="Locality" class="col-md-2 col-sm-12 col-form-label"><span style="color:red;">*</span>Locality</label>
+                        <div class="col-md-4 col-sm-12">
+                            <apex:inputField value="{!sv.Locality__c}" styleClass="form-control" id="Locality" />
+                        </div>
+                        
+                        <label for="City" class="col-md-2 col-sm-12 col-form-label"><span style="color:red;">*</span>City</label>
+                        <div class="col-md-4 col-sm-12">
+                            <apex:inputField value="{!sv.City__c}" styleClass="form-control" id="City" />
+                        </div>
+                        
+                        <!--<label for="State" class="col-md-2 col-sm-12 col-form-label">State</label>
+                        <div class="col-md-4 col-sm-12">
+                            <apex:inputField value="{!sv.State__c}" styleClass="form-control" id="State" />
+                        </div>
+                        
+                        <label for="Country" class="col-md-2 col-sm-12 col-form-label">Country</label>
+                        <div class="col-md-4 col-sm-12">
+                            <apex:inputField value="{!sv.Country__c}" styleClass="form-control" id="Country" />
+                        </div>-->
+                        
+                        <label for="Pincode" class="col-md-2 col-sm-12 col-form-label">Pincode</label>
+                        <div class="col-md-4 col-sm-12">
+                            <apex:inputField value="{!sv.Pincode__c}" styleClass="form-control" id="Pincode" />
+                        </div>
+                    </div>
+                </div>
+                
+                
+                        
+                <!------------------------------------------- Source Details -------------------------------------------->
+                <div class="container" id="Third"> 
+                    <center><br/>
+                        <h3>Source Details</h3> 
+                    </center>
+                    <br/>
+                    
+                    <apex:outputPanel rendered="{!NOT(isSourceNotEditable)}">
+                        <div class="form-group row mt-4">                    
+                            <label for="MasterSource" class="col-md-2 col-sm-12 col-form-label"><span style="color:red;">*</span>Where did you hear about us?</label>
+                            <div class="col-md-10 col-sm-12">
+                                <apex:inputField value="{!sv.Media__c}" styleClass="form-control" id="MasterSource" >
+                                    <apex:actionSupport event="onchange" reRender="subInfo, subInfo1" status="statuss" /> 
+                                </apex:inputField>
+                            </div>
+                        </div>
+                        
+                        <apex:outputPanel id="subInfo">
+                            <apex:outputPanel rendered="{!sv.Media__c == 'Channel Partner'}">
+                                <div class="form-group row mt-4">                    
+                                    <label for="cpName" class="col-md-2 col-sm-12 col-form-label"><span style="color:red;">*</span>Channel Partner</label>
+                                    <div class="col-md-10 col-sm-12">
+                                        <input autocomplete="off" type="text" size="20" name="cp" id="cp" onkeyup="loadXML(this.value);" class="form-control"/>
+                                        <apex:inputHidden value="{!cpName}" id="cp"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row mt-4">
+                                    <label class="col-md-2 col-sm-12 col-form-label"></label>
+                                    <div class="col-md-10 col-sm-12">
+                                        <div style="display: block;width:100%;background-color:#d1cbd7;" align="center" id="searchResult" name="searchResult" onclick="cp();"></div>
+                                    </div>
+                                </div>
+                            </apex:outputPanel>
+                        </apex:outputPanel>
+                        
+                        <apex:outputPanel id="subInfo1">
+                            <apex:outputPanel rendered="{!sv.Media__c == 'Reference'}">
+                                <div class="form-group row mt-4">                    
+                                    <label for="refName" class="col-md-2 col-sm-12 col-form-label"><span style="color:red;">*</span>Referrer Name</label>
+                                    <div class="col-md-10 col-sm-12">
+                                        <input autocomplete="off" type="text" size="20" name="ref" id="ref" onkeyup="loadXML1(this.value);" class="form-control"/>
+                                        <apex:inputHidden value="{!refName}" id="ref"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row mt-4">
+                                    <label class="col-md-2 col-sm-12 col-form-label"></label>
+                                    <div class="col-md-10 col-sm-12">
+                                        <div style="display: block;width:100%;background-color:#d1cbd7;" align="center" id="searchResult1" name="searchResult1" onclick="ref();"></div>
+                                    </div>
+                                </div>
+                            </apex:outputPanel>
+                        </apex:outputPanel>
+                    </apex:outputPanel>  
+                    
+                 	<apex:outputPanel rendered="{!isSourceNotEditable}">
+                        <div class="form-group row mt-4">                    
+                            <label for="MasterSourceO" class="col-md-2 col-sm-12 col-form-label"><span style="color:red;">*</span>Where did you hear about us?</label>
+                            <div class="col-md-10 col-sm-12">
+                                <apex:outputText value="{!sv.Media__c}" styleClass="form-control" id="MasterSourceO"/>
+                            </div>
+                        </div>
+                        
+                        <apex:outputPanel rendered="{!sv.Media__c == 'Channel Partner'}">
+                            <div class="form-group row mt-4">                    
+                                <label for="cpNameO" class="col-md-2 col-sm-12 col-form-label"><span style="color:red;">*</span>Channel Partner</label>
+                                <div class="col-md-10 col-sm-12">
+                                    <apex:outputText value="{!cpName}" styleClass="form-control" id="cpNameO" />
+                                </div>
+                            </div>
+                        </apex:outputPanel>
+                        
+                        <apex:outputPanel rendered="{!sv.Media__c == 'Reference'}">
+                            <div class="form-group row mt-4">
+                                <label for="ReferrerNameO" class="col-md-2 col-sm-12 col-form-label">Referrer Name</label>
+                                <div class="col-md-10 col-sm-12">
+                                    <apex:outputText value="{!refName}" styleClass="form-control" id="ReferrerNameO"/> 
+                                </div>
+                            </div>
+                        </apex:outputPanel> 
+                    </apex:outputPanel>
+        		</div>     
+                <!------------------------------------------- Source Details ------------------------------------------->
+                
+                <!-------------------------------------------Requirement Details-----------------------------------------
+                
+                <div class="container" id="Fourth">
+                    <center><br/>
+                        <h3>Requirement Details</h3>
+                    </center>
+                    <br/>
+                    <div class="form-group row">
+                        <label for="CurrentResidenceStatus" class="col-md-2 col-sm-12 col-form-label"> Which is the option best describes your current residence status? </label>
+                        <div class="col-md-4 col-sm-12">
+                            <apex:inputField value="{!sv.Current_Residence_Status__c}" styleClass="form-control" id="CurrentResidenceStatus" />
+                        </div>
+                        
+                        <label for="ConfigurationRequired" class="col-md-2 col-sm-12 col-form-label"> <span style="color:red;">*</span>Please state the configuration you are interested in ? </label>
+                        <div class="col-md-4 col-sm-12">
+                            <apex:inputField value="{!sv.Configuration_Required__c}" styleClass="form-control" id="ConfigurationRequired" />
+                        </div>
+                        
+                        <label for="Budget" class="col-md-2 col-sm-12 col-form-label"><span style="color:red;">*</span>Please state the budget for purchasing a house? </label>
+                        <div class="col-md-4 col-sm-12">
+                            <apex:inputField value="{!sv.Budget__c}" styleClass="form-control" id="Budget" />
+                        </div>
+                        
+                        <label for="BuyingPurpose" class="col-md-2 col-sm-12 col-form-label"> What is the purpose of Purchase? </label>
+                        <div class="col-md-4 col-sm-12">
+                            <apex:inputField value="{!sv.Buying_Purpose__c}" styleClass="form-control" id="BuyingPurpose" />
+                        </div>
+                        
+                        <label for="PossessionTimeframeRequired" class="col-md-2 col-sm-12 col-form-label"> What is the range of Possession? </label>
+                        <div class="col-md-4 col-sm-12">
+                            <apex:inputField value="{!sv.Possession_Timeframe_Required__c}" styleClass="form-control" id="PossessionTimeframeRequired" />
+                        </div>
+                        
+                    </div>
+                </div>
+                <-------------------------------------------Requirement Details----------------------------------------->
+              
+                <!------------------------------------------- Footer --------------------------------------------->
+                <footer >
+                    <button class="nav-button" id="previousButton" onclick="previousPage();return false;">
+                        <div class="prev">Previous</div>
+                    </button>   
+                    <div class="col"></div>                    
+                    <div class="col"></div>
+                    <button class="nav-button" id="nextButton" onclick="nextPage(1);return false;">
+                        <div class="nxt">Next</div>
+                    </button>
+                </footer>
+                <!------------------------------------------- Footer --------------------------------------------->
+                
+                <!------------------------------------------- Action Function --------------------------------------------->
+                <apex:actionFunction name="validateInput" action="{!validateInput}" onComplete="onCompleteHandler({!valError},'{!message}')" reRender="none">
+                    <apex:param id="p" name="currentTab" value="" />
+                </apex:actionFunction>
+                <apex:actionFunction name="callSubmitMethod" action="{!submit}" onComplete="onCompleteHandler1({!isRunError},'{!message}' )" rerender="error" />
+                <!------------------------------------------- Action Function ---------------------------------------------->
+               	<html> 
+                    <body>
+                        <apex:outputPanel id="error">
+                            <apex:outputPanel rendered="{!isRunError || isSuccess}">
+                                <div style="position: fixed ; left: 0; top: 0; bottom: 0; right: 0; z-index: 1;">
+                                    <div class="customPopup">
+                                        <apex:outputText >{!message}</apex:outputText><br/><br/>
+                                        <apex:commandButton value="Close" action="{!closeForm}" rerender="" styleClass="btn buttonSearch" />
+                                    </div>
+                                </div>
+                            </apex:outputPanel>
+                        </apex:outputPanel>
+           			</body> 
+            
+                   	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" ></script>
+                   	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+                   	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+            
+                   	<script>
+                        var currentTab = 0; // Current tab is set to be the first tab (0)
+                    	showTab(currentTab); // Display the current tab
+                   
+                    	function showTab(n) {
+                            // This function will display the specified tab of the form...
+                           	var x = document.getElementsByClassName("container");
+                            x[n].style.display = "block";
+                            //... and fix the Previous/Next buttons:
+                            if (n == 0) {
+                                document.getElementById("previousButton").style.display = "none";
+                            } else {
+                                document.getElementById("previousButton").style.display = "inline";
+                            }
+                            if (n == (x.length - 1)) {
+                                //alert('In Condition');
+                                document.getElementById("nextButton").innerHTML = "Submit";
+                                document.getElementById("nextButton").style.display = "inline"; 
+                            } else {
+                                document.getElementById("nextButton").innerHTML = "Next";
+                            }
+                        }
+                    	function nextPage(n) {
+                           	// This function will figure out which tab to display
+                            var x = document.getElementsByClassName("container");
+                            var btnText = document.getElementById("nextButton").innerHTML;
+                            
+                            // Hide the current tab:
+                            x[currentTab].style.display = "none";    
+                            
+                            // Increase or decrease the current tab by 1:
+                            if(btnText == 'Next') {
+                                //alert('Test');
+                                validateInput(currentTab);
+                            }
+                            
+                            // if you have reached the end of the form.
+                            if (btnText == 'Submit') {
+                                validateInput(currentTab);
+                                document.getElementById('nextButton').style.display = 'none';
+                                document.getElementById('previousButton').style.display = 'none';
+                            }
+                            
+                            // Otherwise, display the correct tab:              
+                       	}
+                       	function previousPage() {
+                            // This function will figure out which tab to display
+                            var x = document.getElementsByClassName("container");
+                            
+                            // Hide the current tab:
+                            x[currentTab].style.display = "none";    
+                            
+                            //Display Previous tab
+                            currentTab--;
+                            showTab(currentTab);
+                       	}
+                       	function onCompleteHandler(error, msg) {
+                            //alert('In onCompleteHandler: '+error);
+                            if(error == true) {
+                                //alert('currentTab: '+currentTab);
+                                showTab(currentTab);
+                                //stay on the same page.
+                                alert('Error : ' + msg);
+                            } else {
+                                var btnText = document.getElementById("nextButton").innerHTML;
+                                if(btnText == 'Submit') {
+                                    callSubmitMethod();
+                                }
+                                currentTab++;
+                                showTab(currentTab);
+                                //move to the next page
+                            }
+                       	}
+                    </script> 
+                    <script>
+                    	//Channel Partner//
+                    	function loadXML(typed) {
+                            if(typed =='') {
+                                document.getElementById("searchResult").style.display = 'none';
+                            } else {
+                                document.getElementById("searchResult").style.display = 'block';
+                                var records = [];
+                                Visualforce.remoting.Manager.invokeAction(
+                                    '{!$RemoteAction.SiteVisitFormController.getChannelPartner}',
+                                    typed,
+                                    function(result, event) {
+                        
+                                    if(event.status) {
+                                        //for(a=0; a<result.length; a++) {    
+                                        	//alert('result: '+result);
+                                        //}            
+                                        onSuccess(result);
+                                    } else if (event.type === 'exception') {
+                                        alert('Event Exception:' + event.message);
+                                    } else {
+                                        alert('Event Exception:' + event.message);
+                                    }
+                                },
+                                {escape: false}
+                                );
+                                //alert('records: '+records.getArray());    
+                            }
+                        }
+                    	function onSuccess(result) {
+                            var sb = "";
+                            //var records = result.getArray("records");
+                            for(var i = 0; i < result.length && i < 10; i++) {
+                                //alert('records:::: '+records);
+                                sb += "<span id="+result[i] +" onclick='divFunction(this.innerText);'>"+ result[i] +"</span><br>";
+                            }
+                            //alert('inside on success: '+sb);
+                            getObject("searchResult").innerHTML = sb;
+                        }
+                    	function getObject(name) {
+                            //alert('name:: '+name);
+                            var ns4 = (document.layers) ? true : false;
+                            var w3c = (document.getElementById) ? true : false;
+                            var ie4 = (document.all) ? true : false;
+            
+                            if (ns4) return eval('document.' + name);
+                            if (w3c) return document.getElementById(name);
+                            if (ie4) return eval('document.all.' + name);
+                            return false;
+                        }
+                        window.onload = function() {
+                            getObject("cp");
+                            //alert('cp: '+cp);
+                            document.getElementById("searchResult").style.display = 'none';
+                            //alert('searchRes: '+searchResult);
+                        }
+                    	function divFunction(name){
+                            //alert('name::'+name);
+                            document.getElementById("cp").value=name;
+                            var cpName = document.getElementById("j_id0:form:cp").value=name;
+                            //alert('cpName:::'+cpName);
+                            document.getElementById("searchResult").style.display = 'none';
+                            //alert('searchRes: '+searchResult);
+                            alert('You Selected: '+name);
+                        }
+                    	//Channel Partner//
+                    
+                    	//Customer Referrer//
+                    	function loadXML1(typed) {
+                            if(typed =='') {
+                                document.getElementById("searchResult1").style.display = 'none';
+                            } else {
+                                document.getElementById("searchResult1").style.display = 'block';
+                                var records = [];
+                                Visualforce.remoting.Manager.invokeAction(
+                                    '{!$RemoteAction.SiteVisitFormController.getReferrerName}',
+                                    typed,
+                                    function(result, event) {
+                        
+                                    if(event.status) {
+                                        //for(a=0; a<result.length; a++) {    
+                                        	//alert('result: '+result);
+                                        //}            
+                                        onSuccess1(result);
+                                    } else if (event.type === 'exception') {
+                                        alert('Event Exception:' + event.message);
+                                    } else {
+                                        alert('Event Exception:' + event.message);
+                                    }
+                                },
+                                {escape: false}
+                                );
+                                //alert('records: '+records.getArray());    
+                            }
+                        }
+                    	function onSuccess1(result) {
+                            var sb = "";
+                            //var records = result.getArray("records");
+                            for(var i = 0; i < result.length && i < 10; i++) {
+                                //alert('records:::: '+records);
+                                sb += "<span id="+result[i] +" onclick='divFunction1(this.innerText);'>"+ result[i] +"</span><br>";
+                            }
+                            //alert('inside on success: '+sb);
+                            getObject1("searchResult1").innerHTML = sb;
+                        }
+                    	function getObject1(name) {
+                            //alert('name:: '+name);
+                            var ns4 = (document.layers) ? true : false;
+                            var w3c = (document.getElementById) ? true : false;
+                            var ie4 = (document.all) ? true : false;
+            
+                            if (ns4) return eval('document.' + name);
+                            if (w3c) return document.getElementById(name);
+                            if (ie4) return eval('document.all.' + name);
+                            return false;
+                        }
+                        window.onload = function() {
+                            getObject1("ref");
+                            //alert('ref: '+ref);
+                            document.getElementById("searchResult1").style.display = 'none';
+                            //alert('searchRes: '+searchResult1);
+                        }
+                    	function divFunction1(name){
+                            //alert('name: '+name);
+                            document.getElementById("ref").value=name;
+                            var refName = document.getElementById("j_id0:form:ref").value=name;
+                            //alert('refName: '+refName);
+                            document.getElementById("searchResult1").style.display = 'none';
+                            //alert('searchRes: '+searchResult1);
+                            alert('You Selected: '+name);
+                        }
+                    	//Customer Referrer//
+                    </script>
+                </html>
+            </body>
+        </html>
+    </apex:form>
+</apex:page>

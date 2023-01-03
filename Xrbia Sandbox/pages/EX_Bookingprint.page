@@ -1,0 +1,758 @@
+<!-------------------------------------------
+  Project: XRBIA Developers
+  Created By: Exceller Consultancy
+  Created Date: 29-10-2022
+------------------------------------------<-->
+<apex:page Controller="Ex_BookingPrints" docType="html-5.0" showHeader="false" standardStylesheets="true" renderAs="pdf" >
+    
+    <html xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink">
+        
+        
+        <head>
+            <apex:stylesheet value="{!URLFOR($Resource.SLDS090, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+            <script type="text/javascript">__sfdcSessionId = '{!$Api.Session_Id}';</script>
+            <link href="https://fonts.googleapis.com/css?family=Lato:400,700&subset=latin,latin-ext" rel="stylesheet" type="text/css" />
+            <script src="/soap/ajax/9.0/connection.js"></script>
+            <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+            <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+        </head>
+        
+        <style>
+            #col1,#col2{width:49%;display:inline-block;}  
+            
+            /* @page{
+            margin-top: 0.5cm;
+            margin-bottom: 0.5cm;
+            margin-left: 0.5cm;
+            margin-right:0.5cm;
+            size: 220mm 300mm;
+            border :1px solid black; 
+            } */
+            
+            body{
+            font-size:0px;
+            line-height:0.5cm;
+            margin-Right:0.8cm;
+            margin-left:0.8cm;
+            margin-bottom:0.5cm;
+            margin-top:0.7cm;
+            text-align:justify;
+            font-family: Book Antiqua;
+            }
+         
+            
+table.table.table-bordered{
+margin: 20px 0 !important;
+border: 2px solid black;
+border-collapse: collapse;
+} 
+           
+@page{
+size: A4 portrait;
+border: 2px solid black;
+}
+            
+            
+ tr.noBorder th {
+ border: 0px;
+ page-break-inside:auto ;
+ }
+            
+ .Applicant {
+    margin-top: 5px;
+    }
+.Applicant p {
+    display: inline-block;
+    margin-right: 50px;
+ }
+          
+.signblock .inputText {
+    border-bottom: 1px solid;
+    margin-top: 20px;
+}
+            
+.signblock {
+    margin-top: 20px;
+}
+.block {
+    padding: 20px;
+}
+
+.signblock .block:nth-child(2) {
+   
+}
+.signblock .block {
+    display: inline-block;
+}
+ .signblock .inputText {
+    border-bottom: 1px solid;
+    margin-top: 20px;
+}
+             @page 
+            {
+              
+                @bottom-left 
+                {
+                    content: element(footer);
+                }
+            }
+            
+  div.footer {
+            display: block;
+            padding: 10px;
+            position: running(footer);
+        }
+            
+        </style>
+        
+        <body>
+          <!-- <apex:styleSheet value="{!$Resource.QuotCSS}"/> -->
+            
+            
+            
+            
+        <div class="header" >
+                <table width="100%" border="0" cellpadding="0" cellspacing="0" >
+                    
+                    <tr>
+                        
+                        <td>
+                            <div class="floatladd" id="col2">
+                                
+                                <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                                  <tr>
+                                        <td> <apex:image style="float:left;  display:inline;  height:80; width:80;" value="{!$Resource.Newlogo}"/></td>
+                                    </tr> 
+                                </table>
+                                
+                            </div>
+                            <br/>
+                            
+                            <div class="floatradd" >
+                                
+                                
+                                <table width="100%" border="1" align="right" cellpadding="0" cellspacing="0">
+                                    
+                                   
+                                    
+                                    <tr>
+                                        <td  width="25%" align="center" style="font-weight:normal;   font-size:12px; color:#000; "><b>Booked By</b></td>
+                                        <td  width="25%" align="left">{!bklist[0].Owner.Name}</td>
+                                        
+                                    </tr>
+                                    
+                                     <tr>
+                                        <td  width="25%" align="center" style="font-weight:normal;   font-size:12px; color:#000; "><b>Date</b></td>
+                                        <td  width="25%" align="left"><apex:outputtext value="{0, date, dd'-'MM'-'yyyy}"> 
+                                            <apex:param value="{!bklist[0].Booking_Date__c}"/> 
+                                            </apex:outputtext> </td> 
+                                         
+                                    </tr>
+                                   
+                                    <tr>
+                                        <td  width="25%"  align="center" style="font-weight:normal; color:#000; font-size:12px; "><b>Ownership</b></td>
+                                    <!--    <td  align="left">{!Qlist.Unit__r.Tower__r.RERA_Number__c}</td> -->
+                                        <td width="25%"></td>
+                                    </tr>
+                                </table>
+                            </div> 
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            
+            
+            
+  <!------------------------------------------------Applicant Details Section-------------------------------------------->
+            
+            <center> <h3> APPLICATION FORM  </h3></center>
+            
+          <div class="Applicant">
+           <apex:repeat value="{!lstApp}" var="ap"> 
+               <apex:outputPanel rendered="{!ap.Applicant_Number__c	 == 'Primary Applicant'}"> 
+                   <div style="page-break-after:always;"> 
+                       <center>           <h3> {!ap.Applicant_Number__c	} Details </h3> </center> 
+                       <table width="100%" border="1" cellpadding="0" cellspacing="0">
+                      <tr>
+                           <td width="50%" id="tdleft" style="font-weight:normal; font-size:14px;"><b>NAME :</b></td>
+                          <td  width="50%" id="tdleft">{!ap.Applicant_Title__c} {!ap.Name}</td>
+                        <!--<td id="tdleft">{!ap.Salutation__c}  {!ap.First_Name__c}  {!ap.Middle_Name__c}  {!ap.Last_Name__c}</td>-->
+                        <!--  <td width="50%" id="tdleft">Pending</td> -->
+                      </tr>
+                           
+                        <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>ADDRESS</b></td>
+                            <td id="tdleft"> {!ap.Applicant_Address__c}</td>
+                        </tr>
+                           
+                         <tr>
+                           <td  id="tdleft" style="font-weight:normal; font-size:14px;"><b>MOBILE NO.</b></td>
+                            <td id="tdleft"> {!ap.Mobile_Number__c}</td>
+                        </tr>
+                               
+                         <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>ALTERNATE CONTACT NO.</b></td>
+                            <td id="tdleft"> {!ap.Landline_Number__c} </td>
+                        </tr>
+                           
+                           <tr>
+                           <td  id="tdleft" style="font-weight:normal; font-size:14px;"><b>E-MAIL ID</b></td>
+                            <td id="tdleft"> {!ap.Email__c} </td>
+                        </tr>
+                             
+                       <tr>
+                        <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>Date Of Birth : </b></td>
+                       <td id="tdleft"><apex:outputText value="{0,date,dd/MM/yyyy}"> <apex:param value="{!ap.DOB__c}" /> </apex:outputText> </td>
+                           
+                       </tr>
+                                     
+                         <tr>
+                           <td  id="tdleft" style="font-weight:normal; font-size:14px;"><b>PAN NO.</b></td>
+                            <td id="tdleft"> {!ap.PAN_Number__c}</td>
+                        </tr>
+                       <tr>    
+                           <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>CURRENT RESIDENCE</b></td>
+                       <td id="tdleft">{!ap.Current_Residence__c}</td>
+                    </tr>
+                        
+                         <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>NO. OF DEPENDENTS </b></td>
+                        <td id="tdleft">{!ap.Number_Of_Dependents__c}</td>
+                    </tr>
+                       <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>PROFESSION </b></td>
+                           <td id="tdleft"> {!ap.Profession__c}</td>
+                    </tr>
+                        
+                         <tr>
+                           <td  id="tdleft" style="font-weight:normal; font-size:14px;"><b>INCOME TYPE </b></td>
+                           <td id="tdleft">{!ap.Income_Type__c}</td>
+                       </tr>
+                       <tr>
+                           <td width="50%"  id="tdleft" style="font-weight:normal; color:#000; font-size:14px; background:#CCC;"><b>IF SELF EMPLOYED</b></td>
+                           <td  width="50%" id="tdleft" style="font-weight:normal; color:#000; font-size:14px; background:#CCC;"></td>
+                      </tr>
+                           
+                      <tr>
+                           <td  id="tdleft" style="font-weight:normal; font-size:14px;"><b>MONTHLY INCOME</b></td>
+                           <td id="tdleft">{!ap.Monthly_Income__c}</td>
+                      </tr>
+                           
+                      <tr>
+                           <td  id="tdleft" style="font-weight:normal; font-size:14px;"><b>OTHER INCOME 1 </b></td>
+                           <td id="tdleft">{!ap.Other_Income_1__c}</td>
+                      </tr>
+                           
+                           
+                     <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>OTHER INCOME 2 </b></td>
+                           <td id="tdleft">{!ap.Other_Income_2__c}</td>
+                      </tr>
+                           
+                           
+                      <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px; background:#CCC;"><b>IF SALRIED </b></td>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px; background:#CCC;"></td>
+                      </tr>
+                           
+                           
+                       <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>MONTHLY INCOME</b></td>
+                           <td id="tdleft">{!ap.Monthly_Income__c}</td>
+                      </tr>
+                       
+                       <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>OTHER INCOME 1 </b></td>
+                           <td id="tdleft">{!ap.Other_Income_1__c}</td>
+                      </tr>
+                           
+                      <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>OTHER INCOME 2 </b></td>
+                           <td id="tdleft">{!ap.Other_Income_2__c}</td>
+                      </tr>
+                           
+                       <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>NAME OF THE EMPLOYER /BUSINESS </b></td>
+                           <td id="tdleft">{!ap.Name_Of_The_Employer_Business__c}</td>
+                      </tr>
+                           
+                      <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>ADDRESS OF EMPLOYER/BUSINESS  </b></td>
+                           <td id="tdleft">{!ap.Address_Of_Employer_Business__c}</td>
+                      </tr>
+                           
+                       <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>TYPE / BRIEF OF EMPLOYEMENT/BUSINESS</b></td>
+                           <td id="tdleft">{!ap.Type_Brief_Of_Employment_Business__c}</td>
+                      </tr>
+                           
+                       <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>YEARS IN PRESENT EMPLOYEMENT /BUSINESS</b></td>
+                           <td id="tdleft">{!ap.Years_In_Present_Employment_Business__c}</td>
+                      </tr>
+                           
+                      <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>TOTAL WORK/BUSINESS EXPERIENCE </b></td>
+                           <td id="tdleft">{!ap.Total_Work_Business_Experience__c}</td>
+                      </tr>
+                           
+                       <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>SALARY SLIPS / ITR AVAILABLE </b></td>
+                           <td id="tdleft">{!ap.Salary_Slips_ITR_Available__c}</td>
+                      </tr>
+                        
+                       <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>MONTHLY EXPENSE OTHER THAN EMI </b></td>
+                           <td id="tdleft">{!ap.Monthly_Expense_Other_Than_EMI__c}</td>
+                      </tr>
+                           
+                        <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>EXISTING EMI AMOUNT </b></td>
+                           <td id="tdleft">{!ap.Existing_EMI_Amount__c}</td>
+                      </tr>
+                        
+                </table>
+        <br/>  <br/>  
+        
+          <div class="col-md-4" style="float: left;">
+             <p>_______________________________</p>
+               <center><span>APPLICANT</span></center>
+            </div>
+
+               <div class="col-md-4" style="float: right;">
+             <p>_____________________________</p>
+               <center><span>CO-APPLICANT</span></center>
+            </div>
+                       <br/><br/><br/>
+                       <p>
+                           ________________________________________________________________________________________
+                           <center><span> 929, FIRST FLOOR, MANTRI HOUSE, F.C. ROAD, PUNE - 411004</span></center>
+                       </p>
+           </div>    
+                   
+                   
+       </apex:outputPanel> 
+         </apex:repeat>
+</div>
+
+             
+<!--------------------------------------------------Second Time---------------------------------->
+
+<div class="Applicant">
+           <apex:repeat value="{!lstApp}" var="ap">               
+               <br/>
+               <apex:outputPanel rendered="{!ap.Applicant_Number__c <> 'Primary Applicant'}"> 
+                   <div style="page-break-after:always;">   
+                       <center>           <h3> {!ap.Applicant_Number__c} Details </h3> </center> 
+                       <table width="100%" border="1" cellpadding="0" cellspacing="0">
+                      <tr>
+                           <td  width="50%" id="tdleft" style="font-weight:normal; font-size:14px;"><b>NAME :</b></td>
+                          <td width="50%" id="tdleft">{!ap.Applicant_Title__c} {!ap.Name}</td>
+                        <!--<td id="tdleft">{!ap.Salutation__c}  {!ap.First_Name__c}  {!ap.Middle_Name__c}  {!ap.Last_Name__c}</td>-->
+                        
+                      </tr>
+                           
+                        <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>ADDRESS</b></td>
+                            <td id="tdleft"> {!ap.Applicant_Address__c}</td>
+                        </tr>
+                           
+                         <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>MOBILE NO.</b></td>
+                            <td id="tdleft">{!ap.Mobile_Number__c}</td>
+                        </tr>
+                           
+                         <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>ALTERNATE CONTACT NO.</b></td>
+                            <td id="tdleft">{!ap.Landline_Number__c}</td>
+                        </tr>
+                           
+                           <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>E-MAIL ID</b></td>
+                            <td id="tdleft">{!ap.Email__c}</td>
+                        </tr>
+                           
+                       <tr>
+                        <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>Date Of Birth : </b></td>
+                        <td id="tdleft"><apex:outputText value="{0,date,dd/MM/yyyy}"> <apex:param value="{!ap.DOB__c}" /> </apex:outputText> </td>
+                           
+                       </tr>
+                        
+                         <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>PAN NO.</b></td>
+                            <td id="tdleft">{!ap.PAN_Number__c}</td>
+                        </tr>
+                       <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>CURRENT RESIDENCE</b></td>
+                       <td id="tdleft">{!ap.Current_Residence__c}</td>
+                    </tr>
+                        
+                         <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>NO. OF DEPENDENTS </b></td>
+                        <td id="tdleft">{!ap.Number_Of_Dependents__c}</td>
+                    </tr>
+                       <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>PROFESSION </b></td>
+                           <td id="tdleft"> {!ap.Profession__c}</td>
+                    </tr>
+                        
+                         <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>INCOME TYPE </b></td>
+                           <td id="tdleft">{!ap.Income_Type__c}</td>
+                       </tr>
+                       <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px; background:#CCC;"><b>IF SELF EMPLOYED</b></td>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px; background:#CCC;"></td>
+                      </tr>
+                           
+                      <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>MONTHLY INCOME</b></td>
+                           <td id="tdleft">{!ap.Monthly_Income__c}</td>
+                      </tr>
+                           
+                      <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>OTHER INCOME 1 </b></td>
+                           <td id="tdleft">{!ap.Other_Income_1__c}</td>
+                      </tr>
+                           
+                           
+                     <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>OTHER INCOME 2 </b></td>
+                           <td id="tdleft">{!ap.Other_Income_2__c}</td>
+                      </tr>
+                           
+                           
+                      <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px; background:#CCC;"><b>IF SALRIED </b></td>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px; background:#CCC;"></td>
+                      </tr>
+                           
+                           
+                       <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>MONTHLY INCOME</b></td>
+                           <td id="tdleft">{!ap.Monthly_Income__c}</td>
+                      </tr>
+                       
+                       <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>OTHER INCOME 1 </b></td>
+                           <td id="tdleft">{!ap.Other_Income_1__c}</td>
+                      </tr>
+                           
+                      <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>OTHER INCOME 2 </b></td>
+                           <td id="tdleft">{!ap.Other_Income_2__c}</td>
+                      </tr>
+                           
+                       <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>NAME OF THE EMPLOYER /BUSINESS </b></td>
+                           <td id="tdleft">{!ap.Name_Of_The_Employer_Business__c}</td>
+                      </tr>
+                           
+                      <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>ADDRESS OF EMPLOYER/BUSINESS  </b></td>
+                           <td id="tdleft">{!ap.Address_Of_Employer_Business__c}</td>
+                      </tr>
+                           
+                       <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>TYPE / BRIEF OF EMPLOYEMENT/BUSINESS</b></td>
+                           <td id="tdleft">{!ap.Type_Brief_Of_Employment_Business__c}</td>
+                      </tr>
+                           
+                       <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>YEARS IN PRESENT EMPLOYEMENT /BUSINESS</b></td>
+                           <td id="tdleft">{!ap.Years_In_Present_Employment_Business__c}</td>
+                      </tr>
+                           
+                      <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>TOTAL WORK/BUSINESS EXPERIENCE </b></td>
+                           <td id="tdleft">{!ap.Total_Work_Business_Experience__c}</td>
+                      </tr>
+                           
+                       <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>SALARY SLIPS / ITR AVAILABLE </b></td>
+                           <td id="tdleft">{!ap.Salary_Slips_ITR_Available__c}</td>
+                      </tr>
+                        
+                       <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>MONTHLY EXPENSE OTHER THAN EMI </b></td>
+                           <td id="tdleft">{!ap.Monthly_Expense_Other_Than_EMI__c}</td>
+                      </tr>
+                           
+                        <tr>
+                           <td id="tdleft" style="font-weight:normal; font-size:14px;"><b>EXISTING EMI AMOUNT </b></td>
+                           <td id="tdleft">{!ap.Existing_EMI_Amount__c}</td>
+                      </tr>
+                        
+                </table>
+                       
+                        <br/><br/><br/><br/>
+        
+          <div class="col-md-4" style="float: left;">
+             <p>_______________________________</p>
+               <center><span>APPLICANT</span></center>
+            </div>
+
+               <div class="col-md-4" style="float: right;">
+             <p>_____________________________</p>
+               <center><span>CO-APPLICANT</span></center>
+            </div>
+                       
+                       <br/><br/> <br/><br/><br/><br/><br/><br/><br/>
+                       <p>
+                           ________________________________________________________________________________________
+                           <center><span> 929, FIRST FLOOR, MANTRI HOUSE, F.C. ROAD, PUNE - 411004</span></center>
+                       </p>
+            </div>       
+                   
+                   
+       </apex:outputPanel> 
+         </apex:repeat>
+</div>
+
+
+
+            
+            
+            <div style="page-break-after:always;"> </div>
+       <!-----------------------------------------Unit Details---------------------------------------------------------->
+            
+                        <center> <h3> UNIT DETAILS </h3></center>            
+            
+               <table width="100%" border="1" cellpadding="0" cellspacing="0">
+                   
+                   
+                       <tr>
+                           <td width="10" id="tdleft" style="font-weight:normal; font-size:14px;"><b>Project Name  </b></td>
+                           <td width="25" id="tdleft">{!bklist[0].Unit__r.Project__r.Name}</td>
+                           <td width="10" id="tdleft" style="font-weight:normal; font-size:14px;"><b>Stamp Duty </b></td>
+                           <td width="25" id="tdleft">{!strStampDuty}</td>
+                      </tr>
+                   
+                   
+                   <tr>
+                           <td width="10" id="tdleft" style="font-weight:normal; font-size:14px;"><b>Building No.</b></td>
+                           <td width="25" id="tdleft">{!bklist[0].Unit__r.Tower__r.Name}</td>
+                           <td width="10" id="tdleft" style="font-weight:normal; font-size:14px;"><b>GST</b></td>
+                           <td width="25" id="tdleft">{!stragmt}</td>
+                      </tr>
+                   
+                   
+                   <tr>
+                           <td width="10" id="tdleft" style="font-weight:normal; font-size:14px;"><b>Unit No.</b></td>
+                           <td width="25" id="tdleft">{!bklist[0].Unit__r.Name}</td>
+                           <td width="10" id="tdleft" style="font-weight:normal; font-size:14px;"><b>Registration Charges</b></td>
+                           <td width="25" id="tdleft">{!strregCharge}</td>
+                      </tr>
+                   
+                   
+                   <tr>
+                           <td width="10" id="tdleft" style="font-weight:normal; font-size:14px;"><b>BHK</b></td>
+                           <td width="25" id="tdleft">{!bklist[0].Unit__r.Configuration__c}</td>
+                           <td width="10" id="tdleft" style="font-weight:normal; font-size:14px;"><b>Legal Charges </b></td>
+                           <td width="25" id="tdleft">{!strleagal}</td>
+                      </tr>
+                   
+                   
+                   <tr>
+                           <td width="10" id="tdleft" style="font-weight:normal; font-size:14px;"><b>View - Prem/Corner/NP </b></td>
+                           <td width="25" id="tdleft">{!bklist[0].Unit__r.Premium_View__c}</td>
+                           <td width="10" id="tdleft"></td>
+                           <td width="25" id="tdleft"></td>
+                      </tr>
+                      
+                      <tr>
+                           <td width="10" id="tdleft" style="font-weight:normal; font-size:14px;"><b>Carpet Area </b></td>
+                           <td width="25" id="tdleft">{!strcararea}</td>
+                           <td width="10" id="tdleft" style="font-weight:normal; font-size:14px;"><b>Agreement Value </b></td>
+                           <td width="25" id="tdleft">{!stragmtval}</td>
+                      </tr>
+                      <tr>
+                           <td width="50" id="tdleft" style="font-weight:normal; font-size:14px;"><b>Total Cost </b></td>
+                           <td width="50" id="tdleft">{!strTotalcost}</td>
+                           <td width="50" id="tdleft"></td>
+                           <td width="50" id="tdleft"></td>
+                      </tr>
+                   
+                   
+            </table>
+    
+            
+            <p>
+              The Taxes and duties are applicable as per rates prevailing and amended from time to time under respective acts<br/><br/>
+                <b>Tentative agreement Registration Date :</b><span>{!bklist[0].Tentative_Agreement_Reg_Date__c}</span>
+            </p>
+                <br/>
+    <!-----------------------------------------Payment Details---------------------------------------------------------->           
+
+             <center> <h3> PAYMENT DETAILS </h3></center> 
+      <!--<center><b> Payment Mode: Cheque/DD/RTGS/Pay Order/Credit or Debit Card/Others</b> </center>-->
+    <br/><br/>
+                   
+        <table width="100%" border="1" cellpadding="0" cellspacing="0">
+            
+            
+            <tr colspan="4">
+                <!--<td colspan = "1" id="tdleft"><b>  S. No. </b></td>-->
+                <td colspan="1"><b> Payment Mode: </b></td>
+                <td colspan = "1" > <center><b> Instrument No </b></center> </td>
+                <td colspan = "1" > <center><b> Bank Name </b></center> </td>
+                <td colspan = "1" > <center><b> Branch</b></center> </td>   
+                <td colspan = "1" > <center><b> Date</b></center> </td>
+                <td colspan = "1" > <center><b> Amount</b></center> </td>
+            </tr>   
+            <apex:repeat value="{!lstRc}" var="rc">
+                <tr colspan="4">
+                    <td id="tdleft">{!rc.Payment_Mode__c}</td>
+                    <td id="tdleft">{!rc.Chq_No_UTR_TID_APPR_CODE__c}</td>
+                    <td> {!rc.Bank_Name__c}</td>   
+                    <td> {!rc.Drawn_on_Branch_Name__c}</td>
+                    <td> {!rc.Dated__c}</td>  
+                    <td> {!rc.Amount__c}</td>
+                </tr> 
+            </apex:repeat>
+            </table>
+    <br/> <br/>
+            
+            <center> <h3>   PAYMENT OPTIONS  </h3> </center>
+            
+            <p>
+                {!bklist[0].PAYMENT_OPTIONS__c}
+                <b>Whether eligible for Pradhan Mantri Awas Yojana CLSS </b> {!bklist[0].eligible_for_Pradhan_Mantri_Awas_Yojana__c}<br/><br/> 
+                
+                <b>Any other offers:</b>{!bklist[0].Any_other_offers__c}<br/><br/>
+                <b>Remarks:</b>{!bkList[0].Booking_Remarks__c}
+                
+            </p>
+    
+     
+        
+          <div class="col-md-4" style="float: left;">
+             <p>_______________________________</p>
+               <center><span>APPLICANT</span></center>
+            </div>
+
+               <div class="col-md-4" style="float: right;">
+             <p>_____________________________</p>
+               <center><span>CO-APPLICANT</span></center>
+            </div>
+    
+                    <br/><br/> <br/><br/><br/>
+                       <p>
+                           _________________________________________________________________________________________________________
+                           <center><span> 929, FIRST FLOOR, MANTRI HOUSE, F.C. ROAD, PUNE - 411004</span></center>
+                       </p>
+    
+                                  <div style="page-break-after:always;"> </div>
+            <!----------------------------------------Payment Milestone---------------------------------------------->
+            
+                                          <center> <h3> PAYMENT SCHEDULE </h3></center> 
+            
+                         <table width="100%" border="1" cellpadding="0" cellspacing="0">
+                      
+                            <tr> 
+                                <td  width="20%"  ><b>Milestone</b></td>
+                                <td  width="15%"  ><b>Due %</b></td>
+                              <!--  <td  width="15%"  ><b>Due Date</b></td> -->                   
+                                <td  width="15%"  ><b>Amount Due</b></td>
+                                <td  width="15%"  ><b>GST</b></td>
+                                <td  width="15%"  ><b>Total</b></td>
+                                
+                            </tr>
+                           
+                         <tbody>
+                            <apex:repeat value="{!pswList}" var="psw">
+                                <tr>
+                                    <td  width="10%" class="tlb" style="font-weight:normal; font-size:14px;" align="left">{!psw.milestoneName}</td>
+                                    <td width="10%" class="tlb" style="font-weight:normal; font-size:14px;" align="right">{!psw.percentDue}</td>
+                                    <td width="10%" class="tlb" style="font-weight:normal; font-size:14px;" align="right">{!psw.milestoneAmount}</td>
+                                    <td width="10%" class="tlb" style="font-weight:normal; font-size:14px;" align="right">{!psw.milestoneGST}</td>
+                                    <td  width="10%" class="tlb" style="font-weight:normal; font-size:14px;" align="right">{!psw.milestoneTotal}</td>
+                                </tr>
+                            </apex:repeat>
+                             </tbody>  
+                       </table>
+    <br/> <br/>
+              <!-------------------------------------------------Source---------------------------------------->
+            
+                                      <center> <h3>Source: </h3></center>
+            
+            <p>
+                <b>Source Details :</b>&nbsp;{!bklist[0].Opportunity__r.Media__c} <br/><br/>
+                <apex:outputPanel rendered="{!bklist[0].Opportunity__r.Media__c == 'Channel Partner'}">
+                    <b>Channel Partner Name :</b>&nbsp;{!bklist[0].Opportunity__r.Channel_Partner__r.Name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>CP Code :</b>&nbsp;{!bklist[0].Opportunity__r.Channel_Partner__r.CP_Unique_Code__c} <br/><br/>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!bkList[0].Opportunity__r.Media__c == 'Reference'}">
+                    <b>Existing Customer Name : </b>&nbsp;{!refBkList[0].Primary_Applicant_Name__c}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Unit No. :</b>&nbsp;{!refBkList[0].Unit__r.Name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <b>Project :</b>&nbsp;{!refBkList[0].Project_Name__c} <br/><br/><br/>
+                </apex:outputPanel>
+                <b>Any alterations required in booked unit:&nbsp;</b>{!bklist[0].Any_alterations__c}<br/>
+                
+               <b>Project Head Remarks (If any):</b>__________________________________________________________ 
+                
+
+            </p>
+            
+     <br/><br/><br/><br/>
+        
+          <div class="col-md-4" style="float: left;">
+             <p>_______________________________</p>
+               <center><span>APPLICANT</span></center>
+            </div>
+
+               <div class="col-md-4" style="float: right;">
+             <p>_____________________________</p>
+               <center><span>CO-APPLICANT</span></center>
+            </div>
+        <br/><br/> <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                       <p>
+                           ___________________________________________________________________________________________________________
+                           <center><span> 929, FIRST FLOOR, MANTRI HOUSE, F.C. ROAD, PUNE - 411004</span></center>
+                       </p>
+    
+    <!----------------------------------------Terms & Condition--------------------------------------------------------->
+        <p style="page-break-after:always;"> </p>
+          <center> <h3>TERMS AND CONDITIONS</h3></center>
+        
+       <div class="heading" style="text-align:left">
+        
+        <apex:outputField value="{!bklist[0].Tower__r.Terms_Condition__c}"/>
+
+        </div>
+    
+    <div class="col-md-4" style="float: left;">
+             <p>______________________</p>
+               <center><span>APPLICANT</span></center>
+            </div>
+    
+       
+
+               <div class="col-md-4" style="float: right;">
+             <p>_________________________</p>
+               <center><span>PROJECT HEAD </span></center>
+            </div>
+    
+    
+           <br/><br/> <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    
+ 
+                       <p>
+                           _________________________________________________________________________________________________________________
+                           <center><span> 929, FIRST FLOOR, MANTRI HOUSE, F.C. ROAD, PUNE - 411004</span></center>
+                       </p>
+     
+          <!--  <div class="footer"  name="footer">
+                <p>
+                    <center><span> 929, FIRST FLOOR, MANTRI HOUSE, F.C. ROAD, PUNE - 411004</span></center>
+                </p>
+          </div> -->
+            
+    
+           
+             
+        </body>
+    </html>
+    
+</apex:page>

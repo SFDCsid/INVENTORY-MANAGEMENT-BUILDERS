@@ -1,0 +1,843 @@
+<apex:page controller="Ex_BookingPageController" docType="html-5.0" standardStylesheets="true" sidebar="false" showHeader="false">
+    <html>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+        <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"/>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+        <link href= "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="https://fonts.googleapis.com/css?family=Acme&display=swap" rel="stylesheet"/>
+        
+        <head>
+            <style>
+                @media screen and (max-width: 1300px)
+                 {
+                    /* Force table to not be like tables anymore */
+                    table, thead, tbody, th, td, tr { 
+                        display: block; 
+                    }
+				}
+                .jumbotron {
+                    margin-left: 5px;
+                    margin-right: 5px;
+                    border-radius: 15px;
+                }
+                
+                .container{
+                    margin-top: 0px;
+                    background: #f6f7fc;
+                }
+                .btn:hover{
+                background-color: white !important;
+  				color: black !important;
+                border: 2px solid #4CAF50 !important;
+                
+                }
+                .heading{
+                    background: linear-gradient(90deg, rgba(0,171,223,1) 0%, rgba(69,63,151,1) 100%);
+                    font-family: "proxima-nova", "Helvetica Neue", Helvetica, Arial, sans-serif;
+                    margin-left: 20px;
+                    margin-right: 20px;
+                    border-radius: 15px;
+                    color:white;
+                }
+                .error {
+                    background: linear-gradient(90deg, rgba(0,171,223,1) 0%, rgba(69,63,151,1) 100%);
+                    font-family: "proxima-nova", "Helvetica Neue", Helvetica, Arial, sans-serif;
+                }
+                table, th, td {
+                    border: 0px solid white;
+                    border-collapse: collapse;
+                    margin-top:1px;
+                    padding:5px;
+                }
+                .primary-button {
+                    background: green;
+                    color: #8ec3eb;
+                    border-radius: 4px;
+                    width: 50%;
+                    border: none;
+                    outline: none;
+                    cursor: pointer;
+                    align: right; 
+                }
+                #section {
+                    background-color: #ff7777;
+                    color: white;
+                }
+                .nav-tabs{
+                    border-bottom: 2px solid #ff1e00;
+                }
+                .nav-item{
+                    //background-color: white;
+                    color: #ff1e00;
+                    font-size: 17px;
+                    //border: 1px solid #8ec3eb;
+                    
+                }
+                
+                #headingStyle {
+                    //background-color:white;
+                    padding:7px;
+                    color:#8ec3eb;
+                }
+                hr.solid {
+                    border-top: 2px solid #8ec3eb;
+                }
+                body {
+                    font-size: 15px;
+                    background: #f6f7fc;
+                	font-family: arial;
+                	width: auto!important; 
+                	overflow-x: hidden!important;
+                }
+                div.fadeMe {
+                    opacity:    0.5; 
+                    background: #D9E9FF; 
+                    width:      100%;
+                    height:     100%; 
+                    z-index:    1000;
+                    top:        0; 
+                    left:       0; 
+                    position:   fixed; 
+        		}
+                .spinnerBg {
+                    position: fixed;
+                    width: 100%;
+                    height: 100%;
+                    background-color: #000;
+                    opacity: 0.2;
+                    z-index: 999999;
+                    left: 0;
+                    top: 0;
+                }
+                .Assigned {
+                    position: fixed;
+                    <!--background: url('{!URLFOR($Resource.Loading)}');-->
+                    background-size: 50px 50px;
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    width: 100%;
+                    height: 100%;
+                    z-index: 1004;
+                    left: 0%; 
+                    top: 0%;
+                }
+			  
+            </style>
+            <script type="text/javascript">
+            	var isMobile=false;
+                function device(){
+                	isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+                	if(isMobile){
+                        //alert(isMobile);
+                	}
+                	else{
+                        //alert('Laptop');
+                        //console.log('hello');
+                        var Destop = true;
+                        //document.getElementById("section2").style.display = "none";
+                       
+                	}         
+            	}  
+        	window.onload = device();
+        </script>
+                
+           
+        </head>
+        
+        <body>
+            <fieldset class="slds-box slds-theme--shade slds-container--large slds-container--center slds-grid--align-spread">
+                <apex:form style=" box-sizing: border-box;">
+                  
+                    <div class="col-md-4 col-lg-12 col-sm-6 col-sm-12"> <!--class="container"-->
+                        
+                            
+                        
+                        <div id="headingStyle">
+                            <center>
+                                <h3><b>Booking Form</b></h3>
+                            </center>
+                        </div>
+                        <br/>
+                        <apex:actionStatus id="status">
+                            <apex:facet name="start">
+                                <div class="fadeMe">
+                                    &nbsp;
+                                </div>
+                                <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 15% 30%">
+                                    <div style="display: inline-block; padding: 2px; background-color: #fff; width: 125px;">
+                                        <!--<img src="{!$Resource.loadingGIF}" style="float: left; margin: 0px;" />-->
+                                        <span style="display: inline-block;">Please Wait...</span>
+                                    </div>
+                                </div>
+                            </apex:facet>
+                        </apex:actionStatus>
+                        
+                        <apex:outputPanel id="mainPanel">
+                            <apex:outputPanel rendered="{!error}" id="errorMsg">
+                                <center>
+                                    <h4 style="color:red;"> {!errorMsg} </h4>
+                                </center>      
+                            </apex:outputPanel>
+
+                            <apex:outputPanel rendered="{!NOT(error)}">
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item">
+                                        <b>Details of Preferred Unit</b>
+                                    </li>
+                                </ul>
+                                <table width="100%">
+                                    <tr>
+                                        <th>
+                                            <apex:outputText value="Quotation"/>
+                                        </th>
+                                        <td>
+                                            <apex:outputField value="{!q.Name}"/>    
+                                        </td>
+                                        <th>
+                                            <apex:outputText value="Agreement Value"/>
+                                        </th>
+                                        <td>
+                                            <apex:outputText value="{!agreementValueString}"/>
+                                        </td>
+                                        <th>
+                                            <apex:outputText value="Unit"/>
+                                        </th>
+                                        <td>
+                                            <apex:outputField value="{!u.Name}"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <apex:outputText value="Project"/>
+                                        </th>
+                                        <td>
+                                            <apex:outputField value="{!q.Project__c}"/>
+                                        </td>
+                                        <th>
+                                            <apex:outputText value="Tower"/>
+                                        </th>
+                                        <td>
+                                            <apex:outputField value="{!q.Tower__c}"/>
+                                        </td>
+                                        <th>
+                                            <apex:outputText value="Floor"/>
+                                        </th>
+                                        <td>
+                                            <apex:outputField value="{!u.Floor__c}"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <apex:outputText value="Carpet Area"/>
+                                        </th>
+                                        <td>
+                                            <apex:outputField value="{!u.RERA_Carpet_Area_Sq_Ft__c}"/>
+                                        </td>
+                                        <th>
+                                            <apex:outputText value="Configuration"/>
+                                        </th>
+                                        <td>
+                                            <apex:outputField value="{!u.Configuration__c}"/>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <br/>
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item">
+                                        <b>Booking Details</b>
+                                    </li>
+                                </ul>
+                                <table width="100%">
+                                    <tr>
+                                        <th>
+                                            <label><span style="color:red;">*</span> Booking Date </label>
+                                        </th>
+                                        <td> 
+                                            <apex:inputField value="{!b.Booking_Date__c}" styleClass="form-control" /> <!-- required="true" -->
+                                        </td>
+                                        <th>
+                                            <apex:outputText value="Mode of Funding"/>
+                                        </th>
+                                        <td>
+                                            <apex:inputField value="{!b.Mode_of_Funding__c}" styleClass="form-control"/>    
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <label>Tentative agreement Registration Date :</label>
+                                        </th>
+                                        <td>
+                                            <apex:inputField value="{!b.Tentative_Agreement_Reg_Date__c}" styleClass="form-control"/>
+                                        </td>
+                                       
+                                        
+                                    </tr>
+                                </table>
+                                <br/>
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item">
+                                        <b>Booking remarks</b>
+                                    </li>
+                                </ul>
+                                <table width="100%">
+                                    <tr>
+                                        <th>Any other Offers: </th>
+                                        <td><apex:inputField value="{!b.Any_other_offers__c}" styleClass="form-control"/></td>
+                                        <th>Remarks: </th>
+                                        <td><apex:inputField value="{!b.Booking_Remarks__c}" styleClass="form-control"/></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Any alterations required in booked unit:</th>
+                                        <td><apex:inputField value="{!b.Any_alterations__c}" styleClass="form-control"/></td>
+                                    </tr>
+                                </table>
+
+                                <apex:outputPanel id="out2" rendered="{!q != null}">
+                                    <div id="AppSection">
+                                        <ul class="nav nav-tabs">
+                                            <li class="nav-item">
+                                                <b>Applicant Details</b>
+                                            </li>
+                                        </ul>
+                                        
+                                        <apex:variable var="rowNum" value="{!1}"/>
+                                        <apex:repeat value="{!applicantWrapperList}" var="apw">
+                                            <div>
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <ul class="nav nav-tabs">
+                                                                <li class="nav-item">
+                                                                    <a class="nav-link active" data-toggle="tab" href="#aplct1">Applicant &nbsp; {!rowNum}</a>
+                                                                </li>
+                                                                <apex:commandButton id="cmdAdd" value="+" action="{!addApplicant}" reRender="out2" style="width:50px;height:30px;" >
+                                                                    <apex:param name="rowIndex" value="{!rowNum}" />
+                                                                </apex:commandButton>
+                                                                <apex:commandButton id="cmdRmv" value="-" action="{!removeApplicant}" reRender="out2" rendered="{!applicantWrapperList.size > 1}" style="width:50px;height:30px;">
+                                                                    <apex:param name="rowIndex" value="{!rowNum}" />
+                                                                </apex:commandButton>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="tab-content">
+                                                <div id="aplct1" class="tab-pane active custForm"> <!--container -->
+                                                    <table>
+                                                        <tr>
+                                                            <th>
+                                                                <label><span style="color:red;">*</span> <apex:outputText value="Salutation :"/> </label>
+                                                            </th>
+                                                            <td>
+                                                                <apex:inputField value="{!apw.ap.Applicant_Title__c}" styleClass="form-control" /> <!-- required="true" -->
+                                                            </td>
+                                                            <th>
+                                                                <label><span style="color:red;">*</span> <apex:outputText value="Applicant Name :"/> </label>
+                                                            </th>
+                                                            <td>
+                                                                <apex:inputField value="{!apw.ap.Name}" styleClass="form-control" /> <!-- required="true" -->
+                                                            </td>
+                                                            <th>
+                                                                <label><span style="color:red;">*</span> <apex:outputText value="Applicant Number :"/> </label>
+                                                            </th>
+                                                            <td>
+                                                                <apex:inputField value="{!apw.ap.Applicant_Number__c}" styleClass="form-control" /> <!-- required="true" -->
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>
+                                                                <apex:outputText value="Type of Applicant :"/>
+                                                            </th>
+                                                            <td>
+                                                                <apex:inputField value="{!apw.ap.Type_of_Applicant__c}" styleClass="form-control"/>
+                                                            </td>
+                                                            <th>
+                                                                <apex:outputText value="Current Address :"/>
+                                                            </th>
+                                                            <td> 
+                                                                <apex:inputField value="{!apw.ap.Applicant_Address__c}" styleClass="form-control"/>
+                                                            </td>
+                                                            <th>
+                                                                <apex:outputText value="Permanent Address :"/>
+                                                            </th>
+                                                            <td>
+                                                                <apex:inputField value="{!apw.ap.Permanent_Address__c}" styleClass="form-control"/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>
+                                                                <apex:outputText value="City :"/>
+                                                            </th>
+                                                            <td>
+                                                                <apex:inputField value="{!apw.ap.City__c}" styleClass="form-control"/>
+                                                            </td>
+                                                            <th>
+                                                                <apex:outputText value="State :"/>
+                                                            </th>
+                                                            <td>
+                                                                <apex:inputField value="{!apw.ap.State__c}" styleClass="form-control"/>
+                                                            </td>
+                                                            <th>
+                                                                <label><apex:outputText value="Country :"/> </label>
+                                                            </th>
+                                                            <td>
+                                                                <apex:inputField value="{!apw.ap.Country__c}" styleClass="form-control" /> <!-- required="true" -->
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>
+                                                                <label><apex:outputText value="Mobile No. :"/> </label>
+                                                            </th>
+                                                            <td>
+                                                                <apex:inputField value="{!apw.ap.Mobile_Number__c}" styleClass="form-control" /> <!-- required="true" -->
+                                                            </td>
+                                                            <th>
+                                                                <apex:outputText value="Landline No. :"/>
+                                                            </th>
+                                                            <td>
+                                                                <apex:inputField value="{!apw.ap.Landline_Number__c}" styleClass="form-control"/>
+                                                            </td>
+                                                            <th>
+                                                                <label> <apex:outputText value="Pin Code:"/> </label>
+                                                            </th>
+                                                            <td>
+                                                                <apex:inputField value="{!apw.ap.Pin_Code__c}" styleClass="form-control"/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>
+                                                                <label><apex:outputText value="Date of Birth :"/> </label>
+                                                            </th>
+                                                            <td>
+                                                                <apex:input type="date" value="{!apw.applicantDOB}" styleClass="form-control" rendered="true"/> <!-- required="true" -->
+                                                            </td> 
+                                                            <th>
+                                                                <apex:outputText value="Residential status :"/>
+                                                            </th>
+                                                            <td>
+                                                                <apex:inputField value="{!apw.ap.Residential_Status__c}" styleClass="form-control"/>
+                                                            </td> 
+                                                            <th>
+                                                                <apex:outputText value="Email :"/>
+                                                            </th>
+                                                            <td>
+                                                                <apex:inputField value="{!apw.ap.Email__c}" styleClass="form-control"/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>
+                                                                <label> <apex:outputText value="PAN Card Number :"/> </label>
+                                                            </th>
+                                                            <td>
+                                                                <apex:inputField value="{!apw.ap.PAN_Number__c}" styleClass="form-control" /> <!-- required="true" -->
+                                                            </td>
+                                                            <th>
+                                                                <label> <apex:outputText value="Aadhar Details :"/> </label>
+                                                            </th>
+                                                            <td>
+                                                                <apex:inputField value="{!apw.ap.Aadhar_Number__c}" styleClass="form-control" onkeypress="return (event.charCode > 47 && event.charCode < 59)"/> <!-- required="true" -->
+                                                            </td>
+                                                            <th>
+                                                                <label> <apex:outputText value="No. of Dependents :"/> </label>
+                                                            </th>
+                                                            <td>
+                                                                <apex:inputField value="{!apw.ap.No_of_dependant__c}" styleClass="form-control" onkeypress="return (event.charCode > 47 && event.charCode < 59)"/> <!-- required="true" -->
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>
+                                                                <label> <apex:outputText value="Proffession:"/> </label>
+                                                            </th>
+                                                            <td>
+                                                                <apex:inputField value="{!apw.ap.Profession__c}" styleClass="form-control" /> <!-- required="true" -->
+                                                            </td>
+                                                            <th>
+                                                                <label> <apex:outputText value="Income Type:"/> </label>
+                                                            </th>
+                                                            <td>
+                                                                <apex:inputField value="{!apw.ap.Income_Type__c}" styleClass="form-control" /> <!-- required="true" -->
+                                                            </td>
+                                                            <th>
+                                                                <label> <apex:outputText value="Employment Type:"/> </label>
+                                                            </th>
+                                                            <td>
+                                                                <apex:inputField value="{!apw.ap.Employment_Type__c}" styleClass="form-control">
+                                                                    <!--<apex:actionSupport event="onchange" reRender="out2, r1, r2" status="statuss" />-->
+                                                                </apex:inputField> <!-- required="true" -->
+                                                            </td>
+                                                            
+                                                        </tr>
+                                                        
+                                                        <tr >
+                                                            <th>
+                                                                <label> <apex:outputText value="Monthly Income:" /> </label>
+                                                            </th>
+                                                            <td>
+                                                                <apex:inputField value="{!apw.ap.Monthly_Income__c}"  styleClass="form-control" onkeypress="return (event.charCode > 47 && event.charCode < 59)"/> <!-- required="true" -->
+                                                            </td>
+                                                            <th>
+                                                                <label> <apex:outputText value="Other Income 1:" /> </label>
+                                                            </th>
+                                                            <td>
+                                                                <apex:inputField value="{!apw.ap.Other_Income_1__c}"  styleClass="form-control" /> <!-- required="true" -->
+                                                            </td>
+                                                            <th>
+                                                                <label> <apex:outputText value="Other Income 2:" /> </label>
+                                                            </th>
+                                                            <td>
+                                                                <apex:inputField value="{!apw.ap.Other_Income_2__c}" styleClass="form-control" /> <!-- required="true" -->
+                                                            </td>
+                                                            <!---->
+                                                            
+                                                            
+                                                        </tr>
+                                                        <tr>
+                                                            <th>
+                                                                <label> <apex:outputText value="Name of the Employer / Business:" /> </label>
+                                                            </th>
+                                                            <td>
+                                                                <apex:inputField value="{!apw.ap.Name_Of_The_Employer_Business__c}"  styleClass="form-control" /> <!-- required="true" -->
+                                                            </td>
+                                                            <th>
+                                                                <label> <apex:outputText value="Address of Employer/Business:" /> </label>
+                                                            </th>
+                                                            <td>
+                                                                <apex:inputField value="{!apw.ap.Address_Of_Employer_Business__c}" styleClass="form-control" /> <!-- required="true" -->
+                                                            </td>
+                                                            <th>
+                                                                <label> <apex:outputText value="Type / Brief of Employment/Business:" /> </label>
+                                                            </th>
+                                                            <td>
+                                                                <apex:inputField value="{!apw.ap.Type_Brief_Of_Employment_Business__c}" styleClass="form-control" /> <!-- required="true" -->
+                                                            </td>
+                                                            
+                                                            
+                                                        </tr>
+                                                        <tr>
+                                                            <th>
+                                                                <label> <apex:outputText value="Years in Present Employment / Business:" /> </label>
+                                                            </th>
+                                                            <td>
+                                                                <apex:inputField value="{!apw.ap.Years_In_Present_Employment_Business__c}" styleClass="form-control" onkeypress="return (event.charCode > 47 && event.charCode < 59)"/> <!-- required="true" -->
+                                                            </td>
+                                                            <th>
+                                                                <label> <apex:outputText value="Total Work/Business Experience:" /> </label>
+                                                            </th>
+                                                            <td>
+                                                                <apex:inputField value="{!apw.ap.Total_Work_Business_Experience__c}"  styleClass="form-control" onkeypress="return (event.charCode > 47 && event.charCode < 59)"/> <!-- required="true" -->
+                                                            </td>
+                                                            <th>
+                                                                <label> <apex:outputText value="Salary Slips / ITR Available:" /> </label>
+                                                            </th>
+                                                            <td>
+                                                                <apex:inputField value="{!apw.ap.Salary_Slips_ITR_Available__c}" styleClass="form-control" /> <!-- required="true" -->
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>
+                                                                <label> <apex:outputText value="Monthly Expense other than EMI:" /> </label>
+                                                            </th>
+                                                            <td>
+                                                                <apex:inputField value="{!apw.ap.Monthly_Expense_Other_Than_EMI__c}" styleClass="form-control" onkeypress="return (event.charCode > 47 && event.charCode < 59)"/> <!-- required="true" -->
+                                                            </td>
+                                                            <th>
+                                                                <label> <apex:outputText value="Existing EMI Amount:" /> </label>
+                                                            </th>
+                                                            <td>
+                                                                <apex:inputField value="{!apw.ap.Existing_EMI_Amount__c}" styleClass="form-control" onkeypress="return (event.charCode > 47 && event.charCode < 59)"/> <!-- required="true" -->
+                                                            </td>
+                                                        </tr>
+                                                        <apex:variable var="rowNum" value="{!rowNum+1}"/>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </apex:repeat>
+                                    </div>
+                                </apex:outputPanel>
+                                
+                                <div id="section">
+                                    <b> Payment Details </b>
+                                </div>
+                                
+                                <div id="section1">
+                                    <apex:pageblock id="out1">
+                                        <table width="100%">
+                                            <tr>
+                                            <th>
+                                                <label>Payment Options :</label>
+                                            </th>
+                                            <td>
+                                                <apex:inputField value="{!b.PAYMENT_OPTIONS__c}" styleClass="form-control"/>
+                                            </td>
+                                            <th>
+                                                <label>Whether eligible for Pradhan Mantri Awas Yojana CLSS :</label>
+                                            </th>
+                                            <td>
+                                                <apex:inputField value="{!b.eligible_for_Pradhan_Mantri_Awas_Yojana__c}" styleClass="form-control"/>
+                                            </td>
+                                        </tr>
+                                        </table>
+                                        <apex:variable var="rowNum" value="{!0}"/>
+                                        <apex:pageblockTable id="hlabel" value="{!recList}" var="a"  >
+                                            <apex:column id="hlabel" headerValue="Payment Mode">
+                                                <label  id="test" >Payment Mode</label>
+                                                <apex:inputField value="{!a.Payment_Mode__c}" styleClass="form-control" required="true"  html-placeholder="Payment Mode"/>
+                                            </apex:column>
+                                            <apex:column headerValue="Is Token Amount">
+                                                <label id="test" >Is Token Amount</label>
+                                                <apex:inputField value="{!a.isTokenAmount__c}" styleClass="form-control"  html-placeholder="Account Name"/>
+                                            </apex:column>
+                                            
+                                            <apex:column headerValue="Receipt Type" >
+                                                <label id="test">Receipt Type</label>
+                                                <apex:inputField value="{!a.Receipt_Type__c}" styleClass="form-control" required="true"  html-placeholder="Receipt Type"/>
+                                            </apex:column>
+                                          
+                                                                       
+                                            <apex:column headerValue="Payment Type" >
+                                                <label id="test">Payment Type</label>
+                                                <apex:inputField value="{!a.Payment_Type__c}" styleClass="form-control" required="true"  html-placeholder="Payment Type"/>
+                                            </apex:column>
+                                            <apex:column headerValue="Transaction Status" >
+                                                <label id="test" >Transaction Status</label>
+                                                <apex:inputField value="{!a.Transaction_Status__c}" styleClass="form-control" required="true"  html-placeholder="Transaction Status"/>
+                                            </apex:column>
+                                
+                                            
+                                            <apex:column headerValue="Favouring" >
+                                                <label id="test">Favouring</label>
+                                                <apex:inputField value="{!a.Favouring__c}"  styleClass="form-control" html-placeholder="Account Name"/>
+                                            </apex:column>
+                                            
+                                            <apex:column headerValue="Date" >
+                                                <label id="test" >Date</label>
+                                                <apex:inputField value="{!a.Dated__c}" styleClass="form-control" required="true" html-placeholder="Date"/>
+                                            </apex:column>
+                                            <apex:column headervalue="Amount" >
+                                                <label id="test" >Amount</label>
+                                                <apex:inputField value="{!a.Amount__c}" styleClass="form-control" required="true" html-placeholder="Amount"/>
+                                            </apex:column>
+                                            <apex:column headervalue="Chq No/UTR/TID/APPR CODE" >
+                                                <label id="test" >Chq No/UTR/TID/APPR CODE</label>
+                                                <apex:inputField value="{!a.Chq_No_UTR_TID_APPR_CODE__c}" styleClass="form-control" required="true" html-placeholder="Chq No/UTR/TID/APPR CODE"/>
+                                            </apex:column>
+                                            <apex:column headervalue="Drawn on (Bank Name)" >
+                                                <label id="test" >Drawn on (Bank Name)</label>
+                                                <apex:inputField value="{!a.Bank_Name__c}" styleClass="form-control" required="true" html-placeholder="Drawn on (Bank Name)"/>
+                                            </apex:column>
+                                            
+                                            
+                                            <apex:column headervalue="Drawn on (Branch Name)" >
+                                                <label id="test" >Drawn on (Branch Name)</label>
+                                                <apex:inputField value="{!a.Drawn_on_Branch_Name__c}" styleClass="form-control" html-placeholder="Drawn on (Branch Name)"/>
+                                            </apex:column>
+                                            
+                                            <apex:column >
+                                               <apex:commandButton id="cmdAdd" value="+" action="{!addRows}" reRender="out1">
+                                                    <apex:param name="rowIndex" value="{!rowNum}" />
+                                                </apex:commandButton>
+                                                <apex:commandButton id="cmdRmv" value="-" action="{!rmvRows}" reRender="out1" rendered="{!AND(recList.size > 1)}">
+                                                    <apex:param name="rowIndex" value="{!rowNum}" />
+                                                </apex:commandButton>
+                                                <apex:variable var="rowNum" value="{!rowNum+1}"/>
+                                            </apex:column>  
+                                        </apex:pageblockTable>
+                                    </apex:pageBlock>
+                                	</div>
+                                    
+                                    <!--<div id = "section2">
+                                   	<table width = "100%">
+                                        <apex:repeat value="{!recList}" var="a">
+                                          <tr>
+											  <td>
+                                                <label>Payment Mode</label>
+                                                <apex:inputField value="{!a.Payment_Mode__c}" styleClass="form-control" required="true"/>
+                                            	
+                                              </td> 
+                                              <td>
+                                                  <label >Receipt Type</label>
+                                                  <apex:inputField value="{!a.Receipt_Type__c}" styleClass="form-control" required="true"/>
+											  </td>
+                                              
+                                              <td>
+                                                  <label style="">Payment Type</label>
+												  <apex:inputField value="{!a.Payment_Type__c}" styleClass="form-control" required="true"/>
+                                              </td>
+                                              
+                                              <td>
+                                                  <label>Transaction Status</label>
+												  <apex:inputField value="{!a.Transaction_Status__c}" styleClass="form-control" required="true"/>
+                                              </td>
+                                              
+                                              <td>
+                                                  <label>Date</label>
+												  <apex:inputField value="{!a.Dated__c}" styleClass="form-control" required="true"/>
+                                              </td>
+                                              
+                                              <td>
+                                                  <label style="padding-bottom:3px">Amount</label><br/>
+												  <apex:inputField value="{!a.Amount__c}" styleClass="form-control" required="true"/>
+                                              </td>
+                                              
+                                              <td>
+                                                  <label>Chq No/UTR/TID/APPR CODE</label>
+												  <apex:inputField value="{!a.Chq_No_UTR_TID_APPR_CODE__c}" styleClass="form-control" required="true"/>
+                                              </td>
+                                              
+                                              <td>
+                                                  <label>Drawn on (Bank Name)</label><br/>
+                                                  <apex:inputField value="{!a.Bank_Name__c}" styleClass="form-control" required="true"/>
+                                              </td>
+                                              
+                                              <td>
+                                                  <label>Drawn on (Branch Name)</label><br/>
+                                                  <apex:inputField value="{!a.Drawn_on_Branch_Name__c}" styleClass="form-control"/>
+                                              </td>
+                                              <td>
+                                                  <apex:commandButton id="cmdAdd" value="+" action="{!addRows}" reRender="out1">
+                                                    <apex:param name="rowIndex" value="{!rowNum}" />
+                                                  </apex:commandButton>
+                                                  <apex:commandButton id="cmdRmv" value="-" action="{!rmvRows}" reRender="out1" rendered="{!AND(recList.size > 1)}">
+                                                    <apex:param name="rowIndex" value="{!rowNum}" />
+                                                  </apex:commandButton>
+                                                  <apex:variable var="rowNum" value="{!rowNum+1}"/>
+                                              </td>
+                                          </tr>
+                                        </apex:repeat>
+                                    </table>
+                                </div>-->
+                                
+                                <!--<div id="section">
+                                    <b> Source Details </b>
+                                </div>
+                                <table width="100%">
+                                    <tr>
+                                        <th>
+                                            <label><span style="color:red;">*</span> Master Source </label>
+                                        </th>
+                                        <td> 
+                                            <apex:inputField value="{!b.Master_Source__c}" styleClass="form-control" />
+                                        </td>
+                                        <th>
+                                            <label><span style="color:red;">*</span> Booking Source </label>
+                                        </th>
+                                        <td>
+                                            <apex:inputField value="{!b.Booking_Source__c}" styleClass="form-control">
+                                                <apex:actionSupport event="onchange" reRender="subInfo, subInfo1, subInfo2" />
+                                			</apex:inputField>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <label>Booking Sub-Source </label>
+                                        </th>
+                                        <td>
+                                            <apex:inputField value="{!b.Booking_Sub_Source__c}" styleClass="form-control"/>
+                                        </td>
+                                        <th>
+                                            <label>Booking Sub-Source Details </label>
+                                        </th>
+                                        <td>
+                                            <apex:inputField value="{!b.Booking_Sub_Source_Details__c}" styleClass="form-control"/>
+                                        </td>
+                                    </tr>
+                                        
+                                    <apex:outputPanel id="subInfo">
+                                        <apex:outputPanel rendered="{!b.Booking_Source__c == 'Channel Partner'}">
+                                            <tr>
+                                                <th>
+                                                    <label><span style="color:red;">*</span> Channel Partner Name </label>
+                                                </th>
+                                                <td> 
+                                                    <apex:inputField value="{!b.Channel_Partner_Name__c}" styleClass="form-control" /> 
+                                                </td>
+                                                <th>
+                                                    <label><span style="color:red;">*</span> Channel Partner Amount </label>
+                                                </th>
+                                                <td> 
+                                                    <apex:inputField value="{!b.Channel_Partner_Amount__c}" styleClass="form-control" /> 
+                                                </td>
+                                            </tr>
+                                        </apex:outputPanel>
+                                        <apex:outputPanel rendered="{!b.Booking_Source__c == 'Customers'}">
+                                            <tr>
+                                                <th>
+                                                    <label><span style="color:red;">*</span> Customer Referrer Name </label>
+                                                </th>
+                                                <td> 
+                                                    <apex:inputField value="{!b.Reference_Name__c}" styleClass="form-control" /> 
+                                                </td>
+                                                <th>
+                                                    <label><span style="color:red;">*</span> Customer Referrer Amount </label>
+                                                </th>
+                                                <td> 
+                                                    <apex:inputField value="{!b.Reference_Amount__c}" styleClass="form-control" /> 
+                                                </td>
+                                            </tr>
+                                        </apex:outputPanel>
+                                        <apex:outputPanel rendered="{!b.Booking_Source__c == 'Employees'}">
+                                            <tr>
+                                                <th>
+                                                    <label><span style="color:red;">*</span> Employees Referrer Name </label>
+                                                </th>
+                                                <td> 
+                                                    <apex:inputField value="{!b.Reference_Name__c}" styleClass="form-control" /> 
+                                                </td>
+                                                <th>
+                                                    <label><span style="color:red;">*</span> Employees Referrer Amount </label>
+                                                </th>
+                                                <td> 
+                                                    <apex:inputField value="{!b.Reference_Amount__c}" styleClass="form-control" />
+                                                </td>
+                                            </tr>
+                                        </apex:outputPanel>
+                                    </apex:outputPanel>
+                                    <tr>
+                                        <td colspan="6">
+                                            <div id="section">
+                                                &nbsp;
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>-->
+                                
+                                <div id="buttonDetails">
+                                    <center>
+                                        <apex:actionRegion >
+                                            <apex:commandButton value="Save" onclick="validateInput();return false;" styleClass="btn" style="color: #fff; background-color: #5cb85c; 
+												border-color: #4cae4c;user-select: none; background-image: none; border: 1px solid transparent; 
+                                                border-radius: 4px; display: inline-block; padding: 6px 12px; margin-bottom: 0; font-size: 14px; 
+                                                font-weight: normal; line-height: 1.42857143; text-align: center; white-space: nowrap; 
+                                                vertical-align: middle; -ms-touch-action: manipulation; touch-action: manipulation; margin-bottom:10px;"
+                                                rendered="{!NOT(error)}"/>
+                                        </apex:actionRegion>
+                                        <!--<apex:actionFunction name="submitMethod" action="{!save}" status="status" reRender="mainPanel"/>-->
+                                    </center>
+                                </div>
+                                <apex:actionFunction name="validateInput" action="{!validateInput}" onComplete="onCompleteHandler({!valError},'{!errorMsg}')" reRender="none"/>
+                                <!------------------------------------------- Action Function --------------------------------------------->
+                                
+                                <apex:actionFunction name="callSubmitMethod" action="{!save}" status="status" reRender="mainPanel"/>
+                                <!------------------------------------------- Action Function ---------------------------------------------->
+                            </apex:outputPanel>
+                        </apex:outputPanel>
+                    </div>
+                    <script>
+                    	function onCompleteHandler(error, msg) {
+                            //alert('In onCompleteHandler: '+error);
+                            if(error == true) {
+                                //stay on the same page.
+                                alert('Error : ' + msg);
+                            } else {
+                                //Call save method
+                                callSubmitMethod();
+                            }
+                       	}
+                    </script>
+                </apex:form>
+            </fieldset>
+        </body>
+    </html>
+</apex:page>
