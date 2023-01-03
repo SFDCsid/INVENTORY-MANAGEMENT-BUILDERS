@@ -1,0 +1,170 @@
+<aura:component controller="Ex_ApprovalManagementServices" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<aura:attribute name="title" type="String" default="Approval Dashboard"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="approvalWrapperList" type="Ex_ApprovalManagementServices.approvalWrapper[]" />
+    <aura:attribute name="paginationList" type="Ex_ApprovalManagementServices.approvalWrapper[]"/>
+    <aura:attribute name="list_size" type="Integer" default="10"/>
+    <aura:attribute name="counter" type="Integer" default="0"/>
+    <aura:attribute name="total_size" type="Integer"/>
+    <aura:attribute name="disableNext" type="boolean" default="false"/>
+    <aura:attribute name="disablePrevious" type="boolean" default="false"/>
+    <aura:attribute name="page_Number" type="Integer" default="0"/>
+    <aura:attribute name="total_Pages" type="Integer" default="0"/>
+    <aura:attribute name="processItemSet" type="Id[]"/>
+    <aura:attribute name="isError" type="boolean" default="false"/>
+    <aura:attribute name="msg" type="string"/>
+
+    <lightning:card>
+        <aura:set attribute="title">
+            <lightning:icon iconName="utility:approval" size="small"/>
+            {! v.title }
+        </aura:set>
+        <aura:if isTrue="{!v.isError == false}">
+            <div class="container-fluid">
+                <div class="slds-m-around_xx-large"> 
+                    <div class="slds-scrollable_x" style="width:100%">
+                        <div class="slds-align_absolute-center" style="height:2rem">
+                            <lightning:button variant="success" label="Approve" iconName="utility:like" iconPosition="left" onclick="{!c.campaignApprove}" />
+                            <lightning:button variant="destructive" label="Reject" iconName="utility:dislike" iconPosition="left" onclick="{!c.campaignReject}"/>
+                        </div>
+                        
+                        <table>
+                            <tr>
+                                <td style="width:5%">Show</td>
+                                <td style="width:7%">
+                                    <ui:inputSelect aura:id="records" change="{!c.onSelectChange}">
+                                        <ui:inputSelectOption text="10" value="10"/>
+                                        <ui:inputSelectOption text="20" value="20"/>
+                                        <ui:inputSelectOption text="30" value="30"/>
+                                    </ui:inputSelect>
+                                </td>
+                                <td>
+                                    Entries
+                                </td>
+                                <td style="width:7%">
+                                    
+                                </td>
+                                <td style="width:15%">
+                                    Showing Page # {!v.page_Number} of {!v.total_Pages}
+                                </td>
+                            </tr>
+                        </table> 
+                        <br/>
+                        <table class="slds-table slds-table_bordered">
+                            <thead>
+                                <tr class="slds-text-title_caps">
+                                    <th scope="col">
+                                        <div class="slds-truncate" title="Action">Action</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate" title="Marketing Brief">Marketing Brief</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate" title="Campaign Name">Campaign</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate" title="Project">Project</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate" title="Campaign Type">Campaign Type</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate" title="Planned Cost">Planned Cost</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate" title="Planned Leads">Planned Leads</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate" title="Planned Visits">Planned Visits</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate" title="Planned Bookings">Planned Bookings</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate" title="CTI Campaign">CTI Campaign</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate" title="DID Number">DID Number</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                
+                            <aura:iteration items="{!v.approvalWrapperList}" var="apw">
+                                <tr>
+                                    <th scope="row">
+                                        <div class="slds-truncate">    
+                                            <lightning:input value="{!apw.workItemId}" type="checkbox-button" label="Input One" name="input1" onchange="{!c.selectFunction}"/>
+                                            <!--<input aura:id="transferFromCheckbox" type="checkbox" data-id="{!apw.c.Id}" name="transferFromCheckbox" onclick="{!c.selectFunction}"/>-->
+                                        </div>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="slds-truncate">    
+                                            {!apw.c.Marketing_Brief__r.Name}
+                                        </div>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="slds-truncate">    
+                                            {!apw.c.Name}
+                                        </div>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="slds-truncate">    
+                                            {!apw.c.Project__r.Name}
+                                        </div>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="slds-truncate">    
+                                            {!apw.c.Campaign_Type__c}
+                                        </div>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="slds-truncate">
+                                            {!apw.c.Planned_Cost__c}
+                                        </div>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="slds-truncate">    
+                                            {!apw.c.Planned_Leads__c}
+                                        </div>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="slds-truncate">    
+                                            {!apw.c.Planned_Visits__c}
+                                        </div>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="slds-truncate">    
+                                            {!apw.c.Planned_Bookings__c}
+                                        </div>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="slds-truncate">
+                                            <aura:if isTrue="{!apw.c.Is_CTI_Campaign__c}">
+                                                <img src="/img/samples/flag_green.gif"/>
+                                                <aura:set attribute="else">
+                                                    <img src="/img/samples/flag_red.gif"/>
+                                                </aura:set>
+                                            </aura:if>
+                                        </div>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="slds-truncate">    
+                                            {!apw.c.DID_Number__r.Name}
+                                        </div>
+                                    </th>
+                                </tr>
+                            </aura:iteration>
+                        </table>
+                        <lightning:button label="First" onclick="{!c.first}" disabled="{!v.disablePrevious == true}"/>
+                        <lightning:button label="Previous" onclick="{!c.previous}" disabled="{!v.disablePrevious == true}"/>
+                        <lightning:button label="Next" onclick="{!c.next}" disabled="{!v.disableNext == true}"/>
+                        <lightning:button label="Last" onclick="{!c.last}" disabled="{!v.disableNext == true}"/>
+                    </div>
+                </div>
+            </div>
+            <aura:set attribute="else">
+                <h4 class="h4">{!v.msg}</h4>
+            </aura:set>
+        </aura:if>
+    </lightning:card>
+</aura:component>

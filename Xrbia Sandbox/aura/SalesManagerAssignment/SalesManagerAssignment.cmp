@@ -1,0 +1,77 @@
+<aura:component controller='SM_AssignmentController' implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="userList" type="Team_Member__c[]" />
+    <aura:attribute name="SVRecord" type="Site_Visit__c"/>
+    <aura:attribute name="isError" type="boolean" default="false"/>
+    <aura:attribute name="msg" type="string"/>
+    <aura:attribute name="isAvailable" type="boolean" default="false"/>
+    <aura:attribute name="salesManager" type="Team_Member__c"/>
+    
+    <aura:if isTrue="{!v.isError == false}">
+        <!-- Table View Details-->
+        <div class="container-fluid">
+            <div class="slds-m-around_xx-large"> 
+                <div class="slds-scrollable_x" style="width:100%">
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                        <thead>
+                            <tr class="slds-line-height_reset">
+                                <th style="width:3.25rem;" class="slds-text-align--right"></th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Reues Name">Sr. No.</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Building Name">User Name</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title=" Address">Status</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Area">Action</div>
+                                </th>
+                            </tr>
+                        </thead>
+               
+                        <aura:iteration items="{!v.userList}" var="member" indexVar="index">
+                            <tr class="slds-hint-parent">
+                                <th scope="row" class="slds-text-align--right" style="width:3.25rem;"></th>
+                                <th scope="row">
+                                    <div class="slds-truncate">    
+                                        {!index + 1}
+                                    </div>
+                                </th>
+                                <th scope="row">
+                                    <div class="slds-truncate">    
+                                        {!member.User__r.Name}
+                                    </div>
+                                </th>
+                                <th scope="row">
+                                    
+                                    <div class="slds-truncate">
+                                        <aura:if isTrue="{!member.Availability__c}">
+                                            <img src="/img/samples/flag_green.gif"/>
+                                            <aura:set attribute="else">
+                                                <img src="/img/samples/flag_red.gif"/>
+                                            </aura:set>
+                                        </aura:if>
+                                    </div>
+                                </th>
+                                <th scope="row">
+                                    <div class="{!if(member.Availability__c == true,'slds-show','slds-hide')}">
+                                        <div class="slds-truncate">  
+                                            <a id='{!member.Id}' onclick="{!c.asignSalesManager}" tabindex="-1">
+                                                <lightning:button variant="brand" label="Assign" title="Brand action" onclick=""  />     
+                                            </a>
+                                        </div>
+                                    </div>
+                                </th>
+                            </tr>
+                        </aura:iteration>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <aura:set attribute="else">
+            <h4 class="h4">{!v.msg}</h4>
+        </aura:set>
+    </aura:if>
+</aura:component>

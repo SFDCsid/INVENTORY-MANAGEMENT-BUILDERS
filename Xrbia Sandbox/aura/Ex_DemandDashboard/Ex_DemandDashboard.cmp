@@ -1,0 +1,22 @@
+<aura:component controller="Ex_DemandDashboardController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="title" type="String" default="Demand Dashboard"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="projectTowerMap" type="List"/>
+
+    <lightning:card>
+        <aura:set attribute="title">
+            <lightning:icon iconName="utility:approval" size="small"/>
+            {!v.title }
+        </aura:set>
+
+        <lightning:accordion aura:id="accordion">
+            <aura:iteration items="{!v.projectTowerMap}" var="pro">
+                <lightning:accordionSection name="A" label="{!pro.project}">
+                    <aura:iteration items="{!pro.value}" var="tw">
+                        <p>{!tw}</p>
+                    </aura:iteration>
+                </lightning:accordionSection>
+            </aura:iteration>
+        </lightning:accordion>
+    </lightning:card>
+</aura:component>
