@@ -1,0 +1,19 @@
+<template>
+    <template if:true={isCheck}>
+        <div style="height:30%; margin-left:50%; margin-top:8%"> 
+            <lightning-card>
+                <lightning-record-view-form record-id={recordId} object-api-name="Lead__c"> 
+                    <div >
+                    <p class="red slds-align_absolute-center"><b> This Lead is Already Converted.! </b> </p> 
+                    <div>
+                        <lightning-formatted-text class="slds-align_absolute-center" value="Converted Account : " ></lightning-formatted-text>
+                        <lightning-output-field field-name="ConvertedAccountId__c" variant="label-hidden" class="slds-align_absolute-center"></lightning-output-field>
+                    </div>
+                    <p><lightning-formatted-text class="slds-align_absolute-center" value="Converted Opportunity : "></lightning-formatted-text></p>
+                    <lightning-output-field field-name="ConvertedOpportunityId__c" variant="label-hidden" class="slds-align_absolute-center"></lightning-output-field>
+                    </div>
+                </lightning-record-view-form>
+            </lightning-card>
+        </div>
+    </template>
+</template>

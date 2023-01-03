@@ -1,0 +1,68 @@
+<template>
+    <lightning-card title="Sales report 1" class="slds-var-m-around_medium">    
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col" >
+                <lightning-combobox label="Projects"    
+                                    placeholder="Select Project"
+                                    options={projectOptionList}
+                                    class="slds-m-left_medium"
+                                    onchange={handleChangeProject}></lightning-combobox>
+            </div>
+            <div class="slds-col">
+                <lightning-input type="Date"  label="Start Date" placeholder="Select Start Date" onchange={handleStartDate} class="slds-m-left_medium"></lightning-input>
+            </div>
+            <div class="slds-col">                                                                                                                                                                                                                                                                                                                                  
+                <lightning-input type="Date"  label="End Date" placeholder="Select End Date" onchange={handleEndDate} class="slds-m-left_medium"></lightning-input>
+            </div>
+        </div>
+        <template if:true={keyOptionList}>
+            <br>
+            <table> 
+                <tr>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Agent Name</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">No. Of Leads in f up from SVC </th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">No. Of Leads in uq from SVC </th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">No. Of Bookings from SVC </th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Booking Agr Value </th>  
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">total Canc </th>  
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">net bookings </th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Bookings in BL </th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Bookings in SF </th>           
+                </tr>
+                <template for:each={keyOptionList} for:item="data"> 
+                    <tr key={data}>      
+                        <th class=" slds-box custom-background red">  
+                                <p> {data.key}</p>                        
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p>{data.value.totalOpportunities}</p>
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p>{data.value.UnqualifiedOpportunities}</p>
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p>{data.value.BookingOpportunity}</p>
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p>{data.value.totalAgrValue}</p>
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p>{data.value.totalCancel}</p>
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p>{data.value.totalNetBooking}</p>
+                        </th> 
+                        <th class="slds-box custom-background red">
+                            <p>{data.value.bankBookings}</p>
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p>{data.value.selfFundingBooking}</p>
+                        </th>                        
+                    </tr>
+                </template>
+            </table> 
+            <br>
+            <lightning-button variant="brand" label="Export to Excel" title="Export Data" class="slds-align_absolute-center" onclick={exportReportData}></lightning-button>
+        </template>
+    </lightning-card>
+</template>

@@ -1,0 +1,68 @@
+<template>
+    <lightning-card title="Follow-Up Report" class="slds-var-m-around_medium">    
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col" >
+                <lightning-combobox label="Projects"    
+                                    placeholder="Select Project"
+                                    options={projectOptionList}
+                                    class="slds-m-left_medium"
+                                    onchange={handleChangeProject}></lightning-combobox>
+            </div>
+            <div class="slds-col">
+                <lightning-input type="Date"  label="Start Date" placeholder="Select Start Date" onchange={handleStartDate} class="slds-m-left_medium"></lightning-input>
+            </div>
+            <div class="slds-col">                                                                                                                                                                                                                                                                                                                                  
+                <lightning-input type="Date"  label="End Date" placeholder="Select End Date" onchange={handleEndDate} class="slds-m-left_medium"></lightning-input>
+            </div>
+        </div>
+        <template if:true={keyOptionList}>
+            <br>
+            <table> 
+                <tr>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Agent Name</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Follow-Up for Report Date</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Follow-Up Conducted for Report Date</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Follow-Up Not Conducted for Report Date</th> 
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Follow-Up Calls Received By Customer</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Follow-Up Calls Not Received By Customer</th>                
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">No.of Leads Where CNR More Than 5</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Total Leads Where Calls Not Received </th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Unqualified Due To CNR </th>
+                </tr>
+                <template for:each={keyOptionList} for:item="data"> 
+                    <tr key={data}>      
+                        <th class=" slds-box custom-background red">  
+                                <p> {data.key}</p>                        
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p>{data.value.leadCount}</p>
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p>{data.value.conductedCount}</p>
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p>{data.value.notConductedCount}</p>
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p>{data.value.receivedByCustCount}</p>
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p>{data.value.notReceivedByCustCount}</p>
+                        </th> 
+                        <th class="slds-box custom-background red">
+                            <p>{data.value.CNRCallCount}</p>
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p>{data.value.totalCallNotReceivedCount}</p>
+                        </th> 
+                        <th class="slds-box custom-background red">
+                            <p>{data.value.UnqualifiedDuetoCNR}</p>
+                        </th>                                                
+                    </tr>
+                </template>
+            </table> 
+            <br>
+            <lightning-button variant="brand" label="Export to Excel" title="Export Data" class="slds-align_absolute-center" onclick={exportReportData}></lightning-button>
+        </template>
+    </lightning-card>
+</template>

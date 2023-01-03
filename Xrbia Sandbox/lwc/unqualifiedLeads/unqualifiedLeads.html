@@ -1,0 +1,48 @@
+<template>
+    <lightning-card title="Unqualified Leads Report" class="slds-var-m-around_medium">    
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col" >
+                <lightning-combobox label="Projects"    
+                                    placeholder="Select Project"
+                                    options={projectOptionList}
+                                    class="slds-m-left_medium"
+                                    onchange={handleChangeProject}></lightning-combobox>
+            </div>
+            <div class="slds-col">
+                <lightning-input type="Date"  label="Start Date" placeholder="Select Start Date" onchange={handleStartDate} class="slds-m-left_medium"></lightning-input>
+            </div>
+            <div class="slds-col">                                                                                                                                                                                                                                                                                                                                  
+                <lightning-input type="Date"  label="End Date" placeholder="Select End Date" onchange={handleEndDate} class="slds-m-left_medium"></lightning-input>
+            </div>
+        </div>
+        <template if:true={keyOptionList}>
+            <br>
+            <table> 
+                <tr>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Agent Name</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">All Leads</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Unqualified Leads</th>  
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Unqualified Leads %</th>                  
+                </tr>
+                <template for:each={keyOptionList} for:item="data"> 
+                    <tr key={data}>      
+                        <th class=" slds-box custom-background red">  
+                                <p> {data.key}</p>                        
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p>{data.value.totalLeads}</p>
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p>{data.value.unqualifiedLeads}</p>
+                        </th> 
+                        <th class="slds-box custom-background red">
+                            <p>{data.value.unqualifiedPercent}</p>
+                        </th>                         
+                    </tr>
+                </template>
+            </table> 
+            <br>
+            <lightning-button variant="brand" label="Export to Excel" title="Export Data" class="slds-align_absolute-center" onclick={exportReportData}></lightning-button>
+        </template>
+    </lightning-card>
+</template>

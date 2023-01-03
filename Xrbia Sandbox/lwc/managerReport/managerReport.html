@@ -1,0 +1,126 @@
+<template>
+    <lightning-card title="Manager Report" class="slds-var-m-around_medium">    
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col" >
+                <lightning-combobox label="Projects"    
+                                    placeholder="Select Project"
+                                    options={projectOptionList}
+                                    class="slds-m-left_medium"
+                                    onchange={handleChangeProject}></lightning-combobox>
+            </div>
+            <div class="slds-col">
+                <lightning-input type="Date"  label="Start Date" placeholder="Select Start Date" onchange={handleStartDate} class="slds-m-left_medium"></lightning-input>
+            </div>
+            <div class="slds-col">                                                                                                                                                                                                                                                                                                                                  
+                <lightning-input type="Date"  label="End Date" placeholder="Select End Date" onchange={handleEndDate} class="slds-m-left_medium"></lightning-input>
+            </div>
+        </div>
+        <template if:true={keyOptionList}>
+            <br>
+            <table> 
+                <tr>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Agent Name</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Total Lead</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Site Visit</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Bookings</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Ringing</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Unqualified</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">SiteVisit %</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Ringing %</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Unqualified %</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Total Connected</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Daily Connected Call</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Talk-Time</th>
+                </tr>
+                <template for:each={keyOptionList} for:item="data"> 
+                    <tr key={data}>      
+                        <th class=" slds-box custom-background red">  
+                                <p> {data.key}</p>                        
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p> {data.value.lCount} </p>
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p> {data.value.svCount} </p>
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p> {data.value.bkCount} </p>
+                        </th> 
+                        <th class="slds-box custom-background red">
+                            <p> {data.value.ringingCount} </p>
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p> {data.value.unqualifiedCount} </p>
+                        </th>
+                        <th class="slds-box custom-background red yellow">
+                            <p> {data.value.svpCount}% </p>
+                        </th>
+                        <th class="slds-box custom-background red yellow">
+                            <p> {data.value.ringingpercentCount}% </p>
+                        </th>
+                        <th class="slds-box custom-background red yellow">
+                            <p> {data.value.unqualifiedPercentCount}% </p>
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p> {data.value.totalConnectedCount} </p>
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p> {data.value.dailyConnectedCount} </p>
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p> {data.value.talkTimeCount} </p>
+                        </th>   
+                    </tr>
+                </template>
+            </table> 
+            <br>
+            <lightning-button variant="brand" label="Export to Excel" title="Export Data" class="slds-align_absolute-center" onclick={exportReportData}></lightning-button>
+        </template>
+    </lightning-card>
+</template>
+
+<!-- Tried Varitians-->
+
+<!--        {1}
+            <template for:each={keyOptionList} for:item="data">                 
+                <tr key={data}>      
+                <th class="slds-box custom-background">  
+                        <p> {data.key}</p>                        
+                </th>
+                <th class="slds-box custom-background">
+                    <p> {data.value.lcount} </p>
+                </th>
+                </tr>
+            </template>
+
+            {2}
+            <div class="slds-m-around_medium"> 
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Manager &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp; Lead Count 
+            <template for:each={keyOptionList} for:item="data">  
+                <tr key={data}>      
+                     <td></td>
+                    <th class="slds-box custom-background">  
+                            <p> {data.key}</p>                        
+                    </th>
+                    <th class="slds-box custom-background">
+                        <p> {data.value.lcount} </p>
+                    </th>
+                </tr>
+            </template>
+                <lightning-datatable key-field="keyOptionList.key"
+                                data={keyOptionList}
+                                columns={columns}>
+                </lightning-datatable>
+            </div>
+
+            {3}
+            <div class="slds-grid slds-gutters">
+            <div class="slds-col">
+                <lightning-button  label="All Projects" 
+                                        title="All Projects" 
+                                        onclick={handleClickAll}
+                                        class="slds-m-left_medium"></lightning-button>
+            </div>                       
+        </div>
+            -->

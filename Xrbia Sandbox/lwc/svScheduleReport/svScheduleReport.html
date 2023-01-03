@@ -1,0 +1,64 @@
+<template>
+    <lightning-card title="SV Schedule Report" class="slds-var-m-around_medium">
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col" >
+                <lightning-combobox label="Projects"    
+                                    placeholder="Select Project"
+                                    options={projectOptionList}
+                                    class="slds-m-left_medium"
+                                    onchange={handleChangeProject}></lightning-combobox>
+            </div>
+            <div class="slds-col">
+                <lightning-input type="Date"  label="Start Date" placeholder="Select Start Date" onchange={handleStartDate} class="slds-m-left_medium"></lightning-input>
+            </div>
+            <div class="slds-col">                                                                                                                                                                                                                                                                                                                                  
+                <lightning-input type="Date"  label="End Date" placeholder="Select End Date" onchange={handleEndDate} class="slds-m-left_medium"></lightning-input>
+            </div>
+        </div>
+        <template if:true={keyOptionList}>
+            <br>
+            <table> 
+                <tr>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Agent Name</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">SV Scheduled in Followup</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">SV Scheduled in Followup Conducted</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">SV Scheduled in Followup Not Conducted</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Call Answered</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Call Not Answered</th>
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">CNR > 5</th>                    
+                    <th class="slds-box custom-background red slds-text-color_error skyblue">Unqualified Due to CNR > 5</th>
+                </tr>
+                <template for:each={keyOptionList} for:item="data"> 
+                    <tr key={data}>      
+                        <th class=" slds-box custom-background red">  
+                                <p> {data.key}</p>                        
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p> {data.value.leadCount} </p>
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p> {data.value.totalFollowupConducted} </p>
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p> {data.value.totalFollowupNotConducted} </p>
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p> {data.value.callAnswered} </p>
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p> {data.value.callUnanswered} </p>
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p> {data.value.cnrCounter} </p>
+                        </th>
+                        <th class="slds-box custom-background red">
+                            <p> {data.value.unqualifiedCount} </p>
+                        </th>
+                    </tr>
+                </template>
+            </table>
+            <br>
+            <lightning-button variant="brand" label="Export to Excel" title="Export Data" class="slds-align_absolute-center" onclick={exportReportData}></lightning-button>
+        </template>
+    </lightning-card>
+</template>

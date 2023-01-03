@@ -1,0 +1,10 @@
+.yellow{
+    background: yellow;
+}
+
+.red{
+    border:2px solid red;
+}
+.skyblue{
+    background: rgba(151,214,223,255);
+}
