@@ -1,0 +1,184 @@
+<apex:page controller="ViewFeedbackPageController" docType="html-5.0" lightningStylesheets="false" standardStylesheets="false" sidebar="false" showHeader="false">
+    
+    <html 
+          xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink">
+        
+    <head>
+        
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+            <apex:stylesheet value="{!URLFOR($Resource.SLDS090, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+            <link href="https://fonts.googleapis.com/css?family=Lato:400,700&subset=latin,latin-ext" rel="stylesheet" type="text/css" />
+            <link href="https://fonts.googleapis.com/css?family=Buda:300" rel="stylesheet" type="text/css"/>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+     </head> 
+        <style>
+        html{
+         margin: 0;
+         Height: 100%;
+         overflow-Y: hidden;   
+         
+       }
+            body {
+             margin: 0;
+             Height: 100%;
+             overflow-Y: scroll;
+             
+             /* Full height */
+            /* Center and scale the image nicely */
+            background-position: fixed;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;;
+            -webkit-background-size: 100% 100%;; /* For WebKit*/
+            -moz-background-size: 100% 100%;    /* Mozilla*/
+            -o-background-size: 100% 100%;      /* Opera*/
+          }
+            .text-block {
+             position: relative !important;
+    top: 0% !important;
+    margin-bottom: 12% !important;
+    /* left: 25% !important; */
+    /* Max-Width: 75%; */
+    /* Min-Height: 70%; */
+    padding-top: 1rem;
+    padding-bottom: 1.2rem;
+    /* padding-right: 5rem; */
+    border-radius: 5px;
+    background-color: white;
+    opacity: 0.98;
+    font-family: 'Salesforce Sans',Arial,sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    text-align: center;
+    color: rgb(62, 62, 60);
+           }
+               
+.container{
+ Max-Width: 100%;
+ padding-top: 0.2rem;
+ text-align: center;
+                           
+ }            
+            
+ .rating {
+    border: none;
+    float: center;
+    font-size: 1.5em;
+    margin-bottom:-1.5rem;        
+          
+          
+            
+           
+}
+
+.rating > input {
+    display: none;
+}
+
+.rating > label:before {
+    margin: 5px;
+    font-size: 1em;
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f005";
+}
+
+.rating > .half:before {
+    content: "\f089";
+    position: absolute;
+}
+
+.rating > label {
+    color: #ddd;
+    float: center;
+}
+
+ .rating:not(:checked) > label:hover,
+.rating:not(:checked) > label:hover ~ label {
+    color: #006dd5;
+    cursor: pointer;
+} 
+ .textarea {
+   width:80%;
+   height: 100px;
+  -moz-border-bottom-colors: none;
+  -moz-border-left-colors: none;
+  -moz-border-right-colors: none;
+  -moz-border-top-colors: none;
+  background: none repeat scroll 0 0 rgba(0, 0, 0, 0.07);
+  border-color: -moz-use-text-color #FFFFFF #FFFFFF -moz-use-text-color;
+  border-image: none;
+  border-radius: 6px 6px 6px 6px;
+  border-style: none solid solid none;
+  border-width: medium 1px 1px medium;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12) inset;
+  font-family: 'Salesforce Sans',Arial,sans-serif;
+  font-size: 1em;
+  line-height: 1.4em;
+  padding: 5px 8px;
+  transition: background-color 0.2s ease 0s;
+}
+.textarea:focus {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border:1px solid #1124d1;
+    outline-width: 0;
+}            
+           
+             hr{
+             width:85%;
+             margin-top: 0rem;
+          
+            
+            }
+   
+        </style>      
+   <body>       
+  <apex:form id="Theform" styleClass="text-block">
+   
+    <div id="con" class="container">
+        <apex:outputPanel rendered="{!IF(!interviewRecord[0].Feedback_given__c,true,false)}">
+            <center><b>Feedback Pending</b></center>     
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!IF(interviewRecord[0].Feedback_given__c,true,false)}">
+        <apex:repeat var="que" value="{!existingResponseList}"> 
+          <!--  <apex:outputField value="{!que.Question_Number__c}"/>.&nbsp; --> 
+            <apex:outputField value="{!que.Question_Text__c}"/> <br/><br/>
+          <!--  <apex:outputField value="{!que.Answer_Picklist__c}" rendered="{!IF(que.Type__c=='Star Rating',true,false)}"/> -->
+            
+            <apex:outputPanel rendered="{!IF(que.Type__c=='Star Rating',true,false)}">
+                          <input type="hidden" id="{!que.id}-rating" value="{!rating}"/>
+                           
+                          <!-- <apex:variable value="{!VALUE(que.Answer_Picklist__c)}" var="select"/>-->
+                          <fieldset class="rating" rendered="{!IF(que.Type__c='Star Rating',true,false)}">
+                        <input type="radio" id="{!que.id}1" name="rating0"/>
+                        <label class="full" for="{!que.id}1" title="1 star" style="color:{!IF(VALUE(que.Answer_Picklist__c)>= 1&&VALUE(que.Answer_Picklist__c)!=null,'#006dd5','#ddd')};"></label>
+                                 <input type="radio" id="{!que.id}2" name="rating0" />
+                        <label class="full" for="{!que.id}2" title="2 stars" style="color:{!IF(VALUE(que.Answer_Picklist__c)>= 2&&VALUE(que.Answer_Picklist__c)!=null,'#006dd5','#ddd')};"></label>
+                                <input type="radio" id="{!que.id}3" name="rating0" />
+                        <label class="full" for="{!que.id}3" title="3 stars" style="color:{!IF(VALUE(que.Answer_Picklist__c)>= 3&&VALUE(que.Answer_Picklist__c)!=null,'#006dd5','#ddd')};"></label>
+                             <input type="radio" id="{!que.id}4" name="rating0" />
+                        <label class="full" for="{!que.id}4" title="4 stars" style="color:{!IF(VALUE(que.Answer_Picklist__c)>= 4&&VALUE(que.Answer_Picklist__c)!=null,'#006dd5','#ddd')};"></label>
+                        <input type="radio" id="{!que.id}5" name="rating0" />
+                        <label class="full" for="{!que.id}5" title="5 stars" style="color:{!IF(VALUE(que.Answer_Picklist__c)>= 5&&VALUE(que.Answer_Picklist__c)!=null,'#006dd5','#ddd')};"></label>
+                                                  
+                       </fieldset>
+            </apex:outputPanel> 
+            
+            <apex:outputPanel style="color: #006dd5;" rendered="{!IF(que.Type__c=='Comments',true,false)}"><apex:outputField value="{!que.Comments__c}" /><br/></apex:outputPanel>
+            <apex:outputPanel style="color: #006dd5;" rendered="{!IF(que.Type__c=='Yes/ No',true,false)}"><apex:outputField value="{!que.Answer_Yes_No__c}" /><br/></apex:outputPanel>
+          <br/>
+            <hr/>
+        </apex:repeat> 
+        
+        </apex:outputPanel>
+      </div>
+  </apex:form> 
+        </body>
+        </html>   
+
+    
+</apex:page>

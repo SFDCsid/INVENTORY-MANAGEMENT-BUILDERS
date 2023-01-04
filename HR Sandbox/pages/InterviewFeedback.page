@@ -1,0 +1,353 @@
+<apex:page controller="InterviewFeedbackController" docType="html-5.0" lightningStylesheets="false" standardStylesheets="false" sidebar="false" showHeader="false">
+	
+    <html
+		xmlns="http://www.w3.org/2000/svg"
+		xmlns:xlink="http://www.w3.org/1999/xlink">
+		<head>
+			<title>Feedback</title>
+			<meta charset="UTF-8" />
+			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+			<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+			<apex:stylesheet value="{!URLFOR($Resource.SLDS090, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+			<script type="text/javascript">__sfdcSessionId='{!$Api.Session_Id}';</script>
+			<script src="/soap/ajax/9.0/connection.js"></script>
+			<link href="https://fonts.googleapis.com/css?family=Lato:400,700&subset=latin,latin-ext" rel="stylesheet" type="text/css" />
+			<link href="https://fonts.googleapis.com/css?family=Buda:300" rel="stylesheet" type="text/css"/>
+			<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+			<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+		</head>
+		<style>
+   html{
+    margin: 0;
+    Height: 100%;
+    overflow-Y: hidden;
+   }    
+   body {
+    margin: 0;
+    Height: 100%;
+    overflow-Y: scroll;
+    /* Full height */
+    /* Center and scale the image nicely */
+    background-position: fixed;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;;
+    -webkit-background-size: 100% 100%;; /* For WebKit*/
+    -moz-background-size: 100% 100%;    /* Mozilla*/
+    -o-background-size: 100% 100%;      /* Opera*/
+ }
+
+.text-block {
+    position: relative !important;
+    top: 12% !important;
+    margin-bottom: 12% !important;
+    left: 25% !important;
+    Max-Width: 55%;
+    Min-Height: 50%;
+    padding-top: 2.2rem;
+    padding-bottom: 3.5rem;
+    padding-left: 1rem;
+    padding-right:1rem;
+    border-radius: 5px;
+    background-color: white;
+    opacity: 0.98;
+    font-family: 'Salesforce Sans',Arial,sans-serif;
+    font-size: 18px;
+    line-height: 1.5;
+    text-align: center;
+    color: rgb(62, 62, 60);
+}
+
+.btnSection{
+    position: absolute;
+    bottom: 3.5rem;
+    display:inline-block;
+}
+
+.btn {
+    min-width: 95px;
+    background-color: rgb(0, 109, 213);
+    border-radius: 5px;
+    text-align: center;
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+    color: white;
+    font-family: 'Salesforce Sans',Arial,sans-serif;
+    font-size: 13px;
+    vertical-align: middle;
+    border: 1px solid rgb(217, 219, 221);
+    text-decoration: none;
+    transition: border .15s linear;
+}
+            
+.btnPrev{
+background-color: white;
+border:0.5px solid grey;
+color:black;
+}            
+ 
+.btn:hover {
+    background-color: rgb(24, 112, 152);
+    color: white;
+}
+
+.container {
+    Max-Width: 100%;
+    padding-top: 0.5rem;
+    text-align: center;
+}
+
+.rating {
+    border: none;
+    float: center;
+    font-size: 2em;
+}
+
+.rating > input {
+    display: none;
+}
+
+.rating > label:before {
+    margin: 5px;
+    font-size: 1.25em;
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f005";
+}
+
+.rating > .half:before {
+    content: "\f089";
+    position: absolute;
+}
+
+.rating > label {
+    color: #ddd;
+    float: center;
+}
+
+.rating:not(:checked) > label:hover,
+.rating:not(:checked) > label:hover ~ label {
+    color: #006dd5;
+    cursor: pointer;
+}
+.messages{
+    position: relative !important;
+    top: 12% !important;
+    left: 30% !important;
+}
+ 
+ .textarea {
+   width:80%;
+   height: 100px;
+  -moz-border-bottom-colors: none;
+  -moz-border-left-colors: none;
+  -moz-border-right-colors: none;
+  -moz-border-top-colors: none;
+  background: none repeat scroll 0 0 rgba(0, 0, 0, 0.07);
+  border-color: -moz-use-text-color #FFFFFF #FFFFFF -moz-use-text-color;
+  border-image: none;
+  border-radius: 6px 6px 6px 6px;
+  border-style: none solid solid none;
+  border-width: medium 1px 1px medium;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12) inset;
+  font-family: 'Salesforce Sans',Arial,sans-serif;
+  font-size: 1em;
+  line-height: 1.4em;
+  padding: 5px 8px;
+  transition: background-color 0.2s ease 0s;
+}
+
+ .textarea:focus {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border:1px solid #1124d1;
+    outline-width: 0;
+}
+  hr{
+  width:90%;
+  }
+@media screen and (max-width: 480px) {
+  
+    .btnSection{
+       position: absolute;
+       bottom: 1.5rem;
+       display:inline-block;
+    }
+    .rating {
+        border: none;
+        float: center;
+        font-size:1.4em;
+      }
+    .text-block {
+    position: relative !important;
+    top: 12% !important;
+    left: 5% !important;
+    Max-Width: 90%;
+    Min-Height: 54%;
+    padding-top: 2% !important;
+    padding-bottom: 1.5rem !important;
+    padding-left: 1rem  !important;
+    padding-right: 1rem !important;
+    }
+    .messages{
+    position: relative !important;
+    top: 20% !important;
+    left: 10% !important;
+    font-family: 'Salesforce Sans',Arial,sans-serif;
+    font-size: 1em;
+   }
+  hr{
+    width:100%;
+  }
+}
+
+.loader {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url('{!URLFOR($Resource.loadingSurvey)}')  no-repeat rgb(249,249,249);
+    opacity: .8;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 5rem;
+    -webkit-background-size: 5rem; /* For WebKit*/
+    -moz-background-size: 5rem;    /* Mozilla*/
+    -o-background-size: 5rem;      /* Opera*/
+}
+#Page1{
+  display:none;         
+}
+</style>
+		<script> 
+function checkVal(id,type, score) {
+    //alert('hiiii::: '+score+':: type::'+type);
+    if(type !=null && type !='') {
+        if(type=='OverallExp') {
+            //alert('id='+id+' AND score='+score);
+             var subId=id.substr(0,id.length-1);
+            //alert(document.getElementById('{!$Component.pickData}').value);
+             var pickVal=subId+'-rating';
+             document.getElementById(pickVal).value=score;
+             SetVal(subId,score);
+             //set next all stars blank
+            for(var j=score+1;j<=5;j++){
+                var setId=subId+j;
+                document.getElementById(setId).labels[0].setAttribute("style", "color: #ddd;");
+                document.getElementById(setId).checked = false;
+            }
+            // set star upto score
+            for(var i=1;i<=score;i++){
+                var setId=subId+i;
+                document.getElementById(setId).labels[0].setAttribute("style", "color: #006dd5;");
+                document.getElementById(setId).checked =true;
+            }
+        }
+    } 
+}
+function showLoader(){
+
+     $("#WelcomePage").toggle(1000, function(){
+      
+     });
+      $("#Page1").toggle(1000, function(){
+      
+     });
+}
+
+</script>
+		<body id="bd" style="background-image:url({!URLFOR($Resource.ExcellerBanner)});">
+              <apex:form id="TheForm" styleClass="text-block" >
+                  <apex:outputPanel rendered="{!IF(interviewRecord.size>0,true,false)}">
+                  <apex:outputPanel styleClass="messages">
+                      <b> <apex:pageMessages id="msgs"/> </b>
+                  </apex:outputPanel>  <br/>
+                    <apex:actionStatus id="status">
+    <apex:facet name="start">
+        <apex:outputPanel >
+           <!-- <img src="{!URLFOR($Resource.Loading)}" width="25" height="25" /><br/>-->
+            <div class="loader"></div><br/>
+         </apex:outputPanel>
+    </apex:facet>
+</apex:actionStatus>
+         <!--  <apex:image value="{!URLFOR($Resource.ExcellerBanner)}"/> -->
+                  <apex:outputPanel rendered="{!IF(pageIndex==0&&squestions.size>0,true,false)}">
+				<b style="font-size:18px" id="WelcomePage">
+					<br/>
+                    <apex:outputText value="Give us your feedback for the interview!" rendered="{!IF(!interviewRecord[0].Feedback_given__c,true,false)}"> </apex:outputText>
+ 				</b>
+				<br/>
+ 				<br/>
+                <br/>
+                </apex:outputPanel>
+                                 <apex:outputPanel rendered="{!IF(pageIndex==0&&interviewRecord[0].Feedback_given__c,true,false)}">
+				<b style="font-size:18px" id="WelcomePage">
+					<br/> 
+                    <apex:outputText value="Feeback is already submitted." rendered="{!IF(interviewRecord[0].Feedback_given__c,true,false)}"> </apex:outputText>
+				</b>
+				<br/>
+  				<br/>
+                  <center><apex:commandButton styleClass="btn" action="{!BackToRecord}" value="Back To Interview" rendered="{!IF(isSubmitted||interviewRecord[0].Feedback_given__c,true,false)}"></apex:commandButton>&nbsp;&nbsp;</center>
+                 <br/>
+                </apex:outputPanel>       
+				<div id="con" class="container">
+                     <apex:outputPanel rendered="{!IF(pageIndex > 0&&pageIndex != MaxIndex+1&&isTrue==true,true,false)}">
+                         <apex:variable value="{!0}" var="rowNum"/>
+                        
+                     <apex:repeat var="que" value="{!questionMap[pageIndex]}">
+                         
+                          <p>{!que.Question_Text__c}</p>
+                         <apex:outputPanel rendered="{!IF(que.Type__c=='Star Rating',true,false)}">
+                          <input type="hidden" id="{!que.id}-rating" value="{!rating}"/>
+                           
+                           <apex:variable value="{!VALUE(que.Answer_Picklist__c)}" var="select"/>
+                          <fieldset class="rating" rendered="{!IF(que.Type__c='Star Rating',true,false)}">
+                        <input type="radio" id="{!que.id}1" name="rating0" onclick="checkVal(this.id,'OverallExp',1);" />
+						<label class="full" for="{!que.id}1" title="1 star" style="color:{!IF(select>= 1&&select!=null,'#006dd5','#ddd')};"></label>
+                                 <input type="radio" id="{!que.id}2" name="rating0" onclick="checkVal(this.id,'OverallExp',2);" />
+						<label class="full" for="{!que.id}2" title="2 stars" style="color:{!IF(select >= 2&&select!=null,'#006dd5','#ddd')};"></label>
+                                <input type="radio" id="{!que.id}3" name="rating0" onclick="checkVal(this.id,'OverallExp',3);" />
+						<label class="full" for="{!que.id}3" title="3 stars" style="color:{!IF(select >= 3&&select!=null,'#006dd5','#ddd')};"></label>
+                             <input type="radio" id="{!que.id}4" name="rating0" onclick="checkVal(this.id,'OverallExp',4);" />
+						<label class="full" for="{!que.id}4" title="4 stars" style="color:{!IF(select >= 4&&select!=null,'#006dd5','#ddd')};"></label>
+						<input type="radio" id="{!que.id}5" name="rating0" onclick="checkVal(this.id,'OverallExp',5);" />
+						<label class="full" for="{!que.id}5" title="5 stars" style="color:{!IF(select >= 5&&select!=null,'#006dd5','#ddd')};"></label>
+                                                  
+                       </fieldset>
+                         </apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(que.Type__c='Comments',true,false)}">
+                         <apex:inputTextarea styleClass="textarea" value="{!que.Comments__c}"/>
+                         </apex:outputPanel>  
+                           <apex:outputPanel rendered="{!IF(que.Type__c='Yes/ No',true,false)}">
+                         <apex:inputField value="{!que.Answer_Yes_No__c}" style="width:80%;text-align: center;"/>
+                         </apex:outputPanel>    
+                         
+                          <apex:variable var="rowNum" value="{!rowNum + 1}"/>
+                         <hr/><br/>
+                     </apex:repeat>
+                    </apex:outputPanel>
+                  
+ 				<br/>
+ 				<br/><br/><br/>
+            <apex:outputPanel rendered="{!IF(isTrue==true,true,false)}">
+                <div id='btnSection'>
+                    <apex:commandButton styleClass="btn btnPrev" action="{!PreviousPage}" value="Previous" rendered="{!IF(pageIndex>0,true,false)}" status="status" reRender="TheForm,con,btnSection"></apex:commandButton>&nbsp;&nbsp;
+                    <apex:commandButton styleClass="btn" action="{!NextPage}" value="Next" rendered="{!IF(pageIndex < MaxIndex,true,false)}" status="status" reRender="TheForm,con,btnSection"></apex:commandButton>&nbsp;&nbsp;
+                    <apex:commandButton styleClass="btn" action="{!submit}" value="Submit" rendered="{!IF(pageIndex == MaxIndex,true,false)}" status="status" reRender="TheForm"></apex:commandButton>
+
+            <!--    <button class="btn">Submit</button>-->
+                    <apex:actionFunction action="{!setQuestionData}" name="SetVal" reRender="">
+                        <apex:param name="qId" value=""/>
+                        <apex:param name="qVal" value=""/>
+                 </apex:actionFunction>
+                 </div>
+            </apex:outputPanel>
+			</div>  
+           </apex:outputPanel>       
+           </apex:form>
+		</body>
+        </html>
+      
+</apex:page>

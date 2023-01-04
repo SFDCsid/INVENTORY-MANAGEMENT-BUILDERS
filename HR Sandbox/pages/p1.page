@@ -1,0 +1,173 @@
+<apex:page controller="ScreeningController" >
+ <html>
+<head>
+<title>Page Title</title>
+  <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+        
+        <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'/>
+        <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'/>
+  <link href='https://fonts.googleapis.com/css2?family=Roboto&display=swap' rel='stylesheet'/>     
+  
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  
+  
+<style>
+         
+ 
+:root {
+  --accent-color: #6200ee;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, sans-serif;
+}
+
+.form-container {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fafafa;
+}
+
+form {
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 95%;
+  max-width: 300px;
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 0.5rem;
+  box-shadow: 0 0 8px 0 rgb(0 0 0 / 8%), 0 0 15px 0 rgb(0 0 0 / 2%), 0 0 20px 4px rgb(0 0 0 / 6%);
+}
+
+.input-container {
+  background-color: #f5f5f5;
+  position: relative;
+  border-radius: 4px 4px 0 0;
+  height: 56px;
+  transition: background-color 500ms;
+}
+
+.input-container:hover {
+  background-color: #ececec;
+}
+
+.input-container:focus-within {
+  background-color: #dcdcdc;
+}
+
+label {
+  display: block;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 16px;
+  color: rgba(0, 0, 0, 0.5);
+  transform-origin: left top;
+  user-select: none;
+  transition: transform 150ms cubic-bezier(0.4, 0, 0.2, 1),color 150ms cubic-bezier(0.4, 0, 0.2, 1), top 500ms;
+}
+
+input {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  background: transparent;
+  caret-color: var(--accent-color);
+  border: 1px solid transparent;
+  border-bottom-color: rgba(0, 0, 0, 0.42);
+  color: rgba(0, 0, 0, 0.87);
+  transition: border 500ms;
+  padding: 20px 16px 6px;
+  font-size: 1rem;
+}
+
+input:focus {
+  outline: none;
+  border-bottom-width: 2px;
+  border-bottom-color: var(--accent-color);
+}
+
+input:focus + label {
+  color: var(--accent-color);
+}
+
+input:focus + label,
+input.is-valid + label {
+  transform: translateY(-100%) scale(0.75);
+}
+
+footer {
+  text-align: center;
+  padding: 0.5rem 0;
+  background-color: #eaeaea90;
+}
+
+footer p {
+  font-size: 0.75rem;
+  margin: 0.25rem 0;
+  color: #221133;
+}
+
+footer a {
+  text-decoration: none;
+  color: inherit;
+} 
+  
+</style>  
+</head>
+<script>
+$(document).ready(function(){
+const inputs = document.querySelectorAll("input");
+
+inputs.forEach((input) => {
+  input.addEventListener("blur", (event) => {
+    if (event.target.value) {
+      input.classList.add("is-valid");
+    } else {
+      input.classList.remove("is-valid");
+    }
+  });
+});
+})
+</script>
+<body>
+
+<div class="form-container">
+  <apex:form id="form"> 
+    <div class="input-container">
+      <input type="text" id="name" required="true"/>
+      <label for="name">First Name</label>
+    </div>
+    
+    <div class="input-container">
+      <input type="email" id="email" required="true"/> 
+      <label for="email">Email</label>
+    </div>
+      
+<div class="input-container">
+      <apex:inputField value="{!squestions.First_Name__c}" id="name"/>
+      <label for="name">Test Field</label>
+    </div>  
+    </apex:form> 
+</div>
+
+<footer>
+  <p>
+    Pen by <a href="https://www.jemimaabu.com" target="_blank">Jemima Abu</a><span style="color: #D11E15"> &#9829;</span>
+  </p>
+</footer>
+</body>
+</html>
+    
+    
+</apex:page>

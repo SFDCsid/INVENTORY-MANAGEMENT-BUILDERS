@@ -1,0 +1,442 @@
+<apex:page sidebar="false" showheader="false" standardstylesheets="false" id="thePage" controller="ScreeningController" docType="html-5.0" renderAs="PDF">
+   
+        <html>
+            <meta charset="utf-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+            <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet"/>
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"/>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+            <link href="https://fonts.googleapis.com/css?family=Acme&display=swap" rel="stylesheet"/>
+            <head>
+                <style>
+                    html, body {
+                    padding: 0px;
+                    margin: 0px;
+                    font-family: 'IBMPlexSansSemiBold', sans-serif;
+                    font-family: "Google Sans", Roboto, arial, sans-serif;
+                }
+                header {
+                    background:#FFF;
+                    position: sticky;
+                    top: 0px;
+                    width:100%;
+                    padding: 10px 20px;
+                    z-index:999;
+                }
+                         
+img {
+    vertical-align: middle;
+    border-style: none;
+    width: 9em;
+}
+             .container{
+              width:50%;                    
+             }
+              @media screen and (max-width: 768px) {                    
+               .container {
+                 width: 95%;
+               }
+                img {
+                 width: 7em;
+                }
+              }
+ 
+             .fieldBlock{
+              padding: 1em;
+              border-radius: 10px;    
+              background: white;      
+              }
+             .data-table tr.head {
+              background: rgb(147 172 206);
+              }
+              .fieldBlockTitle{
+              border-radius: 10px;    
+              background: white;      
+              }
+               .loader {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url('{!URLFOR($Resource.loadingIcon)}')  no-repeat rgb(249,249,249);
+    opacity: .8;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 5rem;
+    -webkit-background-size: 5rem; /* For WebKit*/
+    -moz-background-size: 5rem;    /* Mozilla*/
+    -o-background-size: 5rem;      /* Opera*/
+}     
+                #previousButton, #nextButton {
+                    outline: none;
+                    color: #fff; 
+                }                
+                .nav-button {
+                    background: transparent;
+                    align-items: center;
+                    margin: 0 16px;
+                    border: none;
+                    outline: none;
+                    color: #263238;
+                    cursor: pointer;
+                    font-size: 16px;
+                }
+                .nav-button.hide {
+                    user-select: none;
+                    opacity: 0;
+                }
+                .nav-button *:first-child {
+                    margin-right: 16px;
+                }
+                .upload-btn-wrapper {
+                    position: relative;
+                    overflow: hidden;
+                    display: inline-block;
+                }                
+                h3{
+                    
+                    color:#DE2A3B;
+                }
+                .dateOnlyInput input {
+                    width: 10em;
+                    float: left;
+                }
+                .dateFormat {
+                    padding: 0 8px !important;
+                }
+                
+                .col-form-label {    
+                    color: #292b33;
+                    font-size: 18px;
+                }
+                .form-control:focus {
+                    color: #292b33;
+                    background-color: #fff;
+                    border-color: #292b33;
+                    outline: 0;
+                    box-shadow: 0 0 0 0.07rem rgb(41, 43, 51);
+                }
+                p.borderdashed{
+                    color:#DE2A3B;
+                    width:50%;
+                    margin:auto;
+                    border-bottom:1px dashed #DE2A3B;
+                }
+                p.borderdashedWeekday{
+                    color:#DE2A3B;
+                    width:40%;
+                    margin:auto;
+                    border-bottom:1px dashed #DE2A3B;
+                }
+                p.borderdashedDR{
+                    color:#DE2A3B;
+                    width:80%;
+                    margin:auto;
+                    border-bottom:1px dashed #DE2A3B;
+                }
+                p.borderdashed2{
+                    color:#DE2A3B;
+                    width:80%;
+                    margin:auto;
+                    border-bottom:1px dashed #DE2A3B;
+                }
+                p.borderdashed3{
+                    color:#DE2A3B;
+                    width:45%;
+                    margin:auto;
+                    border-bottom:1px dashed #DE2A3B;
+                }
+                p.borderdashedAdd{
+                    color:#DE2A3B;
+                    width:15%;
+                    margin:auto;
+                    border-bottom:1px dashed #DE2A3B;
+                }
+                
+                /*----------------------- Button CSS ---------------------------*/
+              
+                .button1{
+                    width: 170px;
+                    padding:5px 12px !important;
+                    font-size: 18px;
+                    font-family: 'IBMPlexSansRegular';
+                    background-image:none;
+                    text-transform: uppercase;
+                    transition: all ease-in-out 0.2s;
+                    -moz-transition: all ease-in-out 0.2s;
+                    -webkit-transition: all ease-in-out 0.2s;
+                    z-index: 1;
+                    position:fixed;
+                    bottom:0px;
+                    right:30px;                
+                    color:#fff !important;
+                    background: #292b33 !important;
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+                    transition: all 0.3s cubic-bezier(.25,.8,.25,1) !important;
+                }               
+               
+                .button1:hover{
+                    background-image:none;
+                    background: #e74315 !important;
+                    color:#FFF !important;
+                    transition:.3s;                                
+                    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);                
+                }
+                      .primary-button {
+                    height: 33px;
+                    background:rgb(25 103 210)!important;
+                    color: #ffffff;
+                    border-radius: 5px;
+                    width: 130px;
+                    border: none;
+                    outline: none;
+                    font-size: 18px;
+                    cursor: pointer;
+                    align: right; 
+
+               .btn {
+                     background-color: #008CBA; 
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+                } /* Blue */
+                .container1{
+                    width:44%;
+                    margin:auto;
+                    background: #292b33 !important;
+                    color:#fff !important;
+                    padding:10px 0;
+                    margin:7% auto;
+                    border-radius:5px;
+                    -webkit-box-shadow: 1px 1px 15px 0px rgba(106,88,95,.8);
+                    -moz-box-shadow: 1px 1px 15px 0px rgba(106,88,95,.8);
+                    box-shadow: 1px 1px 15px 0px rgba(106,88,95,.8);
+                }
+                .container1 .col-form-label {    
+                    color: #FFF;
+                    font-size: 16px;
+                }                
+                .container1 h3{                
+                    font-size: 1.8rem;
+                    font-weight: 500;
+                    color: #DE1E42;
+                    letter-spacing:4px;
+                    font-family: 'verdana', sans-serif;
+                    text-transform: uppercase;
+                }
+                .container1 .form-group{                
+                    padding:8px 30px !important;
+                }
+                .container1 .buttonSearch{
+                    padding:5px 12px !important;
+                    font-size: 16px;      
+                    font-weight:bold;
+                    color:#fff !important;
+                    background: #292b33 !important;
+                    border:1px solid #fff !important;
+                    width:160px;
+                    margin-bottom: 8px;
+                }
+                .container1 .buttonSearch:hover{
+                    background-image:none;
+                    background: #DE1E42 !important;
+                    color:#FFF !important;
+                    transition:.3s;                                
+                    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);                
+                }
+                .container1 .form-control {
+                    background-color: #292b33 ;
+                    border: 1px solid #ced4da;
+                    border-color:linear-gradient(to right top, #292b33, #595a60, #8d8d92, #c5c4c7, #ffffff);
+                    color:#FFF;
+                    border-radius: .25rem;
+                    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+                }
+                .container h3{
+                    font-family: verdana;
+                }
+                footer {
+                    position: fixed;
+                    bottom: 0px;
+                    width:100%;
+                    display: flex;
+                    padding: 5px 10px;
+                    background: #281571 !important;
+                    color:#fff;
+                    align-items: center;
+                    justify-content: space-between;
+                }                
+                .alert-dismissible .close {
+                    position: absolute;
+                    top: 5px;
+                }
+                .customPopup {
+                    //background: #01878e !important; 
+                    border: 1px solid black;           
+                    border-radius: 25px;
+                    left: 56%;
+                    padding: 60px;
+                    position: absolute;
+                    z-index: 999;
+                    width: 530px;
+                    margin-left: -250px;
+                    top: 28%;
+                    text-align: center;
+                    font-size: 12px;
+                    //color: white;
+                }
+                .customPopup .buttonSearch {
+                    padding: 5px 12px !important;
+                    font-size: 16px;
+                    font-weight: bold;
+                    color: #fff !important;
+                    background: #281571 !important;
+                    border: 1px solid #fff !important;
+                    margin-bottom: -20px;
+                    width: 150px;
+                }
+                .customPopup .buttonSearch:hover{
+                    background-image:none;
+                    background: #DE1E42 !important;
+                    color:#FFF !important;
+                    transition:.3s;                                
+                    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);                
+                }
+                .form-group {
+                    margin-bottom: 0rem !important;
+                }
+                .form-control{
+                    margin-bottom: 14px;
+                }
+                .logo{
+                    width: 90px;
+                    text-align:right;
+                }
+                .actionStatusLoading{
+                    margin: 12% 44%;
+                }
+                .innerAction{
+                    display: inline-block;
+                    padding: 2px;
+                    background-color: #384862;
+                    width: 153px;
+                    text-align: center;
+                    color:white;
+                }
+                .innerAction img{
+                    float: left;
+                    height:130px;
+                    width:150px;
+                }
+                
+    .iconstyle{
+    width: 85%;
+    height: calc(1.5em + 0.75rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;  
+                }
+
+                </style>
+            </head>
+            <body style="background:white;">
+            <apex:form >
+                <br/>
+                <div style="top: 7%;width:90%;position: relative;padding:24px; text-align: justify; text-justify: inter-word; font-family:Arial, Times, serif;">
+                   <center> <a href="#"><img class="logo" src="{!$Resource.ExcellerLogo}" style="width: auto;"/> </a></center>
+                    <p style="float:right;">Date_______________</p><br/><br/><br/><br/>
+                   
+                      <b>  <p>To,</p><br/>
+                       <p>Mr./Ms._____________________________</p><br/>
+                       <p>(Address)______________________________________</p><br/><br/>
+
+                                         <b><u><center>Subject: Appointment Letter</center></u></b> <br/><br/>
+                    <p>Dear ______________,</p></b><br/> 
+                    <p>With reference to the review of your performance during the internship period, the Management takes pleasure in appointing you as a _____________________in our organization to be stationed at Thane on the following terms and conditions:</p>
+                    <p><b>1.	Location:</b></p>
+                    <p>Your current location will be in ___________.</p>
+<p><b>2.	Date of Joining:</b></p>
+<p>Your date of joining for full-time employment ______________.</p>
+<p><b>3.	Job title:</b></p>
+<p>Your title will be _____________ , and you will report to the Company’s ________________.</p>
+<p><b>4.	Working schedule:</b></p>
+<p>Your work timing will be from 10:30 - 7:00 pm, Monday to Saturday, however we have Sunday off every week. For completion of assignment on hand the employee may be required to sit late.</p>
+<p><b>5.	PROBATION:</b></p>
+                    <p>You will be on probation for a period of Six months from your date of joining the       Organization. At the end of the first Four months your performance will be reviewed and if not found satisfactory as per the Organization standards, you will be notified about the same by your reporting manager and will be given one month time span to improve on your performance.</p>
+
+<p>You will be confirmed in service at the end of the probation period, which will be subject to satisfactory job performance, good conduct and behavior. You will be deemed as confirmed only after a letter to this effect is issued indicating the successful completion of the probationary period.</p>
+
+<p>During the probation period, your services may be terminated by either party by giving written notice of 15 days or gross salary in lieu of notice period on either side. Post confirmation your notice period will be 60 days. After confirmation, the employee has to serve the complete notice period as per the policy. No notice of resignation will be effective, if it is given while you are on leave. You will not be entitled to avail leave during your notice period. Hence for the notice of resignation to be effective you have to resume duties immediately and actively serve the company for the required notice period.
+                    </p>
+<p><b>6.	Leave: </b></p>
+                    <p>Leave cannot be claimed as a matter of right. It shall be at discretion of the sanctioning authority to approve or refuse the leave application at any time according to the exigencies of the company work. In case of more than 3 consecutive leaves, approval will have to be taken at least 15 days in advance.</p>
+<p><b>7.	Double Employment Prohibited:</b> </p>
+<p>You will appreciate that, as a professional, you have to devote yourself to the company on a full-time employment basis and, as such your hours of work would depend upon the requirement of the Organization. To enable you to give your best, you will not undertake and participate, directly or indirectly, in any activity which may come in the way of effective discharge of your duties, without consent in writing from the Management. You will not without the specific written permission carry on any business or enter a part of your time in any capacity the services of or be employed by any other firm, company or person. In particular you will not divulge or part with any drawings, quotations, specifications, manufacturing information’s etc...
+                    </p>
+                    <p><b>8.	Employment Relationship:</b></p>
+
+ <p>Employment with the Company is for no specific period of time. Your employment with the Company will be “at will,” meaning that either you or the Company may terminate your employment at any time and for any reason, with or without cause. Any contrary representations that may have been made to you are superseded by this letter agreement. This is the full and complete agreement between you and the Company on this term. Although your job duties, title, compensation and benefits, as well as the Company’s personnel policies and procedures, may change from time to time, the “at will” nature of your employment may only be changed in an express written agreement signed by you and a duly authorized officer of the Company (other than you.)
+                    </p>
+
+                    <p><b>9.	Cash Compensation:</b></p>
+                    <p><b>Salary</b></p>
+<p>The Company will pay you a starting salary at the rate of ₹ _________________(__________________) per month, payable in accordance with the Company’s standard payroll schedule, beginning of your joining day. The salary break up will be given after joining in the company. This salary will be subject to adjustment pursuant to the Company’s employee compensation policies.</p>
+
+<p><b>Tax withholding</b></p>
+<p>All forms of compensation referred to in this letter agreement are subject to reduction to reflect applicable withholding and payroll taxes and other deductions required by law.</p>
+
+<p><b>Tax advice</b></p>
+<p>You are encouraged to obtain your own tax advice regarding your compensation from the Company. You agree that the Company does not have a duty to design its compensation policies in a manner that minimizes your tax liabilities and you will not make any claim against the Company or its Board of Directors related to tax liabilities arising from your compensation.</p>
+
+
+<p><b>10.	Privacy and Confidentiality of Information:</b></p>
+<p><b>Privacy Agreement</b></p>
+<p>You are required to observe and uphold all of the Company’s privacy policies and procedures as implemented or varied from time to time. Collection, storage, access to and dissemination of employee personal information will be in accordance with privacy legislation.</p>
+
+<p><b>Proprietary Information and Inventions Agreement</b></p>
+<p>Like all Company employees, you will be required, as a condition of your employment with the Company, to sign the Company’s standard Proprietary Information and Inventions Agreement. During the period of your employment with the company or at any time thereafter, except in the course of performance of your duties, you shall not use, divulge or disclose any information to any person, association, agency or Company, any of the information/secrets concerning the affairs of and / or the business of the Company, which you may have acquired incidental to or in the course of your employment in the company.</p>
+
+<p><b>11.	Interpretation, Amendment and Enforcement</b></p>
+<p>This letter agreement supersedes and replaces any prior agreements, representations or understandings (whether written, oral, implied or otherwise) between you and the Company and constitute the complete agreement between you and the Company regarding the subject matter set forth herein. This letter agreement may not be amended or modified, except by an express written agreement signed by both you and a duly authorized officer of the Company.</p>
+
+<p><b>We take this opportunity to welcome you to the organization and wish you a successful and fruitful career with us.</b></p>
+
+                    <p>           (Sign)</p>
+
+<p>      __________________________________________</p>
+
+               
+ <p>       For <b>Exceller Consultancy</b></p>
+                    <p>   ________________________________________________________________________________________________________</p>
+                    <p> I accept the terms and conditions of my employment with Exceller Consultancy and confirm that my actual date of full-time employment joining is_____________________.</p>
+                    <p> Signature:</p>
+                       
+
+                    <p><b>(Name)______________________</b></p>
+<p><b> (Position)_________________________</b></p>
+
+<br/>
+                 </div>
+            </apex:form>
+            </body>
+       
+        </html>
+  
+</apex:page>

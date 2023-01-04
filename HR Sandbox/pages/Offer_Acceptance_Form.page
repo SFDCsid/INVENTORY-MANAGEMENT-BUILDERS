@@ -1,0 +1,186 @@
+<apex:page id="thePage" controller="OfferAcceptanceController" showHeader="false">
+    
+    <html>
+        <meta charset="utf-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+            <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet"/>
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"/>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+            <link href="https://fonts.googleapis.com/css?family=Acme&display=swap" rel="stylesheet"/>
+        <head>
+            <style>
+                
+          <!--       html, body {
+                    padding: 0px;
+                    margin: 0px;
+                    font-family: 'IBMPlexSansSemiBold', sans-serif;
+                    font-family: "Google Sans", Roboto, arial, sans-serif;
+                }
+                
+                header {
+                    background:#FFF;
+                    position: sticky;
+                    top: 0px;
+                    width:100%;
+                    padding: 10px 20px;
+                    z-index:999;
+                }
+                
+                .container{
+                width:50%;
+                }
+                
+            
+                img {
+                 vertical-align: middle;
+                 border-style: none;
+                 width: 9em;
+               } -->
+                
+                .logo{
+                    width: 130px;
+                    text-align:right;
+                }	
+                
+                  .fieldBlockTitle{
+              border-radius: 10px;    
+              background: white; 
+              text-align:center;  
+              }
+                  .primary-button {
+                    height: 33px;
+                    background:rgb(40,167,69)!important;
+                    color: #ffffff;
+                    border-radius: 5px;
+                    width: 130px;
+                    border: none;
+                    outline: none;
+                    font-size: 18px;
+                    cursor: pointer;
+                    align: right; 
+                
+                }
+                .reject-button{
+                    height: 33px;
+                    background:rgb(237,68,38)!important;
+                    color: #ffffff;
+                    border-radius: 5px;
+                    width: 130px;
+                    border: none;
+                    outline: none;
+                    font-size: 18px;
+                    cursor: pointer;
+                    text-align: center; 
+                }
+    .loader {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url('{!URLFOR($Resource.loadingIcon)}')  no-repeat rgb(249,249,249);
+    opacity: .8;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 5rem;
+    -webkit-background-size: 5rem; /* For WebKit*/
+    -moz-background-size: 5rem;    /* Mozilla*/
+    -o-background-size: 5rem;      /* Opera*/
+}     
+            </style>
+                
+        </head> 
+        
+        <body style="background:#ede7f6;">
+            <apex:form id="form">
+                  <apex:outputPanel styleClass="messages">
+                      <b> <apex:pageMessages id="msgs"/> </b>
+                  </apex:outputPanel>  
+                   <apex:actionStatus id="status">
+    <apex:facet name="start">
+        <apex:outputPanel >
+           <!-- <img src="{!URLFOR($Resource.Loading)}" width="25" height="25" /><br/>-->
+            <div class="loader"></div><br/>
+         </apex:outputPanel>
+    </apex:facet>
+</apex:actionStatus>
+        <apex:outputPanel style="top:2%;left:25%;right:5%;width:48%;position: absolute;" rendered="{!IF(showform==true,true,false)}">
+         <div class="Container">
+         <div class="fieldBlockTitle" style="Background-color:#251b28;border-top:12px solid #ced4da;">
+         <center> <a href="#"><img class="logo" src="{!$Resource.Logo}" /> </a></center>
+         </div>
+        <br/>
+                    <p>Dear Candidate,</p><br/>
+                    <p>We’re pleased to offer you the position of <b>{!offerlist[0].Application__r.Position__r.Name}</b> with Exceller Management Consultancy with Amount of <b><apex:outputText ><!--<apex:param value="{!offerlist[0].Package_Amount_LPA__c}" />-->{!offerlist[0].Package_Amount_LPA__c}</apex:outputText>/-</b> In Words <b>{!numInWords} (LPA).</b></p>
+                    <p>We feel confident that you will contribute your skills and experience towards the growth of our organization. The terms and conditions for your anticipated employment will be as per our company policy.</p>
+                    <p>We would like to have your response by <b> <apex:outputText value="{0,date,dd/MM/yyyy}"> <apex:param value="{!offerlist[0].Valid_By_Date__c}" /> </apex:outputText> </b>. Also requesting you to share with us a copy of your resignation letter. </p>
+                    <p>In the meantime, please feel free to contact us via email or phone, if you have any questions. </p>
+             <p>We are all looking forward to having you in our team.</p><br/>
+            <!-- <p> Please check <u>terms and conditions and accept the offer</u>.</p><br/>
+             <!--<p>Best regards,</p> 
+                    <p>Team HR</p>
+                    <p>Exceller Consultancy</p><br/>-->
+        
+        <!-- <b>Terms and conditions</b><br/>
+        <div style="height:400px; overflow-y:scroll">
+           
+        </div>-->
+      <!--  <apex:inputCheckbox title="Terms and Conditions" id="accept_tnc" styleClass="accept_tnc" value="{!tc}"/> I accept Terms and Conditions  -->
+
+                     <div align="center">
+                         <apex:actionRegion renderRegionOnly="true" ><br/><br/>
+                          <input type="submit" class="primary-button" value="Accept" onclick="submitMethod(this);return false;"/> &nbsp; &nbsp;
+                          <input type="submit" class="reject-button" value="Reject" onclick="rejectMethod(this);return false;"/> &nbsp; &nbsp;   
+                        </apex:actionRegion><br/><br/><br/><br/><br/><br/><br/>
+                     </div> 
+        
+    </div>  </apex:outputPanel> 
+                 <apex:actionFunction name="AcceptedForm" action="{!Accepted}"  status="status" reRender="form"/>
+                 <apex:actionFunction name="RejectedForm" action="{!Rejected}"  status="status" reRender="form"/>
+                
+             </apex:form>
+            
+             <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" ></script>
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+           
+            <script>
+                
+                
+                function submitMethod(e) {
+                
+                //    var tnc_checkbox = document.querySelector(".accept_tnc");
+                // if (tnc_checkbox.checked === true){
+                        let text="Press Ok to accept the offer.";
+                        if (confirm(text) == true){
+                            AcceptedForm();
+                        }else{
+                            console.log("Cancelled accept btn");
+                        }
+                 /*   }
+                else{
+                        alert("Please Accept the Terms and Condition");
+                    }*/
+                    
+                }
+            function rejectMethod(e){
+                         let text="Press Ok to reject the offer.";
+                        if (confirm(text) == true){
+                            RejectedForm();
+                        }else{
+                            console.log("Cancelled reject btn");
+                        }
+            }
+                
+                </script>    
+            
+        </body>    
+        
+    </html>
+</apex:page>

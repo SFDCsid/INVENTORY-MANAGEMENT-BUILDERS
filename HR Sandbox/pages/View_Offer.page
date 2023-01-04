@@ -1,0 +1,389 @@
+<apex:page sidebar="false" showheader="false" standardstylesheets="false" id="thePage" controller="ViewOfferController" docType="html-5.0" renderAs="PDF">
+   
+        <html>
+            <meta charset="utf-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+            <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet"/>
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"/>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+            <link href="https://fonts.googleapis.com/css?family=Acme&display=swap" rel="stylesheet"/>
+            <head>
+                <style>
+                    html, body {
+                    padding: 0px;
+                    margin: 0px;
+                    font-family: 'IBMPlexSansSemiBold', sans-serif;
+                    font-family: "Google Sans", Roboto, arial, sans-serif;
+                }
+                header {
+                    background:#FFF;
+                    position: sticky;
+                    top: 0px;
+                    width:100%;
+                    padding: 10px 20px;
+                    z-index:999;
+                }
+                         
+img {
+    vertical-align: middle;
+    border-style: none;
+    width: 9em;
+}
+             .container{
+              width:50%;                    
+             }
+              @media screen and (max-width: 768px) {                    
+               .container {
+                 width: 95%;
+               }
+                img {
+                 width: 7em;
+                }
+              }
+ 
+             .fieldBlock{
+              padding: 1em;
+              border-radius: 10px;    
+              background: white;      
+              }
+             .data-table tr.head {
+              background: rgb(147 172 206);
+              }
+              .fieldBlockTitle{
+              border-radius: 10px;    
+              background: white;      
+              }
+               .loader {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url('{!URLFOR($Resource.loadingIcon)}')  no-repeat rgb(249,249,249);
+    opacity: .8;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 5rem;
+    -webkit-background-size: 5rem; /* For WebKit*/
+    -moz-background-size: 5rem;    /* Mozilla*/
+    -o-background-size: 5rem;      /* Opera*/
+}     
+                #previousButton, #nextButton {
+                    outline: none;
+                    color: #fff; 
+                }                
+                .nav-button {
+                    background: transparent;
+                    align-items: center;
+                    margin: 0 16px;
+                    border: none;
+                    outline: none;
+                    color: #263238;
+                    cursor: pointer;
+                    font-size: 16px;
+                }
+                .nav-button.hide {
+                    user-select: none;
+                    opacity: 0;
+                }
+                .nav-button *:first-child {
+                    margin-right: 16px;
+                }
+                .upload-btn-wrapper {
+                    position: relative;
+                    overflow: hidden;
+                    display: inline-block;
+                }                
+                h3{
+                    
+                    color:#DE2A3B;
+                }
+                .dateOnlyInput input {
+                    width: 10em;
+                    float: left;
+                }
+                .dateFormat {
+                    padding: 0 8px !important;
+                }
+                
+                .col-form-label {    
+                    color: #292b33;
+                    font-size: 18px;
+                }
+                .form-control:focus {
+                    color: #292b33;
+                    background-color: #fff;
+                    border-color: #292b33;
+                    outline: 0;
+                    box-shadow: 0 0 0 0.07rem rgb(41, 43, 51);
+                }
+                p.borderdashed{
+                    color:#DE2A3B;
+                    width:50%;
+                    margin:auto;
+                    border-bottom:1px dashed #DE2A3B;
+                }
+                p.borderdashedWeekday{
+                    color:#DE2A3B;
+                    width:40%;
+                    margin:auto;
+                    border-bottom:1px dashed #DE2A3B;
+                }
+                p.borderdashedDR{
+                    color:#DE2A3B;
+                    width:80%;
+                    margin:auto;
+                    border-bottom:1px dashed #DE2A3B;
+                }
+                p.borderdashed2{
+                    color:#DE2A3B;
+                    width:80%;
+                    margin:auto;
+                    border-bottom:1px dashed #DE2A3B;
+                }
+                p.borderdashed3{
+                    color:#DE2A3B;
+                    width:45%;
+                    margin:auto;
+                    border-bottom:1px dashed #DE2A3B;
+                }
+                p.borderdashedAdd{
+                    color:#DE2A3B;
+                    width:15%;
+                    margin:auto;
+                    border-bottom:1px dashed #DE2A3B;
+                }
+                
+                /*----------------------- Button CSS ---------------------------*/
+              
+                .button1{
+                    width: 170px;
+                    padding:5px 12px !important;
+                    font-size: 18px;
+                    font-family: 'IBMPlexSansRegular';
+                    background-image:none;
+                    text-transform: uppercase;
+                    transition: all ease-in-out 0.2s;
+                    -moz-transition: all ease-in-out 0.2s;
+                    -webkit-transition: all ease-in-out 0.2s;
+                    z-index: 1;
+                    position:fixed;
+                    bottom:0px;
+                    right:30px;                
+                    color:#fff !important;
+                    background: #292b33 !important;
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+                    transition: all 0.3s cubic-bezier(.25,.8,.25,1) !important;
+                }               
+               
+                .button1:hover{
+                    background-image:none;
+                    background: #e74315 !important;
+                    color:#FFF !important;
+                    transition:.3s;                                
+                    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);                
+                }
+                      .primary-button {
+                    height: 33px;
+                    background:rgb(25 103 210)!important;
+                    color: #ffffff;
+                    border-radius: 5px;
+                    width: 130px;
+                    border: none;
+                    outline: none;
+                    font-size: 18px;
+                    cursor: pointer;
+                    align: right; 
+
+               .btn {
+                     background-color: #008CBA; 
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+                } /* Blue */
+                .container1{
+                    width:44%;
+                    margin:auto;
+                    background: #292b33 !important;
+                    color:#fff !important;
+                    padding:10px 0;
+                    margin:7% auto;
+                    border-radius:5px;
+                    -webkit-box-shadow: 1px 1px 15px 0px rgba(106,88,95,.8);
+                    -moz-box-shadow: 1px 1px 15px 0px rgba(106,88,95,.8);
+                    box-shadow: 1px 1px 15px 0px rgba(106,88,95,.8);
+                }
+                .container1 .col-form-label {    
+                    color: #FFF;
+                    font-size: 16px;
+                }                
+                .container1 h3{                
+                    font-size: 1.8rem;
+                    font-weight: 500;
+                    color: #DE1E42;
+                    letter-spacing:4px;
+                    font-family: 'verdana', sans-serif;
+                    text-transform: uppercase;
+                }
+                .container1 .form-group{                
+                    padding:8px 30px !important;
+                }
+                .container1 .buttonSearch{
+                    padding:5px 12px !important;
+                    font-size: 16px;      
+                    font-weight:bold;
+                    color:#fff !important;
+                    background: #292b33 !important;
+                    border:1px solid #fff !important;
+                    width:160px;
+                    margin-bottom: 8px;
+                }
+                .container1 .buttonSearch:hover{
+                    background-image:none;
+                    background: #DE1E42 !important;
+                    color:#FFF !important;
+                    transition:.3s;                                
+                    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);                
+                }
+                .container1 .form-control {
+                    background-color: #292b33 ;
+                    border: 1px solid #ced4da;
+                    border-color:linear-gradient(to right top, #292b33, #595a60, #8d8d92, #c5c4c7, #ffffff);
+                    color:#FFF;
+                    border-radius: .25rem;
+                    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+                }
+                .container h3{
+                    font-family: verdana;
+                }
+                footer {
+                    position: fixed;
+                    bottom: 0px;
+                    width:100%;
+                    display: flex;
+                    padding: 5px 10px;
+                    background: #281571 !important;
+                    color:#fff;
+                    align-items: center;
+                    justify-content: space-between;
+                }                
+                .alert-dismissible .close {
+                    position: absolute;
+                    top: 5px;
+                }
+                .customPopup {
+                    //background: #01878e !important; 
+                    border: 1px solid black;           
+                    border-radius: 25px;
+                    left: 56%;
+                    padding: 60px;
+                    position: absolute;
+                    z-index: 999;
+                    width: 530px;
+                    margin-left: -250px;
+                    top: 28%;
+                    text-align: center;
+                    font-size: 12px;
+                    //color: white;
+                }
+                .customPopup .buttonSearch {
+                    padding: 5px 12px !important;
+                    font-size: 16px;
+                    font-weight: bold;
+                    color: #fff !important;
+                    background: #281571 !important;
+                    border: 1px solid #fff !important;
+                    margin-bottom: -20px;
+                    width: 150px;
+                }
+                .customPopup .buttonSearch:hover{
+                    background-image:none;
+                    background: #DE1E42 !important;
+                    color:#FFF !important;
+                    transition:.3s;                                
+                    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);                
+                }
+                .form-group {
+                    margin-bottom: 0rem !important;
+                }
+                .form-control{
+                    margin-bottom: 14px;
+                }
+                .logo{
+                    width: 90px;
+                    text-align:right;
+                }
+                .actionStatusLoading{
+                    margin: 12% 44%;
+                }
+                .innerAction{
+                    display: inline-block;
+                    padding: 2px;
+                    background-color: #384862;
+                    width: 153px;
+                    text-align: center;
+                    color:white;
+                }
+                .innerAction img{
+                    float: left;
+                    height:130px;
+                    width:150px;
+                }
+                
+    .iconstyle{
+    width: 85%;
+    height: calc(1.5em + 0.75rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;  
+                }
+
+                </style>
+            </head>
+            <body style="background:white;">
+            <apex:form >
+                <apex:outputPanel rendered="{!IF(offerList.size>0,true,false)}">
+                <br/>
+                <div style="top: 7%;width:90%;position: relative;padding:24px; text-align: justify; text-justify: inter-word; font-family:Arial, Times, serif;">
+                   <center> <a href="#"><img class="logo" src="{!$Resource.ExcellerLogo}" style="width: auto;"/> </a></center>
+                    <p style="float:right;">Date: &nbsp;<apex:outputText value="{0,date,dd/MM/yyyy}"><apex:param value="{!offerList[0].Approval_Date__c}" /></apex:outputText></p><br/><br/><br/><br/>
+                   
+                    <p>Dear <b>{!offerList[0].Candidate_Name__c}</b>,</p><br/>  
+                    <p>We’re pleased to offer you the position of<b> {!offerList[0].Application__r.Position__r.Name}</b> with Exceller Consultancy with salary of<b> {!offerList[0].Package_Amount_LPA__c}/-</b> (<b>IN Words: {!inttext} per annum</b>).</p>
+                    <p>We feel confident that you will contribute your skills and experience towards the growth of our organization. The terms and conditions for your anticipated employment will be as per our company policy.</p>
+                    <p>We would like to have your response by <b><apex:outputText value="{0,date,dd/MM/yyyy}"><apex:param value="{!offerList[0].Valid_By_Date__c}" /></apex:outputText></b>. Also requesting you to share with us a copy of your resignation letter. </p>
+                    <p>In the meantime, please feel free to contact us via email or phone, if you have any questions. </p>
+                    <p>We are all looking forward to having you in our team.</p><br/><br/><br/>
+                    <p>Best regards,</p><br/>
+                    <br/>
+                    <p>____________________</p>
+                    <p>Yuvraj Patil</p>
+                    <p>(CEO &amp; Founder)</p>  
+                    <p>Exceller Consultancy</p><br/>
+                 </div>
+                   </apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(offerList.size==0,true,false)}">
+                    No Offer Found
+                </apex:outputPanel>
+            </apex:form>
+            </body>
+       
+        </html>
+  
+</apex:page>
