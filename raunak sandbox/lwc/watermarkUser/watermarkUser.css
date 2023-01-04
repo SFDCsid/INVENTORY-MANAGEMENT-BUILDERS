@@ -1,0 +1,15 @@
+.watermark{
+    position: fixed;
+    top: -75%;
+    left: -75%;
+    display: block;
+    width: 300%;
+    height: 300%;
+    transform: rotate(-45deg);
+    content: attr(data-watermark);
+    font-size: 40px;
+    opacity: 0.5;
+    line-height: 4em;
+    letter-spacing: 2px;
+    z-index:0.1;
+}
