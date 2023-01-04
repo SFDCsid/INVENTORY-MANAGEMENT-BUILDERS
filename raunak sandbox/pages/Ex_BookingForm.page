@@ -1,0 +1,228 @@
+<apex:page controller="Ex_BookingFormController" standardStylesheets="false" showHeader="false" applyBodyTag="false" applyHtmlTag="false" sidebar="false" docType="html-5.0" renderAs="pdf">
+    <head>
+        <style type="text/css">
+            body {
+            font-family: "Times New Roman", Times, serif;
+            font-size: 16px;
+            }
+            table, th, td {
+            border: 2px solid black;
+            border-collapse: collapse;
+            }
+            th, td {
+            padding: 2px;
+            width: 30%;
+            }
+            th {
+            background-color: #F5F5F5;
+            }
+            @page {
+            margin: 0.8cm 0.8cm;
+            size: A4;
+            padding: 10px;
+            border : 2px solid black;
+            }
+            .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+            }
+            .right {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+            }
+            .signatureBlock p.signed {
+            display: inline-block;
+            height: 50px;
+            width: 100%;
+            border: 1px solid;
+            }
+            .signatureBlock .col-md-4 {
+            text-align: center;
+            }
+            .row.saleMan div {
+            text-align: right;
+            }
+            table.table.table-bordered{
+            margin: 20px 0 !important;
+            border: 2px solid black;
+            border-collapse: collapse;
+            }
+            .signblock {
+            margin-top: 20px;
+            }
+            .signblock .block:nth-child(2) {
+            
+            }
+            .signblock .block {
+            display: inline-block;
+            }
+            .signblock .inputText {
+            border-bottom: 1px solid;
+            margin-top: 20px;
+            }
+            .heading {
+            text-align: left;
+            }
+            #section {
+            background-color: black;
+            height: 5px;
+            }
+
+            .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            }     
+
+        </style>
+    </head>
+    
+    <body>
+        <apex:form >
+            <center> <h2> APPLICATION FORM  </h2> </center>
+           <apex:repeat value="{!lstBk}" var="b">
+           <apex:repeat value="{!lstQt}" var="q">
+              
+               
+             <p> <b> 1. DETAILS OF APPLICANTS  </b>  </p>   
+             <apex:repeat value="{!lstApp}" var="ap">
+           <apex:outputPanel rendered="{!IF(ap.Applicant_Number__c == 'Primary Applicant',true,false)}"> 
+            <table border="1" style="border-collapse: collapse; " width = "100%">
+             <tr> <td colspan = "2"> <apex:outputText ><b> {!ap.Applicant_Number__c} Title  </b>  </apex:outputText>  </td>  <td colspan = "2" style="padding-left:5px;"> <apex:outputText > {!ap.Applicant_Title__c} </apex:outputText> </td>  </tr>   
+             <tr> <td colspan = "2" > <apex:outputText > <b> Name  </b> </apex:outputText> </td> <td colspan = "2" style="padding-left:5px;"> <apex:outputText > {!ap.Name} </apex:outputText> </td>  </tr>   
+                 </table>
+                 </apex:outputPanel>
+               </apex:repeat>
+               <br />
+                  
+            <apex:repeat value="{!lstApp}" var="app">
+           <apex:outputPanel rendered="{!IF(app.Applicant_Number__c <> 'Primary Applicant',true,false)}"> 
+            <table border="1" style="border-collapse: collapse; width: 100%">
+             
+             <tr> <td colspan = "2" > <apex:outputText > <b>  {!app.Applicant_Number__c} Title  </b> </apex:outputText> </td> <td colspan = "2" style="padding-left:5px;"> <apex:outputText > {!app.Applicant_Title__c} </apex:outputText> </td>  </tr>   
+             <tr> <td colspan = "2" > <apex:outputText > <b> Name  </b> </apex:outputText>  </td> <td colspan = "2" style="padding-left:5px;"> <apex:outputText > {!app.Name}  </apex:outputText> </td>  </tr>   
+               
+                 </table> 
+                </apex:outputPanel> <br /><br />
+                     </apex:repeat> 
+               
+           <apex:repeat value="{!lstApp}" var="a">
+           <apex:outputPanel rendered="{!a.Applicant_Number__c == 'Primary Applicant'}"> 
+            <p> <b> 2. APPLICATION DETAILS   </b>  </p>   
+            <table border="1" style="border-collapse: collapse; width: 100%">
+                
+             <tr> <td colspan = "2"> <apex:outputText > <b> Tower  </b> </apex:outputText> </td>  <td colspan = "2"  style="padding-left:5px;"> <apex:outputText > {!b.Tower_Name__c} </apex:outputText> </td>   </tr>   
+             <tr> <td colspan = "2"> <apex:outputText > <b> Flat No.  </b> </apex:outputText>  </td> <td colspan = "2"  style="padding-left:5px;"> <apex:outputText > {!b.Unit__r.Name} </apex:outputText> </td>  </tr>   
+             <tr> <td colspan = "2"> <apex:outputText > <b> Parking  </b> </apex:outputText>  </td> <td colspan = "2"  style="padding-left:5px;"> <apex:outputText value="{!IF(lstCP.size>0,'Yes','No')}">    </apex:outputText> </td>  </tr>   
+               
+               </table>
+            
+            <p> <b> 3. TYPE OF APPLICANT   </b>  </p>   
+            <table border="1" style="border-collapse: collapse; width: 100%">
+            
+            <tr> <td colspan = "4"  style="padding-left:5px;"> <apex:outputText > <b>  {!a.Type_Of_Applicant__c} </b> </apex:outputText> </td>     </tr>   
+                
+            </table>
+            
+            <p> <b> 4. ADDRESS   </b>  </p>   
+            <table border="1" style="border-collapse: collapse; width: 100%">
+                
+             <tr> <td colspan = "2"> <apex:outputText > <b> H.No. &amp; Building  </b> </apex:outputText> </td>  <td colspan = "2"  style="padding-left:5px;"> <apex:outputText > {!a.Applicant_Address__c} </apex:outputText> </td>   </tr>   
+             <tr> <td colspan = "2"> <apex:outputText > <b> Street Name  </b> </apex:outputText>  </td> <td colspan = "2"  style="padding-left:5px;"> {!a.Street_Name__c} <apex:outputText > </apex:outputText> </td>  </tr>   
+             <tr> <td colspan = "2"> <apex:outputText > <b> Locality (incl. landmark)   </b> </apex:outputText>  </td> <td colspan = "2"  style="padding-left:5px;"> <apex:outputText > {!a.Locality_incl_landmark__c} </apex:outputText> </td>  </tr> 
+             <tr> <td colspan = "1" style="width:25%"> <apex:outputText > <b> City   </b> </apex:outputText>  </td> <td colspan = "1" style="width:25%;padding-left:5px;"> <apex:outputText > {!a.City__c} </apex:outputText> </td> 
+                      <td colspan = "1" style="width:25%;padding-left:5px;"> <apex:outputText > <b> Pin Code   </b> </apex:outputText>  </td> <td colspan = "1" style="width:25%;padding-left:5px;"> <apex:outputText > {!a.PIN__c}  </apex:outputText> </td> </tr>   
+             <tr> <td colspan = "1" style="width:25%"> <apex:outputText > <b> Mobile No.   </b> </apex:outputText>  </td> <td colspan = "1" style="width:25%;padding-left:5px;"> <apex:outputText > {!a.Mobile_Number__c} </apex:outputText> </td> 
+                      <td colspan = "1" style="width:25%;padding-left:5px;"> <apex:outputText > <b> PAN No.   </b> </apex:outputText>  </td> <td colspan = "1" style="width:25%;padding-left:5px;"> <apex:outputText >{!a.PAN_Number__c} </apex:outputText> </td> </tr>   
+             <tr> <td colspan = "2"> <apex:outputText > <b> Email   </b> </apex:outputText>  </td> <td colspan = "2"  style="padding-left:5px;"> <apex:outputText > {!a.Email__c} </apex:outputText> </td>  </tr> 
+             <tr> <td colspan = "2"> <apex:outputText > <b> RESIDENTIAL STATUS   </b> </apex:outputText>  </td> <td colspan = "2"  style="padding-left:5px;"> <apex:outputText > {!a.Residential_Status__c}</apex:outputText> </td>  </tr> 
+            </table>
+            
+            <p> <b> 5. PAYMENT DETAILS   </b>  </p>
+           <!-- <p> Application Fee: `27,000 (twenty seven Thousand) for each unit favouring -________      </p> >-->
+               
+           <apex:repeat value="{!lstRc}" var="c">
+               
+            <table border="1" style="border-collapse: collapse; width: 100%">
+                
+             <tr> <td colspan = "2"> <apex:outputText > <b> Chq No / DD No / UTR / Transfer Code   </b> </apex:outputText> </td>  <td colspan = "2"  style="padding-left:5px;"> <apex:outputText >{!c.Chq_No_UTR_TID_APPR_CODE__c} </apex:outputText> </td>   </tr>   
+             <tr> <td colspan = "2"> <apex:outputText > <b> Amount(Rs.)   </b> </apex:outputText> </td>  <td colspan = "2"  style="padding-left:5px;"> <apex:outputText >{!c.Amount__c} </apex:outputText> </td>   </tr>      
+             <tr> <td colspan = "2"> <apex:outputText > <b>Drawn on (Bank Name)  </b> </apex:outputText>  </td> <td colspan = "2"  style="padding-left:5px;"> <apex:outputText >{!c.Bank_Name__c} </apex:outputText> </td>  </tr>   
+             <tr> <td colspan = "2"> <apex:outputText > <b> Drawn on (Branch Name)    </b> </apex:outputText>  </td> <td colspan = "2"  style="padding-left:5px;"> <apex:outputText >{!c.Drawn_on_Branch_Name__c} </apex:outputText> </td>  </tr> 
+             <tr> <td colspan = "2"> <apex:outputText > <b> Dated  </b> </apex:outputText>  </td> <td colspan = "2"  style="padding-left:5px;"> <apex:outputText value="{0,date,dd/MM/yyyy}"> <apex:param value="{!c.Dated__c}" />  </apex:outputText> </td>  </tr> 
+            <tr><td colspan="4"></td></tr>
+               </table>
+            </apex:repeat>
+               
+            <p> <b> 6. APPLICATION SOURCE : &nbsp; &nbsp; &nbsp;  {!q.Opportunity__r.Master_Source__c}   </b>  </p>
+            <table border="1" style="border-collapse: collapse; width: 100%">
+             <tr> <td rowspan = "2" > <apex:outputText > <b>Referred by   </b> </apex:outputText> </td>    
+              <td colspan = "1"  style="width:20%;padding-left:5px;"> <apex:outputText > <b>Customer Name  </b> </apex:outputText>  </td> <td colspan = "1"  style="padding-left:5px;"> <apex:outputText >   {!q.Opportunity__r.Referrer_Name__r.Referrer_Name__c} </apex:outputText> </td>     </tr>
+             <tr><td colspan = "1"  style="width:20%;padding-left:5px;"> <apex:outputText > <b>Mobile Number    </b> </apex:outputText>  </td> <td colspan = "1"  style="padding-left:5px;"> <apex:outputText >  {!q.Opportunity__r.Referrer_Name__r.Phone}</apex:outputText> </td>  </tr> 
+                
+            </table>
+            
+            <div style="page-break-after:always;" />
+
+            <p> <b> 7. CHANNEL PARTNER DETAILS </b>  </p>
+            <table border="1" style="border-collapse: collapse; width: 100%">
+                
+             <tr><td colspan = "1"  style="width:25%;"> <apex:outputText > <b> RERA ID    </b> </apex:outputText>  </td> <td colspan = "1" style="width:25%;padding-left:5px;"> <apex:outputText > {!q.Opportunity__r.CP_Account__r.MahaRERA_Registration_No__c}  </apex:outputText> </td>
+                    <td colspan = "1"  style="width:25%;padding-left:5px;"> <apex:outputText > <b> RG Code    </b> </apex:outputText>  </td> <td colspan = "1"  style="width:25%;padding-left:5px;"> <apex:outputText > {!q.Opportunity__r.CP_Account__r.RG_Code__c} </apex:outputText> </td></tr> 
+             <tr> <td colspan = "2"> <apex:outputText > <b> Channel Partner / Firm Name   </b> </apex:outputText>  </td> <td colspan = "2"  style="padding-left:5px;"> <apex:outputText > {!q.Opportunity__r.CP_Account__r.Name}</apex:outputText> </td>  </tr> 
+             <tr> <td colspan = "2"> <apex:outputText > <b> Channel Partner Mobile No.  </b> </apex:outputText>  </td> <td colspan = "2"  style="padding-left:5px;"> <apex:outputText > {!q.Opportunity__r.CP_Account__r.Phone}</apex:outputText> </td>  </tr> 
+
+            </table>
+            
+        <p> <b>  8. DECLARATION &amp; SIGNATURE I have read and understood the terms and conditions contained in this Application Form and the same are acceptable to me
+                             and hereby agree to be bound by the same. I confirm that all the details on this page have  been filled by me or at my instance and I have thereafter signed 
+                             the Application Form. I hereby confirm that the details  provided in this Application Form are true and accurate. I also agree to pay TDS on my own and submit 
+                             the respective challan  to the developer along with respective payments. </b>   </p>        
+
+            
+            <table class="table table-bordered" width="100%" style="margin-bottom:0;padding-bottom:0;">
+                
+             <tr> <td style="height:150px;width:300px"> <center>  </center> </td>  <td style="height:150px;width:300px"> <center>  </center></td>     </tr>
+             <tr> <td style="height:5px" width="5%"> <center> Signature Of Primary Applicant </center> </td> <td style="height:5px" width="5%" > <center> Signature Of Channel Partner <br /> (IF APPLICABLE) </center></td>    </tr> 
+                
+            </table>            
+            
+            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+            <p>  Received By _____________________________ on __________20    </p>
+            
+               
+               <p style="page-break-after:always;" />
+               
+               <div style="text-align:left;">
+                   
+                   <h4>
+                       <b> Terms &amp; Conditions:</b>
+                   </h4>
+                   
+                   <apex:outputText escape="false" value="{!q.Unit__r.Tower__r.Terms_Condition__c}"></apex:outputText>
+               </div>   
+
+                            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+
+                <p>
+                    
+                    Yours Truly, <br /> <br />
+                    1. Name   _____________________________ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2. Name  _____________________________ <br />
+                                         (Name and Signature of Primary Applicant)      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      (Name and Signature of Secondary Applicant)
+                                        
+                    
+               </p>
+               
+            </apex:outputPanel>
+            </apex:repeat>
+            </apex:repeat>
+            </apex:repeat>
+
+        </apex:form>
+        </body>
+    </apex:page>

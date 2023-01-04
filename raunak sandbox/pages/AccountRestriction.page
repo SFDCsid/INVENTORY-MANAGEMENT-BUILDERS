@@ -1,0 +1,5 @@
+<apex:page standardController="Account">
+    <h1>
+        You can not create Account Directly.
+    </h1>
+</apex:page>

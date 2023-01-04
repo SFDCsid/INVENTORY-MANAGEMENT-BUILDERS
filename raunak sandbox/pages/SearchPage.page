@@ -1,0 +1,536 @@
+<apex:page sidebar="false" showheader="false" standardstylesheets="false" id="thePage" controller="SearchPageController">
+    <html lang="en">
+        <head>
+            <style>
+                html, body {
+                    padding: 0px;
+                    margin: 0px;
+                    font-family: 'Roboto', sans-serif;
+                }
+                header {
+                    position: sticky;
+                    top: 0px;
+                    display: flex;
+                    padding: 24px 48px;
+                    align-items: center;
+                }
+                .flex {
+                    display: flex;
+                }
+                .transparent-button {
+                    background: transparent;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    margin: 16px;
+                    border: none;
+                    outline: none;
+                    color: #263238;
+                    cursor: pointer;
+                    border-radius: 4px;
+                    padding: 4px;
+                }
+                .transparent-button:hover {
+                    background: #f1f1f1;
+                }
+                .transparent-button svg {
+                    height: 32px;
+                    width: 32px;
+                }
+                .flex-auto {
+                    flex: auto;
+                }
+                .icon {
+                    width: 48px;
+                    height: 48px;
+                }
+                .logo {
+                    height: 50%;
+                    width: 15%;
+                }
+                .login-box {
+                    margin: auto; auto;
+                    width: 41%;
+                   
+                }
+                .form-group {
+                    margin-bottom: 10px;
+                    display: flex;
+                    align-items: center;
+                }
+                .form-group .requiredInput{
+                	display: flex;
+                	width: 100%;
+                }
+                .form-group > label {
+                    width: 128px;
+                    font-size: 14px;
+                }
+                .form-group .form-control {
+                    outline: none;
+                    border: none;
+                    background: #D3D3D3;
+                    border-radius: 4px;
+                    font-size: 14px;
+                    padding: 0 8px;
+                    height: 33px;
+                    width: 100%;
+                }
+                .form-control::placeholder {
+                    color: #fafafa;
+                    
+                }
+                .primary-button {
+                    height: 33px;
+                    background: #007bff!important;
+                    color: #ffffff;
+                    border-radius: 4px;
+                    width: 20%;
+                    border: none;
+                    outline: none;
+                    font-size: 14px;
+                    cursor: pointer;
+                    align: right; 
+                }
+                .bt {
+                    background: #1798c1 ;
+                }
+                .organge {
+                    color: #5e3281;
+                }
+                .container {
+                    width: 75%;
+                    padding: 24px;
+                    margin: 0px auto;
+                }
+                .heading {
+                    font-size: 32px;
+                    color: #888;
+                    margin: 24px 0;
+                }
+                .tabs {
+                    background: #263238;
+                    display: flex;
+                }
+                .tabs .tab-item {
+                    color: white;
+                    padding: 8px 16px;
+                    border-bottom: 4px solid #263238;
+                    width: 50%;
+                    text-align: center;
+                    cursor: pointer;
+                }
+                .tabs .tab-item.active {
+                    border-bottom: 4px solid #ff5722;
+                }
+                .search-input {
+                    display: flex;
+                    align-self: center;
+                    width: 100%;
+                    border-radius: 16px;
+                    border: 1px solid #888;
+                    align-items: center;
+                }
+                .search-input svg {
+                    height: 12px;
+                    width: 12px;
+                    margin: 0px 8px 0px 6px;
+                    color: #888;
+                }
+                .search-input input {
+                    background: transparent;
+                    flex: auto;
+                    border: none;
+                    outline: none;
+                    height: 20px;
+                    font-size: 13px;
+                }
+                .data-table {
+                    width: 100%;
+                    border-collapse: separate;
+                    border-top-left-radius: 4px;
+                    border-top-right-radius: 4px;
+                    border-spacing: 0px;
+                    margin-top: 16px;
+                    font-size: 14px;
+                }
+                .data {
+                    display: none;
+                }
+                .data.show {
+                    display: block;
+                }
+                .data-table tr:not(.head) td,
+                .data-table tr:not(.head) th {
+                    border-bottom: 1px solid #888;
+                }
+                .data-table tr.head {
+                    background: #D3D3D3;
+                    border-top-left-radius: 4px;
+                    border-top-right-radius: 4px;
+                    color: #666;
+                }
+                .data-table tr.head th:first-child,
+                .data-table tr.head th:last-child {
+                    position: relative;
+                }
+                .data-table tr.head th:last-child::after {
+                    content: '.';
+                    top: 0px;
+                    right: -8px;
+                    width: 16px;
+                    border-radius: 8px;
+                    bottom: 0px;
+                    background: #D3D3D3;
+                    color: #b0bec5;
+                    position: absolute;
+                }
+                .data-table tr.head th:first-child::before {
+                    content: '.';
+                    top: 0px;
+                    left: -8px;
+                    width: 16px;
+                    border-radius: 8px;
+                    bottom: 0px;
+                    background: #D3D3D3;
+                    color: #b0bec5;
+                    position: absolute;
+                }
+                .data-table tr.head th {
+                    color: #212121;
+                }
+                .data-table th,
+                .data-table td {
+                    padding: 8px 16px;
+                    text-align: center;
+                    color: #666;
+                }
+                .data-table .primary-button {
+                    height: 24px;
+                    font-size: 13px;
+                }
+                
+                @import url('//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+                .isa_info, .isa_success, .isa_warning, .isa_error {
+                    margin: auto;
+                    padding:5px;
+                }
+                .isa_error {
+                    color: #D8000C;
+                    background-color: #FFD2D2;
+                }
+                .isa_info i, .isa_success i, .isa_warning i, .isa_error i {
+                    margin:10px 22px;
+                    font-size:2em;
+                    vertical-align:middle;
+                }
+                
+                @media screen and (max-width: 480px) {
+                    .login-box{
+                        width:75%;
+                    }  
+                    .primary-button {
+                        height: 33px;
+                        background: #ff5722;
+                        color: #ffffff;
+                        border-radius: 4px;
+                        width: 35%;
+                        border: none;
+                        outline: none;
+                        font-size: 14px;
+                        cursor: pointer;
+                        align: right; 
+                    }
+                    .form-control > input, .form-control > select {
+                        outline: none;
+                        border: none;
+                        background: #D3D3D3;
+                        border-radius: 4px;
+                        font-size: 14px;
+                        padding: 0 8px;
+                        height: 33px;
+                        flex: auto;
+                        width: 15%;
+                    }
+                }
+                .checkmark__circle {
+                    stroke-dasharray: 166;
+                    stroke-dashoffset: 166;
+                    stroke-width: 2;
+                    stroke-miterlimit: 10;
+                    stroke: #7ac142;
+                    fill: none;
+                    animation: stroke 1s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+                }
+                .checkmark {
+                    width: 20px;
+                    height: auto;
+                    border-radius: 50%;
+                    display: block;
+                    stroke-width: 2;
+                    stroke: #fff;
+                    stroke-miterlimit: 10;
+                    box-shadow: inset 0px 0px 0px #7ac142;
+                    animation: fill 2s ease-in-out 2s infinite, scale 2s ease-in-out 2s infinite;
+                    float: left;
+                }
+                element.style {
+                    margin-top: 7px;
+                    font-weight: normal;
+                    font-size: 14px;
+                    color: #191717;
+                }
+                .checkmark__check {
+                    font-weight: bold;
+                    transform-origin: 50% 50%;
+                    stroke-dasharray: 48;
+                    stroke-dashoffset: 48;
+                    animation: stroke 1s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+                }
+                @keyframes stroke {
+                    100% {
+                        stroke-dashoffset: 0;
+                    }
+                }
+                @keyframes scale {
+                    0%, 100% {
+                        transform: none;
+                    }
+                    50% {
+                        transform: scale3d(1.1, 1.1, 1);
+                    }
+                }
+                @keyframes fill {
+                    100% {
+                        box-shadow: inset 0px 0px 0px 30px #7ac142;
+                    }
+                }
+            </style>
+        </head>
+        
+        <body>
+            <div class="container">
+                <div class="fullBox">
+                    <apex:form id="theForm" styleclass="form">
+                        <apex:actionstatus id="spinnerStatus">
+                            <apex:facet name="start">
+                                <div class="spinnerBg" />
+                                <div class="Assigned" />
+                            </apex:facet>
+                        </apex:actionstatus> 
+                        <apex:actionStatus id="status" startStyleClass="Processing"/>
+                        
+                        <center>
+                              <a href="#"><img class="logo" src="{!$Resource.Logo}" /> </a>
+                        </center> 
+                        
+                        <div style="font-size: 16px;color: red;margin-top:5px;" id="errorDiv" align="center">
+                            <!--<apex:outputtext value="{!strError}" id="errorId" />-->
+                        </div>
+                        
+                        <div class="form-group"></div>
+                        
+                        <p id="demo"></p>
+                        <div class="frmContainer" style="margin-color:black;">
+                            <div class="row" id="mobo2">
+                                <div class="col-sm-4 col-sm-offset-4">
+                                    <div class="login-box">
+                                        <label class="frmlabel"><span style="color:red;">*</span> Project : </label>
+                                        <div class="form-group">
+                                            <apex:selectList value="{!strProjectId}" size="1" multiselect="false" styleclass="form-control" id="Project" required="true">
+                                                <apex:selectOptions value="{!lstProjectList}"/>
+                                            </apex:selectList> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <p></p>
+                            
+                            <div class="row" id="mobo1">
+                                <div class="col-sm-4 col-sm-offset-4">
+                                    <div class="login-box">
+                                        <label class="frmlabel"><span style="color:red;">*</span> Mobile :  </label>
+                                        <div class="form-group">
+                                            <p id="demo"></p>
+                                            <apex:inputField value="{!l.Mobile__c}" id="phoneID" styleclass="form-control"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                         
+                            <div class="row" id="mobo2">
+                                <div class="col-sm-4 col-sm-offset-4">
+                                    <div class="login-box">
+                                        <label class="frmlabel">Email:</label>
+                                        <div class="form-group">
+                                            <apex:inputField value="{!l.Email__c}" id="emailID" styleclass="form-control"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <apex:pageMessages id="msgId"></apex:pageMessages>
+                            </div>      
+                            
+                            
+                            <div align="center">
+                                <div class="col-md-4 col-md-offset-4 text-center">
+                                    <apex:commandbutton action="{!search}" value="Search" styleclass="primary-button" rendered="{!(l.Mobile__c == '' && l.Email__c == '')}" onClick="return mobEmailValidate('thePage:theForm:phoneID', 'thePage:theForm:emailID' );"/> &nbsp;
+                                    <apex:commandbutton action="{!cancel}" value="Cancel" styleclass="primary-button" /> <br></br><br></br>
+                                </div>  
+                                <div class="col-md-4 col-md-offset-4 text-center"  style="margin-left: 10px;" >                                               
+                                    <apex:commandbutton value="Continue" styleclass="primary-button" action="{!continueMethod}" rendered="{!(l.Mobile__c != '' || l.Email__c != '')}"  style="padding-left: 10px;"/>                      
+                                </div>
+                            </div>
+                            
+                            <apex:outputpanel layout="block" rendered="{!Not(isLead) && NOT(isAccount) && NOT(isOpp) && (isSearch)}">
+                                <div class="isa_success">
+                                    <i class="fa fa-times-circle"></i>
+                                    <div style="font-size: 17px;margin-top:5px; color: #01878e;" id="errorDiv" align="center">
+                                        Details not found. Please click on 'Continue' to proceed.
+                                    </div>
+                                </div>
+                            </apex:outputpanel>
+                            
+                            <apex:outputpanel layout="block" rendered="{!((isLead) || (isAccount) || (isOpp)) && (isSearch)}">
+                                <div class="isa_success">
+                                    <i class="fa fa-times-circle"></i>
+                                    <div style="font-size: 17px;margin-top:5px; color: #01878e;" id="errorDiv" align="center">
+                                        Details Found. Please click on 'Continue' to proceed.
+                                    </div>
+                                </div>
+                            </apex:outputpanel>
+                        </div>
+                        <br/>
+                        
+                        <apex:outputpanel layout="block" rendered="{!(isLead) && leadList != Null}" >
+                            <div class="data show" id="siteWalkIn">
+                                <table  class="data-table" style="width:1000px;">
+                                    <thead>
+                                        <tr class="head">
+                                            <th>Lead Name</th>
+                                            <th>Project</th>
+                                            <th>Mobile</th>
+                                            <th>Alternate Mobile</th>
+                                            <th>Source</th>
+                                           <th>Last Comment</th>
+                                            <th>Presales Manager</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <apex:repeat value="{!leadList}" var="lead">
+                                            <tr>
+                                                <td>{!lead.Name}</td>
+                                                <td>{!lead.Project_Name__r.Name}</td>
+                                                <td>{!lead.Mobile__c}</td>
+                                                <td>{!lead.Alternate_Mobile_No__c}</td>
+                                                <td>{!lead.Lead_Stage__c}</td>
+                                               <!-- <td>{!if(lead.Lead_Stage__c=='Visit Confirmed',true,false)}</td> -->
+                                                <td><apex:outputText rendered="{!if(lead.Lead_Stage__c=='Visit Confirmed',true,false)}">  {!lead.Last_Comment__c} </apex:outputText></td>
+                                                <td>{!lead.Owner.Name}</td>
+                                                
+                                            </tr>
+                                        </apex:repeat>
+                                    </tbody>
+                                </table>
+                            </div>
+                </apex:outputpanel>
+                      
+                        <apex:outputpanel layout="block" rendered="{!(isAccount) && accList != Null}" >
+                            <div class="data show" id="siteWalkIn">
+                                <table  class="data-table" style="width:1000px;">
+                                    <thead>
+                                        <tr class="head">
+                                            <th>Account Name</th>
+                                            <th>Mobile</th>
+                                            <th>Phone</th>
+                                            <th>Email</th>
+                                            <th>RG Code</th>
+                                         
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <apex:repeat value="{!accList}" var="acc">
+                                            <tr>
+                                                <td>{!acc.Name}</td>
+                                                <td>{!acc.PersonMobilePhone}</td>
+                                                <td>{!acc.Phone}</td>
+                                                <td>{!acc.PersonEmail}</td>
+                                                <td>{!acc.RG_Code__c}</td>
+                                                 
+                                            </tr>
+                                        </apex:repeat>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </apex:outputpanel>
+                        
+                        <apex:outputpanel layout="block" rendered="{!(isOpp) && oppList != Null}" >
+                            <div class="data show" id="siteWalkIn">
+                                <table  class="data-table" style="width:1000px;">
+                                    <thead>
+                                        <tr class="head">
+                                            <th>Opportunity Name</th>
+                                            <th>Project</th>
+                                            <th>Mobile</th>
+                                           <!-- <th>Alternate Mobile</th> -->
+                                            <th>Source</th>
+                                            <th>Sales Manager</th>
+                                            <th>CP Firm Name</th>
+                                            <th>Last SV Date</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <apex:repeat value="{!oppList}" var="opp">
+                                            <tr>
+                                                <td>{!opp.Name}</td>
+                                                <td>{!opp.Project__r.Name}</td>
+                                                <td>{!opp.Account_Name__r.PersonMobilePhone}</td>
+                                               <!-- <td>{!opp.Account_Name__r.Phone}</td>-->
+                                                <td>{!opp.Master_Source__c}</td>
+                                                <td>{!opp.Owner.name}</td> 
+                                                <td>{!opp.Channel_Partner_Account__r.Name}</td>
+                                                <td>{!opp.Last_SV_Date__c}</td>
+                                                
+                                            </tr>
+                                        </apex:repeat>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </apex:outputpanel>
+                    </apex:form>
+                </div>
+            </div> 
+        </body>    
+    </html>
+
+    <script>
+        function mobEmailValidate(fldID, eid) {   
+            
+            var mob = document.getElementById(fldID).value;
+            //alert('Mob: '+mob);       
+            var isnum = /^\d+$/.test(mob);
+            var email = document.getElementById(eid).value;
+            var emailcheck = true;
+    
+            if(email != "")
+                emailcheck = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
+            //alert('isnum: '+isnum);   
+            if(mob == "" || isnum == false) {
+                alert('Please enter a valid mobile number to proceed!');    
+                return false;
+            }  
+            if(mob.length != 10) {
+                alert('Mobile number must have exactly 10 digits. Please rectify to proceed! ');
+                return false;
+            }     
+            if (emailcheck == false) {           
+                alert("Please enter a valid email address to proceed!")
+                return (false)
+            }
+        }
+    </script>
+</apex:page>

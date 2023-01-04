@@ -1,0 +1,106 @@
+<apex:page controller="Ex_PriceSheetController" standardStylesheets="false" showHeader="false" applyBodyTag="false" applyHtmlTag="false" sidebar="false" docType="html-5.0" renderAs="pdf">
+    <head>
+        <style type="text/css">
+            body {
+            font-family: "Times New Roman", Times, serif;
+            font-size: 16px;
+            }
+            table, th, td {
+            border: 2px solid black;
+            border-collapse: collapse;
+            }
+            th, td {
+            padding: 2px;
+            }
+            th {
+            background-color: #F5F5F5;
+            }
+            @page {
+            margin: 0.8cm 0.8cm;
+            size: A4;
+            padding: 10px;
+            border : 2px solid black;
+            }
+            .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+            }
+            .right {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+            }
+            .signatureBlock p.signed {
+            display: inline-block;
+            height: 50px;
+            width: 100%;
+            border: 1px solid;
+            }
+            .signatureBlock .col-md-4 {
+            text-align: center;
+            }
+            .row.saleMan div {
+            text-align: right;
+            }
+            table.table.table-bordered{
+            margin: 20px 0 !important;
+            border: 2px solid black;
+            border-collapse: collapse;
+            }
+            .signblock {
+            margin-top: 20px;
+            }
+            .signblock .block:nth-child(2) {
+            
+            }
+            .signblock .block {
+            display: inline-block;
+            }
+            .signblock .inputText {
+            border-bottom: 1px solid;
+            margin-top: 20px;
+            }
+            .heading {
+            text-align: left;
+            }
+            #section {
+            background-color: black;
+            height: 5px;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <apex:form >
+            <apex:outputPanel rendered="{!q != null}">
+                <table border="1" style="border-collapse: collapse; width: 100%">
+                    
+                    <tr style="color: #FFFFFF; background: #6495ED;"> <td colspan = "3" style="height:80px;width:40px;font-size: 21px;"> <center>    <apex:outputText > {!q.Tower__r.Name} - PRICE SHEET </apex:outputText> </center> </td></tr>  
+                    
+                    <tr> <td colspan = "3" style="height:40px;width:40px;"><b> Date :  <apex:outputText value="{0,date,dd/MM/yyyy}"> <apex:param value="{!q.createdDate}" /> </apex:outputText> </b>  </td></tr>   
+                    
+                    <tr> <td> <b><center> Tower </center></b>  </td> <td colspan = "2"> <center> <apex:outputText > {!q.Tower__r.Name} </apex:outputText> </center> </td></tr> 
+                    
+                    <tr> <td> <b><center> Unit No. </center></b>  </td> <td colspan = "2"> <center> <apex:outputText > {!q.Unit__r.Name} </apex:outputText> </center> </td></tr> 
+                    
+                    <tr> <td rowspan ="3"> <b><center> Unit Details </center> </b> </td> <td> RERA Carpet Area </td> <td rowspan = "1"><center> <apex:outputText > {!q.Unit__r.Total_Carpet_Area_Sq_Ft__c} Sq. Ft. </apex:outputText> </center></td></tr>
+                    <tr>  <td> Flat Cost </td> <td> <center> <apex:outputText > {!strflatCost} </apex:outputText> </center> </td> </tr>
+                    <tr>   <td> Parking Charges </td> <td> <center> <apex:outputText >  {!strparkingCharges} </apex:outputText> </center> </td></tr> 
+                    
+                    <tr> <td colspan = "2" style="text-align:center;height:35px;"> <b> Agreement Value </b> </td> <td> <center> <apex:outputText >  {!stravCost} </apex:outputText> </center></td></tr>  
+                    
+                    <tr> <td rowspan ="3">  <b> <center>Legal Charges </center> </b> </td> <td> Stamp duty </td> <td rowspan = "1"><center>   <apex:outputText > {!strStampDuty}</apex:outputText> </center></td></tr>
+                    <tr>  <td>  Registration   </td> <td> <center> <apex:outputText >  {!strregCharge} </apex:outputText> </center> </td> </tr>
+                    <tr>   <td>  Subtotal C : SDR   </td> <td> <center> <apex:outputText > {!strSDR} </apex:outputText> </center> </td></tr> 
+                    <tr> <td> <b> <center> D. Govt. Tax </center> </b> </td> <td> Subtotal D : GST** </td> <td> <center> <apex:outputText > {!strgst} </apex:outputText> </center> </td></tr>  
+                    <tr> <td colspan = "2" style="text-align:center;height:30px;"> <b> Total Value of the Unit : B+C+D </b> </td> <td> <center> <apex:outputText > {!strtotalUnit} </apex:outputText> </center></td></tr>  
+                    
+                </table>
+                    
+            </apex:outputPanel>
+        </apex:form>
+    </body>
+</apex:page>
