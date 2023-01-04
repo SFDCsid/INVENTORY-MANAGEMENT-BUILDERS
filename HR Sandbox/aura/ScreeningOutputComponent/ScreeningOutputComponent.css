@@ -1,0 +1,13 @@
+.THIS .customRejectButton{
+   background-color: #ed4426;
+   color: #fff; 
+}
+
+.THIS .customAcceptButton{
+    background-color: green;
+    
+}
+.THIS .customCancelButton{
+    background-color: White;
+   border-color:black;
+}

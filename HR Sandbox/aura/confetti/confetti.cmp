@@ -1,0 +1,30 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+  <!-- Below line will get confetti script from static resource-->
+    <ltng:require scripts="{!$Resource.confetti}"/>
+ <center>
+     <lightning:button variant="brand" 
+                       class="buttonBox" 
+                       label="Basic" 
+                       onclick="{!c.basic}"/> 
+    
+    <lightning:button variant="brand" 
+                      class="buttonBox" 
+                      label="Fireworks" 
+                      onclick="{!c.fireworks}"/>
+    
+    <lightning:button variant="brand" 
+                      class="buttonBox" 
+                      label="Shower" 
+                      onclick="{!c.shower}"/>
+    
+    <lightning:button variant="brand" 
+                      class="buttonBox" 
+                      label="Celebration" 
+                      onclick="{!c.celebration}"/>
+    
+    <lightning:button variant="brand" 
+                      class="buttonBox" 
+                      label="Burst" 
+                      onclick="{!c.burst}"/>
+ </center>
+</aura:component>

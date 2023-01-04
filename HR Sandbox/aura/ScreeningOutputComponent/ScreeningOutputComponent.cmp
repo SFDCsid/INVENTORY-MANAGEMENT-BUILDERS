@@ -1,0 +1,276 @@
+<aura:component controller="ScreeningOutputController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+   <aura:attribute name="showEditable" type="Boolean" default="false"/>
+    <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
+  <!--create a component attributs -->
+    <aura:attribute name="Spinner" type="boolean" default="false"/>
+    <aura:attribute name="recordId" type="String" default="{!v.recordId}"/>
+    <aura:attribute name="screeningId" type="String" />
+    <aura:attribute name="showBtnSection" type="boolean"/>
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:handler event="force:refreshView" action="{!c.init}" />
+    
+    <aura:attribute name="showModal" type="boolean" default="false" />
+    <aura:attribute name="showModal2" type="boolean" default="false" />
+    
+    <aura:if isTrue="{!v.showModal}">
+        <div style="height:640px">
+            <section role="dialog" tabindex="-1" class="slds-modal slds-modal_x-small slds-fade-in-open" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Confirmation</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium slds-p-left_large" id="modal-content-id-1">
+                        <p style='margin-left:18%'><b>Are you sure you want to 'Accept' this screening?<br/>Note: 'Accepting Screening' Will Send Interview Schedule Email</b></p>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning:button class="slds-button slds-button_brand" name='Confirm' label='Confirm' onclick='{!c.acceptMethod}'/>
+                        <lightning:button class="slds-button slds-button_brand,customCancelButton" name='Cancel' label='Cancel' onclick='{!c.closeModal}'/>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </aura:if>
+        <aura:if isTrue="{!v.showModal2}">
+        <div style="height:640px">
+            <section role="dialog" tabindex="-1" class="slds-modal slds-modal_x-small slds-fade-in-open" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Confirmation</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium slds-p-left_large" id="modal-content-id-1">
+                        <p style='margin-left:18%'><b>Are you sure you want to 'Reject' this screening?</b></p>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning:button class="slds-button slds-button_brand" name='Reject' label='Reject' onclick='{!c.rejectMethod}'/>
+                        <lightning:button class="slds-button slds-button_brand,customCancelButton" name='Cancel' label='Cancel' onclick='{!c.closeModal2}'/>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </aura:if>
+  <!--loading spinner start... style=Brand Medium (blue dots)-->
+ <aura:if isTrue="{!v.Spinner}">
+    <div aura:id="spinnerId" class="slds-spinner_container">
+       <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+         <span class="slds-assistive-text">Loading</span>
+         <div class="slds-spinner__dot-a"></div>
+         <div class="slds-spinner__dot-b"></div>
+       </div>
+    </div>
+ </aura:if>
+    
+    <aura:if isTrue="{!v.showEditable}">
+     <lightning:recordEditForm aura:id="RecordCreatorSteptwo"
+                                      recordId="{!v.screeningId}"
+                                      onsuccess="{!c.handleSuccess}"
+                                      objectApiName="Screening_Questionnaire__c"
+                                      density="comfy">
+   
+                   <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                            <lightning:outputField fieldName="Name" />
+                        </div>
+                          <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                           
+                          </div>
+                     </div>   
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                            <lightning:inputField fieldName="Salutation__c" />
+                        </div>
+                          <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                           <lightning:inputField fieldName="First_Name__c" /> 
+                          </div>
+                     </div> 
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                            <lightning:inputField fieldName="Middle_Name__c" />
+                        </div>
+                          <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                           <lightning:inputField fieldName="Last_Name__c" /> 
+                          </div>
+                     </div>   
+                     <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                            <lightning:inputField fieldName="Full_Name__c" />
+                        </div>
+                          <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                             <lightning:inputField fieldName="Current_Location__c" />
+                         </div>
+                     </div>   
+                    
+                       <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                             <lightning:inputField fieldName="Experience_Type__c" />
+                         </div>
+                           
+                          <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                             <lightning:inputField fieldName="Other_skills_Achievements__c" />
+                         </div>
+                            <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                             <lightning:inputField fieldName="Salesforce_Certifications__c" />
+                         </div> 
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                             <lightning:inputField fieldName="Current_CTC_LPA__c" />
+                         </div>
+                          <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                             <lightning:inputField fieldName="Highest_Qualification__c" />
+                         </div>                          
+                          <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                             <lightning:inputField fieldName="Expected_CTC_LPA__c" />
+                         </div>
+                          <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                             <lightning:inputField fieldName="Notice_period_In_days__c" />
+                         </div>
+                          <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                             <lightning:inputField fieldName="Ready_to_relocate__c" />
+                         </div> 
+                         <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                             <lightning:outputField fieldName="Status__c" />
+                         </div> 
+                          <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                             <lightning:inputField fieldName="Preferred_Interview_Date__c" />
+                         </div>   
+                  
+                       </div> 
+        <br/><br/>
+                 <center>
+                    <div class="slds-align_absolute-center">
+                         <lightning:button label="Cancel" title="Cancel" onclick="{! c.cancelMethod }"/>&nbsp;&nbsp;
+                        <lightning:button label="Save" type="submit" variant="brand" /> 
+                    </div>
+                  </center> <br/>
+        <!--   <lightning:accordion aura:id="accordionC" 
+                                activeSectionName="c"
+                                allowMultipleSectionsOpen="true"
+                                onsectiontoggle="{! c.handleSectionToggle }" >
+                <lightning:accordionSection name="c" label="(LSQ)Legacy details">
+              <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                            <lightning:outputField fieldName="Id" />
+                        </div>
+              </div>
+               </lightning:accordionSection>
+          </lightning:accordion>-->
+    </lightning:recordEditForm>
+             <br/>
+                
+    </aura:if>
+     
+    <aura:if isTrue="{!!v.showEditable}">
+      <lightning:button label="Edit" type="submit" 
+                      onclick="{!c.editMethod}"
+                      variant="brand" />  
+    <lightning:recordViewForm aura:id="myRecordForm" 
+                             recordId="{!v.screeningId}" 
+                             objectApiName="Screening_Questionnaire__c" >
+          <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                            <lightning:outputField fieldName="Name" />
+                        </div>
+                          <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                           
+                         </div>
+                     </div>   
+                     <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                            <lightning:outputField fieldName="Full_Name__c" />
+                        </div>
+                          <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                             <lightning:outputField fieldName="Current_Location__c" />
+                         </div>
+                         <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                            <lightning:outputField fieldName="Date_of_birth__c" />
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                            <lightning:outputField fieldName="Marital_Status__c" />
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                            <lightning:outputField fieldName="Gender__c" />
+                        </div>
+                     </div>   
+                    
+                       <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                             <lightning:outputField fieldName="Experience_Type__c" />
+                         </div>
+                           
+                          <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                             <lightning:outputField fieldName="Other_skills_Achievements__c" />
+                         </div>
+                            <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                             <lightning:outputField fieldName="Salesforce_Certifications__c" />
+                         </div> 
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                             <lightning:outputField fieldName="Current_CTC_LPA__c" />
+                         </div>
+                          <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                             <lightning:outputField fieldName="Highest_Qualification__c" />
+                         </div>                          
+                          <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                             <lightning:outputField fieldName="Expected_CTC_LPA__c" />
+                         </div>
+                          <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                             <lightning:outputField fieldName="Notice_period_In_days__c" />
+                         </div>
+                          <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                             <lightning:outputField fieldName="Ready_to_relocate__c" />
+                         </div> 
+                         <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                             <lightning:outputField fieldName="Status__c" aura:id="status" />
+                         </div> 
+                          <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                             <lightning:outputField fieldName="Preferred_Interview_Date__c" />
+                         </div>  
+                         <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                            <lightning:outputField fieldName="Reference_1_Name__c" />
+                        </div> 
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                            <lightning:outputField fieldName="Reference_1_Mobile__c" />
+                        </div> 
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                            <lightning:outputField fieldName="Reference_2_Name__c" />
+                        </div> 
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                            <lightning:outputField fieldName="Reference_2_Mobile__c" />
+                        </div> 
+                         <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                            <lightning:outputField fieldName="Any_criminal_record__c" />
+                        </div>
+                   
+                           <br/>
+                       </div> 
+        <br/><br/>
+       
+         <center>
+                  <lightning:button label="Accept" type="submit" 
+                      onclick="{!c.openConfirmDialog}"
+                      variant="brand" class="customAcceptButton"/>  
+                 <lightning:button label="Reject" type="submit" 
+                      onclick="{!c.openRejectDialog}"
+                                variant="brand" class="customRejectButton"/>  
+                  </center> <br/>
+        <aura:if isTrue="{!showBtnSection}"> s</aura:if>
+        <!--   <lightning:accordion aura:id="accordionC" 
+                                activeSectionName="c"
+                                allowMultipleSectionsOpen="true"
+                                onsectiontoggle="{! c.handleSectionToggle }" >
+                <lightning:accordionSection name="c" label="(LSQ)Legacy details">
+              <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-large-size_3-of-12">
+                            <lightning:outputField fieldName="Id" />
+                        </div>
+              </div>
+               </lightning:accordionSection>
+          </lightning:accordion>-->
+    </lightning:recordViewForm>
+             <br/>
+                
+    </aura:if>
+    
+
+    
+</aura:component>

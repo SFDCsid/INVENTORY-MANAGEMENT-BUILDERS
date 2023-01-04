@@ -1,0 +1,103 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+
+    <aura:attribute name="activity" type="object" description="For Single Activity Store "/> 
+
+    <li>
+
+        <div class="isExpendable slds-timeline__item_expandable slds-timeline__item_task" aura:id="expId"> 
+
+            <div class="slds-media">
+
+                <div class="slds-media__figure">
+
+                    <button class="slds-button slds-button_icon"
+
+                            onclick="{!c.toggleAcitivity}"
+
+                            title="test"
+
+                            aria-controls="task-item-base">
+
+                        <lightning:icon iconName="utility:switch" 
+
+                                        size="x-small"
+
+                                        class="slds-button__icon slds-timeline__details-action-icon"/>
+
+                    </button>
+
+                    <div class="slds-icon_container" title="task">
+
+                        <lightning:icon iconName="standard:task" size="small"/>
+
+                    </div>
+
+                </div>
+
+                <div class="slds-media__body">
+
+                    <div class="slds-grid slds-grid_align-spread slds-timeline__trigger">
+
+                        <div class="slds-grid slds-grid_vertical-align-center slds-truncate_container_75 slds-no-space">
+
+                            <h3 class="slds-truncate" title="{!v.activity.Subject}">
+
+                                <strong>{!v.activity.Subject}</strong>
+
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+                    <p class="slds-m-horizontal_xx-small">
+
+                        <lightning:formattedDateTime value="{!v.activity.ActivityDate}"/> 
+
+                    </p>
+
+                    <article class="slds-box slds-timeline__item_details slds-theme_shade slds-m-top_x-small slds-m-horizontal_xx-small"
+
+                             id="task-item-base"
+
+                             aria-hidden="true">
+
+                        <ul class="slds-list_horizontal slds-wrap">
+
+                            <li class="slds-grid slds-grid_vertical slds-size_1-of-2 slds-p-bottom_small">
+
+                                <span class="slds-text-title slds-p-bottom_x-small">Priority</span>
+
+                                <span class="slds-text-body_medium slds-truncate" title="{!v.activity.Priority}">{!v.activity.Priority}</span>
+
+                            </li>
+
+                            <li class="slds-grid slds-grid_vertical slds-size_1-of-2 slds-p-bottom_small">
+
+                                <span class="slds-text-title slds-p-bottom_x-small">Description</span>
+
+                                <span class="slds-text-body_medium slds-truncate" title="{!v.activity.Description}">{!v.activity.Description}</span>
+
+                            </li>
+
+                            <li class="slds-grid slds-grid_vertical slds-size_1-of-2 slds-p-bottom_small">
+
+                                <span class="slds-text-title slds-p-bottom_x-small">Related To</span>
+
+                                <span class="slds-text-body_medium slds-truncate" title="{!v.activity.Who.Name}">{!v.activity.Who.Name}</span>
+
+                            </li>
+
+                        </ul>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </li>
+
+</aura:component>

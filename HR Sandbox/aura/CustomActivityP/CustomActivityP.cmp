@@ -1,0 +1,21 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+
+                access="global"
+
+                controller="customActivityController">
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <aura:attribute name="lstActivity" type="list" />
+
+    <ul class="slds-timeline">        
+
+        <aura:iteration items="{!v.lstActivity}" var="task">
+
+            <c:CustomActivity activity="{!task}"/>
+
+        </aura:iteration>
+
+    </ul>
+
+</aura:component>
