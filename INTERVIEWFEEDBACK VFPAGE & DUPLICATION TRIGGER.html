@@ -1,0 +1,1225 @@
+///////////////////////////////////////////// InterviewFeedback 2ND WHICH APPEARS ONCLICK
+/////////////////////////////////////
+
+<apex:page controller="InterviewFeedbackController" docType="html-5.0" lightningStylesheets="false"
+    standardStylesheets="false" sidebar="false" showHeader="false">
+
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+    <head>
+        <title>Feedback</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <apex:stylesheet
+            value="{!URLFOR($Resource.SLDS090, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script type="text/javascript">__sfdcSessionId = '{!$Api.Session_Id}';</script>
+        <script src="/soap/ajax/9.0/connection.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Lato:400,700&subset=latin,latin-ext" rel="stylesheet"
+            type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Buda:300" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+            crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+            integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+            crossorigin="anonymous" />
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    </head>
+    <style>
+        html {
+            margin: 0;
+            Height: 100%;
+            overflow-Y: hidden;
+        }
+
+        body {
+            margin: 0;
+            Height: 100%;
+            overflow-Y: scroll;
+            /* Full height */
+            /* Center and scale the image nicely */
+            background-position: fixed;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            ;
+            -webkit-background-size: 100% 100%;
+            ;
+            /* For WebKit*/
+            -moz-background-size: 100% 100%;
+            /* Mozilla*/
+            -o-background-size: 100% 100%;
+            /* Opera*/
+        }
+
+        .text-block {
+            position: relative !important;
+            top: 12% !important;
+            margin-bottom: 12% !important;
+            left: 25% !important;
+            Max-Width: 55%;
+            Min-Height: 50%;
+            padding-top: 2.2rem;
+            padding-bottom: 3.5rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            border-radius: 5px;
+            background-color: white;
+            opacity: 0.98;
+            font-family: 'Salesforce Sans', Arial, sans-serif;
+            font-size: 18px;
+            line-height: 1.5;
+            text-align: center;
+            color: rgb(62, 62, 60);
+        }
+
+        .btnSection {
+            position: absolute;
+            bottom: 3.5rem;
+            display: inline-block;
+        }
+
+        .btn {
+            min-width: 95px;
+            background-color: rgb(0, 109, 213);
+            border-radius: 5px;
+            text-align: center;
+            padding-top: 5px !important;
+            padding-bottom: 5px !important;
+            color: white;
+            font-family: 'Salesforce Sans', Arial, sans-serif;
+            font-size: 13px;
+            vertical-align: middle;
+            border: 1px solid rgb(217, 219, 221);
+            text-decoration: none;
+            transition: border .15s linear;
+        }
+
+        .btnPrev {
+            background-color: white;
+            border: 0.5px solid grey;
+            color: black;
+        }
+
+        .btn:hover {
+            background-color: rgb(24, 112, 152);
+            color: white;
+        }
+
+        .container {
+            Max-Width: 100%;
+            padding-top: 0.5rem;
+            text-align: center;
+        }
+
+        .rating {
+            border: none;
+            float: center;
+            font-size: 2em;
+        }
+
+        .rating>input {
+            display: none;
+        }
+
+        .rating>label:before {
+            margin: 5px;
+            font-size: 1.25em;
+            font-family: FontAwesome;
+            display: inline-block;
+            content: "\f005";
+        }
+
+        .rating>.half:before {
+            content: "\f089";
+            position: absolute;
+        }
+
+        .rating>label {
+            color: #ddd;
+            float: center;
+        }
+
+        .rating:not(:checked)>label:hover,
+        .rating:not(:checked)>label:hover~label {
+            color: #006dd5;
+            cursor: pointer;
+        }
+
+        .messages {
+            position: relative !important;
+            top: 12% !important;
+            left: 30% !important;
+        }
+
+        .textarea {
+            width: 80%;
+            height: 100px;
+            -moz-border-bottom-colors: none;
+            -moz-border-left-colors: none;
+            -moz-border-right-colors: none;
+            -moz-border-top-colors: none;
+            background: none repeat scroll 0 0 rgba(0, 0, 0, 0.07);
+            border-color: -moz-use-text-color #FFFFFF #FFFFFF -moz-use-text-color;
+            border-image: none;
+            border-radius: 6px 6px 6px 6px;
+            border-style: none solid solid none;
+            border-width: medium 1px 1px medium;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12) inset;
+            font-family: 'Salesforce Sans', Arial, sans-serif;
+            font-size: 1em;
+            line-height: 1.4em;
+            padding: 5px 8px;
+            transition: background-color 0.2s ease 0s;
+        }
+
+        .textarea:focus {
+            background: none repeat scroll 0 0 #FFFFFF;
+            border: 1px solid #1124d1;
+            outline-width: 0;
+        }
+
+        hr {
+            width: 90%;
+        }
+
+        @media screen and (max-width: 480px) {
+
+            .btnSection {
+                position: absolute;
+                bottom: 1.5rem;
+                display: inline-block;
+            }
+
+            .rating {
+                border: none;
+                float: center;
+                font-size: 1.4em;
+            }
+
+            .text-block {
+                position: relative !important;
+                top: 12% !important;
+                left: 5% !important;
+                Max-Width: 90%;
+                Min-Height: 54%;
+                padding-top: 2% !important;
+                padding-bottom: 1.5rem !important;
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+            }
+
+            .messages {
+                position: relative !important;
+                top: 20% !important;
+                left: 10% !important;
+                font-family: 'Salesforce Sans', Arial, sans-serif;
+                font-size: 1em;
+            }
+
+            hr {
+                width: 100%;
+            }
+        }
+
+        .loader {
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: url('{!URLFOR($Resource.loadingSurvey)}') no-repeat rgb(249, 249, 249);
+            opacity: .8;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 5rem;
+            -webkit-background-size: 5rem;
+            /* For WebKit*/
+            -moz-background-size: 5rem;
+            /* Mozilla*/
+            -o-background-size: 5rem;
+            /* Opera*/
+        }
+
+        #Page1 {
+            display: none;
+        }
+    </style>
+    <script>
+        function checkVal(id, type, score) {
+            //alert('hiiii::: '+score+':: type::'+type);
+            if (type != null && type != '') {
+                if (type == 'OverallExp') {
+                    //alert('id='+id+' AND score='+score);
+                    var subId = id.substr(0, id.length - 1);
+                    //alert(document.getElementById('{!$Component.pickData}').value);
+                    var pickVal = subId + '-rating';
+                    document.getElementById(pickVal).value = score;
+                    SetVal(subId, score);
+                    //set next all stars blank
+                    for (var j = score + 1; j <= 5; j++) {
+                        var setId = subId + j;
+                        document.getElementById(setId).labels[0].setAttribute("style", "color: #ddd;");
+                        document.getElementById(setId).checked = false;
+                    }
+                    // set star upto score
+                    for (var i = 1; i <= score; i++) {
+                        var setId = subId + i;
+                        document.getElementById(setId).labels[0].setAttribute("style", "color: #006dd5;");
+                        document.getElementById(setId).checked = true;
+                    }
+                }
+            }
+        }
+        function showLoader() {
+
+            $("#WelcomePage").toggle(1000, function () {
+
+            });
+            $("#Page1").toggle(1000, function () {
+
+            });
+        }
+
+    </script>
+
+    <body id="bd" style="background-image:url({!URLFOR($Resource.ExcellerBanner)});">
+        <apex:form id="TheForm" styleClass="text-block">
+            <apex:outputPanel rendered="{!IF(interviewRecord.size>0,true,false)}">
+                <apex:outputPanel styleClass="messages">
+                    <b>
+                        <apex:pageMessages id="msgs" />
+                    </b>
+                </apex:outputPanel> <br />
+                <apex:actionStatus id="status">
+                    <apex:facet name="start">
+                        <apex:outputPanel>
+                            <!-- <img src="{!URLFOR($Resource.Loading)}" width="25" height="25" /><br/>-->
+                            <div class="loader"></div><br />
+                        </apex:outputPanel>
+                    </apex:facet>
+                </apex:actionStatus>
+                <!--  <apex:image value="{!URLFOR($Resource.ExcellerBanner)}"/> -->
+                <apex:outputPanel rendered="{!IF(pageIndex==0&&squestions.size>0,true,false)}">
+                    <b style="font-size:18px" id="WelcomePage">
+                        <br />
+                        <apex:outputText value="Give us your feedback for the interview!"
+                            rendered="{!IF(!interviewRecord[0].Feedback_given__c,true,false)}"> </apex:outputText>
+                    </b>
+                    <br />
+                    <br />
+                    <br />
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(pageIndex==0&&interviewRecord[0].Feedback_given__c,true,false)}">
+                    <b style="font-size:18px" id="WelcomePage">
+                        <br />
+                        <apex:outputText value="Feeback is already submitted."
+                            rendered="{!IF(interviewRecord[0].Feedback_given__c,true,false)}"> </apex:outputText>
+                    </b>
+                    <br />
+                    <br />
+                    <center>
+                        <apex:commandButton styleClass="btn" action="{!BackToRecord}" value="Back To Interview"
+                            rendered="{!IF(isSubmitted||interviewRecord[0].Feedback_given__c,true,false)}">
+                        </apex:commandButton>&nbsp;&nbsp;
+                    </center>
+                    <br />
+                </apex:outputPanel>
+                <div id="con" class="container">
+                    <apex:outputPanel rendered="{!IF(pageIndex > 0&&pageIndex != MaxIndex+1&&isTrue==true,true,false)}">
+                        <apex:variable value="{!0}" var="rowNum" />
+
+                        <apex:repeat var="que" value="{!questionMap[pageIndex]}">
+
+                            <p>{!que.Question_Text__c}</p>
+                            <apex:outputPanel rendered="{!IF(que.Type__c=='Star Rating',true,false)}">
+                                <input type="hidden" id="{!que.id}-rating" value="{!rating}" />
+
+                                <apex:variable value="{!VALUE(que.Answer_Picklist__c)}" var="select" />
+                                <fieldset class="rating" rendered="{!IF(que.Type__c='Star Rating',true,false)}">
+                                    <input type="radio" id="{!que.id}1" name="rating0"
+                                        onclick="checkVal(this.id,'OverallExp',1);" />
+                                    <label class="full" for="{!que.id}1" title="1 star"
+                                        style="color:{!IF(select>= 1&&select!=null,'#006dd5','#ddd')};"></label>
+                                    <input type="radio" id="{!que.id}2" name="rating0"
+                                        onclick="checkVal(this.id,'OverallExp',2);" />
+                                    <label class="full" for="{!que.id}2" title="2 stars"
+                                        style="color:{!IF(select >= 2&&select!=null,'#006dd5','#ddd')};"></label>
+                                    <input type="radio" id="{!que.id}3" name="rating0"
+                                        onclick="checkVal(this.id,'OverallExp',3);" />
+                                    <label class="full" for="{!que.id}3" title="3 stars"
+                                        style="color:{!IF(select >= 3&&select!=null,'#006dd5','#ddd')};"></label>
+                                    <input type="radio" id="{!que.id}4" name="rating0"
+                                        onclick="checkVal(this.id,'OverallExp',4);" />
+                                    <label class="full" for="{!que.id}4" title="4 stars"
+                                        style="color:{!IF(select >= 4&&select!=null,'#006dd5','#ddd')};"></label>
+                                    <input type="radio" id="{!que.id}5" name="rating0"
+                                        onclick="checkVal(this.id,'OverallExp',5);" />
+                                    <label class="full" for="{!que.id}5" title="5 stars"
+                                        style="color:{!IF(select >= 5&&select!=null,'#006dd5','#ddd')};"></label>
+
+                                </fieldset>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!IF(que.Type__c='Comments',true,false)}">
+                                <apex:inputTextarea styleClass="textarea" value="{!que.Comments__c}" />
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!IF(que.Type__c='Yes/ No',true,false)}">
+                                <apex:inputField value="{!que.Answer_Yes_No__c}"
+                                    style="width:80%;text-align: center;" />
+                            </apex:outputPanel>
+
+                            <apex:variable var="rowNum" value="{!rowNum + 1}" />
+                            <hr /><br />
+                        </apex:repeat>
+                    </apex:outputPanel>
+
+                    <br />
+                    <br /><br /><br />
+                    <apex:outputPanel rendered="{!IF(isTrue==true,true,false)}">
+                        <div id='btnSection'>
+                            <apex:commandButton styleClass="btn btnPrev" action="{!PreviousPage}" value="Previous"
+                                rendered="{!IF(pageIndex>0,true,false)}" status="status"
+                                reRender="TheForm,con,btnSection"></apex:commandButton>&nbsp;&nbsp;
+                            <apex:commandButton styleClass="btn" action="{!NextPage}" value="Next"
+                                rendered="{!IF(pageIndex < MaxIndex,true,false)}" status="status"
+                                reRender="TheForm,con,btnSection"></apex:commandButton>&nbsp;&nbsp;
+                            <apex:commandButton styleClass="btn" action="{!submit}" value="Submit"
+                                rendered="{!IF(pageIndex == MaxIndex,true,false)}" status="status" reRender="TheForm">
+                            </apex:commandButton>
+
+                            <!--    <button class="btn">Submit</button>-->
+                            <apex:actionFunction action="{!setQuestionData}" name="SetVal" reRender="">
+                                <apex:param name="qId" value="" />
+                                <apex:param name="qVal" value="" />
+                            </apex:actionFunction>
+                        </div>
+                    </apex:outputPanel>
+                </div>
+            </apex:outputPanel>
+        </apex:form>
+    </body>
+
+    </html>
+
+</apex:page>
+
+////////////////////////// CLASS /////////////////////////////////////
+
+public class InterviewFeedbackController {
+
+public List < Interview__c> interviewRecord {
+    get;
+    set;
+    }
+    public List < Interview_Feedback_Template__c> interviewTemplate {
+        get;
+        set;
+        }
+        public List < Interview_Feedback_Questions__c> squestions {
+            get;
+            set;
+            }
+            public string oppid {
+            get;
+            set;
+            }
+            public Id sid {
+            get;
+            set;
+            }
+            public Boolean isTrue {
+            get;
+            set;
+            }
+            public Boolean isSubmitted {
+            get;
+            set;
+            }
+            public Boolean isExpired {
+            get;
+            set;
+            }
+            public String rating {
+            get;
+            set;
+            }
+            public String qid {
+            get;
+            set;
+            }
+            public Integer pageIndex {
+            get;
+            set;
+            }
+            public Decimal MaxIndex {
+            get;
+            set;
+            }
+            public Decimal perPage {
+            get;
+            set;
+            }
+            public Map < Id, String> selectedMap {
+                get;
+                set;
+                }
+                public List < Interview_Feedback_Questions__c> qlist {
+                    get;
+                    set;
+                    }
+                    public List < Questionnaire_Response__c> qlistToUpdate {
+                        get;
+                        set;
+                        }
+                        public List < Questionnaire_Response__c> responseList {
+                            get;
+                            set;
+                            }
+                            public Map < Integer, List < Interview_Feedback_Questions__c>> questionMap {
+                                get;
+                                set;
+                                }
+                                public Map < Integer, List < Questionnaire_Response__c>> questionUpdateMap {
+                                    get;
+                                    set;
+                                    }
+                                    public String operationType {
+                                    get;
+                                    set;
+                                    }
+
+                                    public Integer starQuestionsCount {
+                                    get;
+                                    set;
+                                    }
+                                    public Integer CountOfstarRatingsGiven{
+                                    get;
+                                    set;
+                                    }
+
+                                    public InterviewFeedbackController() {
+
+                                    interviewRecord = new List < Interview__c> ();
+                                        interviewTemplate = new List<Interview_Feedback_Template__c>();
+                                            squestions = new List < Interview_Feedback_Questions__c> ();
+                                                responseList = new List<Questionnaire_Response__c>();
+                                                    selectedMap = new Map < ID, String> ();
+                                                        questionMap = new Map < Integer, List <
+                                                            Interview_Feedback_Questions__c>> ();
+                                                            questionUpdateMap = new Map < Integer, List <
+                                                                Questionnaire_Response__c>> ();
+                                                                qlist = new List < Interview_Feedback_Questions__c> ();
+                                                                    qlistToUpdate = new List< Questionnaire_Response__c>
+                                                                        ();
+                                                                        pageIndex = 0;
+                                                                        MaxIndex = 0;
+                                                                        perPage = 12;
+                                                                        rating = '0';isSubmitted = false;
+                                                                        starQuestionsCount = 0;
+                                                                        CountOfstarRatingsGiven = 0;
+                                                                        qid = '';
+                                                                        operationType = 'insert';
+                                                                        sid =
+                                                                        ApexPages.currentPage().getParameters().get('id');
+                                                                        system.debug('id=' + sid);
+
+                                                                        if (sid != null) {
+                                                                        interviewRecord = [select id, Name,
+                                                                        Interview_Type__c,Feedback_Perentage__c,Feedback_given__c,Interview_Status__c,Interview_Feedback_Template__c
+                                                                        from Interview__c where id =: sid];
+                                                                        if (!interviewRecord.isEmpty()) {
+                                                                        if(interviewRecord[0].Feedback_given__c||interviewRecord[0].Interview_Status__c=='Completed'){
+                                                                        operationType = 'update';
+                                                                        }
+
+                                                                        interviewTemplate = [select id, Name,
+                                                                        InterviewTypes__c ,Active__c from
+                                                                        Interview_Feedback_Template__c where
+                                                                        InterviewTypes__c
+                                                                        INCLUDES(:interviewRecord[0].Interview_Type__c)
+                                                                        AND Active__c=:true];
+
+                                                                        if
+                                                                        (!interviewTemplate.isEmpty()&&operationType=='insert')
+                                                                        {
+                                                                        system.debug('interviewTemplate=' +
+                                                                        interviewTemplate);
+
+                                                                        isTrue = true;
+                                                                        squestions = [select id, Name,
+                                                                        Question_Number__c, Question_Text__c, Type__c,
+                                                                        Answer_Picklist__c,Comments__c,Answer_Yes_No__c
+                                                                        from Interview_Feedback_Questions__c where
+                                                                        Interview_Feedback_Template__c=:interviewTemplate[0].id
+                                                                        order by Question_Number__c ASC];
+
+                                                                        if (squestions.isEmpty()) {
+                                                                        system.debug('Feedback Invalid');
+                                                                        ApexPages.addmessage(new
+                                                                        ApexPages.message(ApexPages.severity.Info,
+                                                                        'Feedback Invalid. Please contact
+                                                                        Administrator.'));
+                                                                        }else{
+                                                                        perPage = 5;
+                                                                        MaxIndex =
+                                                                        Integer.valueOf(Math.ceil(squestions.size() /
+                                                                        perPage));
+                                                                        System.debug('maxIndex=' + MaxIndex);
+                                                                        Integer count = 1;
+                                                                        Integer cId = 1;
+                                                                        Integer totalQ = 0;
+
+                                                                        for (Integer i = 0; i <squestions.size(); i++) {
+                                                                            System.debug('i=='+i+' ans=='+squestions[i].Answer_Picklist__c);
+                        if(squestions[i].Answer_Picklist__c==null){
+                            squestions[i].Answer_Picklist__c=' 0'; } qlist.add(squestions[i]); if (count==perPage) {
+                                                                            List < Interview_Feedback_Questions__c> qs =
+                                                                            new List < Interview_Feedback_Questions__c>
+                                                                                ();
+                                                                                qs.addAll(qlist);
+                                                                                totalQ=totalQ+count;
+                                                                                questionMap.put(cId, qs);
+                                                                                cId++;
+                                                                                count = 0;
+                                                                                qlist.clear();
+                                                                                }
+
+                                                                                count++;
+                                                                                }
+
+                                                                                system.debug('totalQ==>'+totalQ+'qsize->'+qlist.size());
+                                                                                if(totalQ<squestions.size()){ List <
+                                                                                    Interview_Feedback_Questions__c> qs
+                                                                                    = new List <
+                                                                                        Interview_Feedback_Questions__c>
+                                                                                        ();
+                                                                                        qs.addAll(qlist);
+                                                                                        questionMap.put(cId, qs);
+                                                                                        }
+                                                                                        }
+                                                                                        }
+                                                                                        }
+                                                                                        }
+
+                                                                                        }
+
+                                                                                        public void setQuestionData() {
+                                                                                        Id passedParam1 =
+                                                                                        Apexpages.currentPage().getParameters().get('qId');
+                                                                                        String passedParam2 =
+                                                                                        Apexpages.currentPage().getParameters().get('qVal');
+                                                                                        System.debug('qid
+                                                                                        ----------------------> ' +
+                                                                                        passedParam1 + 'qVal=' +
+                                                                                        passedParam2);
+                                                                                        selectedMap.put(passedParam1,
+                                                                                        passedParam2);
+                                                                                        system.debug('selectedMap=' +
+                                                                                        selectedMap);
+                                                                                        for (Integer i = 0; i <
+                                                                                            squestions.size(); i++) { if
+                                                                                            (selectedMap.containsKey(squestions[i].id))
+                                                                                            {
+                                                                                            squestions[i].Answer_Picklist__c=selectedMap.get(squestions[i].id);
+                                                                                            } } } public PageReference
+                                                                                            NextPage() {
+                                                                                            pageIndex=pageIndex + 1; //
+                                                                                            save(); return null; }
+                                                                                            public PageReference
+                                                                                            PreviousPage() {
+                                                                                            pageIndex=pageIndex - 1; //
+                                                                                            save(); return null; }
+                                                                                            public PageReference
+                                                                                            BackToRecord() {
+                                                                                            PageReference pg=new
+                                                                                            PageReference('/'+sid);
+                                                                                            pg.setRedirect(true); return
+                                                                                            pg; } public void submit(){
+                                                                                            try{
+                                                                                            if(operationType=='insert'
+                                                                                            ){
+                                                                                            for(Interview_Feedback_Questions__c
+                                                                                            q: squestions){
+                                                                                            Questionnaire_Response__c
+                                                                                            response=new
+                                                                                            Questionnaire_Response__c();
+                                                                                            if(q.Answer_Picklist__c!=null){
+                                                                                            response.Answer_Picklist__c=q.Answer_Picklist__c;
+                                                                                            }
+                                                                                            if(q.Type__c=='Star Rating'
+                                                                                            ){
+                                                                                            system.debug('q.Answer_Picklist__c='+q.Answer_Picklist__c);
+                    starQuestionsCount = starQuestionsCount+1;  
+                    if(q.Answer_Picklist__c!=null){
+                    CountOfstarRatingsGiven = CountOfstarRatingsGiven + Integer.valueOf(q.Answer_Picklist__c);
+                    }
+                }
+                if(q.Answer_Yes_No__c!=null){
+                  response.Answer_Yes_No__c = q.Answer_Yes_No__c;  
+                }
+                response.Comments__c = q.Comments__c;
+                response.Question_Number__c = q.Question_Number__c;    
+                response.Question_Text__c = q.Question_Text__c;
+                response.Type__c = q.Type__c;  
+                response.interview__c = interviewRecord[0].id;
+                 
+                   //response.id = q.QuestionResponseId__c;   
+                 responseList.add(response);
+            }
+        }
+            
+            if(!responseList.isEmpty()){
+                if(operationType==' insert'){ insert responseList; system.debug('CountOfstarRatingsGiven='+CountOfstarRatingsGiven);  
+                 system.debug(' starQuestionsCount='+starQuestionsCount);      
+                 system.debug(' starQuestionsCount*5='+starQuestionsCount*5);     
+                 system.debug(' Percentage='+CountOfstarRatingsGiven/ (starQuestionsCount*5)*100);      
+                if(CountOfstarRatingsGiven>0){
+                  interviewRecord[0].Feedback_Perentage__c =(CountOfstarRatingsGiven/ (starQuestionsCount*5))*100;
+                }
+                interviewRecord[0].Interview_Feedback_Template__c = interviewTemplate[0].id;
+                interviewRecord[0].Feedback_given__c = true;
+                interviewRecord[0].Interview_Status__c = ' Completed'; update interviewRecord[0]; }else{ update
+                                                                                            responseList;
+                                                                                            interviewRecord[0].Interview_Feedback_Template__c=interviewTemplate[0].id;
+                                                                                            interviewRecord[0].Feedback_given__c=true;
+                                                                                            interviewRecord[0].Interview_Status__c='Completed'
+                                                                                            ; update interviewRecord[0];
+                                                                                            } } isSubmitted=true;
+                                                                                            isTrue=false;
+                                                                                            ApexPages.addmessage(new
+                                                                                            ApexPages.message(ApexPages.severity.INFO, 'Thank you for your feedback!'
+                                                                                            )); }catch(Exception e){
+                                                                                            ApexPages.addmessage(new
+                                                                                            ApexPages.message(ApexPages.severity.error, 'Error While Feedback Submission: '
+                                                                                            +e)); } } }
+                                                                                            ///////////////////////////////////////////////////////
+                                                                                            ViewFeedbackPage 1ST
+                                                                                            ///////////////////////////////////////////////////
+                                                                                            ///////////////////////////////////////////////////////
+                                                                                            ViewFeedbackPage 1ST
+                                                                                            ///////////////////////////////////////////////////
+                                                                                            ///////////////////////////////////////////////////////
+                                                                                            ViewFeedbackPage 1ST
+                                                                                            ///////////////////////////////////////////////////
+                                                                                            ///////////////////////////////////////////////////////
+                                                                                            ViewFeedbackPage 1ST
+                                                                                            ///////////////////////////////////////////////////
+                                                                                            ///////////////////////////////////////////////////////
+                                                                                            ViewFeedbackPage 1ST
+                                                                                            ///////////////////////////////////////////////////
+                                                                                            ///////////////////////////////////////////////////////
+                                                                                            ViewFeedbackPage 1ST
+                                                                                            ///////////////////////////////////////////////////
+                                                                                            ///////////////////////////////////////////////////////
+                                                                                            ViewFeedbackPage 1ST
+                                                                                            ///////////////////////////////////////////////////
+                                                                                            ///////////////////////////////////////////////////////
+                                                                                            ViewFeedbackPage 1ST
+                                                                                            ///////////////////////////////////////////////////
+                                                                                            ///////////////////////////////////////////////////////
+                                                                                            ViewFeedbackPage 1ST
+                                                                                            ///////////////////////////////////////////////////
+                                                                                            <apex:page
+                                                                                            controller="ViewFeedbackPageController"
+                                                                                            docType="html-5.0"
+                                                                                            lightningStylesheets="false"
+                                                                                            standardStylesheets="false"
+                                                                                            sidebar="false"
+                                                                                            showHeader="false">
+
+                                                                                            <html
+                                                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                                                xmlns:xlink="http://www.w3.org/1999/xlink">
+
+                                                                                            <head>
+
+                                                                                                <meta charset="UTF-8" />
+                                                                                                <meta name="viewport"
+                                                                                                    content="width=device-width, initial-scale=1.0" />
+                                                                                                <meta
+                                                                                                    http-equiv="X-UA-Compatible"
+                                                                                                    content="ie=edge" />
+                                                                                                <apex:stylesheet
+                                                                                                    value="{!URLFOR($Resource.SLDS090, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+                                                                                                <link
+                                                                                                    href="https://fonts.googleapis.com/css?family=Lato:400,700&subset=latin,latin-ext"
+                                                                                                    rel="stylesheet"
+                                                                                                    type="text/css" />
+                                                                                                <link
+                                                                                                    href="https://fonts.googleapis.com/css?family=Buda:300"
+                                                                                                    rel="stylesheet"
+                                                                                                    type="text/css" />
+                                                                                                <link rel="stylesheet"
+                                                                                                    href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+                                                                                                    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+                                                                                                    crossorigin="anonymous" />
+                                                                                                <link rel="stylesheet"
+                                                                                                    href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+                                                                                                    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+                                                                                                    crossorigin="anonymous" />
+                                                                                                <link rel="stylesheet"
+                                                                                                    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+                                                                                            </head>
+                                                                                            <style>
+                                                                                                html {
+                                                                                                    margin: 0;
+                                                                                                    Height: 100%;
+                                                                                                    overflow-Y: hidden;
+
+                                                                                                }
+
+                                                                                                body {
+                                                                                                    margin: 0;
+                                                                                                    Height: 100%;
+                                                                                                    overflow-Y: scroll;
+
+                                                                                                    /* Full height */
+                                                                                                    /* Center and scale the image nicely */
+                                                                                                    background-position: fixed;
+                                                                                                    background-repeat: no-repeat;
+                                                                                                    background-size: 100% 100%;
+                                                                                                    ;
+                                                                                                    -webkit-background-size: 100% 100%;
+                                                                                                    ;
+                                                                                                    /* For WebKit*/
+                                                                                                    -moz-background-size: 100% 100%;
+                                                                                                    /* Mozilla*/
+                                                                                                    -o-background-size: 100% 100%;
+                                                                                                    /* Opera*/
+                                                                                                }
+
+                                                                                                .text-block {
+                                                                                                    position: relative !important;
+                                                                                                    top: 0% !important;
+                                                                                                    margin-bottom: 12% !important;
+                                                                                                    /* left: 25% !important; */
+                                                                                                    /* Max-Width: 75%; */
+                                                                                                    /* Min-Height: 70%; */
+                                                                                                    padding-top: 1rem;
+                                                                                                    padding-bottom: 1.2rem;
+                                                                                                    /* padding-right: 5rem; */
+                                                                                                    border-radius: 5px;
+                                                                                                    background-color: white;
+                                                                                                    opacity: 0.98;
+                                                                                                    font-family: 'Salesforce Sans', Arial, sans-serif;
+                                                                                                    font-size: 14px;
+                                                                                                    line-height: 1.5;
+                                                                                                    text-align: center;
+                                                                                                    color: rgb(62, 62, 60);
+                                                                                                }
+
+                                                                                                .container {
+                                                                                                    Max-Width: 100%;
+                                                                                                    padding-top: 0.2rem;
+                                                                                                    text-align: center;
+
+                                                                                                }
+
+                                                                                                .rating {
+                                                                                                    border: none;
+                                                                                                    float: center;
+                                                                                                    font-size: 1.5em;
+                                                                                                    margin-bottom: -1.5rem;
+
+
+
+
+                                                                                                }
+
+                                                                                                .rating>input {
+                                                                                                    display: none;
+                                                                                                }
+
+                                                                                                .rating>label:before {
+                                                                                                    margin: 5px;
+                                                                                                    font-size: 1em;
+                                                                                                    font-family: FontAwesome;
+                                                                                                    display: inline-block;
+                                                                                                    content: "\f005";
+                                                                                                }
+
+                                                                                                .rating>.half:before {
+                                                                                                    content: "\f089";
+                                                                                                    position: absolute;
+                                                                                                }
+
+                                                                                                .rating>label {
+                                                                                                    color: #ddd;
+                                                                                                    float: center;
+                                                                                                }
+
+                                                                                                .rating:not(:checked)>label:hover,
+                                                                                                .rating:not(:checked)>label:hover~label {
+                                                                                                    color: #006dd5;
+                                                                                                    cursor: pointer;
+                                                                                                }
+
+                                                                                                .textarea {
+                                                                                                    width: 80%;
+                                                                                                    height: 100px;
+                                                                                                    -moz-border-bottom-colors: none;
+                                                                                                    -moz-border-left-colors: none;
+                                                                                                    -moz-border-right-colors: none;
+                                                                                                    -moz-border-top-colors: none;
+                                                                                                    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.07);
+                                                                                                    border-color: -moz-use-text-color #FFFFFF #FFFFFF -moz-use-text-color;
+                                                                                                    border-image: none;
+                                                                                                    border-radius: 6px 6px 6px 6px;
+                                                                                                    border-style: none solid solid none;
+                                                                                                    border-width: medium 1px 1px medium;
+                                                                                                    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12) inset;
+                                                                                                    font-family: 'Salesforce Sans', Arial, sans-serif;
+                                                                                                    font-size: 1em;
+                                                                                                    line-height: 1.4em;
+                                                                                                    padding: 5px 8px;
+                                                                                                    transition: background-color 0.2s ease 0s;
+                                                                                                }
+
+                                                                                                .textarea:focus {
+                                                                                                    background: none repeat scroll 0 0 #FFFFFF;
+                                                                                                    border: 1px solid #1124d1;
+                                                                                                    outline-width: 0;
+                                                                                                }
+
+                                                                                                hr {
+                                                                                                    width: 85%;
+                                                                                                    margin-top: 0rem;
+
+
+                                                                                                }
+                                                                                            </style>
+
+                                                                                            <body>
+                                                                                                <apex:form id="Theform"
+                                                                                                    styleClass="text-block">
+
+                                                                                                    <div id="con"
+                                                                                                        class="container">
+                                                                                                        <apex:outputPanel
+                                                                                                            rendered="{!IF(!interviewRecord[0].Feedback_given__c,true,false)}">
+                                                                                                            <center><b>Feedback
+                                                                                                                    Pending</b>
+                                                                                                            </center>
+                                                                                                        </apex:outputPanel>
+                                                                                                        <apex:outputPanel
+                                                                                                            rendered="{!IF(interviewRecord[0].Feedback_given__c,true,false)}">
+                                                                                                            <apex:repeat
+                                                                                                                var="que"
+                                                                                                                value="{!existingResponseList}">
+                                                                                                                <!--  <apex:outputField value="{!que.Question_Number__c}"/>.&nbsp; -->
+                                                                                                                <apex:outputField
+                                                                                                                    value="{!que.Question_Text__c}" />
+                                                                                                                <br /><br />
+                                                                                                                <!--  <apex:outputField value="{!que.Answer_Picklist__c}" rendered="{!IF(que.Type__c=='Star Rating',true,false)}"/> -->
+
+                                                                                                                <apex:outputPanel
+                                                                                                                    rendered="{!IF(que.Type__c=='Star Rating',true,false)}">
+                                                                                                                    <input
+                                                                                                                        type="hidden"
+                                                                                                                        id="{!que.id}-rating"
+                                                                                                                        value="{!rating}" />
+
+                                                                                                                    <!-- <apex:variable value="{!VALUE(que.Answer_Picklist__c)}" var="select"/>-->
+                                                                                                                    <fieldset
+                                                                                                                        class="rating"
+                                                                                                                        rendered="{!IF(que.Type__c='Star Rating',true,false)}">
+                                                                                                                        <input
+                                                                                                                            type="radio"
+                                                                                                                            id="{!que.id}1"
+                                                                                                                            name="rating0" />
+                                                                                                                        <label
+                                                                                                                            class="full"
+                                                                                                                            for="{!que.id}1"
+                                                                                                                            title="1 star"
+                                                                                                                            style="color:{!IF(VALUE(que.Answer_Picklist__c)>= 1&&VALUE(que.Answer_Picklist__c)!=null,'#006dd5','#ddd')};"></label>
+                                                                                                                        <input
+                                                                                                                            type="radio"
+                                                                                                                            id="{!que.id}2"
+                                                                                                                            name="rating0" />
+                                                                                                                        <label
+                                                                                                                            class="full"
+                                                                                                                            for="{!que.id}2"
+                                                                                                                            title="2 stars"
+                                                                                                                            style="color:{!IF(VALUE(que.Answer_Picklist__c)>= 2&&VALUE(que.Answer_Picklist__c)!=null,'#006dd5','#ddd')};"></label>
+                                                                                                                        <input
+                                                                                                                            type="radio"
+                                                                                                                            id="{!que.id}3"
+                                                                                                                            name="rating0" />
+                                                                                                                        <label
+                                                                                                                            class="full"
+                                                                                                                            for="{!que.id}3"
+                                                                                                                            title="3 stars"
+                                                                                                                            style="color:{!IF(VALUE(que.Answer_Picklist__c)>= 3&&VALUE(que.Answer_Picklist__c)!=null,'#006dd5','#ddd')};"></label>
+                                                                                                                        <input
+                                                                                                                            type="radio"
+                                                                                                                            id="{!que.id}4"
+                                                                                                                            name="rating0" />
+                                                                                                                        <label
+                                                                                                                            class="full"
+                                                                                                                            for="{!que.id}4"
+                                                                                                                            title="4 stars"
+                                                                                                                            style="color:{!IF(VALUE(que.Answer_Picklist__c)>= 4&&VALUE(que.Answer_Picklist__c)!=null,'#006dd5','#ddd')};"></label>
+                                                                                                                        <input
+                                                                                                                            type="radio"
+                                                                                                                            id="{!que.id}5"
+                                                                                                                            name="rating0" />
+                                                                                                                        <label
+                                                                                                                            class="full"
+                                                                                                                            for="{!que.id}5"
+                                                                                                                            title="5 stars"
+                                                                                                                            style="color:{!IF(VALUE(que.Answer_Picklist__c)>= 5&&VALUE(que.Answer_Picklist__c)!=null,'#006dd5','#ddd')};"></label>
+
+                                                                                                                    </fieldset>
+                                                                                                                </apex:outputPanel>
+
+                                                                                                                <apex:outputPanel
+                                                                                                                    style="color: #006dd5;"
+                                                                                                                    rendered="{!IF(que.Type__c=='Comments',true,false)}">
+                                                                                                                    <apex:outputField
+                                                                                                                        value="{!que.Comments__c}" />
+                                                                                                                    <br />
+                                                                                                                </apex:outputPanel>
+                                                                                                                <apex:outputPanel
+                                                                                                                    style="color: #006dd5;"
+                                                                                                                    rendered="{!IF(que.Type__c=='Yes/ No',true,false)}">
+                                                                                                                    <apex:outputField
+                                                                                                                        value="{!que.Answer_Yes_No__c}" />
+                                                                                                                    <br />
+                                                                                                                </apex:outputPanel>
+                                                                                                                <br />
+                                                                                                                <hr />
+                                                                                                            </apex:repeat>
+
+                                                                                                        </apex:outputPanel>
+                                                                                                    </div>
+                                                                                                </apex:form>
+                                                                                            </body>
+
+                                                                                            </html>
+
+
+                                                                                            </apex:page>
+
+                                                                                            //////////////////////////////////////////////////
+                                                                                            CLASS =
+                                                                                            ViewFeedbackPageController
+                                                                                            ////////////////////////
+
+                                                                                            public class
+                                                                                            ViewFeedbackPageController {
+
+                                                                                            public List <Interview__c>
+                                                                                                interviewRecord{get;
+                                                                                                set;}
+
+                                                                                                public List <
+                                                                                                    Questionnaire_Response__c>
+                                                                                                    existingResponseList{get;set;}
+
+                                                                                                    public String
+                                                                                                    rating{get; set;}
+
+                                                                                                    public id
+                                                                                                    sid{get;set;}
+
+
+                                                                                                    public
+                                                                                                    ViewFeedbackPageController(){
+                                                                                                    interviewRecord=new
+                                                                                                    List<Interview__c>
+                                                                                                        ();
+
+                                                                                                        existingResponseList
+                                                                                                        = new List
+                                                                                                        <Questionnaire_Response__c>
+                                                                                                            ();
+
+                                                                                                            sid =
+                                                                                                            ApexPages.currentPage().getParameters().get('id');
+                                                                                                            system.debug('id='
+                                                                                                            + sid);
+
+                                                                                                            if (sid !=
+                                                                                                            null) {
+                                                                                                            interviewRecord
+                                                                                                            = [select
+                                                                                                            id, Name,
+                                                                                                            Interview_Type__c,Feedback_given__c,Interview_Status__c,Interview_Feedback_Template__c
+                                                                                                            from
+                                                                                                            Interview__c
+                                                                                                            where id =:
+                                                                                                            sid];
+                                                                                                            if
+                                                                                                            (!interviewRecord.isEmpty())
+                                                                                                            {
+                                                                                                            existingResponseList
+                                                                                                            = [SELECT
+                                                                                                            Id,Interview__c,
+                                                                                                            Name,
+                                                                                                            Question_Number__c,Answer_Yes_No__c,
+                                                                                                            Question_Text__c,
+                                                                                                            Type__c,
+                                                                                                            Answer_Picklist__c,Comments__c
+                                                                                                            FROM
+                                                                                                            Questionnaire_Response__c
+                                                                                                            WHERE
+                                                                                                            Interview__c=:interviewRecord[0].id
+                                                                                                            order by
+                                                                                                            Question_Number__c
+                                                                                                            ASC];
+                                                                                                            if(!existingResponseList.isEmpty()){
+
+
+
+                                                                                                            }
+                                                                                                            }
+                                                                                                            }
+                                                                                                            }
+
+                                                                                                            }
+
+
+
+
+                                                                                                            //////////////////////////////////////////////xml
+                                                                                                            /////////////////////////////////////////
+
+                                                                                                            <isExposed>
+                                                                                                                true
+                                                                                                            </isExposed>
+                                                                                                            <targets>
+                                                                                                                <target>
+                                                                                                                    lightning__AppPage
+                                                                                                                </target>
+                                                                                                                <target>
+                                                                                                                    lightning__RecordPage
+                                                                                                                </target>
+                                                                                                                <target>
+                                                                                                                    lightning__HomePage
+                                                                                                                </target>
+                                                                                                                <target>
+                                                                                                                    lightningCommunity__Page
+                                                                                                                </target>
+                                                                                                                <target>
+                                                                                                                    lightningCommunity__Default
+                                                                                                                </target>
+                                                                                                            </targets>
+
+
+                                                                    //////////////////////////////////////////////////////TRIGGER DUPLICATION////////////////////////////
+                                                                    //////////////////////////////////////////////////////TRIGGER DUPLICATION////////////////////////////                                        
+
+                                                                    //////////////////////////////////////////////////////TRIGGER DUPLICATION////////////////////////////                                        
+trigger TrgCandidate on Candidate__c (before insert ,before update) {
+   if(trigger.isbefore && trigger.isinsert ){
+        
+        TrgCandidateHandlerclss.TrgCandidateMethinsert(trigger.new);
+    }
+    
+    
+    
+   if(trigger.isbefore && trigger.isupdate ){
+       
+       
+        
+        for (Candidate__c can: Trigger.new) {
+           Candidate__c oldCan = Trigger.oldMap.get(can.ID);
+            if((can.Mobile__c != oldCan.Mobile__c) && (can.Alternate_Mobile__c != oldCan.Alternate_Mobile__c) && (can.Email__c != oldCan.Email__c) && (can.Alternate_Email__c != oldCan.Alternate_Email__c )){
+                TrgCandidateHandlerclss.TrgCandidateMethinsert(trigger.new);
+            }
+        }
+
+    }
+}
+
+///////////////////////////////////////////       CLASS          ////////////////////////////////////
+
+public class TrgCandidateHandlerclss {
+ 
+    ///////////////////////
+     public static void TrgCandidateMethinsert(List<Candidate__c> listOfCandidate   ){
+     
+      // Set to store email ids
+     Set <String> emailSet = new Set<String>(); 
+     // Set to store phone numbers
+     Set <String> phoneSet = new Set<String>(); 
+     
+     // Iterate through each Contact and add their email and phone number to their respective Sets
+     for (Candidate__c con:listOfCandidate) {
+         If(con.Email__c != NULL )
+         {emailSet.add(con.Email__c);}
+          If(con.Alternate_Email__c != NULL)
+             {emailSet.add(con.Alternate_Email__c);}
+          If(con.Mobile__c != NULL)
+          {phoneSet.add(con.Mobile__c);}
+           If(con.Alternate_Mobile__c != NULL)
+           {phoneSet.add(con.Alternate_Mobile__c);}
+         
+     }
+ 
+     // New list to store the found email or phone numbers
+     List <Candidate__c> contactList = new List<Candidate__c >();
+ 
+     // Populating the list using SOQL
+     contactlist = [SELECT Email__c,Alternate_Email__c,Mobile__c,Alternate_Mobile__c,Name,Id FROM Candidate__c WHERE  Email__c IN :emailSet OR Mobile__c IN :phoneSet OR Alternate_Email__c IN :emailSet OR Alternate_Mobile__c IN :phoneSet 
+               ];
+ 
+     // Iterating through each Contact record to see if the same email or phone was found
+     for (Candidate__c con:listOfCandidate) {
+          String link = '<a href="https://ap1.salesforce.com/';
+         If (contactList.size() > 0   ) {
+             
+             system.debug(contactlist);
+             // Displaying the error 
+         string url = contactlist[0].Name + '      ( ' + contactlist[0].Id + ' ) ' ;
+           con.adderror('Candidate already exist    : ' +'<br/>'+  
+                        + url,TRUE);
+             
+         }
+     }
+ } 
+     
+     ///////////////////////
+   
+     
+ }
+
+ /////////////////////////////////////////////// TEST CLASS ///////////////////////////////////////
+
+ @istest
+public class test_TrgCandidateHandlerclss {
+    @istest
+    public static void testTrgCandidateMethod(){
+        Test.startTest();
+        List<Candidate__c> my_list = new List<Candidate__c>();
+        Candidate__c Can = new Candidate__c();
+      	 Can.Name = 'Test Candidate';
+        Can.Mobile__c = '1234567894';
+         Can.Alternate_Mobile__c = '1234567';
+         Can.Email__c = 'abc@gmail.com';
+         Can.Alternate_Email__c = 'awrc@gmail.com';
+        
+        my_list.add(Can);
+        insert my_list;
+TrgCandidateHandlerclss.TrgCandidateMethinsert(my_list);
+        
+        
+         List<Candidate__c> my_list1 = new List<Candidate__c>();
+        Candidate__c Can1 = new Candidate__c();
+      	 Can1.Name = 'Test1 Candidate';
+        Can1.Mobile__c = '11234567894';
+         Can1.Alternate_Mobile__c = '12341567';
+         Can1.Email__c = 'abcd@gmail.com';
+         Can1.Alternate_Email__c = 'awrdc@gmail.com';
+        
+        my_list1.add(Can1);
+       
+        insert my_list1;
+         update my_list1;
+TrgCandidateHandlerclss.TrgCandidateMethinsert(my_list1);
+               Test.stopTest();
+    }
+}
