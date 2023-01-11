@@ -1,0 +1,30 @@
+.THIS {
+    width:100%;
+}
+.THIS .slds-box.slds-theme_default .slds-button {
+    margin: 6px;
+    float: left;
+}
+.THIS .slds-box.slds-theme_default {
+    width: 100%;
+}
+.THIS .slds-box.slds-theme_default.cont1 {
+    width: 100%
+}
+
+.cT_Inventory_Matrix {
+    width: 48% !important;
+    float: left !Important;
+    margin: 1% !important;
+}
+.THIS .slds-card__footer {
+    margin-bottom: 40px;
+}
+.THIS .MainCont .slds-card.slds-card_narrow {
+    width: 31%;
+    margin: 10px;
+    float: left;
+}
+.THIS.toggle {
+    display: none;
+}

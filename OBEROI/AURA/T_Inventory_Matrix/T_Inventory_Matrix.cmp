@@ -1,0 +1,112 @@
+<aura:component implements="lightning:isUrlAddressable" controller="T_Inventory_Matrix_Apex">
+    <aura:attribute name="refRecordId" type="String" />
+    <aura:attribute name="selectedUnitId" type="String" />
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    <aura:attribute name="towerList" type="List" />
+    <aura:attribute name="unitList" type="List" />
+    <aura:attribute name="floorList" type="List" />
+    <aura:attribute name="activeSections" type="List" default="['A','C']" />
+    <aura:attribute name="activeSectionsMessage" type="String" default="" />
+    <aura:attribute name="Unit" type="List" default="" />
+    <aura:attribute name="showUnit" type="Boolean" default="false"/>
+    <aura:attribute name="showFloor" type="Boolean" default="false"/>
+    
+    <div class="slds-grid slds-wrap" aura:id="towerCard">
+        <div class="slds-box slds-theme_default">
+            <div class="MainCont">
+                
+                <aura:iteration items="{!v.towerList}" var="tower">
+                    <lightning:card variant="Narrow" title="{!tower.Name}" iconName="standard:account" >
+                        <p class="slds-p-horizontal_small">
+                            <img src="{!tower.Image_Path__c}"/>
+                        </p>
+                        <aura:set attribute="footer">
+                            <div data-id="{!tower.Id}"  class="inventoryT">
+                                <lightning:button variant="brand" label="View Units" title="Brand action" aura:id="{!tower.Id}" onclick="{!c.viewUnits}" />
+                            </div>
+                        </aura:set>
+                    </lightning:card>
+                </aura:iteration>
+            </div>
+        </div>
+    </div>
+    <aura:if isTrue="{!v.showFloor}">
+        <div class="slds-grid slds-wrap" aura:id="unitCard">
+            <div class="slds-box slds-theme_default cont1">
+                <p style="background-color:#BA0517;">Available</p><p style="background-color:#45C65A;">Sold</p><p style="background-color:#0176D3;">Blocked</p>
+                <aura:iteration items="{!v.floorList}" var="floor" >    
+                    <span class="list-group-item disabled">
+                        <span>Floor Number:- {!floor.Floor_Number__c}</span>
+                    </span>                    
+                    
+                    <table width="100%">
+                        <tr>
+                            <td>
+                                <aura:iteration items="{!v.unitList}" var="unit" >
+                                    <div data-id="{!unit.Id}">
+                                        <aura:if isTrue="{!and(unit.Status__c == 'Sold', unit.Floor_No__c == floor.Floor_Number__c)}">
+                                            <lightning:button variant="success" label="{!unit.Name}" title="Brand action" aura:id="{!unit.Id}" onclick="{!c.unitDetails}" />
+                                        </aura:if> 
+                                        <aura:if isTrue="{!and(unit.Status__c == 'Blocked', unit.Floor_No__c == floor.Floor_Number__c)}">
+                                            <lightning:button variant="destructive" label="{!unit.Name}" title="Brand action" aura:id="{!unit.Id}" onclick="{!c.unitDetails}" />
+                                        </aura:if>
+                                        <aura:if isTrue="{!and(unit.Status__c == 'Available', unit.Floor_No__c == floor.Floor_Number__c)}">
+                                            <lightning:button variant="brand" label="{!unit.Name}" title="Brand action" aura:id="{!unit.Id}" onclick="{!c.unitDetails}" />
+                                        </aura:if>
+                                        <aura:if isTrue="{!and(unit.Status__c == NULL, unit.Floor_No__c == floor.Floor_Number__c)}">
+                                            <lightning:button variant="brand" label="{!unit.Name}" title="Brand action" aura:id="{!unit.Id}" onclick="{!c.unitDetails}" />
+                                        </aura:if>
+                                    </div>
+                                </aura:iteration>
+                            </td>
+                        </tr>
+                    </table>
+                </aura:iteration>        
+            </div>
+        </div>
+    </aura:if>
+    <aura:if isTrue="{!v.showUnit}">
+        <div class="slds-grid slds-wrap" >
+            <div class="slds-box slds-theme_default cont1" >
+                <div class="MainCont"> 
+                    
+                    <lightning:accordion
+                                         allowMultipleSectionsOpen="true"
+                                         onsectiontoggle="{! c.handleSectionToggle }"
+                                         activeSectionName="{! v.activeSections }"
+                                         >
+                        <aura:iteration items="{!v.Unit}" var="unit" >
+                            <lightning:accordionSection name="A" label="Unit Details">
+                                <aura:set attribute="actions">
+                                    
+                                </aura:set>
+                                <aura:set attribute="body">
+                                    <lightning:button variant="brand" label="Quotation" title="Brand action" onclick="{!c.openQuotation}"  />
+                                    <lightning:button variant="brand" label="Block" title="Brand action" onclick="{!c.openBlock}" />
+                                    <br/><br/><br/>
+                                    <p>Super Area :- {!unit.Super_Area__c}</p>
+                                    <p>Built Up Area :- {!unit.Built_Up_Area__c}</p>
+                                    <p>Built Up Area In Sq Mtr1 :- {!unit.Built_Up_Area_In_Sq_Mtr1__c}</p>
+                                    <p>Balcony Area :- {!unit.Balcony_Area__c}</p>
+                                    <p>Floor Area :- {!unit.Floor_Area__c}</p>
+                                </aura:set>
+                            </lightning:accordionSection>
+                            <lightning:accordionSection name="B" label="Pricing Details">
+                                <p>This is the content area for section B.</p>
+                                <p>.</p>
+                                <p>.</p>
+                                <p>.</p>
+                                <p>The section height expands to fit your content.</p>
+                            </lightning:accordionSection>
+                            <lightning:accordionSection name="C" label="Floor Plans">
+                                <p>This is the content area for section C.</p>
+                                <p>.</p>
+                                <p>.</p>
+                                <p>.</p>
+                                <p>The section height expands to fit your content.</p>
+                            </lightning:accordionSection>
+                        </aura:iteration>
+                    </lightning:accordion>
+                </div></div></div>
+    </aura:if>
+</aura:component>
