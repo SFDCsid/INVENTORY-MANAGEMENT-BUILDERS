@@ -1,0 +1,124 @@
+<aura:component implements="lightning:actionOverride,force:hasRecordId,force:hasSObjectName,flexipage:availableForRecordHome,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" controller="BookingController" access="global" >
+	<aura:attribute name="booking" type="Booking__c" 
+                    default="{ 'sobjectType': 'Booking__c' }"/>    
+    <aura:attribute name="checkRtType" type="Boolean" default="true"/>
+	<aura:attribute name="options" type="String[]"/>
+    <aura:attribute name="recordId" type="String" /> 
+    <aura:attribute name="profileName" type="String"/>
+    <aura:attribute name="error" type="String[]" default=""/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="disabled" type="Boolean" default="false" />
+    <aura:attribute name="saved" type="Boolean" default="false" />
+    <aura:attribute name="showSpinner" type="Boolean" default="true" />
+    <aura:if isTrue="{!!v.saved}">
+        <lightning:recordEditForm objectApiName="Booking__c">
+            <!-- the messages component is for error messages -->
+            <lightning:messages />
+			<div class="slds slds-p-around_small" style="background-color:white;color:black;">
+				<div class="slds-section slds-is-open ">
+					<h3 class="slds-section__title slds-theme_shade">
+					<span class="slds-p-around_xxx-small" title="Property Unit Information">Property Unit Information</span>
+					</h3>
+					<div class="slds-grid slds-gutters">
+							<div class="slds-col slds-size_1-of-2">
+								<lightning:inputField fieldName="Project__c" />
+							</div>
+							<div class="slds-col slds-size_1-of-2">
+								<lightning:inputField fieldName="Property_Type__c"/>
+							</div>
+					</div>
+					<div class="slds-grid slds-gutters">
+							<div class="slds-col slds-size_1-of-2">
+								<lightning:inputField fieldName="Booking_Through__c" />
+							</div>
+							<div class="slds-col slds-size_1-of-2">
+								<lightning:inputField fieldName="Employee_Reference__c"/>
+							</div>
+					</div>
+				</div>
+				<div class="slds-section slds-is-open ">
+					<h3 class="slds-section__title slds-theme_shade">
+					<span class="slds-p-around_xxx-small" title="Booking Details">Booking Details</span>
+					</h3>
+					<div class="slds-grid slds-gutters">
+							<div class="slds-col slds-size_1-of-2">
+								<lightning:inputField fieldName="Booking_Amount__c" />
+							</div>
+							<div class="slds-col slds-size_1-of-2">
+								<lightning:inputField fieldName="Discount_Type__c"/>
+							</div>
+					</div>
+					<div class="slds-grid slds-gutters">
+							<div class="slds-col slds-size_1-of-2">
+								<lightning:inputField fieldName="Booking_Confirmation_Date__c" />
+							</div>
+							<div class="slds-col slds-size_1-of-2">
+								<lightning:inputField fieldName="Discount__c"/>
+							</div>
+					</div>
+					<div class="slds-grid slds-gutters">
+							<div class="slds-col slds-size_1-of-2">
+								<lightning:inputField fieldName="TDS_Paid_By__c" />
+							</div>
+							<div class="slds-col slds-size_1-of-2">
+								<lightning:inputField fieldName="Discount_Per_Unit_Area__c"/>
+							</div>
+					</div>
+					<div class="slds-grid slds-gutters">
+							<div class="slds-col slds-size_1-of-2">
+								<lightning:inputField fieldName="Interest_on_TDS__c" />
+							</div>
+							<div class="slds-col slds-size_1-of-2">
+								<lightning:inputField fieldName="Discounted_Amount__c"/>
+							</div>
+					</div>
+				</div>
+				<div class="slds-section slds-is-open ">
+					<h3 class="slds-section__title slds-theme_shade">
+					<span class="slds-p-around_xxx-small" title="Booking Details">Other Details/ Broker Information</span>
+					</h3>
+					<div class="slds-grid slds-gutters">
+							<div class="slds-col slds-size_1-of-2">
+								<lightning:inputField fieldName="No_ITC_on_Booking__c" />
+							</div>
+							<div class="slds-col slds-size_1-of-2">
+								<lightning:inputField fieldName="Broker_Contact__c"/>
+							</div>
+					</div>
+				</div>
+				<div class="slds-section slds-is-open ">
+					<h3 class="slds-section__title slds-theme_shade">
+					<span class="slds-p-around_xxx-small" title="Booking Details">Car Parking Information</span>
+					</h3>
+					<!-- <div class="slds-grid slds-gutters">
+							<div class="slds-col slds-size_1-of-2">
+								<lightning:inputField fieldName="Project__c" />
+							</div>
+							<div class="slds-col slds-size_1-of-2">
+								<lightning:inputField fieldName="Property_Type__c"/>
+							</div>
+					</div> -->
+				</div>
+				<div class="slds-section slds-is-open ">
+					<h3 class="slds-section__title slds-theme_shade">
+					<span class="slds-p-around_xxx-small" title="Booking Details">Other Charges</span>
+					</h3>
+					<!-- <div class="slds-grid slds-gutters">
+							<div class="slds-col slds-size_1-of-2">
+								<lightning:inputField fieldName="Project__c" />
+							</div>
+							<div class="slds-col slds-size_1-of-2">
+								<lightning:inputField fieldName="Property_Type__c"/>
+							</div>
+					</div> -->
+				</div>
+				<div class="slds-m-top_medium">
+					<lightning:button disabled="{!v.disabled}" variant="brand" type="submit" name="save" label="Save" />
+				</div>
+				</div>
+        </lightning:recordEditForm>
+        <aura:set attribute="else">
+            <p>Saved! New record id is {!v.recordId}</p>
+        </aura:set>
+    </aura:if>
+</aura:component>

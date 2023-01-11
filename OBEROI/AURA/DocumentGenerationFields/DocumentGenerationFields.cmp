@@ -1,0 +1,12 @@
+<aura:component controller="Aura_DocumentUpload" access="global" implements="flexipage:availableForAllPageTypes,force:appHostable">
+    <aura:attribute name="ObjName" Type="String"/>
+    <aura:attribute name="FldName" Type="String"/>
+    <aura:attribute name="DocType" Type="String[]"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.invoke}"/>
+    <lightning:select label="{!v.FldName}" name="Picklist">
+    	<aura:iteration items="{!v.result}" var="a">
+            <option value="{!a}">{!a}</option>
+        </aura:iteration>
+    </lightning:select>
+</aura:component>

@@ -1,0 +1,7 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	 <aura:attribute name="recordId" type="string" />
+    <aura:handler name="init" value="{!this}" action="{!c.Download}"/>
+ <iframe src="{! 'https://oberoirealty--oberoidev.my.salesforce.com/apex/DataSheetAttachment?Id=' + v.recordId }" width="100%" height="800px;" frameBorder="0"/>
+
+    
+</aura:component>

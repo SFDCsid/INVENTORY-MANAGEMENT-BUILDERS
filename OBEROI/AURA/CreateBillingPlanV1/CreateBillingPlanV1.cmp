@@ -1,0 +1,76 @@
+<aura:component implements="lightning:actionOverride,force:hasRecordId,force:hasSObjectName,flexipage:availableForRecordHome,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" controller="BookingController" access="global" >
+    <aura:attribute name="billingplan" type="Payment_Plan__c" 
+                    default="{ 'sobjectType': 'Payment_Plan__c' }" access ="global"/>    
+    <aura:attribute name="checkRtType" type="Boolean" default="true"/>
+    <aura:attribute name="options" type="String[]"/>
+    <aura:attribute name="recordId" type="String" /> 
+    <aura:attribute name="profileName" type="String"/>
+    <aura:attribute name="error" type="String[]" default=""/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="disabled" type="Boolean" default="false" />
+    <aura:attribute name="saved" type="Boolean" default="false" />
+    <aura:attribute name="showSpinner" type="Boolean" default="true" />
+    <aura:html tag="style">
+        .cuf-content {
+        padding: 0 0rem !important;
+        }
+        .slds-p-around--medium {
+        padding: 0rem !important;
+        }       
+        .slds-modal__content{
+        overflow-y:hidden !important;
+        height:unset !important;
+        max-height:unset !important;
+        }
+    </aura:html>
+    <aura:if isTrue="{!!v.saved}"> 
+        <lightning:recordEditForm objectApiName="Payment_Plan__c" onsuccess="{!c.handleSuccess}">
+            <!-- the messages component is for error messages -->
+            <lightning:messages />
+            <div class="slds slds-p-around_small" style="background-color:white;color:black;">
+                <div class="slds-section slds-is-open ">
+                    <h3 class="slds-section__title slds-theme_shade">
+                        <span class="slds-p-around_xxx-small" title="Billing Plan Information">Billing Plan Information</span>
+                    </h3>
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning:inputField fieldName="Billing_Plan_Name__c" />
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning:inputField fieldName="Opportunity__c" aura:id="input_field_Opp"/>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning:inputField fieldName="Project__c" />
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning:inputField fieldName="Tower__c"/>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning:inputField fieldName="Status__c" />
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning:inputField fieldName="Pricing__c"/>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- MODAL FOOTER -->
+                <div class="modal-footer slds-modal__footer slds-size_1-of-1">
+                    <div class="forceChangeRecordTypeFooter">
+                        <ui:button class="slds-button slds-button_neutral" label="Cancel" press="{! c.cancel}" /> 
+                        <!--  <div class="slds-m-top_medium"> -->
+                        <lightning:button disabled="{!v.disabled}" variant="brand" type="submit" name="save" label="Save"/>
+                        <!-- </div> -->
+                    </div>
+                </div>
+            </div>
+        </lightning:recordEditForm>
+        <aura:set attribute="else">
+            <p>Saved! New record id is {!v.recordId}</p>
+        </aura:set>
+    </aura:if> 
+</aura:component>

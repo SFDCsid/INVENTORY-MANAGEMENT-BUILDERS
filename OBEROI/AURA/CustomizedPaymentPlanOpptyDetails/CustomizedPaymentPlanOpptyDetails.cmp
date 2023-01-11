@@ -1,0 +1,38 @@
+<aura:component  implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" >
+    <aura:attribute name="OppList" type="Opportunity" />
+  <!--  <aura:handler includeFacets="true" phase="bubble" name="AddRowEvt" event="c:AddNewRowEvt" action="{!c.addNewRow}"/>
+-->
+
+    <table >
+        <tbody>
+            <tr >
+                <td scope="col">
+                    <div class="slds-truncate" title="">Name</div>
+                </td>
+                <td scope="col">
+                    <div class="slds-truncate"><ui:inputText class="slds-input" value="{!v.OppList.oppObj.Name}"/></div>
+                </td>  
+                <td></td>
+            </tr>
+            <tr >
+                <td scope="col">
+                    <div class="slds-truncate" title="Project Name">Project Name</div>
+                </td>
+                <td scope="col">
+                    <div class="slds-truncate"><ui:inputText class="slds-input" value="{!v.OppList.oppObj.Project__r.Name}"/></div>
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td scope="col">
+                    <div class="slds-truncate" title="Property Name">Property Name</div>
+                </td>
+                <td scope="col">
+                    <div class="slds-truncate"><ui:inputText class="slds-input" value="{!v.OppList.oppObj.Property__r.Name}"/></div>
+                </td>  
+                <td></td>
+            </tr>
+        </tbody>   
+        
+    </table>
+</aura:component>
