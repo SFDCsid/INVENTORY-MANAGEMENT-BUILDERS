@@ -1,0 +1,1360 @@
+<apex:page standardController="Booking__c" action="{!savePDF}" standardStylesheets="false" docType="html-5.0" showheader="false" renderas="PDF" sidebar="false" applyHtmlTag="false" applyBodyTag="false" extensions="BookingFormHandler,BookingFormPageControllerTable"  >
+    
+    <html lang="en">
+        <head>
+            <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+            <style type="text/css">
+                .chkBox {border: 1px black solid; padding-left: 15px;  }
+                .tablepad {padding-top: 40px;padding-bottom: 40px}
+                .tableborderInside {border: 1px solid black;}
+                .tableborder {border: 1px solid black;border-collapse: collapse;padding-left:10px;font-family: Times New Roman;}
+                .border {border: 1px solid black; padding: 2px;}
+                .pgborder {border: 1px solid black; padding: 10px;}
+                .fontEx {font-size:14px; font-family: Times New Roman;} // v1.1 Updated Font family from Calibri to Times New Roman
+                div.ex2 {
+                padding : 5px;
+                box-sizing: border-box;
+                background-color: #D3D3D3;
+                }
+                div.ex3 {
+                padding : 5px;
+                border: 1px solid black
+                }
+                .bgclr{
+                background-color: #D3D3D3;
+                }
+                .brkpage {
+                page-break-before: always;
+                }
+                div.ex4{
+                border: 1px black solid; 
+                padding : 10px;
+                }
+                @page {
+                size:A4 portrait;
+                border: 1px solid black;
+                @top-left{
+                content: element(header);
+                }
+                @bottom-left{
+                content: element(footer);
+                }
+                }
+                div.header {
+                
+                position: running(header);
+                }
+                div.footer {
+                display: block;
+                margin-bottom: 10px;
+                position: running(footer);
+                }
+                
+            </style>  
+        </head>       
+        <body>
+            <div class="header">
+                <!-- <tr><td width="40%" style="font-size: 12px"><b>PROJECT NAME:</b> {!bookingObj.Property__r.Project_Name__r.Name}</td>
+<td width="38%" style="font-size: 12px"><b>CATEGORY:</b> {!bookingObj.Property__r.Unit_Type__c} </td>
+<td width="38%" style="font-size: 12px"><apex:image url="{!$Resource.BookingFormLogo}" width="50" height="50"/></td></tr>
+-->
+            </div> 
+            <div class="footer">
+                <div style="font-size: 8px;"><b>{!bookingObj.Property__r.Project_Name__r.Subsidiary_Company_Name__c}</b> 
+                    {!bookingObj.Property__r.Project_Name__r.Subsidiary_Company_Address__c} - {!bookingObj.Property__r.Project_Name__r.Other_Company_Postal_Code__c} Tel: {!bookingObj.Property__r.Project_Name__r.Other_Company_Phone__c} Fax: {!bookingObj.Property__r.Project_Name__r.Other_Company_Fax__c} <br/>
+                    {!bookingObj.Property__r.Project_Name__r.Other_Company_Website__c}
+                </div>
+                
+            </div>
+            
+            
+            <div class = "fontEx ">
+                <table width="100%" >
+                    <tr>
+                        <td width="40%" style="font-size: 12px"><b>PROJECT NAME:</b> {!bookingObj.Property__r.Project_Name__r.Name}</td>
+                        <td width="38%" style="font-size: 12px"><b>CATEGORY:</b> {!bookingObj.property__r.Property_Type_Name__c} </td>
+                        <td width="33.3%" align="right"><apex:image url="{!$Resource.BookingFormLogo}" width="97px" height="50px"/></td>
+                    </tr>
+                </table>
+                <h1 style="font-size: 14px"><center>BOOKING FORM</center></h1>
+                <!--<b><center>BOOKING FORM</center></b>-->
+                <table width="100%">
+                    <tr>
+                        <td width="80%">&nbsp;</td>
+                        <td width="20%" style="font-size:12px">Date : {!bookdate}</td>
+                    </tr>
+                </table>
+                <!--<div align = "right"><b>Date: &nbsp;{!bookdate}</b></div>
+<br/>
+<div class= "ex2"><b>CUSTOMER/S DETAILS</b></div><br/>-->
+                <table width="100%" cellpadding="1" cellspacing="0" style="height: 800px">
+                    <tr><th style ="border:1px solid black;font-size: 14px" height = '10px' colspan="2"><b>CUSTOMER DETAILS</b></th></tr>
+                    <tr><th  height = '4px' colspan="2"></th></tr>
+                    <tr><td width="30%" align="left" height = '25px' style="font-size: 12px">Name:</td>
+                        <td width="70%" height = '10px' style="font-size: 12px;border-bottom: 1px solid black">&nbsp;&nbsp;1.&nbsp;{!bookingObj.Primary_Applicants__r.Salutation}&nbsp;&nbsp;{!bookingObj.Primary_Applicants__r.name}</td>
+                    </tr>
+                    
+                    <apex:variable var="srono" value="{!2}"/>
+                    <apex:repeat var="coOwner" value="{!KYCDetailLst}" rows="5">
+                        <tr>
+                            <td width="30%" align="left" height = '25px' style="font-size: 12px"> </td>
+                            <td width="70%" height = '10px' style="font-size: 12px;border-bottom: 1px solid black">&nbsp;&nbsp;{!srono}.&nbsp;{!coOwner.Salutation__c}&nbsp;&nbsp;{!coOwner.Contact_name__c}</td>
+                        </tr>
+                        <apex:variable var="srono" value="{!srono + 1}"/>
+                    </apex:repeat>
+                    
+                    
+                    <tr><td width="30%" align="left" height = '25px' style="font-size: 12px">Nationality:</td>
+                        <td width="70%">
+                            <table width="100%">
+                                <tr>
+                                    <td width="35%" style="font-size: 12px;border-bottom: 1px solid black">&nbsp;&nbsp;{!bookingObj.Primary_Applicants__r.Nationality__pc}</td>
+                                    <td width="65%" style="font-size: 12px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Resident Status:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        
+                                        <apex:outputText rendered="{!bookingObj.Primary_Applicants__r.Resident_Status__pc != null}">
+                                            <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(bookingObj.Primary_Applicants__r.Resident_Status__pc, 'Indian'))}"/>
+                                            
+                                            <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(bookingObj.Primary_Applicants__r.Resident_Status__pc, 'Indian')}"/>
+                                        </apex:outputText>
+                                        <apex:outputText rendered="{!bookingObj.Primary_Applicants__r.Resident_Status__pc == null}">
+                                            <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px"/>
+                                        </apex:outputText>
+                                        &nbsp;Resident Indian&nbsp;&nbsp;&nbsp;
+                                        
+                                        <apex:outputText rendered="{!bookingObj.Primary_Applicants__r.Resident_Status__pc != null}">
+                                            <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(bookingObj.Primary_Applicants__r.Resident_Status__pc, 'NRI'))}"/>
+                                            
+                                            <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(bookingObj.Primary_Applicants__r.Resident_Status__pc, 'NRI')}"/>
+                                        </apex:outputText>
+                                        <apex:outputText rendered="{!bookingObj.Primary_Applicants__r.Resident_Status__pc == null}">
+                                            <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px"/>
+                                        </apex:outputText>
+                                        &nbsp;NRI&nbsp;&nbsp;&nbsp;
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr><td width="30%" align="left" height = '25px' style="font-size: 12px;">Residential Address:</td>
+                        <td width="70%" style="font-size: 12px;border-bottom: 1px solid black">&nbsp;&nbsp;House No.:&nbsp;&nbsp;&nbsp;&nbsp;{!bookingObj.C_o_Name_Billing_Address__c}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Street:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!bookingObj.Billing_Street__c},&nbsp;&nbsp;{!bookingObj.Billing_Str_Suppl1__c}</td>
+                    </tr>  <tr></tr>          
+                    <tr><td width="30%" align="left" height = '25px' style="font-size: 12px;"></td>
+                        <td width="70%" style="font-size: 12px;border-bottom: 1px solid black">&nbsp;&nbsp;Street 2:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!bookingObj.Billing_Str_Suppl2__c}</td>
+                    </tr>    <tr></tr>        
+                    <tr><td width="30%" align="left" height = '25px' style="font-size: 12px;"></td>
+                        <td width="70%" style="font-size: 12px;border-bottom: 1px solid black">&nbsp;&nbsp;Street 3:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!bookingObj.Billing_Str_Suppl3__c}</td>
+                    </tr>            
+                    <tr><td width="30%" align="left" height = '25px' style="font-size: 12px;"></td>
+                        <td width="70%" style="font-size: 12px;border-bottom: 1px solid black">&nbsp;&nbsp;City:&nbsp;&nbsp;{!bookingObj.Billing_City__c}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Locality:&nbsp;&nbsp;{!bookingObj.Billing_Location__c}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pin code:&nbsp;&nbsp;{!bookingObj.Billing_Post_Code__c}</td>
+                    </tr> <tr></tr>
+                    <tr>
+                        <td width="30%" align="left" height = '30px' style="font-size: 12px;">Occupation:</td>
+                        <td width="70%" style="font-size: 12px;">
+                            
+                            <apex:outputText rendered="{!bookingObj.Primary_Applicants__r.Occupation__pc != null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(bookingObj.Primary_Applicants__r.Occupation__pc, 'Business'))}"/>
+                                
+                                <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(bookingObj.Primary_Applicants__r.Occupation__pc, 'Business')}"/>
+                            </apex:outputText>
+                            <apex:outputText rendered="{!bookingObj.Primary_Applicants__r.Occupation__pc == null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px"/>
+                            </apex:outputText>
+                            &nbsp;Business&nbsp;&nbsp;&nbsp;
+                            
+                            <apex:outputText rendered="{!bookingObj.Primary_Applicants__r.Occupation__pc != null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(bookingObj.Primary_Applicants__r.Occupation__pc, 'Service'))}"/>
+                                
+                                <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(bookingObj.Primary_Applicants__r.Occupation__pc, 'Service')}"/>
+                            </apex:outputText>
+                            <apex:outputText rendered="{!bookingObj.Primary_Applicants__r.Occupation__pc == null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px"/>
+                            </apex:outputText>
+                            &nbsp;Service&nbsp;&nbsp;&nbsp;
+                            
+                            <apex:outputText rendered="{!bookingObj.Primary_Applicants__r.Occupation__pc != null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(bookingObj.Primary_Applicants__r.Occupation__pc, 'Profession'))}"/>
+                                
+                                <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(bookingObj.Primary_Applicants__r.Occupation__pc, 'Profession')}"/>
+                            </apex:outputText>
+                            <apex:outputText rendered="{!bookingObj.Primary_Applicants__r.Occupation__pc == null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px"/>
+                            </apex:outputText>
+                            &nbsp;Professional&nbsp;&nbsp;&nbsp;
+                            
+                            <apex:outputText rendered="{!bookingObj.Primary_Applicants__r.Occupation__pc != null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(bookingObj.Primary_Applicants__r.Occupation__pc, 'Others'))}"/>
+                                
+                                <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(bookingObj.Primary_Applicants__r.Occupation__pc, 'Others')}"/>
+                            </apex:outputText>
+                            <apex:outputText rendered="{!bookingObj.Primary_Applicants__r.Occupation__pc == null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px"/>
+                            </apex:outputText>
+                            &nbsp;Others&nbsp;&nbsp;__________________________________
+                        </td>
+                    </tr><tr></tr>
+                    <tr><td width="30%" align="left" height = '25px' style="font-size: 12px;">Company you are Working For:</td>
+                        <td width="70%" style="font-size: 12px;border-bottom: 1px solid black">&nbsp;&nbsp;{!bookingObj.Primary_Applicants__r.Company__pc}</td>
+                    </tr>
+                    <tr></tr>
+                    <tr><td width="30%" align="left" height = '25px' style="font-size: 12px;">Designation:</td>
+                        <td width="70%" style="font-size: 12px;border-bottom: 1px solid black">&nbsp;&nbsp;{!bookingObj.Primary_Applicants__r.Designation__pc}</td>
+                    </tr>
+                    <tr></tr>
+                    
+                    <tr><td width="30%" align="left" height = '25px' style="font-size: 12px;">Company Address:</td>
+                        <td width="70%" style="font-size: 12px;border-bottom: 1px solid black">&nbsp;&nbsp;{!bookingObj.Primary_Applicants__r.Company_Address__pc}</td>
+                    </tr>
+                    <tr></tr>
+                    <tr><td width="30%" align="left" height = '25px' style="font-size: 12px;"></td>
+                        <td width="70%" style="font-size: 12px;border-bottom: 1px solid black">&nbsp;&nbsp;City:&nbsp;&nbsp;{!bookingObj.Primary_Applicants__r.Company_city__pc}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pin code:&nbsp;&nbsp;&nbsp;{!bookingObj.Primary_Applicants__r.Company_Pincode__pc}</td>
+                    </tr>
+                    <tr></tr>
+                    <tr><td width="30%" align="left" height = '25px' style="font-size: 12px;">Telephone No:</td>
+                        <td width="70%" style="font-size: 12px;border-bottom: 1px solid black">&nbsp;&nbsp;Residence&nbsp;:&nbsp;&nbsp;{!bookingObj.Telephone__c}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Office&nbsp;:&nbsp;{!bookingObj.Primary_Applicants__r.Office_Phone_Number__pc}&nbsp;&nbsp;</td>
+                    </tr>
+                    <tr></tr>
+                    <tr><td width="30%" align="left" height = '25px' style="font-size: 12px;">Mobile No:</td>
+                        <td width="70%" style="font-size: 12px;border-bottom: 1px solid black">&nbsp;&nbsp;(1)&nbsp;{!bookingObj.Mobile__c}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(2)&nbsp;{!bookingObj.Primary_Applicants__r.Other_Mobile_Number__pc}&nbsp;&nbsp;</td>
+                    </tr>
+                    <tr></tr>
+                    <tr><td width="30%" align="left" height = '25px' style="font-size: 12px;">Email:</td>
+                        <td width="70%" style="font-size: 12px;border-bottom: 1px solid black">&nbsp;&nbsp;{!bookingObj.Email__c}</td>
+                    </tr><tr></tr>
+                    <!--   <tr><td width="30%" align="left" height = '30px' style="font-size: 12px;">Contact Person:</td>
+<td width="70%" style="font-size: 12px;">
+&nbsp;&nbsp;Details same as Applicant - 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+&nbsp;No&nbsp;&nbsp;&nbsp;
+</td>
+</tr>
+<tr>
+<td width="30%" align="left" height = '25px' style="font-size: 12px;">Name:</td>
+<td  align="left" height = '25px' style="font-size: 12px;border-bottom: 1px solid black">
+&nbsp;&nbsp;{!bookingObj.Primary_Applicants__r.Contact_Person_Name__c}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Relation /Designation:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!bookingObj.Primary_Applicants__r.Contact_Person_Relation_Designation__c}
+</td>
+</tr>
+<tr>
+<td width="30%" align="left" height = '25px' style="font-size: 12px;"></td>
+<td  align="left" height = '25px' style="font-size: 12px;border-bottom: 1px solid black">
+&nbsp;&nbsp;Telephone:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!bookingObj.Primary_Applicants__r.Contact_Person_Name__c}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mobile:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!bookingObj.Primary_Applicants__r.Contact_Person_Name__c}&nbsp;&nbsp;&nbsp;&nbsp;
+</td>
+</tr>
+
+<tr>
+<td width="30%" align="left" height = '25px' style="font-size: 12px;">Email:</td>
+<td  align="left" height = '25px' style="font-size: 12px;border-bottom: 1px solid black">
+&nbsp;&nbsp;{!bookingObj.Primary_Applicants__r.Contact_Person_Email__c}
+</td>
+</tr>-->
+                    <tr><td width="30%" align="left" height = '30px' style="font-size: 12px;">Purpose of buying</td>
+                        <td width="70%" style="font-size: 12px;">
+                            
+                            <apex:outputText rendered="{!bookingObj.Opportunity__r.Purpose_of_Buying__c != null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(bookingObj.Opportunity__r.Purpose_of_Buying__c, 'End Use'))}"/>
+                                
+                                <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(bookingObj.Opportunity__r.Purpose_of_Buying__c, 'End Use')}"/>
+                            </apex:outputText>
+                            <apex:outputText rendered="{!bookingObj.Opportunity__r.Purpose_of_Buying__c == null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px"/>
+                            </apex:outputText>
+                            &nbsp;End Use&nbsp;&nbsp;&nbsp;
+                            
+                            <apex:outputText rendered="{!bookingObj.Opportunity__r.Purpose_of_Buying__c != null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(bookingObj.Opportunity__r.Purpose_of_Buying__c, 'Investment'))}"/>
+                                
+                                <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(bookingObj.Opportunity__r.Purpose_of_Buying__c, 'Investment')}"/>
+                            </apex:outputText>
+                            <apex:outputText rendered="{!bookingObj.Opportunity__r.Purpose_of_Buying__c == null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px"/>
+                            </apex:outputText>
+                            &nbsp;Investment&nbsp;&nbsp;&nbsp;
+                            
+                            <apex:outputText rendered="{!bookingObj.Opportunity__r.Purpose_of_Buying__c != null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(bookingObj.Opportunity__r.Purpose_of_Buying__c, 'Second Home'))}"/>
+                                
+                                <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(bookingObj.Opportunity__r.Purpose_of_Buying__c, 'Second Home')}"/>
+                            </apex:outputText>
+                            <apex:outputText rendered="{!bookingObj.Opportunity__r.Purpose_of_Buying__c == null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px"/>
+                            </apex:outputText>
+                            &nbsp;Second Home&nbsp;&nbsp;&nbsp;
+                        </td>
+                    </tr>
+                    <tr><td width="30%" align="left" height = '30px' style="font-size: 12px;">Preferred mode of communication</td>
+                        <td width="70%" style="font-size: 12px;">
+                            
+                            <apex:outputText rendered="{!BookingObj.Opportunity__r.Preferred_Mode_of_Communication__c != null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(BookingObj.Opportunity__r.Preferred_Mode_of_Communication__c, 'Residence'))}"/>
+                                
+                                <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(BookingObj.Opportunity__r.Preferred_Mode_of_Communication__c, 'Residence')}"/>
+                            </apex:outputText>
+                            <apex:outputText rendered="{!BookingObj.Opportunity__r.Preferred_Mode_of_Communication__c == null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px"/>
+                            </apex:outputText>
+                            &nbsp;Residence&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            
+                            <apex:outputText rendered="{!BookingObj.Opportunity__r.Preferred_Mode_of_Communication__c != null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(BookingObj.Opportunity__r.Preferred_Mode_of_Communication__c, 'Mobile'))}"/>
+                                
+                                <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(BookingObj.Opportunity__r.Preferred_Mode_of_Communication__c, 'Mobile')}"/>
+                            </apex:outputText>
+                            <apex:outputText rendered="{!BookingObj.Opportunity__r.Preferred_Mode_of_Communication__c == null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px"/>
+                            </apex:outputText>
+                            &nbsp;Mobile&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            
+                            <apex:outputText rendered="{!BookingObj.Opportunity__r.Preferred_Mode_of_Communication__c != null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(BookingObj.Opportunity__r.Preferred_Mode_of_Communication__c, 'Email'))}"/>
+                                
+                                <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(BookingObj.Opportunity__r.Preferred_Mode_of_Communication__c, 'Email')}"/>
+                            </apex:outputText>
+                            <apex:outputText rendered="{!BookingObj.Opportunity__r.Preferred_Mode_of_Communication__c == null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px"/>
+                            </apex:outputText>
+                            &nbsp;Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            
+                            <apex:outputText rendered="{!BookingObj.Opportunity__r.Preferred_Mode_of_Communication__c != null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(BookingObj.Opportunity__r.Preferred_Mode_of_Communication__c, 'Office'))}"/>
+                                
+                                <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(BookingObj.Opportunity__r.Preferred_Mode_of_Communication__c, 'Office')}"/>
+                            </apex:outputText>
+                            <apex:outputText rendered="{!BookingObj.Opportunity__r.Preferred_Mode_of_Communication__c == null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px"/>
+                            </apex:outputText>
+                            &nbsp;Office&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </td>
+                    </tr>
+                    
+                    <tr><td width="30%" align="left" height = '30px' style="font-size: 12px;" valign="top">How did you hear about us</td>
+                        <td width="70%" style="font-size: 12px;">
+                            
+                            <apex:outputText rendered="{!BookingObj.Opportunity__r.How_did_You_Hear_About_Us__c != null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(BookingObj.Opportunity__r.How_did_You_Hear_About_Us__c, 'Newspaper'))}"/>
+                                
+                                <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(BookingObj.Opportunity__r.How_did_You_Hear_About_Us__c, 'Newspaper')}"/>
+                            </apex:outputText>
+                            <apex:outputText rendered="{!BookingObj.Opportunity__r.How_did_You_Hear_About_Us__c == null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px"/>
+                            </apex:outputText>
+                            &nbsp;Newspaper&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            
+                            <apex:outputText rendered="{!BookingObj.Opportunity__r.How_did_You_Hear_About_Us__c != null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(BookingObj.Opportunity__r.How_did_You_Hear_About_Us__c, 'Website'))}"/>
+                                
+                                <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(BookingObj.Opportunity__r.How_did_You_Hear_About_Us__c, 'Website')}"/>
+                            </apex:outputText>
+                            <apex:outputText rendered="{!BookingObj.Opportunity__r.How_did_You_Hear_About_Us__c == null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px"/>
+                            </apex:outputText>
+                            &nbsp;Website&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                            
+                            <apex:outputText rendered="{!BookingObj.Opportunity__r.How_did_You_Hear_About_Us__c != null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(BookingObj.Opportunity__r.How_did_You_Hear_About_Us__c, 'Digital'))}"/>
+                                
+                                <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(BookingObj.Opportunity__r.How_did_You_Hear_About_Us__c, 'Digital')}"/>
+                            </apex:outputText>
+                            <apex:outputText rendered="{!BookingObj.Opportunity__r.How_did_You_Hear_About_Us__c == null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px"/>
+                            </apex:outputText>
+                            &nbsp;Digital&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            
+                            <apex:outputText rendered="{!BookingObj.Opportunity__r.How_did_You_Hear_About_Us__c != null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(BookingObj.Opportunity__r.How_did_You_Hear_About_Us__c, 'Hoardings'))}"/>
+                                
+                                <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(BookingObj.Opportunity__r.How_did_You_Hear_About_Us__c, 'Hoardings')}"/>
+                            </apex:outputText>
+                            <apex:outputText rendered="{!BookingObj.Opportunity__r.How_did_You_Hear_About_Us__c == null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px"/>
+                            </apex:outputText>
+                            &nbsp;Hoardings&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            
+                            <apex:outputText rendered="{!BookingObj.Opportunity__r.How_did_You_Hear_About_Us__c != null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(BookingObj.Opportunity__r.How_did_You_Hear_About_Us__c, 'Property Consultant'))}"/>
+                                
+                                <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(BookingObj.Opportunity__r.How_did_You_Hear_About_Us__c, 'Property Consultant')}"/>
+                            </apex:outputText>
+                            <apex:outputText rendered="{!BookingObj.Opportunity__r.How_did_You_Hear_About_Us__c == null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px"/>
+                            </apex:outputText>
+                            &nbsp;Property Consultant&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <br/>
+                            
+                            <!-- <apex:outputText rendered="{!offr.How_did_you_hear_about_us__c != null}">
+<apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(BookingObj.Opportunity__r.How_did_You_Hear_About_Us__c, 'Elite Member'))}"/>
+
+<apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(offr.How_did_you_hear_about_us__c, 'Elite Member')}"/>
+</apex:outputText>
+<apex:outputText rendered="{!offr.How_did_you_hear_about_us__c == null}">
+<apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px"/>
+</apex:outputText>
+&nbsp;Elite Member&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                            
+                            <apex:outputText rendered="{!BookingObj.Opportunity__r.How_did_You_Hear_About_Us__c != null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(BookingObj.Opportunity__r.How_did_You_Hear_About_Us__c, 'Walk'))}"/>
+                                
+                                <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(BookingObj.Opportunity__r.How_did_You_Hear_About_Us__c, 'Walk')}"/>
+                            </apex:outputText>
+                            <apex:outputText rendered="{!BookingObj.Opportunity__r.How_did_You_Hear_About_Us__c == null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px"/>
+                            </apex:outputText>
+                            &nbsp;Walk-In&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            
+                            <apex:outputText rendered="{!BookingObj.Opportunity__r.How_did_You_Hear_About_Us__c != null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(BookingObj.Opportunity__r.How_did_You_Hear_About_Us__c, 'Friends'))}"/>
+                                
+                                <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(BookingObj.Opportunity__r.How_did_You_Hear_About_Us__c, 'Friends')}"/>
+                            </apex:outputText>
+                            <apex:outputText rendered="{!BookingObj.Opportunity__r.How_did_You_Hear_About_Us__c == null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px"/>
+                            </apex:outputText>
+                            &nbsp;Friends &amp; Relatives&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            
+                            <apex:outputText rendered="{!BookingObj.Opportunity__r.How_did_You_Hear_About_Us__c != null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(BookingObj.Opportunity__r.How_did_You_Hear_About_Us__c, 'Print Media'))}"/>
+                                
+                                <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(BookingObj.Opportunity__r.How_did_You_Hear_About_Us__c, 'Print Media')}"/>
+                            </apex:outputText>
+                            <apex:outputText rendered="{!BookingObj.Opportunity__r.How_did_You_Hear_About_Us__c == null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px"/>
+                            </apex:outputText>
+                            &nbsp;Print Media&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </td>
+                    </tr>
+                    
+                    <tr><td width="30%" align="left" height = '30px' style="font-size: 12px;">Address for Correspondence</td>
+                        <td width="70%" style="font-size: 12px;">
+                            
+                            <apex:outputText rendered="{!BookingObj.Primary_Applicants__r.Address_for_Correspondence__pc != null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(BookingObj.Primary_Applicants__r.Address_for_Correspondence__pc, 'Residence'))}"/>
+                                
+                                <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(BookingObj.Primary_Applicants__r.Address_for_Correspondence__pc, 'Residence')}"/>
+                            </apex:outputText>
+                            <apex:outputText rendered="{!BookingObj.Primary_Applicants__r.Address_for_Correspondence__pc == null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px"/>
+                            </apex:outputText>
+                            &nbsp;Residence Address&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            
+                            <apex:outputText rendered="{!BookingObj.Primary_Applicants__r.Address_for_Correspondence__pc!= null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(BookingObj.Primary_Applicants__r.Address_for_Correspondence__pc, 'Office'))}"/>
+                                
+                                <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(BookingObj.Primary_Applicants__r.Address_for_Correspondence__pc, 'Office')}"/>
+                            </apex:outputText>
+                            <apex:outputText rendered="{!BookingObj.Primary_Applicants__r.Address_for_Correspondence__pc == null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px"/>
+                            </apex:outputText>
+                            &nbsp;Office Address&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </td>
+                    </tr>
+                    
+                    <tr><td width="30%" align="left" height = '30px' style="font-size: 12px;">Source of Booking</td>
+                        <td width="70%" style="font-size: 12px;">
+                            <apex:outputText rendered="{!BookingObj.Opportunity__r.Enquiry_Type__c != null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(BookingObj.Opportunity__r.Enquiry_Type__c, 'Direct'))}"/>
+                                
+                                <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(BookingObj.Opportunity__r.Enquiry_Type__c, 'Direct')}"/>
+                            </apex:outputText>
+                            <apex:outputText rendered="{!BookingObj.Opportunity__r.Enquiry_Type__c == null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px"/>
+                            </apex:outputText>
+                            &nbsp;Direct&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            
+                            <apex:outputText rendered="{!BookingObj.Opportunity__r.Enquiry_Type__c != null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(BookingObj.Opportunity__r.Enquiry_Type__c, 'Partner'))}"/>
+                                
+                                <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(BookingObj.Opportunity__r.Enquiry_Type__c, 'Partner')}"/>
+                            </apex:outputText>
+                            <apex:outputText rendered="{!BookingObj.Opportunity__r.Enquiry_Type__c == null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px"/>
+                            </apex:outputText>
+                            &nbsp;Partner&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            
+                            <apex:outputText rendered="{!BookingObj.Opportunity__r.Enquiry_Type__c != null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(BookingObj.Opportunity__r.Enquiry_Type__c, 'Existing Customer'))}"/>
+                                
+                                <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(BookingObj.Opportunity__r.Enquiry_Type__c, 'Existing Customer')}"/>
+                            </apex:outputText>
+                            <apex:outputText rendered="{!BookingObj.Opportunity__r.Enquiry_Type__c == null}">
+                                <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px"/>
+                            </apex:outputText>
+                            &nbsp;Existing customer &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            
+                            <!-- <apex:outputText rendered="{!BookingObj.Opportunity__r.Enquiry_Type__c != null}">
+<apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(BookingObj.Opportunity__r.Enquiry_Type__c, 'Referral'))}"/>
+
+<apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(BookingObj.Opportunity__r.Enquiry_Type__c, 'Referral')}"/>
+</apex:outputText>
+<apex:outputText rendered="{!BookingObj.Opportunity__r.Enquiry_Type__c == null}">
+<apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px"/>
+</apex:outputText>
+&nbsp;Referral &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                        </td>
+                    </tr>
+                </table>
+                <p style="font-size: 12px;"><b>Signature of Applicant/s:</b>..........................................................................................................................................................................</p>
+                <div style="page-break-after:always;"/>
+                
+                <table width="100%" >
+                    <tr><td width="40%" style="font-size: 12px"><b>PROJECT NAME:</b> {!bookingObj.Property__r.Project_Name__r.Name}</td>
+                        <td width="38%" style="font-size: 12px"><b>CATEGORY:</b> {!bookingObj.property__r.Property_Type_Name__c}</td>
+                        <td width="33.3%" align="right"><apex:image url="{!$Resource.BookingFormLogo}" width="97px" height="48px"/></td></tr>
+                </table>
+                
+                <!-- <h1 style="font-size: 14px"><center>PAYMENT SCHEDULE</center></h1> -->
+                <table width="100%">
+                    <tr>
+                        <td width="80%">&nbsp;</td>
+                        <td width="20%" style="font-size:12px">Date : {!bookdate}</td>
+                    </tr>
+                </table>                
+                <br/>
+                <table width="100%" style="height: 750px">
+                    <tr>
+                        <td>
+                            
+                            <table width="100%" cellpadding="3" cellspacing="0" >
+                                <tr><th style ="border:1px solid black;font-size: 14px" height = '10px' colspan="2">PROPERTY CONSULTANT (BROKER) DETAILS</th></tr>
+                                <tr><td  align="left" style="font-size: 12px" height = '30px' width="30%">Property Consultant’s Name:<br/>
+                                    (Name as per RERA Website)</td>
+                                    <td align="left" height = '25px' style="font-size: 12px;border-bottom: 1px solid black">&nbsp;&nbsp;{!bookingObj.Opportunity__r.Partner_s_Firm_Name__c}</td></tr>
+                                
+                                <tr><td  align="left" style="font-size: 12px" height = '30px' width="30%">RERA Registration No:</td>
+                                    <td align="left" height = '25px' style="font-size: 12px;border-bottom: 1px solid black">&nbsp;&nbsp;{!bookingObj.RERA_Registration_No__c}</td></tr>
+                                
+                                <!-- <tr><td  align="left" style="font-size: 12px" height = '30px' width="30%">Property Consultant’s Contact Name:</td>
+<td align="left" height = '25px' style="font-size: 12px;border-bottom: 1px solid black">&nbsp;&nbsp;{!bookingObj.Opportunity__r.Partner_s_Name__c}</td></tr>    
+-->
+                                <tr><td  align="left" style="font-size: 12px" height = '25px' width="30%">Contact: </td>
+                                    <td align="left" height = '25px' style="font-size: 12px;border-bottom: 1px solid black">&nbsp;&nbsp;(Mobile)&nbsp;&nbsp;&nbsp;{!bookingObj.Opportunity__r.Partner_Mobile__c}</td></tr>
+                                <tr><td align="left" style="font-size: 12px" height = '25px' width="30%">Email:</td>
+                                    <td align="left" height = '25px' style="font-size: 12px;border-bottom: 1px solid black">&nbsp;&nbsp;{!bookingObj.Opportunity__r.Partner_Email__c}</td></tr>
+                                <tr><td align="left" style="font-size: 12px" height = '25px' width="30%">Property Consultant’s(Broker’s) Signature:</td>
+                                    <td align="left" height = '25px' style="font-size: 12px;border-bottom: 1px solid black"></td></tr>
+                            </table>
+                            <br/>
+                            
+                            
+                            <table width="100%" cellpadding="3" cellspacing="0" >
+                                <tr><th style ="border:1px solid black;font-size: 14px" height = '10px' colspan="2">BOOKING DETAILS</th></tr>
+                                <tr>
+                                    <td colspan="2" width="100%">
+                                        <table width="100%">
+                                            <tr><td  align="left" style="font-size: 12px" height = '25px' width="8.33%" >Flat No:</td>
+                                                <td align="center" height = '25px' style="font-size: 12px;border-bottom: 1px solid black" width="25%">&nbsp;&nbsp;{!bookingObj.Booking_Flat_No__c}</td>
+                                                <td  align="left" style="font-size: 12px" height = '25px' width="8.33%">Floor:</td>
+                                                <td align="center" height = '25px' style="font-size: 12px;border-bottom: 1px solid black" width="25%">
+                                                    &nbsp;&nbsp;{!ROUND(bookingObj.Property__r.Floor_Number__c,0)}</td>
+                                                <td  align="left" style="font-size: 12px" height = '25px' width="8.33%">Tower:</td>
+                                                <td align="center" height = '25px' style="font-size: 12px;border-bottom: 1px solid black" width="25%">
+                                                    &nbsp;&nbsp;{!bookingObj.Property__r.Tower__r.Tower_Name__c}</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" style="font-size: 12px" height = '25px' width="30%" >Sale Price:</td>
+                                    <td align="left" height = '25px' style="font-size: 12px;border-bottom: 1px solid black">&nbsp;&nbsp;Rs.&nbsp;<apex:outputText value="{0, number, ###,###,###,##0}"> <apex:param value="{!ROUND(bookingObj.Total_Sales_Cost__c,0)}"/> </apex:outputText>  <span style="font-size: 10px">(Excluding all taxes, duties, charges, levies, additional expenses and all other indirect taxes)</span></td>
+                                </tr>
+                                
+                                <tr>
+                                    <td align="left" style="font-size: 12px" height = '25px' width="30%">Car Park Details:</td>
+                                    <td align="left" height = '25px' style="font-size: 12px;border-bottom: 1px solid black">
+                                        Single Parking: <apex:outputPanel rendered="{!bookingObj.Single_Car_Parking__c != 0}"> {!bookingObj.Single_Car_Parking__c} </apex:outputPanel> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tandem Parking: <apex:outputPanel rendered="{!bookingObj.Tandem_Car_Parking__c != 0}"> {!bookingObj.Tandem_Car_Parking__c} </apex:outputPanel>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <apex:outputPanel rendered="{!bookingObj.Property__r.Project_Name__r.Name == 'PRISMA'}">Triple Parking:  <apex:outputPanel rendered="{!bookingObj.Triple_Car_Parking__c != 0}"> {!bookingObj.Triple_Car_Parking__c} </apex:outputPanel> </apex:outputPanel>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td align="left" style="font-size: 12px" height = '25px' width="30%">Loan Required:</td>
+                                    <td align="left" height = '25px' style="font-size: 12px;">
+                                        <apex:outputText rendered="{!bookingObj.Loan_Required__c != null}">
+                                            <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(bookingObj.Loan_Required__c, 'Yes'))}"/>
+                                            
+                                            <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(bookingObj.Loan_Required__c, 'Yes')}"/>
+                                        </apex:outputText>
+                                        <apex:outputText rendered="{!bookingObj.Loan_Required__c == null}">
+                                            <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px"/>
+                                        </apex:outputText>
+                                        &nbsp;&nbsp;Yes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        
+                                        <apex:outputText rendered="{!bookingObj.Loan_Required__c != null}">
+                                            <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(bookingObj.Loan_Required__c, 'No'))}"/>
+                                            
+                                            <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(bookingObj.Loan_Required__c, 'No')}"/>
+                                        </apex:outputText>
+                                        <apex:outputText rendered="{!bookingObj.Loan_Required__c == null}">
+                                            <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px"/>
+                                        </apex:outputText>
+                                        &nbsp;&nbsp;No&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td align="left" style="font-size: 12px" height = '25px' width="30%">Loan Amount:</td>
+                                    <td align="left" height = '25px' style="font-size: 12px;border-bottom: 1px solid black">&nbsp;&nbsp;Rs.&nbsp;<apex:outputText value="{0, number, ###,###,###,##0}"> <apex:param value="{!ROUND(bookingObj.Loan_Amount__c,0)}"/> </apex:outputText>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;% of Sale Price:&nbsp;&nbsp;<apex:outputText value="{!ROUND(bookingObj.Loan_Amount__c*100/(bookingObj.Total_Sales_Cost__c +1),0)}"/></td>
+                                </tr>
+                                
+                                <tr>
+                                    <td align="left" height = '25px' style="font-size: 12px;">Bank:</td>
+                                    <td align="left" height = '25px' style="font-size: 12px;border-bottom: 1px solid black">&nbsp;&nbsp;{!bookingObj.Bank_Name__c}</td>
+                                </tr>
+                            </table>
+                            <br/>
+                            <table width="100%" cellpadding="3" cellspacing="0" >
+                                <tr><th style ="border:1px solid black;font-size: 14px" height = '10px'>PAYMENT DETAILS</th></tr>
+                            </table>
+                            <br/>
+                            <table width="100%" style="border-collapse: collapse;border: 1px solid black;font-size: 12px">
+                                <tr>
+                                    <td align="center" height = '25px' style="font-size: 12px;border: 1px solid black" width="5%">S.No.</td>
+                                    <td align="center" height = '25px' style="font-size: 12px;border: 1px solid black" width="14%">Payment Mode</td>
+                                    <td align="center" height = '25px' style="font-size: 12px;border: 1px solid black" width="14%">Amount</td>
+                                    <td align="center" height = '25px' style="font-size: 12px;border: 1px solid black" width="14%">Cheque/Draft No./RTGS Code</td>
+                                    <td align="center" height = '25px' style="font-size: 12px;border: 1px solid black" width="25%">Bank Name</td>
+                                    <td align="center" height = '25px' style="font-size: 12px;border: 1px solid black" width="14%">Instrument Date</td>
+                                </tr>
+                                
+                                <apex:variable var="srono" value="{!1}"/>
+                                <apex:repeat var="pre" value="{!payList}">
+                                    <tr>
+                                        <td align="center" height = '25px' style="font-size: 12px;border: 1px solid black" width="5%">{!srono}</td>
+                                        <td align="center" height = '25px' style="font-size: 12px;border: 1px solid black" width="14%">{!pre.Payment_Mode__c}</td>
+                                        <td align="center" height = '25px' style="font-size: 12px;border: 1px solid black" width="14%">Rs. <apex:outputText value="{0, number, ###,###,###,##0}"> <apex:param value="{!ROUND(pre.Amount__c,0)}"/> </apex:outputText></td>
+                                        <td align="center" height = '25px' style="font-size: 12px;border: 1px solid black" width="14%">{!pre.RTGS_Cheque_Draft_No__c}</td>
+                                        <td align="center" height = '25px' style="font-size: 12px;border: 1px solid black" width="25%">{!pre.Bank_Name__c}</td>
+                                        <td align="center" height = '25px' style="font-size: 12px;border: 1px solid black" width="14%"><apex:outputText value="{0, date, dd'.'MM'.'yy}"> <apex:param value="{!pre.Instrument_Date__c}" /> </apex:outputText></td>
+                                    </tr> 
+                                    <apex:variable var="srono" value="{!srono + 1}"/>
+                                </apex:repeat>  
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+                <table width="100%" cellpadding="1" cellspacing="0" >
+                    <tr><td  align="left" style="font-size: 12px;">Signature:<br/>_____________________________&nbsp;&nbsp;<br/>Name: &nbsp;<br/><br/><div style="font-size: 12px;">Prepared By (Sales)</div></td>
+                        <!--<td  align="left" style="font-size: 12px;">Signature:<br/>_____________________________&nbsp;&nbsp;<br/>Name: &nbsp;{!bookingObj.Owner.Name}<br/><br/><div style="font-size: 12px;">Prepared By (Sales)</div></td>-->
+                        <td align="left" style="font-size: 12px;">Signature:<br/>_____________________________&nbsp;&nbsp;<br/>Name:<br/><br/><div style="font-size: 12px;">Checked By (CRM)</div></td>
+                        <td align="left" style="font-size: 12px;">Signature:<br/>_______________________________<br/>Name:<br/><br/><div style="font-size: 12px;">Authorised By</div></td></tr>
+                    
+                </table>
+                <br/><br/>
+                <p style="font-size: 12px;"><b>Signature of Applicant/s:</b>..........................................................................................................................................................................</p>
+                
+                <!-- <div style="font-size: 8px;"><b>{!offr.PropStrength__Project__r.Other_Comapny_Name__c}</b>,{!offr.PropStrength__Project__r.Other_Company_Address__c} - {!offr.PropStrength__Project__r.Other_Company_Postal_Code__c}  
+<br/>Tel:{!offr.PropStrength__Project__r.Other_Company_Phone__c} Fax:{!offr.PropStrength__Project__r.Other_Company_Fax__c} {!offr.PropStrength__Project__r.Other_Company_Website__c}</div> -->
+                
+                
+                
+                
+                <!--PAGE 2 Ends---------------------------------------------------------------------------------------------------->
+                
+                
+                
+                <div style="page-break-after:always;"/>  
+                <table width="100%" >
+                    <tr><td width="40%" style="font-size: 12px"><b>PROJECT NAME:</b> {!bookingObj.Property__r.Project_Name__r.Name}</td>
+                        <td width="38%" style="font-size: 12px"><b>CATEGORY:</b> {!bookingObj.property__r.Property_Type_Name__c}</td>
+                        <td width="33.3%" align="right"><apex:image url="{!$Resource.BookingFormLogo}" width="97px" height="48px"/></td></tr>
+                </table>
+                
+                <!-- <h1 style="font-size: 14px"><center>PAYMENT SCHEDULE</center></h1> -->
+                <table width="100%">
+                    <tr>
+                        <td width="80%">&nbsp;</td>
+                        <td width="20%" style="font-size:12px">Date : {!bookdate}</td>
+                    </tr>
+                </table>
+                <table width="100%">
+                    <tr>
+                        <td>
+                            <table width="100%">
+                                <tr><td  align="left" style="font-size: 12px" height = '25px' width="8.33%" >Flat No:</td>
+                                    <td align="center" height = '25px' style="font-size: 12px;border-bottom: 1px solid black" width="25%">&nbsp;&nbsp;{!bookingObj.Booking_Flat_No__c}</td>
+                                    <td  align="left" style="font-size: 12px" height = '25px' width="8.33%">Floor:</td>
+                                    <td align="center" height = '25px' style="font-size: 12px;border-bottom: 1px solid black" width="25%">
+                                        &nbsp;&nbsp;{!ROUND(bookingObj.Property__r.Floor_Number__c,0)}</td>
+                                    <td  align="left" style="font-size: 12px" height = '25px' width="8.33%">Tower:</td>
+                                    <td align="center" height = '25px' style="font-size: 12px;border-bottom: 1px solid black" width="25%">
+                                        &nbsp;&nbsp;{!bookingObj.Property__r.Tower__r.Tower_Name__c}</td>
+                                </tr>
+                            </table>
+                            <br/>
+                            
+                            <div style="font-size: 12px; font-family: Times New Roman;" align="center">
+                                <p><strong><u>Payment Schedule for Agreements To be Executed on Receipt of 10% of Sale Price</u></strong></p>
+                                <br/>
+                            </div>
+                            <apex:outputPanel rendered="{!if(schemeBp == true,true,false)}">
+                                <table width="100%" style="border: 1px solid black; border-collapse: collapse;" cellspacing="0">
+                                    <tr style="background-color:#ECEAEB; border: 1px solid black; border-collapse: collapse; font-size: 12px; font-family: Times New Roman;">
+                                        <td width="65%" align="left" style="border: 1px solid black; border-collapse: collapse;">
+                                            <b>&nbsp;&nbsp;&nbsp;&nbsp;PARTICULARS</b>
+                                        </td>
+                                        <td width="15%" style="border: 1px solid black; border-collapse: collapse;">
+                                            &nbsp;
+                                        </td>
+                                        <td width="20%" align="center" style="border: 1px solid black; border-collapse: collapse;">
+                                            <b>Amount (Rs.)</b>
+                                        </td>
+                                    </tr>
+                                    <tr style="border: 1px solid black; border-collapse: collapse; font-size: 12px; font-family: Times New Roman;">
+                                        <td width="65%" align="left" style="border: 1px solid black; border-collapse: collapse;">
+                                            <b>&nbsp;&nbsp;&nbsp;&nbsp;SALE PRICE</b>
+                                        </td>
+                                        <td width="15%" style="border: 1px solid black; border-collapse: collapse;width: 20%;"><!--v1.1 Added width-->
+                                            <b>(Excluding Taxes and Additional Expenses)</b>
+                                        </td>
+                                        <td width="20%" align="right" style="border: 1px solid black; border-collapse: collapse;">
+                                            <apex:outputText value="{0, number, ###,##0}">
+                                                
+                                                <apex:param value="{!ROUND(booking.Billing_Plan__r.Total_Sales_Amount_At_Time_of_Booking__c,2)}"/>
+                                            </apex:outputText> /-
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table width="100%" style=" border: 1px solid black; border-collapse: collapse;font-size: 12px; font-family: Times New Roman;" cellspacing="0"><!--v1.1 Added font-size: 12px; font-family: Times New Roman, Applying it for table-->
+                                    <tr style="background-color:#ECEAEB; border: 1px solid black; font-size: 12px; font-family: Times New Roman;">
+                                        <td width="5%" style="border: 1px solid black; border-collapse: collapse;" align="center">
+                                            Sr. No.
+                                        </td>
+                                        <td width="60%" style="border: 1px solid black; border-collapse: collapse;" align="center">
+                                            Milestone
+                                        </td>
+                                        <td width="15%" style="border: 1px solid black; border-collapse: collapse;" align="center">
+                                            Percentage
+                                        </td>
+                                        <td width="20%" style="border: 1px solid black; border-collapse: collapse;" align="center">
+                                            Amount(Rs.)
+                                        </td>
+                                    </tr>
+                                    <apex:variable value="{!1}" var="count" />
+                                    <apex:repeat value="{!billingLineItems}" var="item">
+                                        <tr style="display: {!IF(AND(item.Payment_Group__c=='IN',item.Line_Item_Type__c == 'Construction Linked'), 'table-row', 'none')};">
+                                            <td style="width:10%" class = "tableborder" align="center"> 
+                                                {!count}</td>
+                                            <td style="width:55%" class = "tableborder" align="left">
+                                                <apex:outputText value="{!item.Description__c}"/>                 
+                                                <table class="tableborder ">
+                                                    <tr style="background-color:#ECEAEB; border: 1px solid black; font-size: 12px; font-family: Times New Roman;">
+                                                        <td style="width:50%;border: 1px solid black; border-collapse: collapse;" align="center" class="tableborder "><b>Particulars</b></td>
+                                                        <td style="width:5%;border: 1px solid black; border-collapse: collapse;" align="center" class="tableborder "><b>Amount (Rs.)</b></td>
+                                                    </tr>
+                                                    <apex:variable value="{!0}" var="index" />
+                                                    <apex:repeat value="{!billinglineItemTimeLinked}" var="bplitl">
+                                                        <tr style="font-family: Times New Roman;">
+                                                            <td align="left" style="width:50%;font-family: Times New Roman;" class="tableborder ">
+                                                                <apex:outputText value="{!bplitl.Description__c}" /></td>
+                                                            <td align="right" style="width:30%" class="tableborder "><apex:outputText value="{0, number, ###,##0}">
+                                                                <apex:param value="{!ROUND(bplitl.Discount_Amount__c,0)}" /></apex:outputText> /- </td>
+                                                        </tr>                      
+                                                    </apex:repeat>
+                                                </table>
+                                            </td>
+                                            <td style="width:15%" class = "tableborder" align="center">
+                                                <apex:outputText value="{!if(item.Payment_Group__c=='IN',ROUND(inPercent,0),ROUND(VALUE(item.Percentage_Of_Value_To_Be_Invoiced__c),0))}"/>%</td>
+                                            <td align="right" style="width:20%" class = "tableborder"><apex:outputText value="{0, number, ###,##0}">
+                                                <apex:param value="{!if(item.Payment_Group__c=='IN',ROUND(inAmount,0),ROUND(item.Discount_Amount__c,0))}" /></apex:outputText> /-
+                                            </td>
+                                            <apex:variable var="count"  value="{!IF(AND(item.Payment_Group__c=='IN',item.Line_Item_Type__c == 'Construction Linked'), count+1, count)}" /> 
+                                        </tr>
+                                        <tr style="display: {!IF(item.Payment_Group__c!='IN', 'table-row', 'none')};">
+                                            <td style="width:5%" class = "tableborder" align="center">
+                                                {!count}</td>
+                                            <td style="width:55%;font-family: Times New Roman;" align="left" class = "tableborder"><apex:outputText value="{!item.Description__c}"/></td>
+                                            <td style="width:20%" align="center" class = "tableborder">
+                                                <apex:outputText value="{!ROUND(item.Percentage_Rate__c,0)}"/> %
+                                            </td>
+                                            <td style="width:20%" align="right" class = "tableborder"><apex:outputText value="{0, number, ###,##0}">
+                                              <!--  <apex:param value="{!item.Discount_Amount__c}" />-->
+                                                 <apex:param value="{!if((lstSize == count),ROUND(discAmt,0) , ROUND(item.Discount_Amount__c,0) )}" />
+                                                </apex:outputText> /-
+                                            </td>
+                                            
+                                        </tr>
+                                        <apex:variable var="count"  value="{!IF(item.Payment_Group__c!='IN', count+1, count)}" /> 
+                                    </apex:repeat>
+                                </table>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!if(AND(schemeBp == false,checkProp==true),true,false)}">
+                                <table width="100%" style="border: 1px solid black; border-collapse: collapse;" cellspacing="0">
+                                    <tr style="background-color:#ECEAEB; border: 1px solid black; border-collapse: collapse; font-size: 12px; font-family: Times New Roman;">
+                                        <td width="65%" align="left" style="border: 1px solid black; border-collapse: collapse;">
+                                            <b>&nbsp;&nbsp;&nbsp;&nbsp;PARTICULARS</b>
+                                        </td>
+                                        <td width="15%" style="border: 1px solid black; border-collapse: collapse;">
+                                            &nbsp;
+                                        </td>
+                                        <td width="20%" align="center" style="border: 1px solid black; border-collapse: collapse;">
+                                            <b>Amount (Rs.)</b>
+                                        </td>
+                                    </tr>
+                                    <tr style="border: 1px solid black; border-collapse: collapse; font-size: 12px; font-family: Times New Roman;">
+                                        <td align="left" style="border: 1px solid black; border-collapse: collapse;">
+                                            <b>&nbsp;&nbsp;&nbsp;&nbsp;SALE PRICE</b>
+                                        </td>
+                                        <td style="border: 1px solid black; border-collapse: collapse;width: 20%;"><!--v1.1 Added width-->
+                                            <b>(Excluding Taxes and Additional Expenses)</b>
+                                        </td>
+                                        <td align="right" style="border: 1px solid black; border-collapse: collapse;">
+                                            <apex:outputText value="{0, number, ###,##0}">
+                                                <!--  <apex:param value="{!ROUND(bookingObj.Billing_Plan__r.Total_Sales_Amount__c,2)}"/> -->
+                                                <apex:param value="{!ROUND(bookingObj.Billing_Plan__r.Total_Sales_Amount_At_Time_of_Booking__c,2)}"/>
+                                            </apex:outputText> /-
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table width="100%" style=" border: 1px solid black; border-collapse: collapse;font-size: 12px; font-family: Times New Roman;" cellspacing="0"><!--v1.1 Added font-size: 12px; font-family: Times New Roman, Applying it for table-->
+                                    <tr style="background-color:#ECEAEB; border: 1px solid black; font-size: 12px; font-family: Times New Roman;">
+                                        <td width="5%" style="border: 1px solid black; border-collapse: collapse;" align="center">
+                                            Sr. No.
+                                        </td>
+                                        <td width="55%" style="border: 1px solid black; border-collapse: collapse;" align="center">
+                                            Milestone
+                                        </td>
+                                        <td width="20%" style="border: 1px solid black; border-collapse: collapse;" align="center">
+                                            Percentage
+                                        </td>
+                                        <td width="20%" style="border: 1px solid black; border-collapse: collapse;" align="center">
+                                            Amount (Rs.)
+                                        </td>
+                                    </tr>
+                                    <apex:variable value="{!1}" var="count" />
+                                    <apex:repeat value="{!billingLineItems}" var="item">
+                                        <tr style="display: {!IF(AND(item.Payment_Group__c=='IN',item.Line_Item_Type__c == 'Construction Linked'), 'table-row', 'none')};">
+                                            <td style="width:10%" class = "tableborder" align="center"> 
+                                                {!count}</td>
+                                            <td style="width:55%" class = "tableborder" align="left">
+                                                <apex:outputText value="{!item.Description__c}"/>                 
+                                                <table class="tableborder ">
+                                                    <tr style="background-color:#ECEAEB; border: 1px solid black; font-size: 12px; font-family: Times New Roman;">
+                                                        <td style="width:50%;border: 1px solid black; border-collapse: collapse;" align="center" class="tableborder "><b>Particulars</b></td>
+                                                        <td style="width:5%;border: 1px solid black; border-collapse: collapse;" align="center" class="tableborder "><b>Amount (Rs.)</b></td>
+                                                    </tr>
+                                                    <apex:variable value="{!0}" var="index" />
+                                                    <apex:repeat value="{!billinglineItemTimeLinked}" var="bplitl">
+                                                        <tr style="font-family: Times New Roman;">
+                                                            <td align="left" style="width:50%;font-family: Times New Roman;" class="tableborder ">
+                                                                <apex:outputText value="{!bplitl.Description__c}" /></td>
+                                                            <td align="right" style="width:30%" class="tableborder "><apex:outputText value="{0, number, ###,##0}">
+                                                                <apex:param value="{!ROUND(bplitl.Discount_Amount__c,0)}" /></apex:outputText> /- </td>
+                                                        </tr>                      
+                                                    </apex:repeat>
+                                                </table>
+                                            </td>
+                                            <td style="width:15%" class = "tableborder" align="center">
+                                                <apex:outputText value="{!if(item.Payment_Group__c=='IN',ROUND(inPercent,0),ROUND(VALUE(item.Percentage_Of_Value_To_Be_Invoiced__c),0))}"/>%</td>
+                                            <td align="right" style="width:20%" class = "tableborder"><apex:outputText value="{0, number, ###,##0}">
+                                                <apex:param value="{!if(item.Payment_Group__c=='IN',ROUND(inAmount,0),ROUND(item.Discount_Amount__c,0))}" /></apex:outputText> /-
+                                            </td>
+                                            <apex:variable var="count"  value="{!IF(AND(item.Payment_Group__c=='IN',item.Line_Item_Type__c == 'Construction Linked'), count+1, count)}" /> 
+                                        </tr>
+                                        <tr style="display: {!IF(item.Payment_Group__c!='IN', 'table-row', 'none')};">
+                                            <td style="width:5%" class = "tableborder" align="center">
+                                                {!count}</td>
+                                            <td style="width:55%;font-family: Times New Roman;" align="left" class = "tableborder"><apex:outputText value="{!item.Description__c}"/></td>
+                                            <td style="width:20%" align="center" class = "tableborder">
+                                                <apex:outputText value="{!ROUND(item.Percentage_Rate__c,0)}"/> %
+                                            </td>
+                                            <td style="width:20%" align="right" class = "tableborder"><apex:outputText value="{0, number, ###,##0}">
+                                                <!-- <apex:param value="{!item.Discount_Amount__c}" />-->
+                                                <apex:param value="{!if((lstSize == count),ROUND(discAmt,0) , ROUND(item.Discount_Amount__c,0) )}" /></apex:outputText> /-
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr style="display: {!IF(AND(item.Payment_Group__c=='IN',item.Line_Item_Type__c == 'Time Linked',checkProp==false), 'table-row', 'none')};">
+                                            <td style="width:5%" class = "tableborder" align="center">
+                                                {!count}</td>
+                                            <td style="width:55%;font-family: Times New Roman;" align="left" class = "tableborder"><apex:outputText value="{!item.Description__c}"/></td>
+                                            <td style="width:20%" align="center" class = "tableborder">
+                                                <apex:outputText value="{!ROUND(item.Percentage_Rate__c,0)}"/> %
+                                            </td>
+                                            <td style="width:20%" align="right" class = "tableborder"><apex:outputText value="{0, number, ###,##0}">
+                                                <!--<apex:param value="{!item.Discount_Amount__c}" /> -->
+                                                <apex:param value="{!if((lstSize == count),ROUND(discAmt,0) , ROUND(item.Discount_Amount__c,0 ))}" /></apex:outputText> /-
+                                            </td>
+                                            <apex:variable var="count"  value="{!IF(AND(item.Payment_Group__c=='IN',item.Line_Item_Type__c == 'Time Linked',checkProp==false), count+1, count)}" />
+                                        </tr>
+                                        <apex:variable var="count"  value="{!IF(item.Payment_Group__c!='IN', count+1, count)}" /> 
+                                    </apex:repeat>
+                                </table>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!if(AND(schemeBp == false,checkProp==false),true,false)}">
+                                <table width="100%" style="border: 1px solid black; border-collapse: collapse;" cellspacing="0">
+                                    <tr style="background-color:#ECEAEB; border: 1px solid black; border-collapse: collapse; font-size: 12px; font-family: Times New Roman;">
+                                        <td width="60%" align="left" style="border: 1px solid black; border-collapse: collapse;">
+                                            <b>&nbsp;&nbsp;&nbsp;&nbsp;PARTICULARS</b>
+                                        </td>
+                                        <td width="20%" style="border: 1px solid black; border-collapse: collapse;">
+                                            &nbsp;
+                                        </td>
+                                        <td width="20%" align="center" style="border: 1px solid black; border-collapse: collapse;">
+                                            <b>Amount (Rs.)</b>
+                                        </td>
+                                    </tr>
+                                    <tr style="border: 1px solid black; border-collapse: collapse; font-size: 12px; font-family: Times New Roman;">
+                                        <td align="left" style="border: 1px solid black; border-collapse: collapse;">
+                                            <b>&nbsp;&nbsp;&nbsp;&nbsp;SALE PRICE</b>
+                                        </td>
+                                        <td style="border: 1px solid black; border-collapse: collapse;width: 20%;"><!--v1.1 Added width-->
+                                            <b>(Excluding Taxes and Additional Expenses)</b>
+                                        </td>
+                                        <td align="right" style="border: 1px solid black; border-collapse: collapse;">
+                                            <apex:outputText value="{0, number, ###,##0}">
+                                                <!--  <apex:param value="{!ROUND(bookingObj.Billing_Plan__r.Total_Sales_Amount__c,2)}"/> -->
+                                                <apex:param value="{!ROUND(bookingObj.Billing_Plan__r.Total_Sales_Amount_At_Time_of_Booking__c,2)}"/>
+                                            </apex:outputText> /-
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table width="100%" style=" border: 1px solid black; border-collapse: collapse;font-size: 12px; font-family: Times New Roman;" cellspacing="0"><!--v1.1 Added font-size: 12px; font-family: Times New Roman, Applying it for table-->
+                                    <tr style="background-color:#ECEAEB; border: 1px solid black; font-size: 12px; font-family: Times New Roman;">
+                                        <td width="5%" style="border: 1px solid black; border-collapse: collapse;" align="center">
+                                            Sr. No.
+                                        </td>
+                                        <td width="55%" style="border: 1px solid black; border-collapse: collapse;" align="center">
+                                            Milestone
+                                        </td>
+                                        <td width="20%" style="border: 1px solid black; border-collapse: collapse;" align="center">
+                                            Percentage
+                                        </td>
+                                        <td width="20%" style="border: 1px solid black; border-collapse: collapse;" align="center">
+                                            Amount (Rs.)
+                                        </td>
+                                    </tr>
+                                    <apex:variable value="{!1}" var="count" />
+                                    <apex:repeat value="{!billingLineItems}" var="item">
+                                        <tr style="display: {!IF(AND(item.Payment_Group__c=='IN',item.Line_Item_Type__c == 'Construction Linked'), 'table-row', 'none')};">
+                                            <td style="width:10%" class = "tableborder" align="center"> 
+                                                {!count}</td>
+                                            <td style="width:55%" class = "tableborder" align="left">
+                                                <apex:outputText value="{!item.Description__c}"/>                 
+                                                <table class="tableborder ">
+                                                    <tr style="background-color:#ECEAEB; border: 1px solid black; font-size: 12px; font-family: Times New Roman;">
+                                                        <td style="width:50%;border: 1px solid black; border-collapse: collapse;" align="center" class="tableborder "><b>Particulars</b></td>
+                                                        <td style="width:5%;border: 1px solid black; border-collapse: collapse;" align="center" class="tableborder "><b>Amount (Rs.)</b></td>
+                                                    </tr>
+                                                    <apex:variable value="{!0}" var="index" />
+                                                    <apex:repeat value="{!billinglineItemTimeLinked}" var="bplitl">
+                                                        <tr style="font-family: Times New Roman;">
+                                                            <td align="left" style="width:50%;font-family: Times New Roman;" class="tableborder ">
+                                                                <apex:outputText value="{!bplitl.Description__c}" /></td>
+                                                            <td align="right" style="width:30%" class="tableborder "><apex:outputText value="{0, number, ###,##0}">
+                                                                <apex:param value="{!ROUND(bplitl.Discount_Amount__c,0)}" /></apex:outputText> /- </td>
+                                                        </tr>                      
+                                                    </apex:repeat>
+                                                </table>
+                                            </td>
+                                            <td style="width:15%" class = "tableborder" align="center">
+                                                <apex:outputText value="{!if(item.Payment_Group__c=='IN',ROUND(inPercent,0),ROUND(VALUE(item.Percentage_Of_Value_To_Be_Invoiced__c),0))}"/>%</td>
+                                            <td align="right" style="width:20%" class = "tableborder"><apex:outputText value="{0, number, ###,##0}">
+                                                <apex:param value="{!if(item.Payment_Group__c=='IN',ROUND(inAmount,0),ROUND(item.Discount_Amount__c,0))}" /></apex:outputText> /-
+                                            </td>
+                                            <apex:variable var="count"  value="{!IF(AND(item.Payment_Group__c=='IN',item.Line_Item_Type__c == 'Construction Linked'), count+1, count)}" /> 
+                                        </tr>
+                                        <tr style="display: {!IF(item.Payment_Group__c!='IN', 'table-row', 'none')};">
+                                            <td style="width:5%" class = "tableborder" align="center">
+                                                {!count}</td>
+                                            <td style="width:55%;font-family: Times New Roman;" align="left" class = "tableborder"><apex:outputText value="{!item.Description__c}"/></td>
+                                            <td style="width:20%" align="center" class = "tableborder">
+                                                <apex:outputText value="{!ROUND(item.Percentage_Rate__c,0)}"/> %
+                                            </td>
+                                            <td style="width:20%" align="right" class = "tableborder"><apex:outputText value="{0, number, ###,##0}">
+                                               <!-- <apex:param value="{!item.Discount_Amount__c}" /> -->
+                                                 <apex:param value="{!if((lstSize == count),ROUND(discAmt,0) ,ROUND( item.Discount_Amount__c,0) )}" /></apex:outputText> /-
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr style="display: {!IF(AND(item.Payment_Group__c=='IN',item.Line_Item_Type__c == 'Time Linked',checkProp==false), 'table-row', 'none')};">
+                                            <td style="width:5%" class = "tableborder" align="center">
+                                                {!count}</td>
+                                            <td style="width:55%;font-family: Times New Roman;" align="left" class = "tableborder"><apex:outputText value="{!item.Description__c}"/></td>
+                                            <td style="width:20%" align="center" class = "tableborder">
+                                                <apex:outputText value="{!ROUND(item.Percentage_Rate__c,0)}"/> %
+                                            </td>
+                                            <td style="width:20%" align="right" class = "tableborder"><apex:outputText value="{0, number, ###,##0}">
+                                               <!-- <apex:param value="{!item.Discount_Amount__c}" /> -->
+                                               <apex:param value="{!if((lstSize == count),ROUND(discAmt,0) , ROUND(item.Discount_Amount__c,0 ))}" /></apex:outputText> /-
+                                            </td>
+                                            <apex:variable var="count"  value="{!IF(AND(item.Payment_Group__c=='IN',item.Line_Item_Type__c == 'Time Linked',checkProp==false), count+1, count)}" />
+                                        </tr>
+                                        <apex:variable var="count"  value="{!IF(item.Payment_Group__c!='IN', count+1, count)}" /> 
+                                    </apex:repeat>
+                                </table>
+                            </apex:outputPanel>
+                            <br/>
+                            
+                            <table width="100%">
+                                <tr>
+                                    <td width="100%" style ="border:1px solid black;font-size: 14px"><b>Promotional Material</b>&nbsp;-&nbsp; <span style="font-size: 12px">I hereby give consent to Oberoi Realty Limited and / or its Group Companies to communicate its marketing and promotional communication by letters / email / voice / SMS or otherwise, to my contact details mentioned in this Customer Data Sheet / Expression of Interest.
+                                        I confirm that the above information given by me is true and correct to the best of my knowledge. </span> </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="justify"><b>Note:</b> <span style="font-size: 12px">I hereby certify that the above information given are true and correct as to the best of my knowledge.</span> </td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table >
+                                <tr>
+                                    <td width="40%" valign="top" style="font-size: 12px">&nbsp;&nbsp;<b>Signature of Applicant/s:</b></td>
+                                    <td style="font-size: 12px">
+                                        (1)_________________________________________&nbsp;&nbsp;(4)_________________________________________<br/><br/>
+                                        (2)_________________________________________&nbsp;&nbsp;(5)_________________________________________<br/><br/>
+                                        (3)_________________________________________&nbsp;&nbsp;(6)_________________________________________<br/><br/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+                <div style="page-break-after:always;"/>
+                <div>
+                    <table width="100%" >
+                        <tr><td width="40%" style="font-size: 12px"><b>PROJECT NAME:</b> {!bookingObj.Property__r.Project_Name__r.Name}</td>
+                            <td width="38%" style="font-size: 12px"><b>CATEGORY:</b> {!bookingObj.property__r.Property_Type_Name__c}</td>
+                            <td width="33.3%" align="right"><apex:image url="{!$Resource.BookingFormLogo}" width="97px" height="48px"/></td>
+                        </tr>
+                    </table>
+                    <h1 style="font-size: 14px"><center>KYC DETAILS</center></h1>
+                    <table width="100%">
+                        <tr>
+                            <td width="80%">&nbsp;</td>
+                            <td width="20%" style="font-size:12px">Date : {!bookdate}</td>
+                        </tr> 
+                        
+                    </table>
+                    <table width="100%" style="border-collapse: collapse;border: 1 solid black">
+                        <tr>
+                            <td height="25px" width="20%" style="border: 1px solid black;font-size: 12px">Applicant Name</td>
+                            <td width="15%" style="border: 1px solid black;font-size: 12px">Category</td>
+                            <td width="65%" align="center" style="border: 1px solid black;font-size: 12px">Mandatory Documents</td> 
+                            
+                        </tr>
+                        
+                        <apex:repeat value="{!lstKycDetail}" var="k">
+                            
+                            <apex:outputText rendered="{!k.Person_Account__r.Customer_Classification__pc =='Individual'}">
+                                <tr>
+                                    <td width = "20%" style="border: 1px solid black;font-size: 12px">
+                                        <apex:OutputField value="{!k.Person_Account__r.Name}"/>
+                                    </td>
+                                    <td width = "10%" style="border: 1px solid black;font-size: 12px">
+                                        <apex:OutputField value="{!k.Person_Account__r.Customer_Classification__pc}"/>
+                                    </td>
+                                    <td style="border: 1px solid black;font-size: 12px" width = "70%">
+                                        <apex:outputLabel value="Passport/Election ID" />
+                                        <apex:OutputField value="{!k.Passport_Election_ID__c}"/>&nbsp;&nbsp;
+                                        <apex:outputLabel value="PAN Card"/>
+                                        <apex:outputField value="{!k.PAN_Card__c}" />
+                                    </td>
+                                </tr>
+                            </apex:outputText>
+                            <apex:outputText rendered="{!k.Person_Account__r.Customer_Classification__pc=='NRI'}">
+                                
+                                <tr>
+                                    <td width = "20%" style="border: 1px solid black;font-size: 12px">
+                                        <apex:OutputField value="{!k.Person_Account__r.Name}"/>
+                                    </td>
+                                    <td width = "20%" style="border: 1px solid black;font-size: 12px">
+                                        <apex:OutputField value="{!k.Person_Account__r.Customer_Classification__pc}"/>
+                                    </td>
+                                    <td style="border: 1px solid black;font-size: 12px">
+                                        <apex:outputLabel value="Passport/Election ID" for="c"/>
+                                        <apex:outputField value="{!k.Passport_Election_ID__c}"/>&nbsp;&nbsp;
+                                        <apex:outputLabel value="NRI Declaration" for="d"/>
+                                        <apex:outputField value="{!k.NRI_Declaration__c}"/>&nbsp;&nbsp;
+                                        <apex:outputLabel value="OCI/PIO Card" for="e"/>
+                                        <apex:outputField value="{!k.OCI_PIO_Card__c}"/>&nbsp;&nbsp;
+                                        <apex:outputLabel value="PAN Card" for="g"/>
+                                        <apex:outputField value="{!k.PAN_Card__c}"/>
+                                    </td>
+                                </tr>
+                            </apex:outputText>
+                            <apex:outputText rendered="{!k.Person_Account__r.Customer_Classification__pc=='HUF'}">
+                                
+                                <tr>
+                                    <td width = "20%" style="border: 1px solid black;font-size: 12px">
+                                        <apex:OutputField value="{!k.Person_Account__r.Name}"/>
+                                    </td>
+                                    <td width = "20%" style="border: 1px solid black;font-size: 12px">
+                                        <apex:OutputField value="{!k.Person_Account__r.Customer_Classification__pc}"/>
+                                    </td>
+                                    <td style="border: 1px solid black;font-size: 12px">
+                                        <apex:outputLabel value="List of HUF Members" for="h"/>
+                                        <apex:outputField value="{!k.List_of_HUF_Members__c}" />&nbsp;&nbsp;
+                                        <apex:outputLabel value="Bank Confirmation Letter" for="i"/>
+                                        <apex:outputField value="{!k.Bank_Confirmation_Letter__c}"/>&nbsp;&nbsp;
+                                        <apex:outputLabel value="HUF PAN" for="j"/>
+                                        <apex:outputField value="{!k.HUF_PAN__c}"/>&nbsp;&nbsp;
+                                    </td>
+                                </tr>
+                            </apex:outputText>
+                            <apex:outputText rendered="{!k.Person_Account__r.Customer_Classification__pc=='Company'}">
+                                
+                                <tr>
+                                    <td width = "20%" style="border: 1px solid black;font-size: 12px">
+                                        <apex:OutputField value="{!k.Person_Account__r.Name}"/>
+                                    </td>
+                                    <td width = "20%" style="border: 1px solid black;font-size: 12px">
+                                        <apex:OutputField value="{!k.Person_Account__r.Customer_Classification__pc}"/>
+                                    </td>
+                                    <td style="border: 1px solid black;font-size: 12px">
+                                        <apex:outputLabel value="Board Resolution" for="k"/>
+                                        <apex:outputField value="{!k.Board_Resolution__c}"/>&nbsp;&nbsp;
+                                        <apex:outputLabel value="List of Directors" for="l"/>
+                                        <apex:outputField value="{!k.List_of_Directors__c}" />&nbsp;&nbsp;
+                                        <apex:outputLabel value="M.O.A. & A.O.A." for="m"/>
+                                        <apex:outputField value="{!k.M_O_A_A_O_A__c}"/>&nbsp;&nbsp;
+                                        <apex:outputLabel value="Company PAN" for="n"/>
+                                        <apex:outputField value="{!k.Company_PAN__c}"/>
+                                    </td>
+                                </tr>
+                            </apex:outputText>
+                            <apex:outputText rendered="{!k.Person_Account__r.Customer_Classification__pc=='Partnership'}">
+                                
+                                <tr>
+                                    <td width = "20%" style="border: 1px solid black;font-size: 12px">
+                                        <apex:OutputField value="{!k.Person_Account__r.Name}"/>
+                                    </td>
+                                    <td width = "20%" style="border: 1px solid black;font-size: 12px">
+                                        <apex:OutputField value="{!k.Person_Account__r.Customer_Classification__pc}"/>
+                                    </td>
+                                    <td style="border: 1px solid black;font-size: 12px">
+                                        <apex:outputLabel value="Passport/Election ID" for="o"/>
+                                        <apex:outputField value="{!k.Passport_Election_ID__c}"/>&nbsp;&nbsp;
+                                        <apex:outputLabel value="Registered Partnership Deed" for="p"/>
+                                        <apex:outputField value="{!k.Registered_Partnership_Deed__c}"/>&nbsp;&nbsp;
+                                        <apex:outputLabel value="List of Partners" for="q"/>
+                                        <apex:outputField value="{!k.List_of_Partners__c}"/>&nbsp;&nbsp;
+                                        <apex:outputLabel value="Resolution" for="r"/>
+                                        <apex:outputField value="{!k.Resolution__c}"/>&nbsp;&nbsp;
+                                        <apex:outputLabel value="PAN Card" for="s"/>
+                                        <apex:outputField value="{!k.PAN_Card__c}"/>
+                                    </td>
+                                </tr>
+                            </apex:outputText>
+                            <apex:outputText rendered="{!k.Person_Account__r.Customer_Classification__pc=='Proprietorship'}">
+                                
+                                <tr>
+                                    <td width = "20%" style="border: 1px solid black;font-size: 12px">
+                                        <apex:OutputField value="{!k.Person_Account__r.Name}"/>
+                                    </td>
+                                    <td width = "20%" style="border: 1px solid black;font-size: 12px">
+                                        <apex:OutputField value="{!k.Person_Account__r.Customer_Classification__pc}"/>
+                                    </td>
+                                    <td style="border: 1px solid black;font-size: 12px">
+                                        <apex:outputLabel value="Bank Confirmation Letter" for="t"/>
+                                        <apex:outputField value="{!k.Bank_Confirmation_Letter__c}"/>&nbsp;&nbsp;
+                                        <apex:outputLabel value="Proprietorship PAN" for="u"/>
+                                        <apex:outputField value="{!k.Proprietorship_PAN__c}"/>&nbsp;&nbsp;
+                                        <apex:outputLabel value="Latest ITR (optional)" for="v"/>
+                                        <apex:outputField value="{!k.Latest_ITR_optional__c}"/>
+                                    </td>
+                                </tr>
+                            </apex:outputText>
+                            <apex:outputText rendered="{!k.Person_Account__r.Customer_Classification__pc=='Trust'}">
+                                
+                                <tr>
+                                    <td width = "20%" style="border: 1px solid black;font-size: 12px">
+                                        <apex:OutputField value="{!k.Person_Account__r.Name}"/>
+                                    </td>
+                                    <td width = "20%" style="border: 1px solid black;font-size: 12px">
+                                        <apex:OutputField value="{!k.Person_Account__r.Customer_Classification__pc}"/>
+                                    </td>
+                                    <td style="border: 1px solid black;font-size: 12px">
+                                        <apex:outputLabel value="Registered Trust Deed" for="w"/>
+                                        <apex:outputField value="{!k.Registered_Trust_Deed__c}"/>&nbsp;&nbsp;
+                                        <apex:outputLabel value="List of Trustees" for="x"/>
+                                        <apex:outputField value="{!k.List_of_Trustees__c}"/>&nbsp;&nbsp;
+                                        <apex:outputLabel value="Resolution" for="y"/>
+                                        <apex:outputField value="{!k.Resolution__c}"/>
+                                    </td>
+                                </tr>
+                            </apex:outputText>
+                            <apex:outputText rendered="{!k.Person_Account__r.Customer_Classification__pc=='LLP'}">
+                                
+                                <tr>
+                                    <td width = "20%" style="border: 1px solid black;font-size: 12px">
+                                        <apex:OutputField value="{!k.Person_Account__r.Name}"/>
+                                    </td>
+                                    <td width = "20%" style="border: 1px solid black;font-size: 12px">
+                                        <apex:OutputField value="{!k.Person_Account__r.Customer_Classification__pc}"/>
+                                    </td>
+                                    <td style="border: 1px solid black;font-size: 12px">
+                                        <apex:outputLabel value="LLP Agreement"/>
+                                        <apex:outputField value="{!k.LLP_Agreement__c}"/>&nbsp;&nbsp;
+                                        <apex:outputLabel value="Cert of Incorporation"/>
+                                        <apex:outputField value="{!k.Cert_of_Incorporation__c}"/>&nbsp;&nbsp;
+                                        <apex:outputLabel value="List of Designated Partners"/>
+                                        <apex:outputField value="{!k.List_of_Designated_Partners__c}"/>&nbsp;&nbsp;
+                                        <apex:outputLabel value="LLP PAN"/>
+                                        <apex:outputField value="{!k.LLP_PAN__c}"/>&nbsp;&nbsp;
+                                        <apex:outputLabel value="Resolution" for="ad"/>
+                                        <apex:outputField value="{!k.Resolution__c}"/>&nbsp;&nbsp;
+                                        <apex:outputLabel value="Bank Confirmation Letter"/>
+                                        <apex:outputField value="{!k.Bank_Confirmation_Letter__c}"/>
+                                    </td>
+                                </tr>
+                            </apex:outputText>
+                            
+                        </apex:repeat>
+                        
+                        
+                    </table>
+                    <br/>
+                    <table width="100%">
+                        <tr>
+                            <td width="30%" style="font-size: 12px">TDS</td>
+                            <td style="font-size: 12px">
+                                <apex:outputText rendered="{!bookingObj.TDS_Paid_By__c != null}">
+                                    <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(bookingObj.TDS_Paid_By__c, 'Authorization'))}"/>
+                                    
+                                    <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(bookingObj.TDS_Paid_By__c, 'Authorization')}"/>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!bookingObj.TDS_Paid_By__c == null}">
+                                    <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px"/>
+                                </apex:outputText>
+                                &nbsp;&nbsp;Authorization to Company&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                
+                                <apex:outputText rendered="{!bookingObj.TDS_Paid_By__c != null}">
+                                    <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(bookingObj.TDS_Paid_By__c, 'Self'))}"/>
+                                    
+                                    <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(bookingObj.TDS_Paid_By__c, 'Self')}"/>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!bookingObj.TDS_Paid_By__c == null}">
+                                    <apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px"/>
+                                </apex:outputText>
+                                &nbsp;&nbsp;Self&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </td>
+                        </tr>
+                    </table>
+                    <br/><br/><br/>
+                    
+                    <table>
+                        <tr style="font-size: 12px">
+                            <td valign="top">
+                                <b>Signature of Applicant/s:</b>
+                            </td>
+                            <td>
+                                (1)_________________________________________&nbsp;&nbsp;(4)_________________________________________<br/><br/>
+                                (2)_________________________________________&nbsp;&nbsp;(5)_________________________________________<br/><br/>
+                                (3)_________________________________________&nbsp;&nbsp;(6)_________________________________________<br/><br/>
+                            </td>
+                        </tr>
+                    </table>
+                </div><br/><br/>
+                <div style="page-break-after:always;"/>
+                <table width="100%" >
+                    <tr><td width="40%" style="font-size: 12px"><b>PROJECT NAME:</b> {!bookingObj.Property__r.Project_Name__r.Name}</td>
+                        <td width="38%" style="font-size: 12px"><b>CATEGORY:</b> {!bookingObj.property__r.Property_Type_Name__c}</td>
+                        <td width="33.3%" align="right"><apex:image url="{!$Resource.BookingFormLogo}" width="97px" height="48px"/></td></tr>
+                </table>
+                
+                <!-- <h1 style="font-size: 14px"><center>PAYMENT SCHEDULE</center></h1> -->
+                <table width="100%">
+                    <tr>
+                        <td width="80%">&nbsp;</td>
+                        <td width="20%" style="font-size:12px">Date : {!bookdate}</td>
+                    </tr>
+                </table>
+                <table width="100%">
+                    <tr>
+                        <td>
+                            <table width="100%">
+                                <tr><td  align="left" style="font-size: 12px" height = '25px' width="8.33%" >Flat No:</td>
+                                    <td align="center" height = '25px' style="font-size: 12px;border-bottom: 1px solid black" width="25%">&nbsp;&nbsp;{!bookingObj.Booking_Flat_No__c}</td>
+                                    <td  align="left" style="font-size: 12px" height = '25px' width="8.33%">Floor:</td>
+                                    <td align="center" height = '25px' style="font-size: 12px;border-bottom: 1px solid black" width="25%">
+                                        &nbsp;&nbsp;{!ROUND(bookingObj.Property__r.Floor_Number__c,0)}</td>
+                                    <td  align="left" style="font-size: 12px" height = '25px' width="8.33%">Tower:</td>
+                                    <td align="center" height = '25px' style="font-size: 12px;border-bottom: 1px solid black" width="25%">
+                                        &nbsp;&nbsp;{!bookingObj.Property__r.Tower__r.Tower_Name__c}</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+                <br/>
+                <b><h1 style="font-size: 24px"><center>ACKNOWLEDGEMENT</center></h1></b><br/><br/>
+                <p align="justify" style="line-height: 25px;font-size: 12px">Received from {!bookingObj.Primary_Applicants__r.Salutation} {!bookingObj.Primary_Applicants__r.name}, Booking Form along with a payment as per below mentioned details <!-- {!pre1.prepay.Payment_Mode__c} No. {!pre1.prepay.Cheque_Demand_Draft_Number__c} dated <apex:outputText value="{0, date, d MMMM',' yyyy}"> --> 
+                    <!--   <apex:param value="{!pre1.prepay.Instrument_Date__c}" /> </apex:outputText> drawn on {!pre1.prepay.Bank_Name__c} --><!-- already commented branch {!offr.Bank_Branch__c} --> <!-- for an amount of Rs.{!ROUND(pre.prepay.Amount__c,0)} (Rupees {!pre.amountreceived}) towards part payment of the Sale Price of the above mentioned flat. 
+Booking of the said flat is subject to realization of {!pre.prepay.Payment_Mode__c} and receipt of all other payments as set out is the booking form and the Acceptance Form. -->
+                    towards part payment of the Sale Price of the above mentioned flat. Booking of the said flat is subject to realization of Cheque / DD / Payorder
+                    and receipt of all other payments as set out is the Booking Form and the Acceptance Form.
+                </p>
+                <br/><br/>
+                <table width="100%" cellpadding="3" cellspacing="0" >
+                    <tr><th style ="border:1px solid black;font-size: 14px" height = '10px'>PAYMENT DETAILS</th></tr>
+                </table>
+                <br/>
+                <table width="100%" style="border-collapse: collapse;border: 1px solid black;font-size: 12px">
+                    <tr>
+                        <td align="center" height = '25px' style="font-size: 12px;border: 1px solid black" width="5%">S.No.</td>
+                        <td align="center" height = '25px' style="font-size: 12px;border: 1px solid black" width="14%">Payment Mode</td>
+                        <td align="center" height = '25px' style="font-size: 12px;border: 1px solid black" width="14%">Amount</td>
+                        <td align="center" height = '25px' style="font-size: 12px;border: 1px solid black" width="14%">Cheque/Draft No./RTGS Code</td>
+                        <td align="center" height = '25px' style="font-size: 12px;border: 1px solid black" width="25%">Bank Name</td>
+                        <td align="center" height = '25px' style="font-size: 12px;border: 1px solid black" width="14%">Instrument Date</td>
+                    </tr>
+                    <apex:variable var="sno" value="{!1}"/>
+                    <apex:repeat var="pay" value="{!payList}">
+                        <tr>
+                            <td align="center" height = '25px' style="font-size: 12px;border: 1px solid black" width="5%">{!sno}</td>
+                            <td align="center" height = '25px' style="font-size: 12px;border: 1px solid black" width="14%">{!pay.Payment_Mode__c}</td>
+                            <td align="center" height = '25px' style="font-size: 12px;border: 1px solid black" width="14%">Rs. {!ROUND(pay.Amount__c,0)}</td>
+                            <td align="center" height = '25px' style="font-size: 12px;border: 1px solid black" width="14%">{!pay.RTGS_Cheque_Draft_No__c}</td>
+                            <td align="center" height = '25px' style="font-size: 12px;border: 1px solid black" width="25%">{!pay.Bank_Name__c}</td>
+                            <td align="center" height = '25px' style="font-size: 12px;border: 1px solid black" width="14%"><apex:outputText value="{0, date, dd'.'MM'.'yy}"> <apex:param value="{!pay.Instrument_Date__c}" /> </apex:outputText></td>
+                        </tr> 
+                        <apex:variable var="sno" value="{!sno + 1}"/>
+                    </apex:repeat> 
+                </table>
+                <br/>
+                <p style="font-size: 12px"><b>For {!bookingObj.Property__r.Project_Name__r.Subsidiary_Company_Name__c}</b><br/>
+                    <br/>
+                    Signature:<br/><br/>
+                    _________________________<br/><br/>
+                    Name:
+                </p><br/><br/><br/>
+                
+                <table width="100%" style="border: 1px solid black;font-size: 12px" cellpadding="10">
+                    <tr>
+                        <td height="155px" valign="top">
+                            List of Pending Documents (If any) :
+                            <table width="100%">
+                                <apex:repeat value="{!kycwrapperList}" var="kyc">
+                                    <tr>
+                                        <td width="35%" align="left"><apex:outputText value="{!kyc.accountname}"/></td>
+                                        <td width="65%" align="left"><apex:outputText value="{!kyc.pendingdoc}"/></td>
+                                    </tr>
+                                </apex:repeat>
+                            </table>
+                            <br/>
+                            Comments (If any) :
+                            <br/>
+                        </td>
+                    </tr>
+                </table>
+                
+                
+                <!--<b>For OBEROY REALTY LTD</b><br/><br/>
+Signature:<br/>
+_______________________________<br/> <br/> 
+Name:  <br/><br/>
+<div class = "ex4">
+List of Pending Documents (If any) :<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+Comments (If any) :<br/><br/><br/><br/><br/>
+</div>-->
+            </div>  
+        </body>
+    </html>
+</apex:page>

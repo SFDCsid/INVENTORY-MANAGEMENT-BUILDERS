@@ -1,0 +1,29 @@
+<apex:page showHeader="false" sidebar="false">
+    <html>
+<head><title>Blocking</title></head>
+    <apex:includeLightning />    
+    <div id="LightningComponentid" />    
+    <script>
+    var oppId;
+    var unitId;
+    var action;
+    window.onload=function()
+        {
+         oppId = "{!$CurrentPage.parameters.oppId}";
+         unitId = "{!$CurrentPage.parameters.unitId}";
+         action = "{!$CurrentPage.parameters.action}";
+        };
+    
+    $Lightning.use("c:BlockingApp", function() {
+        $Lightning.createComponent("c:BookingPage",
+          {"oppId":oppId,"unitId":unitId,"action":action},
+          "LightningComponentid",
+          function(cmp) {
+              console.log(oppId);
+              console.log(unitId);
+              console.log(action);
+          });
+    });
+    </script>
+</html>
+</apex:page>

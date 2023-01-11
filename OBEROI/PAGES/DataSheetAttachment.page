@@ -1,0 +1,1010 @@
+<apex:page RenderAs="pdf" standardController="Opportunity"  extensions="DataSheetPDF"    sidebar="false" showHeader="false" applyBodyTag="false" applyHtmlTag="false">
+    
+    <apex:form >
+        
+        <head>
+            <style>
+                
+                body { 
+                font-family: Verdana ; 
+                font-size: 6px;
+                margin-top: 12px;
+                } 
+                .ctlHead{
+                text-align: left;
+                font-weight: bold;
+                font-size: 9px;
+                padding: 2px;
+                margin-top: 5px;                        
+                }  
+                .dtlHead{
+                text-align: left;
+                font-weight: medium;
+                font-size: 9px;
+                padding: 2px;
+                margin-top:3px;
+                
+                }    
+                #aa {           
+                height: 20px;
+                border: 1px solid #000;
+                overflow: hidden;
+                } 
+                #centerSt{
+                height: 300px;
+                border: 1px solid #000;
+                overflow: hidden; 
+                position: fixed;
+                
+                
+                }
+                #ab{
+                height: 20px;
+                border: 1px solid #000;
+                overflow: hidden; 
+                margin-top: 2000px;
+                }
+                #footer {position: relative;
+                margin-top: -500px;  
+                height: 2px;
+                clear:both;} 
+            </style>
+            
+        </head>
+        <body>
+            
+            
+            
+            <div style="font-size:14px">
+                <center><apex:image id="theImage" value="{!$Resource.logoOberoi}"  width="100" height="100"/></center>
+                <table  width="100%"><tr><td width= "80%"><b>{!oppObj.Opportunity_Number__c}</b></td>
+                    <td width = "5%"><b>Date: <apex:outputText value="{0,date,dd'/'MM'/'yyyy}">
+                        <apex:param value="{!oppObj.Data_Sheet_Submitted_Date__c}" /> 
+                        </apex:outputText>
+                        </b>
+                    </td></tr></table>
+                <table bgcolor="#808080"  width="100%" style="text-align:Left" ><tr ><td ><b>CUSTOMER DETAILS</b></td></tr></table>
+                <table width="100%" cellpadding="7" cellspacing="0">
+                    <tr><td width="25%" >Name:</td><td width="40%" style="border-bottom: 1px solid;" align="left">1. {!oppObj.Name} </td><td style="border-bottom: 1px solid;" width="35%"></td></tr>
+                    <apex:variable var="cnt" value="{!2}" /> 
+                    <apex:repeat var="c" value="{!oppObj.Co_Owner__r}" >
+                        <tr><td width="25%" ></td><td width="40%" style="border-bottom: 1px solid;" align="left"><apex:OutputText value="{!cnt}"/>.&nbsp;<apex:outputText value="{!c.Person_Account__r.Name}"/></td><td style="border-bottom: 1px solid;" width="35%"></td></tr>
+                        <apex:variable var="cnt" value="{!cnt+1}"/>
+                    </apex:repeat>
+                    <apex:outputText rendered="{!oppObj.Resident_Status__c == 'Indian'}">
+                        <tr><td width="25%">Nationality:</td><td style="border-bottom: 1px solid;" width="35%">{!oppObj.Nationality__c}</td><td style="border-bottom: 1px solid;" width="40%">Resident Status: <img height="8" width="8" src="{!$Resource.Checked_Radio}" />&nbsp;&nbsp;Indian  &nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;&nbsp;&nbsp;NRI </td></tr>
+                    </apex:outputText>
+                    <apex:outputText rendered="{!oppObj.Resident_Status__c == 'NRI'}">
+                        <tr><td width="25%">Nationality:</td><td style="border-bottom: 1px solid;" width="35%">{!oppObj.Nationality__c}</td><td style="border-bottom: 1px solid;" width="40%">Resident Status: <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Indian &nbsp;&nbsp;&nbsp;&nbsp; <img height="8" width="8" src="{!$Resource.Checked_Radio}" />&nbsp;&nbsp;&nbsp;&nbsp;NRI</td></tr>
+                    </apex:outputText>
+                    <tr><td width="25%">Residential Address:</td><td style="border-bottom: 1px solid;" width="40%"> House No: {!oppObj.House_No__c}</td><td style="border-bottom: 1px solid;" width="35%">Street: {!oppObj.Str_Suppl1__c}</td></tr> 
+                    <tr><td width="25%"></td><td width="40%" style="border-bottom: 1px solid;" > Street 2:{!oppObj.Str_Suppl2__c} </td><td width="35%" style="border-bottom: 1px solid;"></td></tr>
+                    <tr><td width="25%"></td><td width="40%" style="border-bottom: 1px solid;" > Street 3:{!oppObj.Str_Suppl3__c}</td><td style="border-bottom: 1px solid;" width="35%"></td></tr>            
+                    <tr><td width="25%"></td><td width="40%" style="border-bottom: 1px solid;" > Locality: {!oppObj.Locality__c}</td><td style="border-bottom: 1px solid;" width="35%"></td></tr>            
+                    <tr><td width="25%"></td><td width="30%" style="border-bottom: 1px solid;" > City: {!oppObj.City__c} </td><td width="35%" style="border-bottom: 1px solid;" > PinCode: {!oppObj.Post_Code1__c}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Country: {!oppObj.Country_Picklist__c} </td></tr>
+                    <tr><td width="25%"></td><td width="40%"></td><td width="35%"></td></tr>
+                </table>
+                <table width="100%" cellpadding="7" cellspacing="0">
+                    <apex:outputText rendered="{!oppObj.Occupation__c == 'Business'}">
+                        <tr><td width="25%">Occupation:</td> <td width="19%"> Business &nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.Checked_Radio}"/></td><td width="18%">Service &nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" /></td><td width="19%">Professional &nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" /></td><td width="19%">Others &nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" /></td></tr>
+                    </apex:outputText>
+                    <apex:outputText rendered="{!oppObj.Occupation__c == 'Service'}">
+                        <tr><td width="25%">Occupation:</td> <td width="19%"> Business &nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" /></td><td width="18%">Service &nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.Checked_Radio}" /></td><td width="19%">Professional &nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" /></td><td width="19%">Others &nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" /></td></tr>
+                    </apex:outputText>
+                    <apex:outputText rendered="{!oppObj.Occupation__c == 'Professional'}">
+                        <tr><td width="25%">Occupation:</td> <td width="19%"> Business &nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" /></td><td width="18%">Service &nbsp;&nbsp;&nbsp;&nbsp;<img  height="8" width="8" src="{!$Resource.uncheck_radio}" /></td><td width="19%">Professional &nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.Checked_Radio}" /></td><td width="19%">Others &nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" /></td></tr>
+                    </apex:outputText>
+                    <apex:outputText rendered="{!oppObj.Occupation__c == 'Others'}">
+                        <tr><td width="20%">Occupation:</td> <td width="19%"> Business <img height="8" width="8" src="{!$Resource.uncheck_radio}" /></td><td width="18%">Service &nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" /></td><td width="19%">Professional &nbsp;&nbsp;&nbsp;&nbsp;<img  height="8" width="8" src="{!$Resource.uncheck_radio}" /></td><br/><td width="5%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Others &nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.Checked_Radio}" />
+                            
+                            {!oppObj.Occupation_in_case_of_other__c} </td></tr>
+                    </apex:outputText>
+                </table>
+                <table width="100%" cellpadding="7" cellspacing="0"> 
+                    
+                    <tr><td width="25%">Company you are Working for: </td><td style="border-bottom: 1px solid;" width="40%">{!oppObj.Related_Lead__r.Company_Custom__c}</td><td style="border-bottom: 1px solid;" width="35%"></td></tr>
+                    <tr><td width="25%">Designation:</td><td style="border-bottom: 1px solid;" width="40%">{!oppObj.Designation__c}</td><td style="border-bottom: 1px solid;" width="35%"></td></tr>
+                    <tr><td width="25%">Telephone No:</td><td style="border-bottom: 1px solid;" width="40%" align="left">Residence:{!oppObj.Related_Lead__r.Phone} </td><td style="border-bottom: 1px solid;" width="35%" align="left">Office:{!oppObj.Related_Lead__r.Office_No__c}</td></tr>    
+                    <tr><td width="25%">Mobile No: </td><td style="border-bottom: 1px solid;" width="40%">1){!oppObj.Country_Code__c}{!oppObj.Mobile__c} </td><td style="border-bottom: 1px solid;" width="35%">2) {!oppObj.Country_Code_for_Other_Mobile_Number__c}{!oppObj.Other_Mobile__c}</td></tr>
+                    <tr><td width="25%">Email:</td><td style="border-bottom: 1px solid;" width="40%">{!oppObj.email__c}</td><td style="border-bottom: 1px solid;" width="35%"></td></tr>
+                    <tr><td width="25%">Project of Interest:</td><td style="border-bottom: 1px solid;" width="40%">{!oppObj.Project__r.Name}</td><td style="border-bottom: 1px solid;" width="35%"></td></tr>
+                    <apex:outputText rendered="{!oppObj.Contact_Person_is_Same_as_Applicant__c  == 'Yes'}">
+                        <tr><td width="25%">Contact Person: </td><td style="border-bottom: 1px solid;" width="40%">Details same as Applicant-1 </td><td style="border-bottom: 1px solid;" width="35%">YES&nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.Checked_Radio}" />&nbsp;&nbsp;&nbsp;&nbsp; NO &nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" /></td></tr>
+                        <tr><td width="25%">Name of Contact Person:</td><td style="border-bottom: 1px solid;" width="35%" align="left">{!oppObj.Name} </td><td style="border-bottom: 1px solid;" width="40%" align="left">Relation /Designation: {!oppObj.Contact_Person_Relation_Designation__c}</td></tr>
+                        <tr><td width="25%"></td><td width="50%" style="border-bottom: 1px solid;" >Mobile 1 :&nbsp; {!oppObj.Contact_Person_Mobile_1__c}</td><td style="border-bottom: 1px solid;" width="25%">Mobile 2 :&nbsp; {!oppObj.Contact_Person_Mobile_2__c} </td></tr>
+                        <tr><td width="25%"></td><td width="50%" style="border-bottom: 1px solid;" >Email:&nbsp; {!oppObj.Contact_Person_Email__c}</td><td style="border-bottom: 1px solid;" width="25%"></td></tr>
+                    </apex:outputText>
+                    <apex:outputText rendered="{!oppObj.Contact_Person_is_Same_as_Applicant__c  == 'No'}">
+                        <tr><td width="25%">Contact Person: </td><td style="border-bottom: 1px solid;" width="40%">Details same as Applicant-1 </td><td style="border-bottom: 1px solid;" width="35%">YES&nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NO &nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.Checked_Radio}" /></td></tr>
+                        <tr><td width="25%">Name of Contact Person:</td><td style="border-bottom: 1px solid;" width="35%" align="left">{!oppObj.Contact_Person_Name__c} </td><td style="border-bottom: 1px solid;" width="40%" align="left">Relation /Designation: {!oppObj.Contact_Person_Relation_Designation__c}</td></tr>
+                        <tr><td width="25%"></td><td width="50%" style="border-bottom: 1px solid;" >Mobile 1 :&nbsp; {!oppObj.Contact_Person_Mobile_1__c}</td><td style="border-bottom: 1px solid;" width="25%">Mobile 2 :&nbsp; {!oppObj.Contact_Person_Mobile_2__c} </td></tr>
+                        <tr><td width="25%"></td><td width="50%" style="border-bottom: 1px solid;" >Email:&nbsp; {!oppObj.Contact_Person_Email__c}</td><td style="border-bottom: 1px solid;" width="25%"></td></tr>
+                    </apex:outputText>
+                    <div style="page-break-after:always;"/>
+                    
+                    
+                </table>
+                
+                <!------------------------------------------------------ Budget ---------------------------------------------------------->
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <tr><td width= "80%"><b>{!oppObj.Opportunity_Number__c}</b></td></tr>
+                <table width="100%" cellpadding="1" cellspacing="0">
+                    <apex:outputText rendered="{!oppObj.Budget__c == '1.5 cr - 2.5 cr'}">    
+                        <tr><td width="25%">Budget:</td><td width="25%"><img height="8" width="8" src="{!$Resource.Checked_Radio}" /> &nbsp;&nbsp;1.5 cr - 2.5 cr </td><td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;2.5 cr - 3.5 cr </td><td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;3.5 cr - 4.5 cr </td></tr> 
+                        <tr><td width="25%"></td><td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" /> &nbsp;&nbsp; 4.5 cr - 6 cr</td><td width="25%"> <img height="8" width="8" src="{!$Resource.uncheck_radio}" /> &nbsp;&nbsp; 6 cr - 8 cr </td><td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Above 8 cr</td> </tr> 
+                    </apex:outputText>
+                    <apex:outputText rendered="{!oppObj.Budget__c == '2.5 cr - 3.5 cr'}">    
+                        <tr><td width="25%">Budget:</td><td width="25%">  <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;1.5 cr - 2.5 cr</td><td width="25%"> <img height="8" width="8" src="{!$Resource.Checked_Radio}" /> &nbsp;&nbsp;2.5 cr - 3.5 cr</td><td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;3.5 cr - 4.5 cr</td></tr> 
+                        <tr><td width="25%"></td><td width="25%"> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;4.5 cr - 6 cr</td><td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;6 cr - 8 cr</td><td width="25%"> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Above 8 cr</td> </tr> 
+                    </apex:outputText>
+                    <apex:outputText rendered="{!oppObj.Budget__c == '3.5 cr - 4.5 cr'}">    
+                        <tr><td width="25%">Budget:</td><td width="25%"> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;1.5 cr - 2.5 cr </td><td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;2.5 cr - 3.5 cr </td><td width="25%"> <img height="8" width="8" src="{!$Resource.Checked_Radio}" />&nbsp;&nbsp;3.5 cr - 4.5 cr</td></tr> 
+                        <tr><td width="25%"></td><td width="25%"> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;4.5 cr - 6 cr</td><td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;6 cr - 8 cr </td><td width="25%"> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Above 8 cr</td> </tr> 
+                    </apex:outputText>
+                    <apex:outputText rendered="{!oppObj.Budget__c == '4.5 cr - 6 cr'}">    
+                        <tr><td width="25%">Budget:</td><td width="25%"> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;1.5 cr - 2.5 cr </td><td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;2.5 cr - 3.5 cr </td><td width="25%"> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;3.5 cr - 4.5 cr</td></tr> 
+                        <tr><td width="25%"></td><td width="25%"> <img height="8" width="8" src="{!$Resource.Checked_Radio}" />&nbsp;&nbsp;4.5 cr - 6 cr</td><td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;6 cr - 8 cr </td><td width="25%"> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Above 8 cr</td> </tr> 
+                    </apex:outputText>
+                    <apex:outputText rendered="{!oppObj.Budget__c == '6 cr - 8 cr'}">    
+                        <tr><td width="25%">Budget:</td><td width="25%"> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;1.5 cr - 2.5 cr </td><td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;2.5 cr - 3.5 cr </td><td width="25%"> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;3.5 cr - 4.5 cr</td></tr> 
+                        <tr><td width="25%"></td><td width="25%"> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;4.5 cr - 6 cr</td><td width="25%"><img height="8" width="8" src="{!$Resource.Checked_Radio}" />&nbsp;&nbsp;6 cr - 8 cr </td><td width="25%"> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Above 8 cr</td> </tr> 
+                    </apex:outputText>
+                    <apex:outputText rendered="{!oppObj.Budget__c == '8 cr & Above'}">    
+                        <tr><td width="25%">Budget:</td><td width="25%"> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;1.5 cr - 2.5 cr </td><td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;2.5 cr - 3.5 cr </td><td width="25%"> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;3.5 cr - 4.5 cr</td></tr> 
+                        <tr><td width="25%"></td><td width="25%"> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;4.5 cr - 6 cr</td><td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;6 cr - 8 cr </td><td width="25%"> <img height="8" width="8" src="{!$Resource.Checked_Radio}" />&nbsp;&nbsp;Above 8 cr</td> </tr> 
+                    </apex:outputText>
+                    
+                    <apex:outputText rendered="{!oppObj.Budget__c ==null}">    
+                        <tr><td width="25%">Budget:</td><td width="25%"> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;1.5 cr - 2.5 cr </td><td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;2.5 cr - 3.5 cr </td><td width="25%"> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;3.5 cr - 4.5 cr</td></tr> 
+                        <tr><td width="25%"></td><td width="25%"> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;4.5 cr - 6 cr</td><td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;6 cr - 8 cr </td><td width="25%"> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Above 8 cr</td> </tr> 
+                        <!---       <tr><td width="25%"></td><td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;3 - 6 Cr</td> <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;7 - 10 Cr</td> <td width="25%"> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;10 Cr +</td></tr>    ---->
+                    </apex:outputText>
+                    <br/>
+                    
+                    <!---------------------------------------------------------------------------------------------------------> 
+                    
+                    <apex:outputText rendered="{!oppObj.Purpose_of_Buying__c== 'End Use'}">
+                        <tr><td width="25%">Purpose of Buying:&nbsp;&nbsp;</td><td width="19%"> <img height="8" width="8" src="{!$Resource.Checked_Radio}" />&nbsp;&nbsp;End Use</td><td width="25%"> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Investment</td><td width="19%"> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Second Home</td></tr>          
+                    </apex:outputText>             
+                    <apex:outputText rendered="{!oppObj.Purpose_of_Buying__c== 'Investment'}">
+                        <tr><td width="25%">Purpose of Buying:&nbsp;&nbsp;</td><td width="19%"> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;End Use</td><td width="25%"> <img height="8" width="8" src="{!$Resource.Checked_Radio}" />&nbsp;&nbsp;Investment</td><td width="19%"> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Second Home</td></tr>          
+                    </apex:outputText>
+                    <apex:outputText rendered="{!oppObj.Purpose_of_Buying__c== 'Second Home'}">
+                        <tr><td width="25%">Purpose of Buying:&nbsp;&nbsp;</td><td width="19%"> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;End Use</td><td width="25%"> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Investment</td><td width="19%"> <img height="8" width="8" src="{!$Resource.Checked_Radio}" />&nbsp;&nbsp;Second Home</td></tr>          
+                    </apex:outputText>
+                    
+                    <apex:outputText rendered="{!oppObj.Purpose_of_Buying__c==null}">
+                        <tr><td width="25%">Purpose of Buying:&nbsp;&nbsp;</td><td width="19%"> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;End Use</td><td width="25%"> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Investment</td><td width="19%"> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Second Home</td></tr>          
+                    </apex:outputText>
+                    
+                    <br/>
+                    <!--------------------------------------------------------------------------------------------------------->        
+                    
+                    <table width = "100%" cellpadding="1" cellspacing="0">
+                        <apex:outputText >
+                            <tr><td width="23%" >Possession Timeline:</td><td>&nbsp;&nbsp;&nbsp;&nbsp;<apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(oppObj.Possession_Timeliness__c, 'Immediate'))}"/>   
+                                <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(oppObj.Possession_Timeliness__c, 'Immediate') && oppObj.Possession_Timeliness__c!=null}"/>&nbsp;&nbsp;Immediate</td>
+                                
+                                <td width = "27%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(oppObj.Possession_Timeliness__c, '2 to 3 years'))}"/>   
+                                    <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(oppObj.Possession_Timeliness__c, '2 to 3 years') && oppObj.Possession_Timeliness__c!=null}"/>&nbsp;&nbsp;2 to 3 years </td>
+                                
+                                <td width = "27%">&nbsp;&nbsp;&nbsp;&nbsp;<apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!Not(Contains(oppObj.Possession_Timeliness__c, 'Above 3 years'))}"/>   
+                                    
+                                    <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(oppObj.Possession_Timeliness__c, 'Above 3 years') && oppObj.Possession_Timeliness__c!=null}"/>&nbsp;&nbsp;Above 3 years</td></tr>          
+                            
+                        </apex:outputText>
+                        
+                    </table>
+                    <br/>
+                    <table width = "100%" cellpadding="1" cellspacing="0">
+                        <apex:outputText >
+                            
+                            <tr><td width="23%" >Location :</td><td>&nbsp;&nbsp;&nbsp;&nbsp;<apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(oppObj.Location_Rating__c, 'Liked'))}"/>   
+                                <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(oppObj.Location_Rating__c, 'Liked') && oppObj.Location_Rating__c!=null}"/>&nbsp;&nbsp;Liked</td>
+                                
+                                <td width = "27%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(oppObj.Location_Rating__c, 'Neutral'))}"/>   
+                                    <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(oppObj.Location_Rating__c, 'Neutral') && oppObj.Location_Rating__c!=null}"/>&nbsp;&nbsp;Neutral </td>
+                                
+                                <td width = "27%">&nbsp;&nbsp;&nbsp;&nbsp;<apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!Not(Contains(oppObj.Location_Rating__c, 'Disliked'))}"/>   
+                                    
+                                    <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(oppObj.Location_Rating__c, 'Disliked') && oppObj.Location_Rating__c!=null}"/>&nbsp;&nbsp;Disliked</td></tr>          
+                            
+                        </apex:outputText>
+                        <br/>
+                        <apex:outputText >
+                            <tr><td width="23%" >How Soon Do You Want To Buy :</td><td>&nbsp;&nbsp;&nbsp;&nbsp;<apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(oppObj.How_Soon_Do_You_Want_To_Buy__c, 'Immediately'))}"/>   
+                                <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(oppObj.How_Soon_Do_You_Want_To_Buy__c, 'Immediately') && oppObj.How_Soon_Do_You_Want_To_Buy__c!=null}"/>&nbsp;&nbsp;Immediately</td>
+                                
+                                <td width = "27%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(oppObj.How_Soon_Do_You_Want_To_Buy__c, '3-6 Month'))}"/>   
+                                    <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(oppObj.How_Soon_Do_You_Want_To_Buy__c, '3-6 Month') && oppObj.How_Soon_Do_You_Want_To_Buy__c!=null}"/>&nbsp;&nbsp; 3-6 Month </td>
+                                
+                                <td width = "27%">&nbsp;&nbsp;&nbsp;&nbsp;<apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!Not(Contains(oppObj.How_Soon_Do_You_Want_To_Buy__c, '> 6 Months'))}"/>   
+                                    
+                                    <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(oppObj.How_Soon_Do_You_Want_To_Buy__c, '> 6 Months') && oppObj.How_Soon_Do_You_Want_To_Buy__c!=null}"/>&nbsp;&nbsp;> 6 Months</td></tr>          
+                            
+                        </apex:outputText>
+                        
+                    </table>
+                    
+                    
+                    
+                    <!-------------------------------------------------------------------------------------------------->
+                    <!--Industry-->
+                    <br/>
+                    <table width = "100%" cellpadding="1" cellspacing="0">
+                        <apex:outputText rendered="{!oppObj.Related_Lead__r.Industry== 'Banking and Financial Services'}">
+                            <tr><td  width="25%" >Industry:</td><td width = "25%"><img height="8" width="8" src="{!$Resource.Checked_Radio}"/>&nbsp;&nbsp;Banking and Financial&nbsp;&nbsp;&nbsp;&nbsp; Services</td><td width = "25%">&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Automobiles</td><td width = "26%">&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Real Estate</td></tr>          
+                            <tr><td><td><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Retail</td><td>&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Gem &amp; Jewellery</td><td>&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Other</td></td></tr>
+                </apex:outputText>
+                
+                <apex:outputText rendered="{!oppObj.Related_Lead__r.Industry== 'Automobiles'}">
+                    <tr><td  width="25%" >Industry:</td><td><img height="8" width="8" src="{!$Resource.uncheck_radio}"/>&nbsp;&nbsp;Banking and Financial Services</td><td width = "25%">&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.Checked_Radio}" />&nbsp;&nbsp;Automobiles</td><td width = "26%">&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Real Estate</td></tr>          
+                    <tr><td><td><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Retail</td><td>&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Gem &amp; Jewellery</td><td>&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Other</td></td></tr>
+        </apex:outputText>
+        
+        <apex:outputText rendered="{!oppObj.Related_Lead__r.Industry== 'Real Estate'}">
+            <tr><td  width="25%" >Industry:</td><td><img height="8" width="8" src="{!$Resource.uncheck_radio}"/>&nbsp;&nbsp;Banking and Financial Services</td><td width = "25%">&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Automobiles</td><td width = "26%">&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.Checked_Radio}" />&nbsp;&nbsp;Real Estate</td></tr>          
+            <tr><td><td><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Retail</td><td>&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Gem &amp; Jewellery</td><td>&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Other</td></td></tr>
+</apex:outputText>
+
+<apex:outputText rendered="{!oppObj.Related_Lead__r.Industry== 'Retail'}">
+    <tr><td  width="25%" >Industry:</td><td><img height="8" width="8" src="{!$Resource.uncheck_radio}"/>&nbsp;&nbsp;Banking and Financial Services</td><td width = "25%">&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Automobiles</td><td width = "26%">&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Real Estate</td></tr>          
+    <tr><td><td><img height="8" width="8" src="{!$Resource.Checked_Radio}" />&nbsp;&nbsp;Retail</td><td>&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Gem &amp; Jewellery</td><td>&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Other</td></td></tr>
+</apex:outputText>
+
+<apex:outputText rendered="{!oppObj.Related_Lead__r.Industry== 'Gem & Jewellery'}">
+    <tr><td  width="25%" >Industry:</td><td><img height="8" width="8" src="{!$Resource.uncheck_radio}"/>&nbsp;&nbsp;Banking and Financial Services</td><td width = "25%">&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Automobiles</td><td width = "26%">&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Real Estate</td></tr>          
+    <tr><td><td><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Retail</td><td>&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.Checked_Radio}" />&nbsp;&nbsp;Gem &amp; Jewellery</td><td>&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Other</td></td></tr>
+</apex:outputText>
+
+<apex:outputText rendered="{!oppObj.Related_Lead__r.Industry== 'Other'}">
+    <tr><td  width="25%" >Industry:</td><td><img height="8" width="8" src="{!$Resource.uncheck_radio}"/>&nbsp;&nbsp;Banking and Financial Services</td><td width = "25%">&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Automobiles</td><td width = "26%">&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Real Estate</td></tr>          
+    <tr><td><td><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Retail</td><td>&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Gem &amp; Jewellery</td><td>&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.Checked_Radio}" />&nbsp;&nbsp;Other</td></td></tr>
+</apex:outputText>
+
+<apex:outputText rendered="{!oppObj.Related_Lead__r.Industry==null}">
+    <tr><td  width="25%" >Industry:</td><td><img height="8" width="8" src="{!$Resource.uncheck_radio}"/>&nbsp;&nbsp;Banking and Financial Services</td><td width = "25%">&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Automobiles</td><td width = "26%">&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Real Estate</td></tr>          
+    <tr><td><td><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Retail</td><td>&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Gem &amp; Jewellery</td><td>&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Other</td></td></tr>
+</apex:outputText>
+
+</table>            
+<br/>
+<!--------------------------------------------------------------------------------------------------------->  
+
+<table width = "100%" cellpadding="1" cellspacing="0">          
+    <apex:outputText rendered="{!oppObj.Enquiry_Type__c== 'Partner'}">
+        <tr><td width="25%" >Source of walk-in/Booking:</td><td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}"/>&nbsp;&nbsp;Direct</td>
+            <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Existing Customer</td>
+            <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Customer Referral</td>
+        </tr>
+        <!--<td width = "26%">&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Existing Customer</td></tr> -->
+        
+        <tr>
+            <td>
+                <td><img height="8" width="8" src="{!$Resource.Checked_Radio}" />&nbsp;&nbsp;Property Consultant/Broker/Channel Partner</td>
+            <td><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Employee Referral</td>
+            <td><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Employee</td>
+        </td>
+</tr>    
+</apex:outputText>
+
+<apex:outputText rendered="{!oppObj.Enquiry_Type__c== 'Employee Referral'}">
+    <tr><td width="25%" >Source of walk-in/Booking:</td><td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}"/>&nbsp;&nbsp;Direct</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Existing Customer</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Customer Referral</td>
+    </tr>
+    <!--<td width = "26%">&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Existing Customer</td></tr> -->
+    
+    <tr>
+        <td>
+            <td><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Property Consultant/Broker/Channel Partner</td>
+        <td><img height="8" width="8" src="{!$Resource.Checked_Radio}" />&nbsp;&nbsp;Employee Referral</td>
+        <td><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Employee</td>
+    </td>
+</tr>    
+</apex:outputText>
+
+<apex:outputText rendered="{!oppObj.Enquiry_Type__c== 'Employee'}">
+    <tr><td width="25%" >Source of walk-in/Booking:</td><td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}"/>&nbsp;&nbsp;Direct</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Existing Customer</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Customer Referral</td>
+    </tr>
+    <!--<td width = "26%">&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Existing Customer</td></tr> -->
+    
+    <tr>
+        <td>
+            <td><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Property Consultant/Broker/Channel Partner</td>
+        <td><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Employee Referral</td>
+        <td><img height="8" width="8" src="{!$Resource.Checked_Radio}" />&nbsp;&nbsp;Employee</td>
+    </td>
+</tr>    
+</apex:outputText>
+
+<apex:outputText rendered="{!oppObj.Enquiry_Type__c== 'Existing Customer'}">
+    <tr><td width="25%" >Source of walk-in/Booking:</td><td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}"/>&nbsp;&nbsp;Direct</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.Checked_Radio}" />&nbsp;&nbsp;Existing Customer</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Customer Referral</td>
+    </tr>
+    <!--<td width = "26%">&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Existing Customer</td></tr> -->
+    
+    <tr>
+        <td>
+            <td><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Property Consultant/Broker/Channel Partner</td>
+        <td><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Employee Referral</td>
+        <td><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Employee</td>
+    </td>
+</tr>    
+</apex:outputText>
+
+<apex:outputText rendered="{!oppObj.Enquiry_Type__c== 'Customer Referral'}">
+    <tr><td width="25%" >Source of walk-in/Booking:</td><td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}"/>&nbsp;&nbsp;Direct</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Existing Customer</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.Checked_Radio}" />&nbsp;&nbsp;Customer Referral</td>
+    </tr>
+    <!--<td width = "26%">&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Existing Customer</td></tr> -->
+    
+    <tr>
+        <td>
+            <td><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Property Consultant/Broker/Channel Partner</td>
+        <td><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Employee Referral</td>
+        <td><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Employee</td>
+    </td>
+</tr>    
+</apex:outputText>
+
+<apex:outputText rendered="{!oppObj.Enquiry_Type__c== 'Direct'}">
+    <tr><td width="25%" >Source of walk-in/Booking:</td><td width="25%"><img height="8" width="8" src="{!$Resource.Checked_Radio}"/>&nbsp;&nbsp;Direct</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Existing Customer</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Customer Referral</td>
+    </tr>
+    <!--<td width = "26%">&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Existing Customer</td></tr> -->
+    
+    <tr>
+        <td>
+            <td><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Property Consultant/Broker/Channel Partner</td>
+        <td><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Employee Referral</td>
+        <td><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Employee</td>
+    </td>
+</tr>    
+</apex:outputText>
+
+<apex:outputText rendered="{!oppObj.Enquiry_Type__c==null}">
+    <tr><td width="25%" >Source of walk-in/Booking:</td><td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}"/>&nbsp;&nbsp;Direct</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Existing Customer</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Customer Referral</td>
+    </tr>
+    <!--<td width = "26%">&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Existing Customer</td></tr> -->
+    
+    <tr>
+        <td>
+            <td><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Property Consultant/Broker/Channel Partner</td>
+        <td><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Employee Referral</td>
+        <td><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Employee</td>
+    </td>
+</tr>    
+</apex:outputText>
+</table>
+<br/>
+
+<!--------------------------------------------------------------------------------------------------------->       
+ 
+<apex:outputText rendered="{!oppObj.How_did_You_Hear_About_Us__c== null}">
+    <tr>
+        <td width="23%" >How did you hear about us:</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Website</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" /> &nbsp;&nbsp;Hoardings</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Friends &amp; Relatives	 </td>
+    </tr>
+    <tr>
+        
+        
+        <td width="23%">&nbsp;</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Property Consultant	</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Elite Member	</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Direct Walk-In	</td>
+        
+    </tr>
+    <tr>
+        
+        
+        <td width="23%">&nbsp;</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Print Media	</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Digital</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Email/SMS	</td>
+        
+    </tr>
+    <tr>
+        <td width="23%">&nbsp;</td>
+        <td > <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Site branding</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" /> &nbsp;&nbsp;Promotional Event</td>
+        <td> &nbsp;</td>
+        
+    </tr>            
+</apex:outputText>
+
+<apex:outputText rendered="{!oppObj.How_did_You_Hear_About_Us__c== 'Website'}">
+    <tr>
+        <td width="23%" >How did you hear about us:</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.Checked_Radio}" />&nbsp;&nbsp;Website</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" /> &nbsp;&nbsp;Hoardings</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Friends &amp; Relatives	 </td>
+    </tr>
+    <tr>
+        
+        
+        <td width="23%">&nbsp;</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Property Consultant	</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Elite Member	</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Direct Walk-In	</td>
+        
+    </tr>
+    <tr>
+        
+        
+        <td width="23%">&nbsp;</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Print Media	</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Digital</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Email/SMS	</td>
+        
+    </tr>
+    <tr>
+        <td width="23%">&nbsp;</td>
+        <td > <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Site branding</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" /> &nbsp;&nbsp;Promotional Event</td>
+        <td> &nbsp;</td>
+        
+    </tr>            
+</apex:outputText>
+
+<apex:outputText rendered="{!oppObj.How_did_You_Hear_About_Us__c== 'Hoardings'}">
+    <tr>
+        <td width="23%" >How did you hear about us:</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Website</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.Checked_Radio}" /> &nbsp;&nbsp;Hoardings</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Friends &amp; Relatives	 </td>
+    </tr>
+    <tr>
+        
+        
+        <td width="23%">&nbsp;</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Property Consultant	</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Elite Member	</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Direct Walk-In	</td>
+        
+    </tr>
+    <tr>
+        
+        
+        <td width="23%">&nbsp;</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Print Media	</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Digital</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Email/SMS	</td>
+        
+    </tr>
+    <tr>
+        <td width="23%">&nbsp;</td>
+        <td > <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Site branding</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" /> &nbsp;&nbsp;Promotional Event</td>
+        <td> &nbsp;</td>
+        
+    </tr>            
+</apex:outputText>
+<apex:outputText rendered="{!oppObj.How_did_You_Hear_About_Us__c== 'Friends & Relatives'}">
+    <tr>
+        <td width="23%" >How did you hear about us:</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Website</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" /> &nbsp;&nbsp;Hoardings</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.Checked_Radio}" />&nbsp;&nbsp;Friends &amp; Relatives	 </td>
+    </tr>
+    <tr>
+        
+        
+        <td width="23%">&nbsp;</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Property Consultant	</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Elite Member	</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Direct Walk-In	</td>
+        
+    </tr>
+    <tr>
+        
+        
+        <td width="23%">&nbsp;</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Print Media	</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Digital</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Email/SMS	</td>
+        
+    </tr>
+    <tr>
+        <td width="23%">&nbsp;</td>
+        <td > <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Site branding</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" /> &nbsp;&nbsp;Promotional Event</td>
+        <td> &nbsp;</td>
+        
+    </tr>            
+</apex:outputText>
+
+<apex:outputText rendered="{!oppObj.How_did_You_Hear_About_Us__c== 'Property Consultant'}">
+    <tr>
+        <td width="23%" >How did you hear about us:</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Website</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" /> &nbsp;&nbsp;Hoardings</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Friends &amp; Relatives	 </td>
+    </tr>
+    <tr>
+        
+        
+        <td width="23%">&nbsp;</td>
+        <td> <img height="8" width="8" src="{!$Resource.Checked_Radio}" />&nbsp;&nbsp;Property Consultant	</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Elite Member	</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Direct Walk-In	</td>
+        
+    </tr>
+    <tr>
+        
+        
+        <td width="23%">&nbsp;</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Print Media	</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Digital</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Email/SMS	</td>
+        
+    </tr>
+    <tr>
+        <td width="23%">&nbsp;</td>
+        <td > <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Site branding</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" /> &nbsp;&nbsp;Promotional Event</td>
+        <td> &nbsp;</td>
+        
+    </tr>            
+</apex:outputText>
+
+<apex:outputText rendered="{!oppObj.How_did_You_Hear_About_Us__c== 'Elite Member'}">
+    <tr>
+        <td width="23%" >How did you hear about us:</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Website</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" /> &nbsp;&nbsp;Hoardings</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Friends &amp; Relatives	 </td>
+    </tr>
+    <tr>
+        
+        
+        <td width="23%">&nbsp;</td>
+        <td> <img height="8" width="8" src="{!$Resource.Checked_Radio}" />&nbsp;&nbsp;Property Consultant	</td>
+        <td> <img height="8" width="8" src="{!$Resource.Checked_Radio}" />&nbsp;&nbsp;Elite Member	</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Direct Walk-In	</td>
+        
+    </tr>
+    <tr>
+        
+        
+        <td width="23%">&nbsp;</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Print Media	</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Digital</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Email/SMS	</td>
+        
+    </tr>
+    <tr>
+        <td width="23%">&nbsp;</td>
+        <td > <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Site branding</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" /> &nbsp;&nbsp;Promotional Event</td>
+        <td> &nbsp;</td>
+        
+    </tr>            
+</apex:outputText>
+<apex:outputText rendered="{!oppObj.How_did_You_Hear_About_Us__c== 'Direct Walk-In'}">
+    <tr>
+        <td width="23%" >How did you hear about us:</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Website</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" /> &nbsp;&nbsp;Hoardings</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Friends &amp; Relatives	 </td>
+    </tr>
+    <tr>
+        
+        
+        <td width="23%">&nbsp;</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Property Consultant	</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Elite Member	</td>
+        <td> <img height="8" width="8" src="{!$Resource.Checked_Radio}" />&nbsp;&nbsp;Direct Walk-In	</td>
+        
+    </tr>
+    <tr>
+        
+        
+        <td width="23%">&nbsp;</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Print Media	</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Digital</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Email/SMS	</td>
+        
+    </tr>
+    <tr>
+        <td width="23%">&nbsp;</td>
+        <td > <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Site branding</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" /> &nbsp;&nbsp;Promotional Event</td>
+        <td> &nbsp;</td>
+        
+    </tr>            
+</apex:outputText>
+
+<apex:outputText rendered="{!oppObj.How_did_You_Hear_About_Us__c== 'Print Media'}">
+    <tr>
+        <td width="23%" >How did you hear about us:</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Website</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" /> &nbsp;&nbsp;Hoardings</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Friends &amp; Relatives	 </td>
+    </tr>
+    <tr>
+        
+        
+        <td width="23%">&nbsp;</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Property Consultant	</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Elite Member	</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Direct Walk-In	</td>
+        
+    </tr>
+    <tr>
+        
+        
+        <td width="23%">&nbsp;</td>
+        <td> <img height="8" width="8" src="{!$Resource.Checked_Radio}" />&nbsp;&nbsp;Print Media	</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Digital</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Email/SMS	</td>
+        
+    </tr>
+    <tr>
+        <td width="23%">&nbsp;</td>
+        <td > <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Site branding</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" /> &nbsp;&nbsp;Promotional Event</td>
+        <td> &nbsp;</td>
+        
+    </tr>            
+</apex:outputText>
+
+<apex:outputText rendered="{!oppObj.How_did_You_Hear_About_Us__c== 'Digital'}">
+    <tr>
+        <td width="23%" >How did you hear about us:</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Website</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" /> &nbsp;&nbsp;Hoardings</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Friends &amp; Relatives	 </td>
+    </tr>
+    <tr>
+        
+        
+        <td width="23%">&nbsp;</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Property Consultant	</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Elite Member	</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Direct Walk-In	</td>
+        
+    </tr>
+    <tr>
+        
+        
+        <td width="23%">&nbsp;</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Print Media	</td>
+        <td> <img height="8" width="8" src="{!$Resource.Checked_Radio}" />&nbsp;&nbsp;Digital</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Email/SMS	</td>
+        
+    </tr>
+    <tr>
+        <td width="23%">&nbsp;</td>
+        <td > <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Site branding</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" /> &nbsp;&nbsp;Promotional Event</td>
+        <td> &nbsp;</td>
+        
+    </tr>            
+</apex:outputText>
+
+<apex:outputText rendered="{!oppObj.How_did_You_Hear_About_Us__c== 'Email/SMS'}">
+    <tr>
+        <td width="23%" >How did you hear about us:</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Website</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" /> &nbsp;&nbsp;Hoardings</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Friends &amp; Relatives	 </td>
+    </tr>
+    <tr>
+        
+        
+        <td width="23%">&nbsp;</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Property Consultant	</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Elite Member	</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Direct Walk-In	</td>
+        
+    </tr>
+    <tr>
+        
+        
+        <td width="23%">&nbsp;</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Print Media	</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Digital</td>
+        <td> <img height="8" width="8" src="{!$Resource.Checked_Radio}" />&nbsp;&nbsp;Email/SMS	</td>
+        
+    </tr>
+    <tr>
+        <td width="23%">&nbsp;</td>
+        <td > <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Site branding</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" /> &nbsp;&nbsp;Promotional Event</td>
+        <td> &nbsp;</td>
+        
+    </tr>            
+</apex:outputText>
+
+<apex:outputText rendered="{!oppObj.How_did_You_Hear_About_Us__c== 'Site branding'}">
+    <tr>
+        <td width="23%" >How did you hear about us:</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Website</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" /> &nbsp;&nbsp;Hoardings</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Friends &amp; Relatives	 </td>
+    </tr>
+    <tr>
+        
+        
+        <td width="23%">&nbsp;</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Property Consultant	</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Elite Member	</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Direct Walk-In	</td>
+        
+    </tr>
+    <tr>
+        
+        
+        <td width="23%">&nbsp;</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Print Media	</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Digital</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Email/SMS	</td>
+        
+    </tr>
+    <tr>
+        <td width="23%">&nbsp;</td>
+        <td > <img height="8" width="8" src="{!$Resource.Checked_Radio}" />&nbsp;&nbsp;Site branding</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" /> &nbsp;&nbsp;Promotional Event</td>
+        <td> &nbsp;</td>
+        
+    </tr>            
+</apex:outputText>
+
+<apex:outputText rendered="{!oppObj.How_did_You_Hear_About_Us__c== 'Promotional Event'}">
+    <tr>
+        <td width="23%" >How did you hear about us:</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Website</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" /> &nbsp;&nbsp;Hoardings</td>
+        <td width="25%"><img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Friends &amp; Relatives	 </td>
+    </tr>
+    <tr>
+        
+        
+        <td width="23%">&nbsp;</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Property Consultant	</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Elite Member	</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Direct Walk-In	</td>
+        
+    </tr>
+    <tr>
+        
+        
+        <td width="23%">&nbsp;</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Print Media	</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Digital</td>
+        <td> <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Email/SMS	</td>
+        
+    </tr>
+    <tr>
+        <td width="23%">&nbsp;</td>
+        <td > <img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Site branding</td>
+        <td> <img height="8" width="8" src="{!$Resource.Checked_Radio}" /> &nbsp;&nbsp;Promotional Event</td>
+        <td> &nbsp;</td>
+        
+    </tr>            
+</apex:outputText>
+ 
+<br/>
+
+<apex:outputText rendered="{!oppObj.Other_Sources_Where_You_Heard_About_Us__c== 'Print Media'}">
+    <tr><td width="23%">Other Sources Where You Heard About Us:</td><td width="22%">&nbsp;<img height="8" width="8" src="{!$Resource.Checked_Radio}" />&nbsp;&nbsp;Print Media</td><td width="25%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Digital</td><td width="25%">&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Hoardings </td></tr>
+    <tr><td><td>&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Friends &amp; Relatives</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;<!--Property Consultant-->Direct Walk-In</td><td>&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Elite Member</td></td></tr>
+<tr><td><td colspan="3">&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;<!--Direct Walk-In -->Property Consultant/Broker/Channel Partner</td></td></tr>
+</apex:outputText> 
+
+<apex:outputText rendered="{!oppObj.Other_Sources_Where_You_Heard_About_Us__c==null}">
+    <tr><td width="23%">Other Sources Where You Heard About Us:</td><td width="22%">&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Print Media</td><td width="25%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Digital</td><td width="25%">&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Hoardings </td></tr>
+    <tr><td><td>&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Friends &amp; Relatives</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;<!--Property Consultant-->Direct Walk-In</td><td>&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Elite Member</td></td></tr>
+<tr><td><td colspan="3">&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;<!--Direct Walk-In -->Property Consultant/Broker/Channel Partner</td></td></tr>
+</apex:outputText> 
+
+<apex:outputText rendered="{!oppObj.Other_Sources_Where_You_Heard_About_Us__c== 'Digital'}">
+    <tr><td width="23%">Other Sources Where You Heard About Us:</td><td width="22%">&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Print Media</td><td width="25%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.Checked_Radio}" />&nbsp;&nbsp;Digital</td><td width="25%">&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Hoardings </td></tr>
+    <tr><td><td>&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Friends &amp; Relatives</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;<!--Property Consultant-->Direct Walk-In</td><td>&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Elite Member</td></td></tr>
+<tr><td><td colspan="3">&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;<!--Direct Walk-In -->Property Consultant/Broker/Channel Partner</td></td></tr>     
+</apex:outputText> 
+<apex:outputText rendered="{!oppObj.Other_Sources_Where_You_Heard_About_Us__c== 'Hoardings'}">
+    <tr><td width="23%">Other Sources Where You Heard About Us:</td><td width="22%">&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Print Media</td><td width="25%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Digital</td><td width="25%">&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.Checked_Radio}" />&nbsp;&nbsp;Hoardings </td></tr>
+    <tr><td><td>&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Friends &amp; Relatives</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;<!--Property Consultant-->Direct Walk-In</td><td>&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Elite Member</td></td></tr>
+<tr><td><td colspan="3">&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;<!--Direct Walk-In -->Property Consultant/Broker/Channel Partner</td></td></tr>
+</apex:outputText> 
+<apex:outputText rendered="{!oppObj.Other_Sources_Where_You_Heard_About_Us__c== 'Friends & Relatives'}">
+    <tr><td width="23%">Other Sources Where You Heard About Us:</td><td width="22%">&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Print Media</td><td width="25%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Digital</td><td width="25%">&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Hoardings </td></tr>
+    <tr><td><td>&nbsp;<img height="8" width="8" src="{!$Resource.Checked_Radio}" />&nbsp;&nbsp;Friends &amp; Relatives </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;<!--Property Consultant-->Direct Walk-In</td><td>&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Elite Member</td></td></tr>
+<tr><td><td colspan="3">&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;<!--Direct Walk-In -->Property Consultant/Broker/Channel Partner</td></td></tr>
+</apex:outputText> 
+
+<!--- <apex:outputText rendered="{!oppObj.Other_Sources_Where_You_Heard_About_Us__c== 'Property Consultant'}"> --->
+<apex:outputText rendered="{!oppObj.Other_Sources_Where_You_Heard_About_Us__c== 'Direct Walk-In'}">
+    <tr><td width="23%">Other Sources Where You Heard About Us:</td><td width="22%">&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Print Media</td><td width="25%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Digital</td><td width="25%">&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Hoardings </td></tr>
+    <tr><td><td>&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Friends &amp; Relatives</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.Checked_Radio}" />&nbsp;&nbsp;<!--Property Consultant-->Direct Walk-In</td><td>&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Elite Member</td></td></tr>
+<tr><td><td colspan="3">&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;<!--Direct Walk-In -->Property Consultant/Broker/Channel Partner</td></td></tr>               
+</apex:outputText> 
+<apex:outputText rendered="{!oppObj.Other_Sources_Where_You_Heard_About_Us__c== 'Elite Member'}">
+    <tr><td width="23%">Other Sources Where You Heard About Us:</td><td width="22%">&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Print Media</td><td width="25%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Digital</td><td width="25%">&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Hoardings </td></tr>
+    <tr><td><td>&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Friends &amp; Relatives</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;<!--Property Consultant-->Direct Walk-In</td><td>&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.Checked_Radio}" />&nbsp;&nbsp;Elite Member</td></td></tr>
+<tr><td><td colspan="3">&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;<!--Direct Walk-In -->Property Consultant/Broker/Channel Partner</td></td></tr>            
+</apex:outputText>
+<apex:outputText rendered="{!oppObj.Other_Sources_Where_You_Heard_About_Us__c== 'Walk-In'}">
+    <tr><td width="23%">Other Sources Where You Heard About Us:</td><td width="22%">&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Print Media</td><td width="25%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Digital</td><td width="25%">&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Hoardings </td></tr>
+    <tr><td><td>&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Friends &amp; Relatives</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;<!--Property Consultant-->Direct Walk-In</td><td>&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Elite Member</td></td></tr>
+<tr><td><td colspan="3">&nbsp;<img height="8" width="8" src="{!$Resource.Checked_Radio}" />&nbsp;&nbsp;<!--Direct Walk-In -->Property Consultant/Broker/Channel Partner</td></td></tr>            
+</apex:outputText>
+<!--- <apex:outputText rendered="{!oppObj.Other_Sources_Where_You_Heard_About_Us__c== 'Direct Walk-In'}"> --->
+<apex:outputText rendered="{!oppObj.Other_Sources_Where_You_Heard_About_Us__c== 'Property Consultant'}">
+    <tr><td width="23%">Other Sources Where You Heard About Us:</td><td width="22%">&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Print Media</td><td width="25%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Digital</td><td width="25%">&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Hoardings </td></tr>
+    <tr><td><td>&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Friends &amp; Relatives</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Property Consultant</td><td>&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="{!$Resource.uncheck_radio}" />&nbsp;&nbsp;Elite Member</td></td></tr>
+<tr><td><td colspan="3">&nbsp;<img height="8" width="8" src="{!$Resource.Checked_Radio}" />&nbsp;&nbsp;<!--Direct Walk-In -->Property Consultant/Broker/Channel Partner</td></td></tr>            
+</apex:outputText>
+
+
+
+<br/>
+
+
+
+<!------------------------------------------------MULTISELECT DIES--------------------------------------------------------------->
+<table width = "100%"><tr>
+    <td width="20%">Requirements</td>
+    <td width = "20%"><apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(oppObj.Requirement__c, '2 BHK'))}"/>
+        <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(oppObj.Requirement__c, '2 BHK') && oppObj.Requirement__c!=null}"/>
+        &nbsp;&nbsp;2 BHK &nbsp;&nbsp;</td>
+    <td width = "20%"><apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(oppObj.Requirement__c, '2.5 BHK'))}"/>   
+        <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(oppObj.Requirement__c, '2.5 BHK') && oppObj.Requirement__c!=null}"/>
+        &nbsp;&nbsp;2.5 BHK&nbsp;&nbsp;</td>
+    <td width = "20%">&nbsp;<apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(oppObj.Requirement__c, '3 BHK'))}"/>
+        <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(oppObj.Requirement__c, '3 BHK') && oppObj.Requirement__c!=null}"/>
+        &nbsp;&nbsp;3 BHK&nbsp;&nbsp;</td>
+    </tr>
+    <tr>
+        <td width="20%"></td>
+        <td width = "20%"><apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(oppObj.Requirement__c, '4 BHK'))}"/>
+            <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(oppObj.Requirement__c, '4 BHK') && oppObj.Requirement__c!=null}"/>
+            &nbsp;&nbsp;4 BHK &nbsp;&nbsp;</td>
+        
+        <td width = "20%"><apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(oppObj.Requirement__c, '5 BHK'))}"/>
+            <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(oppObj.Requirement__c, '5 BHK') && oppObj.Requirement__c!=null}"/>
+            &nbsp;&nbsp;5 BHK &nbsp;&nbsp;</td>
+        
+        <td width = "20%"><apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(oppObj.Requirement__c, 'Penthouse'))}"/>   
+            <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(oppObj.Requirement__c, 'Penthouse') && oppObj.Requirement__c!=null}"/>
+            &nbsp;&nbsp;Penthouse&nbsp;&nbsp;</td>
+        
+    </tr>
+    
+    <tr>
+        <td width="20%"></td>
+        <td width = "20%"><apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(oppObj.Requirement__c, 'Duplex'))}"/>
+            <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(oppObj.Requirement__c, 'Duplex') && oppObj.Requirement__c!=null}"/>
+            &nbsp;&nbsp;Duplex &nbsp;&nbsp;</td>
+        
+    </tr>
+    
+    <br/>
+    <!------------------------------------CARPET AREA---------------------------------------------------------->
+    <table width = "100%" >
+        <tr>
+            <td width ="23%">Carpet Area</td>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;<apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(oppObj.Carpet_Area__c, 'Below 800'))}"/>     
+                <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(oppObj.Carpet_Area__c, 'Below 800') && oppObj.Carpet_Area__c!=null}"/>
+                &nbsp;&nbsp;Below 800&nbsp;&nbsp;</td>
+            <td width ="23%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(oppObj.Carpet_Area__c, '801–1200'))}"/>
+                <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(oppObj.Carpet_Area__c, '801–1200') && oppObj.Carpet_Area__c!=null}"/>
+                &nbsp;&nbsp;801 – 1200&nbsp;&nbsp;</td>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(oppObj.Carpet_Area__c, '1201–1600'))}"/>
+                <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(oppObj.Carpet_Area__c, '1201–1600')  && oppObj.Carpet_Area__c!=null}"/>
+                &nbsp;&nbsp;1201 – 1600&nbsp;&nbsp;</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;<apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(oppObj.Carpet_Area__c, '1601-2200'))}"/>
+                <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(oppObj.Carpet_Area__c, '1601-2200')  && oppObj.Carpet_Area__c!=null}"/>
+                &nbsp;&nbsp;1601-2200&nbsp;&nbsp;</td>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(oppObj.Carpet_Area__c, '2201 & Above'))}"/>
+                <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(oppObj.Carpet_Area__c, '2201 & Above') && oppObj.Carpet_Area__c!=null}"/>
+                &nbsp;&nbsp;2201 &amp; Above</td>
+            <td ></td>
+        </tr>
+        <div style="page-break-before:always;"/> 
+    </table>
+    
+    <!------------------------------------------------MULTISELECT DIES-----ends--------------------------------------------------{!BrokerContact}-------->
+</table><br/>
+<tr><td width= "80%"><b>{!oppObj.Opportunity_Number__c}</b></td></tr>
+<table bgcolor="#808080"  width="100%" style="text-align:Left" ><tr ><td ><b>PROPERTY CONSULTANT</b></td></tr></table>
+<table>
+    <apex:outputText rendered="{!oppObj.Broker_Account__c == Null }">
+        <tr><td width="27%" >Property Consultant Firm Name: </td><td width="40%" style="border-bottom: 1px solid;" >{!oppObj.Partner_s_Firm_Name__c}</td><td style="border-bottom: 1px solid;" width="35%"></td></tr>
+        <tr><td width="27%" >Property Consultant Name: </td><td width="40%" style="border-bottom: 1px solid;" >{!oppObj.Partner_s_Name__c}</td><td style="border-bottom: 1px solid;" width="35%"></td></tr>
+        <tr><td width="25%" >Mobile:</td><td width="40%" style="border-bottom: 1px solid;" > {!oppObj.Partner_Mobile_Country_Code__c}{!oppObj.Partner_Mobile__c}</td><td style="border-bottom: 1px solid;" width="35%">(Office Address): {!oppObj.Partner_s_Office_Address__c} </td></tr>
+        <tr><td width="25%" >Email: </td><td width="40%" style="border-bottom: 1px solid;" >{!oppObj.Partner_Email__c}</td><td style="border-bottom: 1px solid;" width="35%"></td></tr>
+        <tr><td width="25%" >Property Consultant (Broker’s) Signature: </td><td width="40%" style="border-bottom: 1px solid;" ></td><td style="border-bottom: 1px solid;" width="35%"></td></tr>
+        <tr><td width="25%" >&nbsp;</td><td width="40%" ></td><td width="355%" ></td></tr>
+    </apex:outputText>
+    
+    <apex:outputText rendered="{!oppObj.Broker_Account__c != Null }">
+        <tr><td width="27%" >Property Consultant Firm Name: </td><td width="40%" style="border-bottom: 1px solid;" >{!oppObj.Broker_Account__r.Name}</td><td style="border-bottom: 1px solid;" width="35%"></td></tr>
+        <tr><td width="27%" >Property Consultant Name: </td><td width="40%" style="border-bottom: 1px solid;" >{!oppObj.Broker_Account__r.Name_1__c}</td><td style="border-bottom: 1px solid;" width="35%"></td></tr>
+        <tr><td width="25%" >Mobile:</td><td width="40%" style="border-bottom: 1px solid;" > {!oppObj.Broker_Account__r.Mobile_1__c}</td><td style="border-bottom: 1px solid;" width="35%">Email: {!oppObj.Broker_Account__r.Email_1__c}</td></tr>
+        <tr><td width="25%" > (Office Address):</td><td width="75%" style="border-bottom: 1px solid;" >{!oppObj.Broker_Account__r.Full_CP_Address__c} </td></tr>
+        <tr><td width="25%" >Property Consultant (Broker’s) Signature: </td><td width="40%" style="border-bottom: 1px solid;" ></td><td style="border-bottom: 1px solid;" width="35%"></td></tr>
+        <tr><td width="25%" >&nbsp;</td><td width="40%" ></td><td width="355%" ></td></tr>
+    </apex:outputText>
+</table>
+
+</table>
+
+
+</div>
+<br/>  
+
+
+<!--------------------------------------------------------------------------------------------------------->    
+
+<text style = "font-size:11px">
+    I hereby give consent to Oberoi Realty Limited and / or its Group Companies to communicate its marketing and promotional communication by letters / email / voice / SMS or otherwise, to my contact details mentioned in this Customer Data Sheet / Expression of Interest. I confirm that the above information given by me is true and correct to the best of my knowledge.
+</text> 
+<br/><br/>
+
+<table border="1" width="35%" height="20%">
+    
+    <tr width="35%" height="20%">
+        <td style ="border-bottom:none">Please Attached Your Visiting Card</td>
+    </tr>
+    <tr>
+        <td style ="border-top:none;border-bottom:none;color:white">me</td>
+    </tr>
+    <tr>
+        <td style ="border-top:none;border-bottom:none;color:white">me</td>
+    </tr>
+    <tr>
+        <td style ="border-top:none;border-bottom:none;color:white">me</td>
+    </tr>
+    <tr>
+        <td style ="border-top:none;color:white">me</td>
+    </tr> 
+    
+</table>
+
+<table width = "100%">
+    <tr>
+        
+        <td style="border-bottom: 1px solid;" width="45%"> 
+            <br/><br/><br/><br/><br/><br/><br/><br/>
+            <apex:outputPanel rendered="{!CPsignatureid != Null }">
+                <apex:image url="/servlet/servlet.FileDownload?file={!CPsignatureid}"/>
+            </apex:outputPanel>
+            
+        </td>
+        <td style="border-bottom: 1px solid;" width="45%"> 
+            <br/><br/><br/><br/><br/><br/><br/><br/>
+            <apex:outputPanel rendered="{!signatureid != Null }">
+                <apex:image url="/servlet/servlet.FileDownload?file={!signatureid}"/>
+            </apex:outputPanel>
+        </td>
+        
+    </tr>
+    <tr align="center">
+        <td width = "45%">CP Signature</td>  
+        <td width = "45%">Applicant Signature</td>
+    </tr>
+</table>  
+
+
+</body>
+</apex:form>
+</apex:page>

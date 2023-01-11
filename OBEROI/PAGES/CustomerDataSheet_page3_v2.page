@@ -1,0 +1,96 @@
+<apex:page showHeader="false" sidebar="False" lightningStylesheets="True" docType="html-5.0"  standardController="Lead" extensions="CustomerDataSheet_v2"> 
+    <html lang="en"  >
+        
+        
+        <style type="text/css">
+            .myClass{
+             color :white !important;
+            background:#EC6810 !important;
+         
+            }
+            
+        </style>
+        
+        <style type="text/css">
+            body{
+            font-family: Verdana, Arial, Helvetica, sans-serif;
+            color:#414141;
+            }
+            .Main{
+            margin: auto;
+            max-width: 80%;
+            background-color: White;
+            border-radius:0px 0px 30px 30px ;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+            display: flex;
+            flex-flow:column;
+            align-items: center;
+            }
+            .Main:hover {
+            box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+            }
+            .Text-Center{
+            
+            font-size: 3vw;
+            
+            }
+            .Head-Text{
+            padding: 10px 0px;
+            }
+            
+            .image{
+            width:6vw;
+            }
+            
+            .footer {
+            width:100%;
+            position: fixed;
+            bottom: 0;
+            
+            border-bottom: 7px solid #ec6810; 
+            display: flex;
+            flex-flow:column;
+            align-items: center;
+            }
+            .footer div{
+            
+            margin:10px;
+            }
+            
+            
+            
+        </style>
+        
+        <body>
+            <apex:form >
+                <div class="Main">
+                    <p class="Head-Text Text-Center  ">Submitted Successfully</p>
+                    <p class=" ">{!SuccessMessage}</p>
+                    <apex:image url="{!$Resource.Success}"  styleClass="image" />
+                    
+                    <p class="Head-Text Text-Center  ">Thank You !</p>
+                    <apex:commandButton id="new_Datasheet" styleClass="myClass" value="New Data Sheet" action="{!NewDataSheetButton}"/>
+                    
+                    <br/><br/><br/>
+                    
+                    
+                    
+                    
+                </div>
+                
+                <div  class="footer">
+                    <div style="line-height: 16px;font-size: 12px;" >
+                        Head Office: Commerz, 3rd Floor, International Business Park, Oberoi Garden City, Off Western Express Highway, Goregaon (East),  Mumbai-400 063. India. 
+                        T: +91 22 6677 3333 (Board) F: +91 22 6677 3334 (Corporate) <!-- <a href="www.oberoirealty.com" target="_blank" style="color: #ec6810;text-decoration: none"> -->www.oberoirealty.com
+                    </div>
+                    
+                    <br/>
+                    
+                    
+                </div >
+            </apex:form>
+        </body>
+        
+    </html>
+</apex:page>

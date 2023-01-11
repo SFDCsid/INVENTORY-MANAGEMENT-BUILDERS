@@ -1,0 +1,3 @@
+<apex:page standardController="Booking__c" standardStylesheets="false" renderas="PDF"  docType="html-5.0" showheader="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" extensions="BookingFormPageController" action="{!attachPDF}" >
+
+</apex:page>

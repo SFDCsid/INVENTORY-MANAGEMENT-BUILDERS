@@ -1,0 +1,1942 @@
+<apex:page standardController="Lead" extensions="CustomerDataSheet_v2" showHeader="false" standardStylesheets="false" docType="html-5.0" id="thepage">
+    
+    <html lang="en">
+        <head>
+            <title>Visitor Detail Page 2 </title>
+            <meta charset="utf-8"/>
+            <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+            <title></title>
+            <meta name="keywords" content=""/>
+            <meta name="description" content=""/>
+            <apex:stylesheet value="{!$Resource.IntellCSS}"/>
+            <apex:includeScript value="{!$Resource.HTML5shiv}"/>
+            <apex:includeScript value="{!$Resource.Respond}"/>
+            <style type="text/css">
+                
+                body{font-family:Verdana, Arial, Helvetica, sans-serif;font-size:14px;line-height:18px;color:#7c7c7c;}
+                .col-4{width:33.33333333333333%;}
+                .col-5{width:41.66666666666667%;}
+                .col-6{width:50%;}
+                .col-3, .col-4, .col-5, .col-6{float:left;}
+                .container
+                {
+                max-width: 1200px;
+                padding: 0 5px;
+                width: 96%;
+                margin: auto
+                }
+                .FieldTitle{color: #000; padding: 10px; font-weight: bold; margin-bottom: 15px;
+                text-align: center;
+                color: #000;
+                font-size: 17px;
+                font-weight: bold;
+                margin-bottom: 15px;
+                }
+                body{
+                font-size: 16px;
+                }   
+                td {
+                padding-top: 5px;
+                padding-bottom: 25px;
+                position: relative;
+                }
+                input[type='text']{
+                width: 95%;
+                }
+                input[type='text'],select {
+                display: block;
+                width: 100%;
+                height: 28px;
+                line-height: 1.42857143;
+                background-color: #ffffff;
+                background-image: none;
+                border: 1px solid #cccccc;
+                border-radius: 4px;
+                -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+                box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+                -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+                transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+                padding: 1px 0px;
+                }   
+                .btn{
+                background-color: #ec6810 !important;
+                color: #fff !important;
+                padding: 7px 25px;
+                font-size: 16px;
+                border:0px;
+                cursor: pointer;
+                }
+                .sign_btn{
+                background-color: #ec6810 !important;
+                color: #fff !important;
+                
+                font-size: 16px;
+                border:0px;
+                cursor: pointer;
+                } 
+                
+                label.error {
+                color: #f00;
+                position: absolute;
+                bottom: 10px;
+                left: 0;
+                line-height: 14px;
+                font-size: 12px;
+                }
+                
+                table td:first-child{
+                width: 25%;
+                padding-left: 0px;
+                }
+                table td:last-child{
+                width: 75%;
+                }
+                .subCatExCustomer, .subCatNewCustomer,.categoryOther,.subCatProCons,.sub_categoryOther,.subCatBanker{
+                display: none;
+                }
+                input[type='text'], select{
+                margin-top: 7px;
+                }
+                .showDetails{
+                display: none;
+                }
+                input[type="radio"]{
+                margin: 0px;
+                margin-right: 5px;
+                vertical-align: middle;
+                margin-top: -4px;
+                }
+                .radioBtn td{
+                padding-top: 0px;
+                padding-bottom: 5px;
+                }
+                .IPadShowBr{display: none;}
+                @media (max-width:1024px){
+                .IPadShowBr{display: block;}
+                }
+                .sub_categoryOther input{
+                width: 99%;
+                }
+                
+                .iti-flag {
+                
+                background-image: url({!$Resource.images});
+                
+                }
+                
+                body{font-family:Verdana, Arial, Helvetica, sans-serif;font-size:14px;color:#7c7c7c;line-height:18px}
+                
+                .col-4{width:33.33333333333333%;}
+                .col-5{width:41.66666666666667%;}
+                .col-6{width:50%;}
+                .col-3, .col-4, .col-5, .col-6{float:left;}
+                .container
+                {
+                max-width: 1200px;
+                padding: 0 5px;
+                width: 96%;
+                margin: auto
+                }
+                .formTitle{text-align: center; color: #000; font-size: 17px; font-weight: bold; margin-bottom: 15px;}
+                .FieldTitle{text-align: center; color: #000;  font-weight: bold; margin-bottom: 15px;}
+                .red{color: #a94442;}
+                
+                .btn {
+                background-color: #ec6810 !important;
+                color: #fff !important;
+                padding: 7px 25px;
+                font-size: 16px;
+                border: 0px;
+                cursor: pointer;
+                }
+                
+                #nameFieldPlus,.nameFieldMinus{
+                cursor: pointer;
+                }
+                .nameFiledPlusIcon{
+                font-size: 24px;
+                border: 1px solid #999;
+                color: #000;
+                display: inline-block;
+                border-radius: 50px;
+                vertical-align: middle;
+                width: 20px;
+                height: 20px;
+                text-align: center;
+                }
+                
+                label.error {
+                color: #f00;
+                position: absolute;
+                top: 75%;
+                left: 10px;
+                line-height: 14px;
+                font-size: 12px;
+                }
+                td {
+                padding-top: 5px;
+                padding-bottom: 25px;
+                position: relative;
+                padding-left: 10px;
+                padding-right: 10px;
+                }
+                input[type='text']{
+                width: 100%;
+                }
+                input[type='text'],select {
+                display: block;
+                width: 100%;
+                height: 28px;
+                line-height: 1.42857143;
+                background-color: #ffffff;
+                background-image: none;
+                border: 1px solid #cccccc;
+                border-radius: 4px;
+                -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+                box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+                -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+                transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+                padding: 1px 0px;
+                }
+                input[type='text'], select{
+                margin-top: 7px;
+                }
+                .otherIndustry{
+                display: none;
+                }
+                .contactPersonDetail{
+                display: none;
+                }   
+                .eliteClubMember,.propertyConsultant,.otherOccupation,.otherAddress{
+                display: none;
+                }
+                input[type="radio"]{
+                margin-right: 5px;
+                vertical-align: middle;
+                margin-top: -4px;
+                }
+                
+                @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+                .iti-flag {
+                background-image: url({!$Resource.images});
+                }
+                }
+                #signature,#cp_signature{
+                border: 1px solid black;
+                }
+            </style>
+            
+        </head>
+        
+        <body>
+            <div class="container">
+                <table style="border-radius: 10px; padding: 20px 15px;  font-size: 14px;width: 100%;">
+                    <tr>
+                        <td align="right" colspan="2">
+                            <!--<img src="http://oberoirealty.com/images/oberoi_logo.png"> -->
+                            <apex:image url="http://oberoirealty.com/images/oberoi_logo.png"/>
+                        </td>
+                    </tr>
+                </table>
+                <div class="form1">
+                    <!--<form accept-charset='UTF-8' action='/site/customer_contact' id='customerFeedback' method='post' novalidate='novalidate'> -->
+                    <apex:form id="frm">
+                        
+                        <input type="hidden" name="customer_feedback[id]" value=""/>
+                        <table style="border-radius: 10px; padding: 20px 15px; font-size: 14px;width: 100%;">
+                            <th class="formTitle" colspan="4">CUSTOMER DATA SHEET</th>
+                            <!-- <div id='form_fields'> -->
+                            
+                            <tr>
+                                <td colspan="4">
+                                    <!--<div class="FieldTitle"><br/><br/>CUSTOMER DETAILS</div> -->
+                                    <br/><br/>
+                                    <b> CUSTOMER DETAILS  </b>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td style="width:10%;">
+                                    <span class="red">*</span>Project of Interest:                          
+                                </td>
+                                <td style="width:20%;"  valign="top"> 
+                                    <apex:outputtext value="{!ProjectName}" id="prjIntrst"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="red">*</span>Budget ₹:
+                                </td>
+                                <td colspan="3">
+                                    
+                                    <div class="radioWrap">
+                                        <div class="col-4"><input type="radio" name="customer_feedback[budget]" value="1.5 cr - 2.5 cr" class='required'/> 1.5 cr - 2.5 cr</div>                     
+                                        <div class="col-4"><input type="radio" name="customer_feedback[budget]" value="2.5 cr - 3.5 cr" class='required'/> 2.5 cr - 3.5 cr</div>    
+                                        <div class="col-4"><input type="radio" name="customer_feedback[budget]" value="3.5 cr - 4.5 cr" class='required'/> 3.5 cr - 4.5 cr</div>    
+                                        <div class="col-4"><input type="radio" name="customer_feedback[budget]" value="4.5 cr - 6 cr" class='required'/> 4.5 cr - 6 cr</div>    
+                                        <div class="col-4"><input type="radio" name="customer_feedback[budget]" value="6 cr - 8 cr" class='required'/> 6 cr - 8 cr</div>
+                                        <div class="col-4"><input type="radio" name="customer_feedback[budget]" value="8 cr & Above" class='required'/>8 cr and Above </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td colspan="1">
+                                    <span class="red">*</span>Requirement:
+                                </td>
+                                <td colspan="3">
+                                    <div class="radioWrap">
+                                        <div class="col-4"><input type="radio" name="customer_feedback[requirement][]" value="2 BHK" class='FeedbackRequired' /> 2 BHK</div>
+                                        <div class="col-4"><input type="radio" name="customer_feedback[requirement][]" value="2.5 BHK" class='FeedbackRequired'/> 2.5 BHK</div>
+                                        <div class="col-4"><input type="radio" name="customer_feedback[requirement][]" value="3 BHK" class='FeedbackRequired'/> 3 BHK</div>
+                                        <div class="col-4"><input type="radio" name="customer_feedback[requirement][]" value="4 BHK" class='FeedbackRequired'/> 4 BHK</div>
+                                        <div class="col-4"><input type="radio" name="customer_feedback[requirement][]" value="5 BHK" class='FeedbackRequired'/> 5 BHK</div>
+                                        <div class="col-4"><input type="radio" name="customer_feedback[requirement][]" value="Duplex" class='FeedbackRequired'/> Duplex</div>
+                                        <div class="col-4"><input type="radio" name="customer_feedback[requirement][]" value="Penthouse" class='FeedbackRequired'/> Penthouse</div>
+                                    </div> 
+                                </td>
+                            </tr> 
+                            <tr>
+                                <td colspan="1" >
+                                    Carpet Area(in sq. ft.):
+                                </td>
+                                <td colspan="3">
+                                    <div class="radioWrap">
+                                        <div class="col-4"><input type="checkbox" name="customer_feedback[carpet_area][]" value="Below 800" class='FeedbackCarpet'/> Below  800</div>
+                                        <div class="col-4"><input type="checkbox" name="customer_feedback[carpet_area][]" value="801–1200" class='FeedbackCarpet'/>801–1200</div>
+                                        <div class="col-4"><input type="checkbox" name="customer_feedback[carpet_area][]" value="1201–1600" class='FeedbackCarpet'/>1201–1600</div>
+                                        <div class="col-4"><input type="checkbox" name="customer_feedback[carpet_area][]" value="1601-2200" class='FeedbackCarpet'/>1601-2200</div>
+                                        <div class="col-4"><input type="checkbox" name="customer_feedback[carpet_area][]" value="2201 & Above" class='FeedbackCarpet'/> 2201 &amp; Above</div>
+                                    </div>  
+                                </td>
+                                
+                            </tr>
+                            <tr>
+                                <td colspan="1" >
+                                    <span class="red">*</span>How Did You Hear About Us:
+                                    
+                                    
+                                </td>
+                                <td colspan="3">
+                                    <div class="radioWrap">
+                                        <div class="col-4"><input type="radio" name="customer_feedback[about_oberoi]" value="Print Media" class='required'/> Print Media</div>
+                                        <div class="col-4"><input type="radio" name="customer_feedback[about_oberoi]" value="Digital" class='required'/> Digital</div>
+                                        <div class="col-4"><input type="radio" name="customer_feedback[about_oberoi]" value="Hoardings" class='required'/> Hoardings</div>
+                                        <div class="col-4"><input type="radio" name="customer_feedback[about_oberoi]" value="Friends & Relatives" class='required'/> Friends &amp; Relatives</div>
+                                        <div class="col-4"><input type="radio" name="customer_feedback[about_oberoi]" value="Property Consultant" class='required'/> Property Consultant/Broker/Channel Partner</div>
+                                        <!-- <div class="col-4"><input type="radio" name="customer_feedback[about_oberoi]" value="Elite Member" class='required'/> Elite Member</div> 
+<div class="col-4"><input type="radio" name="customer_feedback[about_oberoi]" value="Direct Walk-In" class='required'/> Direct Walk-In</div>-->
+                                        <div class="col-4"><input type="radio" name="customer_feedback[about_oberoi]" value="Radio" class='FeedbackHeard'/>Radio</div>
+                                        <div class="col-4"><input type="radio" name="customer_feedback[about_oberoi]" value="Promotional Event" class='FeedbackHeard'/>Promotional Event</div>
+                                        <div class="col-4"><input type="radio" name="customer_feedback[about_oberoi]" value="Email/SMS" class='FeedbackHeard'/>Email/SMS</div>
+                                        <div class="col-4"><input type="radio" name="customer_feedback[about_oberoi]" value="Site branding" class='FeedbackHeard'/>Site branding</div>
+                                        
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                            
+                            <tr>
+                                <td colspan="1" >
+                                    Other Sources Where You Heard About Us:
+                                </td>
+                                <td colspan="3">
+                                    <div class="radioWrap">
+                                        <div class="col-4"><input type="checkbox" name="customer_feedback[heard_about][]" value="Print Media" class='FeedbackHeard'/> Print Media</div>
+                                        <div class="col-4"><input type="checkbox" name="customer_feedback[heard_about][]" value="Digital" class='FeedbackHeard'/>Digital</div>
+                                        <div class="col-4"><input type="checkbox" name="customer_feedback[heard_about][]" value="Hoarding" class='FeedbackHeard'/>Hoarding</div>
+                                        <div class="col-4"><input type="checkbox" name="customer_feedback[heard_about][]" value="Friends & Relatives" class='FeedbackHeard'/>Friends &amp; Relatives</div>
+                                        <div class="col-4"><input type="checkbox" name="customer_feedback[heard_about][]" value="Property Consultants" class='FeedbackHeard'/> Property Consultant/Broker/Channel Partner</div>                                    
+                                        <!--<div class="col-4"><input type="checkbox" name="customer_feedback[heard_about][]" value="Direct Walk-In" class='FeedbackHeard'/>Direct Walk-In</div>-->
+                                        <div class="col-4"><input type="checkbox" name="customer_feedback[heard_about][]" value="Radio" class='FeedbackHeard'/>Radio</div>
+                                        <div class="col-4"><input type="checkbox" name="customer_feedback[heard_about][]" value="Promotional Event" class='FeedbackHeard'/>Promotional Event</div>
+                                        <div class="col-4"><input type="checkbox" name="customer_feedback[heard_about][]" value="Email/SMS" class='FeedbackHeard'/>Email/SMS</div>
+                                        <div class="col-4"><input type="checkbox" name="customer_feedback[heard_about][]" value="Site branding" class='FeedbackHeard'/>Site branding</div>
+                                    </div>  
+                                </td>
+                                
+                            </tr>
+                            <tr>
+                                <td colspan="1">
+                                    <span class="red">*</span>How Soon Do You Want To Buy:
+                                </td>
+                                <td colspan="3">
+                                    <div class="radioWrap">
+                                        <div class="col-4"><input type="radio" name="customer_feedback[time_limit][]" value="immediately" class='required'/> Immediately</div>
+                                        <div class="col-4"><input type="radio" name="customer_feedback[time_limit][]" value="3-6 Month" class='required'/> 3-6 Month</div>
+                                        <div class="col-4"><input type="radio" name="customer_feedback[time_limit][]" value="> 6 Months" class='required'/> > 6 Months</div>
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                            <tr>
+                                <td colspan="1" >
+                                    <span class="red">*</span>Purpose of Buying:
+                                </td>
+                                <td colspan="3">
+                                    <div class="radioWrap">
+                                        <div class="col-4"><input type="radio" name="customer_feedback[purpose]" value="End Use" class='required'/> End Use</div>
+                                        <div class="col-4"><input type="radio" name="customer_feedback[purpose]" value="Investment" class='required'/> Investment</div>
+                                        <div class="col-4"><input type="radio" name="customer_feedback[purpose]" value="Second Home" class='required'/> Second Home</div>
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                            <tr>
+                                <td colspan="1" >
+                                    <span class="red">*</span>Location:
+                                </td>
+                                <td colspan="3">
+                                    <div class="radioWrap">
+                                        <div class="col-4"><input type="radio" name="customer_feedback[Location]" value="Liked" class='required'/> Liked</div>
+                                        <div class="col-4"><input type="radio" name="customer_feedback[Location]" value="Neutral" class='required'/> Neutral</div>
+                                        <div class="col-4"><input type="radio" name="customer_feedback[Location]" value="Disliked" class='required'/> Disliked</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="">
+                                    <span class="red">*</span>Possession Timeliness:
+                                </td>
+                                <td colspan="3">
+                                    <div class="radioWrap">
+                                        <!--<div class="col-4"><input type="checkbox" name="customer_feedback[timeliness][]" value="Ready Possession" class='feedbackReady'/> Ready Possession</div>-->
+                                        <div class="col-4"><input type="radio" name="customer_feedback[timeliness][]" value="Immediate" class='feedbackReady'/> Immediate</div>
+                                        <div class="col-4"><input type="radio" name="customer_feedback[timeliness][]" value="2 to 3 years" class='feedbackReady'/> 2 to 3 years</div>
+                                        <div class="col-4"><input type="radio" name="customer_feedback[timeliness][]" value="above 3 years" class='feedbackReady'/> Above 3 years</div>
+                                    </div>  
+                                </td>
+                                
+                            </tr>
+                            
+                            
+                            <tr>
+                                <td colspan="1" valign="top">
+                                    <span class="red">*</span>Name:
+                                </td>
+                                
+                                <td colspan="3">
+                                    <apex:pageBlock id="blc"> 
+                                        <!--  <apex:pageBlockSection columns="1" id="sect"> -->
+                                        <table width="100%" cellpadding="5" >
+                                            
+                                            
+                                            
+                                            <tr id="nameFieldAdd">
+                                                
+                                                <td style="padding-left:0;width:28%;"><span class="red">*</span>First Name<br/>
+                                                    <apex:inputText value="{!GetSal}" style="float:left;width:30%;" disabled="true"/> 
+                                                    <apex:inputText value="{!GetFirstName}" style="float:left;width:65%" id="fisrt" disabled="true"/> 
+                                                    <!-- <input type='text' class='required' id='' name='customer_feedback[first_name]' value="" style="float:left;width:70%" /> --></td>
+                                                <td style="width:18%;"><!--<input type='text' id='' name='customer_feedback[middle_name]' value=""/>--> Middle Name<br/><apex:inputText value="{!GetMiddleName}" style="width:100%;" id="middle" disabled="true"/></td>
+                                                <td style="width:18%;"><!--<input type='text' id='name_3' name='customer_feedback[last_name]'  value=""/>--><span class="red">*</span>Last Name<br/> <apex:inputText value="{!GetLastname}" style="width:100%;" id="last" disabled="true"/></td> 
+                                                <td style="width:18%;">Occupation<br/><apex:inputField value="{!leadobj.Occupation__c}" style="width:100%;" id="occupation"/></td>
+                                                <td style="width:18%;">Industry<br/><apex:inputField value="{!leadobj.Industry}" style="width:100%;" id="industry"/></td>
+                                                <td style="width:18%;">Designation<br/><apex:inputField value="{!leadobj.Designation__c}" style="width:100%;" id="Designation"/></td>
+                                                
+                                            </tr>
+                                            
+                                            
+                                            
+                                            <apex:repeat value="{!lstwrp}" var="abc">
+                                                <tr id="nameFieldAdd">
+                                                    
+                                                    <td style="padding-left:0;width:28%;">
+                                                        <apex:inputField value="{!abc.actObj.Salutation}" style="float:left;width:30%;"/>
+                                                        <apex:inputField value="{!abc.actObj.FirstName}" style="float:left;width:65%" /> 
+                                                        <!-- <input type='text' class='required' id='' name='customer_feedback[first_name]' value="" style="float:left;width:70%" /> --></td>
+                                                    <td style="width:18%;"><!--<input type='text' id='' name='customer_feedback[middle_name]' value=""/>--> <apex:inputText value="{!abc.actObj.MiddleName}" style="width:100%;"/></td>
+                                                    <td style="width:18%;"><!--<input type='text' id='name_3' name='customer_feedback[last_name]'  value=""/>--> <apex:inputText value="{!abc.actObj.LastName}" style="width:100%;"/>
+                                                        
+                                                    </td>                
+                                                    <td style="width:18%;"><apex:inputField value="{!abc.actObj.Occupation__c}" style="width:100%;" /></td>
+                                                    <td style="width:18%;"><apex:inputField value="{!abc.actObj.Industry__c}" style="width:100%;" /></td>
+                                                    <td style="width:18%;"><apex:inputField value="{!abc.actObj.Designation__c}" style="width:100%;" /></td>
+                                                    
+                                                    
+                                                    <td style="width:10%;"><apex:commandLink value="Del" action="{!doRem}" reRender="blc">
+                                                        <apex:param value="{!abc.count}" assignTo="{!prmVal}" name=""/>
+                                                        </apex:commandLink></td>
+                                                </tr>
+                                            </apex:repeat>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            <tr id="nameFieldPlusWrap">
+                                                <td colspan="4" align="right" style="padding-bottom: 0px;">
+                                                    <div id="nameFieldPlus">
+                                                        <div class="nameFiledPlusIcon"><apex:commandLink value="+" action="{!doAdd}" reRender="blc"/></div>
+                                                        Click here to add an applicant
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            
+                                        </table>
+                                    </apex:pageBlock>
+                                </td>
+                            </tr>
+                            
+                            
+                            <tr>
+                                <td >
+                                    Nationality:
+                                </td>
+                                <td style="width:25%;">
+                                    <!--<input type='text' class='' id='nationality' name='customer_feedback[nationality]' /> -->
+                                    <apex:inputField value="{!lead.Nationality__c}"/>
+                                </td>
+                                <td style="width:20%;" align="right">
+                                    <span class="red">*</span>Resident Status:
+                                </td>
+                                <td style="width:30%;">
+                                    <div>
+                                        <input type="radio" name="customer_feedback[resident_status]" value="Indian" class="required"/> Indian<br/>
+                                        <input type="radio" name="customer_feedback[resident_status]" value="NRI" class="required"/> NRI
+                                        
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                            <tr><td colspan="4">Residential Address:</td></tr>
+                            <tr>
+                                <td style="width:25%;">
+                                    
+                                </td>
+                                <td style="width:25%;">
+                                    <!--<input type='text' class='' id='house_number' name='customer_feedback[residence_address_1]' /> -->
+                                    House No.<br/>
+                                    <apex:inputField value="{!Lead.House_No__c}"/>
+                                </td>
+                                <td style="width:25%;" align="right">
+                                    
+                                </td>
+                                <td style="width:25%;">
+                                    <!--<input type='text' class='' id='street_1' name='customer_feedback[street_1]' /> -->
+                                    Street 1.<br/>
+                                    <apex:inputfield value="{!Lead.Str_Suppl1__c}"/>
+                                </td>
+                                
+                            </tr>
+                            <tr>
+                                <td colspan="1" >
+                                    
+                                </td>
+                                <td colspan="3" >
+                                    <!--<input type='text' class='' id='street_2' name='customer_feedback[street_2]' /> -->
+                                    Street 2.<br/>
+                                    <apex:inputfield value="{!Lead.Str_Suppl2__c}"/>
+                                </td>
+                                
+                            </tr>
+                            <tr>
+                                <td style="width:25%;">
+                                    
+                                </td>
+                                <td style="width:25%;">
+                                    <!--<input type='text' class='' id='street_3' name='customer_feedback[street_3]' /> -->
+                                    Street 3.<br/>
+                                    <apex:inputfield value="{!Lead.Str_Suppl3__c}"/>
+                                </td>
+                                <td style="width:25%;"  align="right">
+                                    
+                                </td>
+                                <td style="width:25%;">
+                                    <span class="red">*</span>Locality:
+                                    <br/>
+                                    <apex:inputfield value="{!Lead.Locality__c}"/>
+                                    <!--<input type='text' class='' id='locality' name='customer_feedback[locality]' /> -->
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width:25%;">
+                                    
+                                </td>
+                                <td style="width:25%;">
+                                    <!--<input type='text' class='required' id='city' name='customer_feedback[city]' /> -->
+                                    <span class="red">*</span>City: <br/>
+                                    <apex:inputField value="{!Lead.City__c}"/>
+                                </td>
+                                <td style="width:25%;"  align="right">
+                                    
+                                </td>
+                                <td style="width:25%;">
+                                    <!--<input type='text' class='required' id='pincode' name='customer_feedback[pincode]' /> -->
+                                    <!-- <span class="red">*</span>Pincode: -->
+                                    Pincode:
+                                    <br/>
+                                    <apex:inputField value="{!Lead.Post_Code1__c}"/>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td style="width:25%;">
+                                    
+                                </td>
+                                <td style="width:25%;">
+                                    <!--<input type='text' class='required' id='city' name='customer_feedback[city]' /> -->
+                                    <span class="red">*</span>Country: <br/>
+                                    <apex:inputField value="{!Lead.Country_Picklist__c}"/>
+                                </td>
+                                <td style="width:25%;"  align="right">
+                                    
+                                </td>
+                                <td style="width:25%;">
+                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="1">
+                                    <span class="red">*</span>Company You Are Working for:
+                                </td>
+                                <td colspan="3">
+                                    <!-- <input type='text'  id='' name='customer_feedback[company_name]' class="required" /> -->
+                                    <apex:inputfield value="{!lead.Company_Custom__c}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                
+                                
+                                <td style="width:25%;">
+                                    Contact No. Residence:
+                                </td>
+                                <td style="width:25%;" >
+                                    <table width="20%" cellpadding="10%">
+                                        <tr width = "20%">
+                                            
+                                            <td> <apex:inputText value="{!ResCode}" rendered="true" styleClass="required phone_field validname" style="width:90px;"/> </td>
+                                            <td> <apex:inputField value="{!Lead.Phone}" style="width:150px;" /></td>
+                                            
+                                        </tr>
+                                    </table>
+                                    
+                                </td>
+                                <td style="width:25%;" align="right">
+                                    Office No.:
+                                </td>
+                                <td style="width:25%;" >
+                                    <table width="20%" cellpadding="10%">
+                                        <tr width = "20%">
+                                            
+                                            <td> <apex:inputText value="{!OfficeCode}" rendered="true" styleClass="required phone_field validname" style="width:90px;"/> </td>
+                                            <td>  <apex:inputField value="{!Lead.Office_No__c}" style="width:150px;" /></td>
+                                            
+                                        </tr>
+                                    </table>
+                                </td> 
+                            </tr>
+                            
+                            <tr>
+                                <td style="width:25%;">
+                                    <span class="red">*</span>Mobile:
+                                </td>
+                                <td style="width:25%;" >
+                                    <table width="20%" cellpadding="10%">
+                                        <tr width = "20%">
+                                            
+                                            <td> <apex:inputText value="{!mbnoflg}" rendered="true" styleClass="required phone_field validname" style="width:90px;"/> </td>
+                                            <td> <apex:inputText value="{!mbno}" style="width:150px;" disabled="true"/></td>
+                                            
+                                        </tr>
+                                    </table>
+                                    
+                                </td>
+                                <td style="width:25%;" align="right">
+                                    Other Mobile
+                                </td>
+                                <td style="width:25%;" >
+                                    <table width="20%" cellpadding="10%">
+                                        <tr width = "20%">
+                                            
+                                            <td> <apex:inputText value="{!mbnoOtherflg}" rendered="true" styleClass="required phone_field validname" style="width:90px;"/> </td>
+                                            <td> <apex:inputText value="{!otMo}" style="width:150px;" disabled="true"/></td>
+                                            
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="1">
+                                    <!--<span class="red">*</span>Email: -->
+                                    Email:
+                                </td>
+                                <td colspan="3" >
+                                    <apex:inputtext value="{!EmailCon}" disabled="true"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="1"   >  
+                                    Contact Person is same as Name 1:
+                                </td>
+                                <td colspan="3" align="left">
+                                    <div class="radioWrap">
+                                        <div class="col-4"><input type="radio" name="customer_feedback[contact_person_same_as_applicant]" value="Yes"/> Yes</div>
+                                        <div class="col-4"><input type="radio" name="customer_feedback[contact_person_same_as_applicant]" value="No"/> No</div>
+                                    </div>
+                                    
+                                </td>
+                            </tr> 
+                            
+                            <tr class="contactPersonDetail">
+                                <td colspan="4" valign="top">
+                                    <table width="100%;" cellpadding="0" cellspacing="0">   
+                                        
+                                        <tr>
+                                            <td colspan="1">
+                                                <span class="red">*</span>Name:
+                                            </td>
+                                            <td colspan="1">
+                                                <apex:inputField value="{!Lead.Contact_Person_Name__c}"/> 
+                                                <!--<input type='text' class='required' id='second_applicant_name' name='customer_feedback[contact_person_name]' />-->
+                                            </td>
+                                            <td style="width:25%;"  align="right">
+                                                <span class="red">*</span>Relation/Designation:
+                                            </td>
+                                            <td style="width:25%;" >
+                                                <apex:inputField value="{!Lead.Contact_Person_Relation_Designation__c}"/>
+                                                <!--   <input type='text' class='' id='second_applicant_mobile_number' name='customer_feedback[contact_person_mobile]' /> -->
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width:25%;" >
+                                                <span class="red">*</span>Mobile 1:
+                                            </td>
+                                            <td style="width:25%;" >
+                                                <apex:inputField id="mobileNo1" value="{!Lead.Contact_Person_Mobile_1__c}"/> 
+                                                <!--   <input type='text' class='' id='second_applicant_contact_number' name='customer_feedback[contact_person_phone]' /> -->
+                                            </td>
+                                            <td style="width:25%;"  align="right">
+                                                Mobile 2:
+                                            </td>
+                                            <td style="width:25%;" >
+                                                <apex:inputField id="mobileNo2" value="{!Lead.Contact_Person_Mobile_2__c}"/> 
+                                                <!--   <input type='text' class='' id='second_applicant_mobile_number' name='customer_feedback[contact_person_mobile]' /> -->
+                                            </td>
+                                            
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td colspan="1">
+                                                <span class="red">*</span>Email:
+                                            </td>
+                                            <td colspan="3">
+                                                <apex:inputField id="cEmail" value="{!Lead.Contact_Person_Email__c}" />
+                                                <!--<input type='text' class='required' id='second_applicant_email' name='customer_feedback[contact_person_email]' /> -->
+                                            </td>
+                                        </tr>
+                                    </table>    
+                                </td>
+                            </tr>       
+                            <tr class="otherAddress"> 
+                                <td colspan="1">
+                                    Please add Correspondence address                                 
+                                </td>
+                                <td colspan="3" >                                
+                                    <apex:inputField value="{!Lead.Correspondence_address__c}" style="width:70%;" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="1" >
+                                    <span class="red">*</span>Source of Walk-In / Booking:
+                                </td>
+                                <td colspan="3" >
+                                    <div class="radioWrap">
+                                        <div class="col-4"><input type="radio" name="customer_feedback[walkin_source]" value="Direct" class='required'/> Direct</div>
+                                        <div class="col-4"><input type="radio" name="customer_feedback[walkin_source]" value="Existing Customer" class='required'/> Existing Customer</div>
+                                        <div class="col-4"><input type="radio" name="customer_feedback[walkin_source]" value="Customer Referral" class='required'/> Customer Referral</div>
+                                        <div class="col-4"><input type="radio" name="customer_feedback[walkin_source]" value="Partner" class='required'/> Property Consultant/Broker/Channel Partner</div>
+                                        <div class="col-4"><input type="radio" name="customer_feedback[walkin_source]" value="Employee Referral" class='required'/> Employee Referral</div>
+                                        <div class="col-4"><input type="radio" name="customer_feedback[walkin_source]" value="Employee" class='required'/> Employee</div>
+                                    </div>
+                                </td>
+                            </tr>         
+                            
+                            <tr class="propertyConsultant">
+                                <td colspan="4">
+                                    <table width="100%" cellpadding="0" cellspacing="0">
+                                        <tr>
+                                            <td colspan="4">
+                                                <div class="FieldTitle">PROPERTY CONSULTANT/BROKER/CHANNEL PARTNER DETAILS <br/><span style="color:#000; font-size:11px;">* If you have chosen the source of Booking as Property Consultant/Broker/Channel Partner</span></div>
+                                            </td>
+                                        </tr><tr><td>
+                                        <apex:outputPanel id="popolate">
+                                            
+                                            <apex:outputPanel rendered="{! !chbox}"><!---->
+                                                <div class="form-group row mt-1">
+                                                    <label for="Channelpartner" class="col-md-2 col-form-label">Search Your Property Consultant/Broker/Channel Partner Here</label>
+                                                    <div class="col-md-4" >
+                                                        <input class="from-control" autocomplete="off" type="text" size="20" name="cp" id="cp" onkeyup="loadXMLDoc(this.value)" style="width:100%;"/>
+                                                        
+                                                        <apex:inputHidden value="{!cpname}" id="cp1" > </apex:inputHidden>                                    
+                                                    </div>
+                                                </div>
+                                                
+                                                
+                                                <div class="form-group row mt-1">
+                                                    <label for="Channelpartner" class="col-md-2 col-form-label" style="visibility: hidden;"></label>
+                                                    <div class="col-md-4">
+                                                        <div align="center" id="searchResult" name="searchResult" styleClass="form-control" style="cursor: pointer;background: #D3D3D3;"></div>
+                                                    </div>
+                                                </div> 
+                                                
+                                                 <apex:inputText id="ChannelPartnerName" value="{!ChannelPartnerName}" style="display:none">
+                                                </apex:inputText>
+                                            </apex:outputPanel>
+                                        </apex:outputPanel>
+                                        <br/>
+                                        
+                                        <apex:outputLabel value="New CP" for="theCPLabel" style="font-size:14px;"/>
+                                        
+                                        <apex:inputCheckbox value="{!chbox}" styleClass="form-control3" id="newcpcheckbox">
+                                            <apex:actionSupport event="onclick" action="{!chboxaction}" reRender="NewCP,popolate" status="loadingA"/>
+                                        </apex:inputCheckbox>
+                                        <br/><br/>
+                                        
+                                        <apex:outputPanel id="NewCP">
+                                            <!-- -->
+                                            <div class="form-group row mt-1">
+                                                <tr style="display: {!IF(!file1ren, 'none', 'table-row')}; ">
+                                                    <td colspan="1">
+                                                        <span class="red">*</span>Property Consultant/Broker/Channel Partners Firm Name:
+                                                    </td>
+                                                    <td colspan="3">
+                                                        <apex:inputField value="{!Lead.Partner_s_Firm_Name__c}"/>
+                                                    </td>
+                                                </tr>
+                                                
+                                                <tr style="display: {!IF(!file1ren, 'none', 'table-row')}; ">
+                                                    <td colspan="1">
+                                                        <span class="red">*</span>Property Consultant/Broker/Channel Partners Name:
+                                                    </td>
+                                                    <td colspan="3">
+                                                        <apex:inputField value="{!Lead.Partner_s_Name__c}"/>
+                                                    </td>
+                                                    
+                                                </tr>
+                                                
+                                                <tr style="display: {!IF(!file1ren, 'none', 'table-row')}; ">
+                                                    <td style="width:25%;">
+                                                        <span class="red">*</span>Contact Mobile:
+                                                    </td>
+                                                    <td style="width:25%;" >
+                                                        <table width="20%" cellpadding="10%">
+                                                            <tr width = "20%">
+                                                                
+                                                                <td> <apex:inputText value="{!Lead.PC_Mobile_Country_Code__c}" rendered="true" styleClass="required phone_field validname" style="width:90px;"/> </td>
+                                                                <td><apex:inputField id="partMob" value="{!Lead.Partner_Mobile__c}" rendered="true" style="width:150px;"/> </td>
+                                                                
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                    <td style="width:25%;" align="right">
+                                                        Office Address:
+                                                    </td>
+                                                    <td style="width:25%;" >
+                                                        <apex:inputField value="{!Lead.Partner_s_Office_Address__c}" required="false"/>
+                                                    </td>
+                                                </tr>
+                                                <tr style="display: {!IF(!file1ren, 'none', 'table-row')}; ">
+                                                    <td style="width:25%;">
+                                                        <span class="red">*</span>Email:
+                                                    </td>
+                                                    <td style="width:25%;" >
+                                                        <apex:inputField value="{!Lead.Partner_Email__c}" id="pEmail" required="false"/>
+                                                    </td>
+                                                    <td style="width:25%;" align="right">
+                                                        PCID:
+                                                    </td>
+                                                    <td style="width:25%;" >
+                                                        <apex:inputField value="{!Lead.PCID__c}" required="false" />
+                                                        
+                                                    </td>
+                                                </tr>
+                                                <tr style="display: {!IF(!file1ren, 'none', 'table-row')}; ">
+                                                    <td style="width:15%;">
+                                                        PAN Number:
+                                                    </td>
+                                                    <td style="width:25%;" >
+                                                        <apex:inputField value="{!Lead.Partner_s_PAN_Number__c}" id="pPan" required="false"/>
+                                                    </td>
+                                                    <td style="width:15%;" align="right">
+                                                        RERA Number:
+                                                    </td>
+                                                    <td style="width:25%;" >
+                                                        <apex:inputField value="{!Lead.Partner_s_RERA_Number__c}" required="false" />
+                                                        
+                                                    </td>
+                                                </tr>
+                                                
+                                            </div>
+                                        </apex:outputPanel>
+                                        <tr><td colspan="2">CP Signature :</td></tr>
+                                        <tr>
+                                            
+                                            <td colspan="2"> 
+                                                <apex:actionFunction action="{!cp_saveImage}" name="cp_saveImageToServer" reRender="">
+                                                    <apex:param assignTo="{!cp_fileData}" name="cp_data" value="" />
+                                                </apex:actionFunction>
+                                                <apex:actionFunction action="{!cp_clearImage}" name="cp_ClearImageFromServer" reRender="">
+                                                    
+                                                </apex:actionFunction>
+                                                <canvas id="cp_signature" width="350" height="100" /><br/><br/>
+                                                <!-- <input class="sign_btn" type="button" id="cp_Save" style="height:20px;width:50px;" value="Save" />&nbsp; &nbsp;-->
+                                                <input class="sign_btn" type="button" value="Clear" id="cp_Clear"  />
+                                            </td>
+                                        </tr>
+                                        
+                                        </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <!-- property end -->
+                            <tr  class="eliteClubMember">
+                                <td colspan="4">
+                                    <table  width="100%" cellpadding="0" cellspacing="0">
+                                        <tr>
+                                            <td colspan="4">
+                                                <div class="FieldTitle">REFERRAL DETAILS <span style="color:#000; font-size:11px;float: right;"></span></div>
+                                            </td>
+                                        </tr>                       
+                                        
+                                        <tr>
+                                            <td >
+                                                Referred By :
+                                            </td>
+                                            <td style="width:25%;"> 
+                                                <apex:inputField value="{!Lead.Referred_By__c}"/>                                
+                                            </td>
+                                            <td style="width:20%;" align="right">
+                                                Project :
+                                            </td>
+                                            <td style="width:30%;">
+                                                <apex:inputField value="{!Lead.Referred_Project__c}"/> 
+                                                
+                                            </td>
+                                            
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td style="width:25%;">
+                                                Tower : <apex:inputField value="{!Lead.Referred_Tower__c}"/> 
+                                            </td>                           
+                                            <td style="width:25%;">
+                                                Flat : <apex:inputField value="{!Lead.Referred_Flat__c}"/> 
+                                            </td>
+                                            <td style="width:25%;">
+                                                Emp Code : <apex:inputField value="{!Lead.Referred_Emp_Code__c}"/> 
+                                                
+                                            </td>                           
+                                            
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            
+                            <tr><td colspan="2">Signature :</td></tr>
+                            <tr>
+                                
+                                <td colspan="2"> 
+                                    <apex:actionFunction action="{!saveImage}" name="saveImageToServer" reRender="">
+                                        <apex:param assignTo="{!fileData}" name="data" value="" />
+                                    </apex:actionFunction>
+                                    <apex:actionFunction action="{!clearImage}" name="ClearImageFromServer" reRender="">
+                                        
+                                    </apex:actionFunction>
+                                    <canvas id="signature" width="350" height="100" /><br/><br/>
+                                    
+                                    <!--  <input class="sign_btn" type="button" id="save" style="height:20px;width:50px;" value="Save" />&nbsp; &nbsp;  -->
+                                    <input class="sign_btn" type="button" value="Clear" id="clear"  />
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td colspan="4">
+                                    I hereby give consent to Oberoi Realty Limited and / or its Group Companies to communicate its marketing and promotional communication by letters / email / voice / sms or otherwise, to my contact details mentioned in this Customer Data Sheet / Expression of Interest.<br/><br/>
+                                    <!--  <input type="checkbox" required="true" name="customer_feedback['right_terms']"  class='required' id="right_terms"/> -->
+                                    <input type="checkbox" required="true" name="customer_feedback['right_terms']" value="immediately" id="right_terms"/> <label for="right_terms">I confirm that the above information given by me is true and correct to the best of my knowledge.</label>
+                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" valign="top">
+                                    <!-- rerender="mndtpanel" -->
+                                    
+                                    <apex:actionStatus id="loadingA" style="align:left;">
+                                        <apex:facet name="start">
+                                            <apex:outputPanel >
+                                                <apex:commandButton value="Processing.." styleClass="btn" disabled="true"/>
+                                                &nbsp;&nbsp;
+                                                <img src="/img/loading.gif"/>
+                                            </apex:outputPanel>
+                                        </apex:facet>
+                                        <apex:facet name="stop">
+                                            <apex:commandButton styleClass="btn" id="cmdid" value="Register" action="{!doSave}" oncomplete="validateUserInput();" rerender="mndtpanel" status="loadingA"/>
+                                        </apex:facet>
+                                    </apex:actionStatus>
+                                    
+                                </td>
+                                <td colspan="2" valign="top" align="right">
+                                    
+                                </td>
+                                
+                            </tr>
+                            
+                            
+                            <!-- </div> -->
+                        </table>
+                        <apex:outputPanel id="abc">
+                            <apex:pageMessages ></apex:pageMessages>
+                        </apex:outputPanel>
+                        
+                        
+                        
+                        
+                        
+                        <apex:inputHidden value="{!Walkinsource}"  id="subcat"/>
+                        <apex:inputHidden value="{!bdgt}"  id="bdgt"/>
+                        <apex:inputHidden value="{!slctRequment}" id="req"/>
+                        <apex:inputHidden value="{!carpetArea}" id="carArea"/>
+                        
+                        <apex:inputHidden value="{!hear}" id="hra"/>
+                        <apex:inputHidden value="{!heard}" id="hrd"/>
+                        <apex:inputHidden value="{!reachUs}" id="rch"/> 
+                        <apex:inputHidden value="{!cResidence}" id="cres"/>                    
+                        <apex:inputHidden value="{!howSoon}" id="hwson"/>
+                        <apex:inputHidden value="{!purposeOfBuying}" id="pbyng"/>
+                        <apex:inputHidden value="{!LocationRating}" id="loc"/>
+                        <!-- <apex:inputHidden value="{!whtlkng}" id="lkng"/>    -->
+                        <apex:inputHidden value="{!possesionTime}" id="psgnTm"/>
+                        
+                        <apex:inputHidden value="{!industry}" id="Indr"/>
+                        <apex:inputHidden value="{!sameApplicant}" id="smApp"/>
+                        <apex:inputHidden value="{!residentStatus}" id="resdnt"/>
+                        <apex:outputPanel id="mndtpanel">
+                            <apex:inputHidden value="{!mndtTrue}"  id="mndtTrue11"/>
+                            <!-- <apex:inputHidden value="{!validEmail}"  id="vEmail"/>-->
+                            <apex:inputHidden value="{!hasError}"  id="mndtTrue12"/>
+                            <apex:inputHidden value="{!ErrorDetail}"  id="ErrorDetailid"/>
+                            <apex:inputHidden value="{!hasDuplicate}"  id="mndtTrue13"/>
+                        </apex:outputPanel>
+                    </apex:form>
+                    
+                </div>
+                
+                <div style="line-height: 16px;font-size: 12px;">
+                    Head Office: Commerz, 3rd Floor, International Business Park, Oberoi Garden City, Off Western Express Highway, Goregaon (East),  Mumbai-400 063. India. 
+                    T: +91 22 6677 3333 (Board) F: +91 22 6677 3334 (Corporate) <!-- <a href="www.oberoirealty.com" target="_blank" style="color: #ec6810;text-decoration: none"> -->www.oberoirealty.com
+                </div>
+                
+                
+                
+                <div class="footerline"  style="bottom: 0px;border-bottom: 7px solid #ec6810;width: 100%;background-color: #fff;padding: 10px 10px;left:0;line-height: 16px;font-size: 12px;">
+                </div>
+                
+                
+                <div class="form1_thankyou" style="display: none; text-align:center;  padding: 25% 15px; width: 100%; font-size: 24px;   font-weight: bold; line-height: 36px;">
+                    Thank you for submitting the details.<br/> We look forward to assisting you.
+                    
+                </div>
+            </div>
+            
+            
+            
+            
+            <!--<script type="text/javascript" src="http://oberoirealty.com/elite_club/js/jquery.min.js"></script>
+
+<script type="text/javascript" src="http://oberoirealty.com/elite_club/js/jquery.validate.js"></script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.js"></script>-->
+            
+            <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"/>
+            <apex:includeScript value="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.js"/>
+            <!--<apex:includeScript value="{!$Resource.CSS}"/> -->
+            <apex:includeScript value="https://code.jquery.com/jquery-1.12.4.js"/>
+            <apex:includeScript value="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.js"/>
+            <apex:includeScript value="{!$Resource.intlTelInput}"/>
+            
+            
+            
+            
+            <script type="text/javascript">
+            
+            
+            
+            var selectedCat ;
+            $(document).ready(function($){  
+                $("input[name='customer_feedback[category]']").change(function() {
+                    $('.showDetails').show();
+                    var val = $("input[type='radio'][name='customer_feedback[category]']:checked").val();
+                    selectedCat = val;
+                    var cmpID = '{!$Component.frm.cat}';
+                    document.getElementById(cmpID).value = val;
+                    
+                    $('.subCatExCustomer,.subCatNewCustomer,.subCatProCons,.subCatBanker,.categoryOther').hide();
+                    if(val=='Existing Customer'){
+                        $('.subCatExCustomer').show();
+                    }
+                    if(val=='New Customer'){
+                        $('.subCatNewCustomer').show();
+                    }
+                    if(val=='Property Consultant'){
+                        $('.subCatProCons').show();
+                    }
+                    if(val=='Banker'){
+                        $('.subCatBanker').show();
+                    }
+                    if(val=='Others'){
+                        $('.categoryOther').show();
+                    }
+                    $("input[name='customer_feedback[sub_category]']").attr("checked" , false);     
+                });
+                
+                $("input[name='customer_feedback[sub_category]']").change(function() {
+                    var val = $("input[type='radio'][name='customer_feedback[sub_category]']:checked").val();
+                    var cmpID = '{!$Component.frm.subcat}';
+                    document.getElementById(cmpID).value = val;
+                    if(val=='Other'){
+                        $('.sub_categoryOther').show();
+                    }else{
+                        $('.sub_categoryOther').hide();
+                    }
+                    
+                });
+                
+                
+                
+                
+                $.validator.setDefaults({
+                    submitHandler: function() {
+                        debugger;
+                        $('.btn').attr("disabled", "true");
+                        $.ajax({
+                            type:"POST",
+                            dataType:"json",
+                            url:$("#customerFeedback").attr("action"),
+                            data:$("#customerFeedback").serialize(),
+                            success: function(resp, status, xhr){
+                                debugger;
+                                console.log("Status : " + status);
+                                console.log(resp);
+                                if(status == "success"){
+                                    // console.log(resp.data.customer_feedback["category"]);
+                                    if (($("input[type='radio'][name='customer_feedback[category]']:checked").val() == "New Customer") || ($("input[type='radio'][name='customer_feedback[sub_category]']:checked").val() =="Enquiry for New Flat"))
+                                    {             
+                                        if (resp.already_exist) {
+                                            $('.form1').hide();
+                                            $('.form1_thankyou').show();                
+                                            $('.form1_thankyou').html("Thank you for submitting the details. We look forward to assisting you.");
+                                            $('.btn').attr("disabled", "false");
+                                        }else{
+                                            $('.form1').hide();
+                                            $('.form1_thankyou').hide();                
+                                            $('.form1_thankyou').html("Thank you for submitting the details. We look forward to assisting you.");
+                                            $('.btn').attr("disabled", "false");
+                                            // $('.form1_thankyou').html("Please wait ...");
+                                            
+                                            //window.location.href = "/apex/customer_data_sheetdetail?id="+resp.data.customer_feedback["id"];
+                                        }
+                                        
+                                    }else{
+                                        $('.form1').hide();
+                                        $('.form1_thankyou').show();
+                                        $('.btn').attr("disabled", "false");
+                                    }
+                                    
+                                    
+                                }else{}
+                            },
+                            error: function(resp, status, xhr){
+                            }
+                        });
+                    }
+                });
+                
+                $("#customerFeedback").validate();
+                
+                $(".phone_field").intlTelInput({
+                    defaultCountry: "in",
+                    preferredCountries:['in', 'gb'],
+                    autoHideDialCode: false
+                });
+                
+            });
+            
+            var selectedCat ;
+            $(document).ready(function($){  
+                
+                
+                
+                $("input[name='customer_feedback[contact_person_same_as_applicant]']").change(function() {
+                    var val = $("input[type='radio'][name='customer_feedback[contact_person_same_as_applicant]']:checked").val();
+                    if(val=='Yes'){
+                        $('.contactPersonDetail').hide();
+                    }else{
+                        $('.contactPersonDetail').show();
+                    }     
+                });
+                
+                $("input[name='customer_feedback[budget]']").change(function() {
+                    var valbud = $("input[type='radio'][name='customer_feedback[budget]']:checked").val();
+                    
+                    var cmpID = '{!$Component.frm.bdgt}';
+                    
+                    document.getElementById(cmpID).value = valbud;
+                });
+                
+                
+                
+                $("input[name='customer_feedback[requirement][]']").change(function() {
+                    var valbud;
+                    
+                    valbud = $("input[type='checkbox'][name='customer_feedback[requirement][]']:checked").val();
+                    var cmpID = '{!$Component.frm.req}';
+                    var valbudTest;
+                    Testvalbud = document.getElementsByClassName('FeedbackRequired'); 
+                    
+                    document.getElementById(cmpID).value='';
+                    for(var i=0;i<Testvalbud.length;i++){
+                        if(Testvalbud[i].checked){
+                            // alert(Testvalbud[i].value);
+                            
+                            if(document.getElementById(cmpID).value==''){
+                                document.getElementById(cmpID).value = Testvalbud[i].value;
+                            }
+                            else{
+                                document.getElementById(cmpID).value =document.getElementById(cmpID).value+','+Testvalbud[i].value;
+                            }
+                        }
+                    }
+                    
+                });
+                
+                $("input[name='customer_feedback[carpet_area][]']").change(function() {
+                    var valbud;
+                    //alert('check');
+                    
+                    valbud = $("input[type='checkbox'][name='customer_feedback[carpet_area][]']:checked").val();
+                    var valbudTest;
+                    Testvalbud = document.getElementsByClassName('FeedbackCarpet'); 
+                    
+                    
+                    //alert(valbud);
+                    var cmpID = '{!$Component.frm.carArea}';
+                    //alert(cmpID);
+                    document.getElementById(cmpID).value='';
+                    // document.getElementById(cmpID).value = valbud;  
+                    //alert('Test');
+                    
+                    for(var i=0;i<Testvalbud.length;i++){
+                        if(Testvalbud[i].checked){
+                            
+                            
+                            if(document.getElementById(cmpID).value==''){
+                                document.getElementById(cmpID).value = Testvalbud[i].value;
+                            }
+                            else{
+                                document.getElementById(cmpID).value =document.getElementById(cmpID).value+','+Testvalbud[i].value;
+                            }
+                        }
+                    }
+                    // alert(document.getElementById(cmpID).value);
+                    
+                });
+                
+                $("input[name='customer_feedback[about_oberoi]']").change(function() {
+                    var valbud;
+                    //alert('check');
+                    
+                    valbud = $("input[type='radio'][name='customer_feedback[about_oberoi]']:checked").val();
+                    //alert(valbud);
+                    var cmpID = '{!$Component.frm.hra}';
+                    //alert(cmpID);
+                    document.getElementById(cmpID).value = valbud;  
+                    //alert('Test');
+                    
+                });
+                
+                $("input[name='customer_feedback[heard_about][]']").change(function() {
+                    var valbud;
+                    //alert('check');
+                    
+                    valbud = $("input[type='checkbox'][name='customer_feedback[heard_about][]']:checked").val();
+                    var valbudTest;
+                    Testvalbud = document.getElementsByClassName('FeedbackHeard'); 
+                    
+                    
+                    //alert(valbud);
+                    var cmpID = '{!$Component.frm.hrd}';
+                    //alert(cmpID);
+                    document.getElementById(cmpID).value='';
+                    // document.getElementById(cmpID).value = valbud;  
+                    //alert('Test');
+                    
+                    for(var i=0;i<Testvalbud.length;i++){
+                        if(Testvalbud[i].checked){                        
+                            
+                            if(document.getElementById(cmpID).value==''){
+                                document.getElementById(cmpID).value = Testvalbud[i].value;
+                            }
+                            else{
+                                document.getElementById(cmpID).value =document.getElementById(cmpID).value+','+Testvalbud[i].value;
+                            }
+                        }
+                    }
+                    // alert(document.getElementById(cmpID).value);
+                    
+                });
+                
+                $("input[name='customer_feedback[reach_oberoi]']").change(function() {
+                    var valbud;
+                    //alert('check');
+                    
+                    valbud = $("input[type='radio'][name='customer_feedback[reach_oberoi]']:checked").val();
+                    //alert(valbud);
+                    var cmpID = '{!$Component.frm.rch}';
+                    //alert(cmpID);
+                    document.getElementById(cmpID).value = valbud;  
+                    //alert('Test');
+                    
+                });
+                
+                $("input[name='customer_feedback[current_residence]']").change(function() {
+                    var valbud;
+                    //alert('check');
+                    
+                    valbud = $("input[type='radio'][name='customer_feedback[current_residence]']:checked").val();
+                    //alert(valbud);
+                    var cmpID = '{!$Component.frm.cres}';
+                    //alert(cmpID);
+                    document.getElementById(cmpID).value = valbud;  
+                    //alert('Test');
+                    
+                });
+                
+                $("input[name='customer_feedback[time_limit][]']").change(function() {
+                    var valbud;
+                    //alert('check');
+                    
+                    valbud = $("input[type='radio'][name='customer_feedback[time_limit][]']:checked").val();
+                    //alert(valbud);
+                    var cmpID = '{!$Component.frm.hwson}';
+                    //alert(cmpID);
+                    document.getElementById(cmpID).value = valbud;  
+                    //alert('Test');
+                    
+                });  
+                
+                $("input[name='customer_feedback[purpose]']").change(function() {
+                    var valbud;
+                    //alert('check');
+                    
+                    valbud = $("input[type='radio'][name='customer_feedback[purpose]']:checked").val();
+                    //alert(valbud);
+                    var cmpID = '{!$Component.frm.pbyng}';
+                    //alert(cmpID);
+                    document.getElementById(cmpID).value = valbud;  
+                    //alert('Test');
+                    
+                });
+                
+                $("input[name='customer_feedback[Location]']").change(function() {
+                    var valbud;
+                    //alert('check');
+                    
+                    valbud = $("input[type='radio'][name='customer_feedback[Location]']:checked").val();
+                    //alert(valbud);
+                    var cmpID = '{!$Component.frm.loc}';
+                    //alert(cmpID);
+                    document.getElementById(cmpID).value = valbud;  
+                    //alert('Test');
+                    
+                });
+                
+                $("input[name='customer_feedback[timeliness][]']").change(function() {
+                    var valbud;
+                    valbud = $("input[type='checkbox'][name='customer_feedback[timeliness][]']:checked").val();
+                    var valbudTest;
+                    Testvalbud = document.getElementsByClassName('feedbackReady'); 
+                    var cmpID = '{!$Component.frm.psgnTm}';
+                    //alert(cmpID);
+                    document.getElementById(cmpID).value='';
+                    // document.getElementById(cmpID).value = valbud;  
+                    //alert('Test');
+                    
+                    for(var i=0;i<Testvalbud.length;i++){
+                        if(Testvalbud[i].checked){
+                            
+                            
+                            if(document.getElementById(cmpID).value==''){
+                                document.getElementById(cmpID).value = Testvalbud[i].value;
+                            }
+                            else{
+                                document.getElementById(cmpID).value =document.getElementById(cmpID).value+','+Testvalbud[i].value;
+                            }
+                        }
+                    }
+                    // alert(document.getElementById(cmpID).value);  
+                    
+                    
+                }); 
+                
+                
+                $("input[name='customer_feedback[contact_person_same_as_applicant]']").change(function() {
+                    var valbud;
+                    //alert('check');
+                    
+                    valbud = $("input[type='radio'][name='customer_feedback[contact_person_same_as_applicant]']:checked").val();
+                    //alert(valbud);
+                    var cmpID = '{!$Component.frm.smApp}';
+                    //alert(cmpID);
+                    document.getElementById(cmpID).value = valbud;  
+                    //alert('Test');
+                    
+                });
+                
+                $("input[name='customer_feedback[resident_status]']").change(function() {
+                    var valbud;
+                    //alert('check');
+                    
+                    valbud = $("input[type='radio'][name='customer_feedback[resident_status]']:checked").val();
+                    //alert(valbud);
+                    var cmpID = '{!$Component.frm.resdnt}';
+                    //alert(cmpID);
+                    document.getElementById(cmpID).value = valbud;  
+                    //alert('Test');
+                    
+                });
+                
+                
+                $("input[name='customer_feedback[walkin_source]']").change(function() {
+                    var val = $("input[type='radio'][name='customer_feedback[walkin_source]']:checked").val();
+                    selectedCat = val;
+                    
+                    var cmpID = '{!$Component.frm.subcat}';
+                    document.getElementById(cmpID).value = selectedCat;
+                    
+                    if(val=='Partner'){
+                        $('.propertyConsultant').show();
+                        $('.eliteClubMember').hide();
+                    }else if(val=='Existing Customer'){
+                        $('.eliteClubMember').show();
+                        $('.propertyConsultant').hide();
+                    }else if(val=='Customer Referral'){
+                        $('.eliteClubMember').show();
+                        $('.propertyConsultant').hide();
+                    }else if(val=='Employee Referral'){
+                        $('.eliteClubMember').show();
+                        $('.propertyConsultant').hide();
+                    }else if(val=='Employee'){
+                        $('.eliteClubMember').show();
+                        $('.propertyConsultant').hide();
+                    }else{
+                        $('.eliteClubMember').hide();
+                        $('.propertyConsultant').hide();
+                    }    
+                });
+                
+                
+                $.validator.setDefaults({
+                    submitHandler: function() {
+                        jQuery('.form1').hide();
+                        jQuery('.form1_thankyou').show();
+                        $.ajax({
+                            type:"POST",
+                            dataType:"json",
+                            url:$("#customerFeedback").attr("action"),
+                            data:$("#customerFeedback").serialize(),
+                            success: function(resp, status, xhr){
+                                if(resp.status == "success"){
+                                    alert('Thanks ');
+                                }
+                                else{
+                                }
+                            },
+                            error: function(resp, status, xhr){
+                            }
+                        });
+                    }
+                });
+                $("#customerFeedback").validate();
+            });
+            
+            </script>
+            
+            <script>
+            function search(){
+                doSearch();
+            }
+            
+            function loadXMLDoc(typed) {
+                //alert('typed: '+typed);
+                if(typed =='') {
+                    document.getElementById("searchResult").style.display = 'none';
+                } else {
+                    document.getElementById("searchResult").style.display = 'block';
+                    var records = [];
+                    
+                    Visualforce.remoting.Manager.invokeAction(
+                        '{!$RemoteAction.CustomerDataSheet_v2.getCPAccounts}',
+                        typed,
+                        function(result, event) {
+                            
+                            if(event.status) {
+                                onSuccess(result);
+                            } else if (event.type === 'exception') {
+                                alert('Event Exception:' + event.message);
+                            } else {
+                                alert('Event Exception:' + event.message);
+                            }
+                        },
+                        {escape: false}
+                    );
+                    //alert('records:: '+records.getArray()); 
+                }
+            }
+            
+            function onSuccess(result) {
+                var sb = "";
+                for (var i = 0; i < result.length && i < 10; i++) {
+                    sb += "<span id="+result[i] +" onclick='divFunction(this.innerText);'>"+result[i] + "</span><br>";
+                }
+                //alert('hiii inside onsucc::'+sb);
+                getObject("searchResult").innerHTML = sb;
+                //$('#sai').load('#sai');               
+            }
+            
+            function getObject(name) {
+                //alert('name:: '+name);
+                var ns4 = (document.layers) ? true : false;
+                var w3c = (document.getElementById) ? true : false;
+                var ie4 = (document.all) ? true : false;
+                
+                if (ns4) return eval('document.' + name);
+                if (w3c) return document.getElementById(name);
+                if (ie4) return eval('document.all.' + name);
+                return false;
+            }
+            
+            window.onload = function() {
+                getObject("cp");
+                //alert('cp:: '+cp);
+                document.getElementById("searchResult").style.display = 'none';
+                //alert('searchRes::'+searchResult);  
+            }
+            
+            function divFunction(name){
+                //alert('name::'+name);
+                document.getElementById("cp").value = name;
+                //alert('name1::'+name);
+                var cpname = document.getElementById("cp").value = name;
+                document.getElementById("thepage:frm:ChannelPartnerName").value = name;
+                document.getElementById("searchResult").style.display = 'none';
+                //alert('searchRes '+searchResult);
+                //$( "#here" ).load(window.location.href + " #here" );
+                //alert('You have selected '+name);
+                
+            }
+            
+            </script>
+            
+            <script>    
+            
+            
+            function validateUserInput() {
+                
+                var cem = document.getElementById('thepage:frm:cEmail').value;
+                var em = document.getElementById('thepage:frm:pEmail').value;
+                var mnt = document.getElementById('thepage:frm:mndtTrue11').value;
+                // var validEm = document.getElementById('thepage:frm:vEmail').value;
+                var mntt = document.getElementById('thepage:frm:mndtTrue12').value;
+                var error_d = document.getElementById('thepage:frm:ErrorDetailid').value;
+                var mn = document.getElementById('thepage:frm:mndtTrue13').value;
+                window.$Label = window.$Label || {};
+                $Label.customLabel= '{!($Label.Site_URL)}'; // assigning the label to the JS variable.
+                
+                //Access the above declared variable in your Exteranal Javascript file as shown below.                
+                var x =  $Label.customLabel;   
+                var catpos=cem.indexOf("@");
+                var cdotpos=cem.lastIndexOf(".");
+                
+                var pattern=/^\d{10}$/;
+                
+                var atpos=em.indexOf("@");
+                var dotpos=em.lastIndexOf(".");
+                
+                if(em != '' && (atpos<1 || dotpos<atpos+2 || dotpos+2>=em.length)){
+                    alert("Please enter valid e-mail address for Partner");
+                } else if(cem != '' &&  (catpos<1 || cdotpos<catpos+2 || cdotpos+2>=cem.length)){
+                    alert("Please enter valid e-mail address for Contact Person.");
+                } else if (mnt=='false'){
+                    alert(' Please select all the required fields.');
+                }else if (mntt =='false'){
+                    alert('Error :  \n'+error_d); //There are some internal Errors.Please contact your Admin.  
+                    
+                } else if (mn =='true'){
+                    alert('Lead already axist with the mentioned details');                   
+                } else if (document.getElementById('right_terms').checked){
+                    alert('Thank you for providing your details.', 'Please select the checkbox.');
+                    top.location.href= x;
+                    document.getElementById("thepage:frm").reset();
+                    window.history.forward();
+                    noback();
+                } 
+            }
+            
+            
+            window.history.forward();
+            function noBack()
+            {
+                window.history.forward();
+            }             
+            </script>
+            
+            <!--signature-->
+            <script>
+            
+            
+            !function() {
+                var canvas, lastX, lastY,movement=0;
+                
+                const lineWidth = 0;
+                const halfLineWidth = lineWidth / 2;
+                const fillStyle = '#333';
+                const strokeStyle = '#333';
+                const shadowColor = '#333';
+                const shadowBlur = lineWidth / 4;
+                const state = {
+                    mousedown: false
+                };
+                
+                function start(event) {
+                    lastX = event.offsetX;
+                    lastY = event.offsetY;
+                    document.body.addEventListener("mousemove", draw);
+                    document.body.addEventListener("mouseup", end);
+                }
+                function draw(event) {
+                    var context = canvas.getContext("2d");
+                    
+                    if(event.target === canvas) {
+                        context.fillStyle = "black";
+                        context.strokeStyle = "black";
+                        context.beginPath();
+                        context.moveTo(lastX, lastY);
+                        context.lineTo(event.offsetX, event.offsetY, 3);
+                        context.stroke();
+                        lastX = event.offsetX;
+                        lastY = event.offsetY; 
+                    }
+                    console.log('count : ',movement);
+                    
+                    movement +=1; 
+                    event.preventDefault();
+                }
+                function end(event) {
+                    document.body.removeEventListener("mousemove", draw);
+                    document.body.removeEventListener("mouseup", end);
+                    //canvas.removeEventListener("mouseenter", mouseenter);
+                    event.preventDefault();
+                    //event.preventDefault();
+                    if(movement > 2){
+                        saveImageToServer(canvas.toDataURL("image/jpeg").split(/;base64,/)[1]);
+                        alert("Click OK to save signature");
+                    }
+                    
+                }
+                function save(event) {
+                    event.preventDefault();
+                    saveImageToServer(canvas.toDataURL("image/jpeg").split(/;base64,/)[1]);
+                    alert("Click OK to save signature");
+                } 
+                
+                
+                
+                function init() {
+                    var context;
+                    canvas = document.getElementById("signature");
+                    
+                    canvas.addEventListener("mousedown", start);
+                    
+                    canvas.addEventListener('touchstart', handleWritingStart);
+                    canvas.addEventListener('touchmove', handleWritingInProgress);
+                    canvas.addEventListener('touchend', handleDrawingEnd);
+                    
+                    
+                    
+                    
+                    context = canvas.getContext("2d");
+                    context.fillStyle = "white";
+                    context.fillRect(0, 0, canvas.width, canvas.height);
+                    //document.getElementById("save").addEventListener("click", save);
+                    document.getElementById('clear').addEventListener('click', function () {
+                        console.log('clear');
+                        context.fillStyle = "white";
+                        context.fillRect(0, 0, canvas.width, canvas.height);
+                        ClearImageFromServer();
+                        
+                        movement=0;
+                        console.log('movement cleared count : ',movement);
+                        alert("Signature Cleared ! Please Re-Sign");
+                    }, false);
+                    
+                }
+                function resetForm() {
+                    document.getElementById("signature");
+                    var context = canvas.getContext("2d");
+                    context.clear();
+                    
+                }
+                
+                
+                function handleWritingStart(event) {
+                    
+                    var context = canvas.getContext("2d");
+                    event.preventDefault();
+                    
+                    const mousePos = getMosuePositionOnCanvas(event);
+                    console.log('x : '+mousePos.x);
+                    console.log('y : '+mousePos.y);
+                    context.beginPath();
+                    
+                    context.moveTo(mousePos.x, mousePos.y);
+                    
+                    context.lineWidth = lineWidth;
+                    context.strokeStyle = strokeStyle;
+                    context.shadowColor = null;
+                    context.shadowBlur = null;
+                    
+                    context.fill();
+                    
+                    state.mousedown = true;
+                }
+                
+                function handleWritingInProgress(event) {
+                    var context = canvas.getContext("2d");
+                    event.preventDefault();
+                    
+                    if (state.mousedown) {
+                        const mousePos = getMosuePositionOnCanvas(event);
+                        
+                        context.lineTo(mousePos.x, mousePos.y);
+                        context.stroke();
+                    }
+                    
+                    movement+=1;
+                    console.log('movement count : ',movement);
+                }
+                
+                function handleDrawingEnd(event) {
+                    var context = canvas.getContext("2d");
+                    event.preventDefault();
+                    
+                    if (state.mousedown) {
+                        context.shadowColor = shadowColor;
+                        context.shadowBlur = shadowBlur;
+                        
+                        context.stroke();
+                    }
+                    
+                    state.mousedown = false;
+                    event.preventDefault();
+                    if(movement > 2){
+                        saveImageToServer(canvas.toDataURL("image/jpeg").split(/;base64,/)[1]);
+                        alert("Click OK to save signature");
+                    }
+                    
+                }
+                function getMosuePositionOnCanvas(event) {
+                    
+                    
+                    const clientX =  event.touches[0].clientX;
+                    const clientY =  event.touches[0].clientY;
+                    //const { left, top } = canvas.getBoundingClientRect();
+                    const canvasX = clientX - canvas.getBoundingClientRect().left;
+                    const canvasY = clientY -  canvas.getBoundingClientRect().top ;
+                    
+                    return { x: canvasX, y: canvasY };
+                }
+                
+                
+                window.addEventListener('DOMContentLoaded', init);
+            }() 
+            </script>
+            
+            
+            <!--cp signature-->
+            <script>
+            
+            
+            !function() {
+                var canvas, lastX, lastY,movement=0;
+                
+                const lineWidth = 0;
+                const halfLineWidth = lineWidth / 2;
+                const fillStyle = '#333';
+                const strokeStyle = '#333';
+                const shadowColor = '#333';
+                const shadowBlur = lineWidth / 4;
+                const state = {
+                    mousedown: false
+                };
+                
+                function start(event) {
+                    lastX = event.offsetX;
+                    lastY = event.offsetY;
+                    document.body.addEventListener("mousemove", draw);
+                    document.body.addEventListener("mouseup", end);
+                }
+                function draw(event) {
+                    var context = canvas.getContext("2d");
+                    
+                    if(event.target === canvas) {
+                        context.fillStyle = "black";
+                        context.strokeStyle = "black";
+                        context.beginPath();
+                        context.moveTo(lastX, lastY);
+                        context.lineTo(event.offsetX, event.offsetY, 3);
+                        context.stroke();
+                        lastX = event.offsetX;
+                        lastY = event.offsetY; 
+                    }
+                    
+                    movement +=1;
+                    console.log('movement count : ',movement);
+                    event.preventDefault();
+                }
+                function end(event) {
+                    document.body.removeEventListener("mousemove", draw);
+                    document.body.removeEventListener("mouseup", end);
+                    //canvas.removeEventListener("mouseenter", mouseenter);
+                    event.preventDefault();
+                    //event.preventDefault();
+                    if(movement>2){
+                        cp_saveImageToServer(canvas.toDataURL("image/jpeg").split(/;base64,/)[1]);
+                        alert("Click OK to save signature");
+                    }
+                    
+                }
+                function cp_save(event) {
+                    event.preventDefault();
+                    cp_saveImageToServer(canvas.toDataURL("image/jpeg").split(/;base64,/)[1]);
+                    alert("Click OK to save signature");
+                } 
+                
+                
+                
+                function init() {
+                    var context;
+                    canvas = document.getElementById("cp_signature");
+                    
+                    canvas.addEventListener("mousedown", start);
+                    
+                    canvas.addEventListener('touchstart', handleWritingStart);
+                    canvas.addEventListener('touchmove', handleWritingInProgress);
+                    canvas.addEventListener('touchend', handleDrawingEnd);
+                    
+                    
+                    
+                    
+                    context = canvas.getContext("2d");
+                    context.fillStyle = "white";
+                    context.fillRect(0, 0, canvas.width, canvas.height);
+                    //document.getElementById("cp_Save").addEventListener("click", cp_save);
+                    document.getElementById('cp_Clear').addEventListener('click', function () {
+                        context.fillStyle = "white";
+                        context.fillRect(0, 0, canvas.width, canvas.height);
+                        ClearImageFromServer();
+                        
+                        movement=0;
+                        console.log('movement cleared count : ',movement);
+                        alert(" CP Signature Cleared ! Please Re-Sign");
+                    }, false);
+                    
+                }
+                function resetForm() {
+                    document.getElementById("cp_signature");
+                    var context = canvas.getContext("2d");
+                    context.clear();
+                    
+                }
+                
+                
+                function handleWritingStart(event) {
+                    
+                    var context = canvas.getContext("2d");
+                    event.preventDefault();
+                    
+                    const mousePos = getMosuePositionOnCanvas(event);
+                    console.log('x : '+mousePos.x);
+                    console.log('y : '+mousePos.y);
+                    context.beginPath();
+                    
+                    context.moveTo(mousePos.x, mousePos.y);
+                    
+                    context.lineWidth = lineWidth;
+                    context.strokeStyle = strokeStyle;
+                    context.shadowColor = null;
+                    context.shadowBlur = null;
+                    
+                    context.fill();
+                    
+                    state.mousedown = true;
+                }
+                
+                function handleWritingInProgress(event) {
+                    var context = canvas.getContext("2d");
+                    event.preventDefault();
+                    
+                    if (state.mousedown) {
+                        const mousePos = getMosuePositionOnCanvas(event);
+                        
+                        context.lineTo(mousePos.x, mousePos.y);
+                        context.stroke();
+                    }
+                    movement += 1;
+                    console.log('movement count : ',movement);
+                }
+                
+                function handleDrawingEnd(event) {
+                    var context = canvas.getContext("2d");
+                    event.preventDefault();
+                    
+                    if (state.mousedown) {
+                        context.shadowColor = shadowColor;
+                        context.shadowBlur = shadowBlur;
+                        
+                        context.stroke();
+                    }
+                    
+                    state.mousedown = false;
+                    event.preventDefault();
+                    if(movement>2){
+                        cp_saveImageToServer(canvas.toDataURL("image/jpeg").split(/;base64,/)[1]);
+                        alert("Click OK to save signature");
+                    }
+                    
+                    
+                }
+                function getMosuePositionOnCanvas(event) {
+                    
+                    
+                    const clientX =  event.touches[0].clientX;
+                    const clientY =  event.touches[0].clientY;
+                    //const { left, top } = canvas.getBoundingClientRect();
+                    const canvasX = clientX - canvas.getBoundingClientRect().left;
+                    const canvasY = clientY -  canvas.getBoundingClientRect().top ;
+                    
+                    return { x: canvasX, y: canvasY };
+                }
+                
+                
+                window.addEventListener('DOMContentLoaded', init);
+            }() 
+            </script>
+            
+        </body>
+    </html>
+</apex:page>

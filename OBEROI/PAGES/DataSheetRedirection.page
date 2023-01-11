@@ -1,0 +1,6 @@
+<apex:page RenderAs="pdf"  standardController="Opportunity"  extensions="DataSheetPDF"  sidebar="false" showHeader="false" applyBodyTag="false" applyHtmlTag="false">
+ <!--dsgyujfkdijg
+ <apex:form >
+  <apex:commandButton value="Search" action="{!insertAttachment}"/>
+  </apex:form>-->
+</apex:page>

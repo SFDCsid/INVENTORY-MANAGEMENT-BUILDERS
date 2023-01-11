@@ -1,0 +1,316 @@
+<apex:page renderAs="PDF" showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false">
+    <html>
+        
+    
+    <head>
+          <style type="text/css" media="print">
+                @page {
+                size:4in 4in;
+                margin:20mm 20mm 60mm 20mm;
+                }
+                body{
+                margin:0;
+                padding:0;
+                font-family: Times;
+                font-size:18px;
+                line-height:1.2;
+                }
+                @page {
+                size: 8.26in 11.69in;
+                margin:25mm;
+                }
+                
+                table {
+        		page-break-inside: auto;
+      			}
+                
+                tr{
+                page-break-inside: avoid;
+        		page-break-after: auto;
+                }
+                
+                .maintable {
+                border:1px solid black;       
+                border-collapse: collapse;
+                margin:0;
+                }
+                .maintable tr td {
+                
+                border:1px solid black;
+                border-collapse: collapse;
+                }
+             
+               
+            </style>  
+        </head>
+    	<body>
+        
+            <p style='font-size:12pt;text-align:center;font-family:Times;font-weight: bold;'>AGREEMENT FOR SALE OF PREMISES</p><br/>
+            <p style='font-size:12pt;text-align:center;font-family:Times;'>Dated This _____ Day of _____________ «pyear».</p>
+            <p style='font-size:12pt;text-align:center;font-family:Times;font-weight: bold;'>BETWEEN</p>
+            <p style='font-size:12pt;text-align:center;font-family:Times;font-weight: bold;margin-bottom:0px;'>OBEROI REALTY LIMITED </p>
+            <p style='font-size:12pt;text-align:center;font-family:Times;font-weight: bold;margin-top:0px;'>(“PROMOTER”)</p>
+            <p style='font-size:12pt;text-align:center;font-family:Times;font-weight: bold;'>AND</p>
+            <p style='font-size:12pt;text-align:center;font-family:Times;font-weight: bold;'>Applicants Name</p>
+            <p style='font-size:12pt;text-align:center;font-family:Times;font-weight: bold;'>(“THE ALLOTTEE/S”)</p>
+            <p style='font-size:12pt;text-align:center;font-family:Times;font-weight: bold;'>FOR</p>
+            <p style='font-size:12pt;text-align:center;font-family:Times;font-weight: bold;margin-bottom:0px;'>Flat No.</p>
+            <p style='font-size:12pt;text-align:center;font-family:Times;font-weight: bold;margin-bottom:0px;margin-top:0px;'>Floor No.</p>
+            <p style='font-size:12pt;text-align:center;font-family:Times;font-weight: bold;margin-top:0px;'>Tower No.</p>
+            <p style='font-size:14pt;text-align:center;font-family:Times;font-weight: bold;'>Project Name</p>
+            <div style='page-break-after: always;'></div>
+            
+            <p style='font-size:12pt;text-align:center;font-family:Times;font-weight: bold;'><u>AGREEMENT FOR SALE OF PREMISES</u></p><br/>
+            <p style='font-size:12pt;text-align:justify;font-family:Times;'><b>THIS AGREEMENT</b> is made at Mumbai this ____ day of _______________, «pyear».</p>
+            <p style='font-size:12pt;text-align:center;font-family:Times;font-weight: bold;'>BETWEEN</p>
+            <p style='font-size:11pt;text-align:justify;font-family:Times;'>OBEROI REALTY LIMITED a company incorporated under the provisions of the Companies Act, 1956 having its registered office at Commerz, 3rd floor, International Business Park, Oberoi Garden City, Off Western Express Highway, Goregaon (East), Mumbai– 400 063, hereinafter referred to as the “Promoter” (which expression shall unless it be repugnant to the context or meaning thereof, be deemed to mean and include its successors and assigns) of the ONE PART</p>
+            <p style='font-size:12pt;text-align:center;font-family:Times;font-weight: bold;'>AND</p>
+            <p style='font-size:11pt;text-align:justify;font-family:Times;'>«name» having his/her/their address at «add1», hereinafter referred to as “the Allottee/s”, (which expression shall unless it be repugnant to the context or meaning thereof be deemed to mean and include in case of an individual his/her/their heirs, executors, administrators and permitted assigns and incase of a partnership firm, the partners or partner for the time being of the said firm, the survivor or survivors and the heirs, executors and administrators of the last survivor and in case of an HUF, the members of the HUF from time to time and the last surviving member of the HUF and the heirs, executors, administrators and permitted assigns of such last surviving member of the coparcenery and survivor/s of them and the heirs, executors, administrators and assigns of the last survivor/s of them and in case of a trust the trustee/s for the time being and from time to time of the trust and the survivor or survivors of them and the heirs, executors and administrators of the last surviving Trustee and his or her assigns and in case of a body corporate/company its successors and permitted assigns) of the OTHER PART</p>
+            <div style='page-break-after: always;'></div>
+            
+            <p style='font-size:11pt;text-align:center;font-family:Times;font-weight: bold;'><u>THE SEVENTH SCHEDULE ABOVE REFERRED TO</u></p>
+            
+            <table width = "100%" class="maintable" border="background-color:black;border-collapse: collapse;" cellpadding='1'>
+            		<tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;margin-bottom:4px;color:black;font-weight: bold;width:5%;text-align: center !important; padding:1px;background-color:#d3d3d3;" >Sr. No.</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: center !important; padding:1px;font-weight: bold;background-color:#d3d3d3;width:40%;">Terms and Expressions</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: center !important; padding:1px;font-weight: bold;background-color:#d3d3d3;width:55%;">Meaning</td>
+                	</tr>
+                	<tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;margin-bottom:4px;color:black;width:5%;text-align: center !important; padding:1px;" >1.</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: left !important; padding:1px;width:40%;">Said Premises</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: left !important; padding:1px;width:55%;">Flat No. «flat_no» on the «floor»«sufx» floor of Tower A being  the Real Estate Project.</td>
+                	</tr>
+                	<tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;margin-bottom:4px;color:black;width:5%;text-align: center !important; padding:1px;" >2.</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: left !important; padding:1px;width:40%;">Carpet area of the said Premises as per RERA</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: left !important; padding:1px;width:55%;">Carpet area of the said Premises as per RERA</td>
+                	</tr>
+                	<tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;margin-bottom:4px;color:black;width:5%;text-align: center !important; padding:1px;" >3.</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: left !important; padding:1px;width:40%;">Sale Price</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: left !important; padding:1px;width:55%;">Rs.«sale_price»/- (Rupees «sale_price_in_words»)</td>
+                	</tr>
+                	<tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;margin-bottom:4px;color:black;width:5%;text-align: center !important; padding:1px;" ></td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: left !important; padding:1px;width:40%;">(i)	Sale Price towards the carpet area of the said Premises</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: left !important; padding:1px;width:55%;">Rs.«price_withoutbal»/-(Rupees «price_withoutbal_in_words»)</td>
+                	</tr>
+                	<tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;margin-bottom:4px;color:black;width:5%;text-align: center !important; padding:1px;" ></td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: left !important; padding:1px;width:40%;">(ii)	Proportionate Sale Price towards the Limited Areas and Facilities</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: left !important; padding:1px;width:55%;">Rs.«price_bal»/- (Rupees «price_bal_in_words»)</td>
+                	</tr>
+                	<tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;margin-bottom:4px;color:black;width:5%;text-align: center !important; padding:1px;" >4.</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: left !important; padding:1px;width:40%;">Part Payment towards the Sale Price paid prior hereto</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: left !important; padding:1px;width:55%;">Rs.«m_20text»/-(Rupees «m_20word»)</td>
+                	</tr>
+                	<tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;margin-bottom:4px;color:black;width:5%;text-align: center !important; padding:1px;" >5.</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: left !important; padding:1px;width:40%;">Bank Account of the Promoter</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: left !important; padding:1px;width:55%;">Oberoi Realty Limited - Elysian Tower A</td>
+                	</tr>
+                	<tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;margin-bottom:4px;color:black;width:5%;text-align: center !important; padding:1px;" >6.</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: left !important; padding:1px;width:40%;">Car parking space/s</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: left !important; padding:1px;width:55%;">Permission to park in «cartext»</td>
+                	</tr>
+                	<tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;margin-bottom:4px;color:black;width:5%;text-align: center !important; padding:1px;" >7.</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: left !important; padding:1px;width:40%;">Booking Date</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: left !important; padding:1px;width:55%;">«bookingdt»</td>
+                	</tr>
+                	<tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;margin-bottom:4px;color:black;width:5%;text-align: center !important; padding:1px;" >8.</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: left !important; padding:1px;width:40%;">Completion Date</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: left !important; padding:1px;width:55%;">31st December 2026</td>
+                	</tr>
+                	<tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;margin-bottom:4px;color:black;width:5%;text-align: center !important; padding:1px;" >9.</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: left !important; padding:1px;width:40%;">Limited Areas and Facilities</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: left !important; padding:1px;width:55%;">«limited»</td>
+                	</tr>
+                	<tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;margin-bottom:4px;color:black;width:5%;text-align: center !important; padding:1px;" >10.</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: left !important; padding:1px;width:40%;">Optional Fittings/Furniture/Fixtures/ Equipment (at such price to be determined by the Promoter)</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: left !important; padding:1px;width:55%;">(1)	Split ACs/VRV<br/>(2)	Wardrobe<br/>(3)	Modular Kitchen</td>
+                	</tr>
+                	<tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;margin-bottom:4px;color:black;width:5%;text-align: center !important; padding:1px;" >11.</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: left !important; padding:1px;width:40%;">Said Nominee</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: left !important; padding:1px;width:55%;">Name: «nominee»<br/>Relationship with Allottee/s: «relation»<br/>Address of Nominee: «nominee_address»</td>
+                	</tr>
+                	<tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;margin-bottom:4px;color:black;width:5%;text-align: center !important; padding:1px;" >12.</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: left !important; padding:1px;width:40%;">Contact Details</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: left !important; padding:1px;width:55%;">Promoter’s email address: customer.service@oberoi realty.com<br/>
+							Promoter’s phone number: 022 66773333<br/>
+							Promoter’s fax number: 022 66773334<br/>
+
+							Allottee/s email address: «emailid»<br/>
+							Allottee/s phone number: «mobno»<br/>
+							Allottee/s fax number: «faxno»
+						</td>
+                	</tr>
+                	<tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;margin-bottom:4px;color:black;width:5%;text-align: center !important; padding:1px;" >13.</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: left !important; padding:1px;width:40%;">PAN</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: left !important; padding:1px;width:55%;">Promoter’s PAN : AABCK0235H<br/>Allottee/s PAN : «pan_no»</td>
+                	</tr>
+                
+            </table>
+            
+            <div style='page-break-after: always;'></div>
+            <p style='font-size:11pt;text-align:center;font-family:Times;font-weight: bold;'><u>THE EIGHTH SCHEDULE ABOVE REFERRED TO</u></p>
+            <table width = "100%" class="maintable" border="background-color:black;border-collapse: collapse;" cellpadding='3'>
+            		<tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;margin-bottom:1px;color:black;font-weight: bold;width:10%;text-align: center !important; padding:1px;background-color:#d3d3d3;" >Sr. No.</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;font-weight: bold;background-color:#d3d3d3;width:45%;">Milestone</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;font-weight: bold;background-color:#d3d3d3;width:15%;">Percentage</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;font-weight: bold;background-color:#d3d3d3;width:32%;">Amount</td>
+                    </tr>
+                	<tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;margin-bottom:1px;color:black;width:8%;text-align: center !important; padding:1px;;" >1.</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: justify !important; padding:5px;width:45%;">At the time of Booking i.e. on Executing the Acceptance Form (being part of the Earnest Money)</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;width:15%;">10%</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:32%;">Rs.«m_10_sale_price»/-<br/>(Rupees «m_10_in_words»)</td>
+                    </tr>
+                <tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;margin-bottom:1px;color:black;width:8%;text-align: center !important; padding:1px;;" >2.</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: justify !important; padding:5px;width:45%;">Construction linked payment from time to time as per RERA (including balance 50% of Earnest Money) upon Execution and Registration of the Agreement</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;width:15%;">45%</td>
+                    <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:32%;">Rs.«m_45_sale_price» /-<br/>(Rupees«m_45_in_words»)</td>
+                    </tr>
+                <tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;margin-bottom:1px;color:black;width:8%;text-align: center !important; padding:1px;;" >3.</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: justify !important; padding:5px;width:45%;">To be Paid on or before «idate2»</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;width:15%;">15%</td>
+                    <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:32%;">Rs. «install2»/-<br/>(Rupees «install2_in_words»)</td>
+                    </tr>
+                <tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;margin-bottom:1px;color:black;width:8%;text-align: center !important; padding:1px;;" >4.</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: justify !important; padding:5px;width:45%;">Completion of the walls, internal plaster, floorings, and windows of the said Premises</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;width:15%;">5%</td>
+                    <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:32%;">Rs.«m_5_sale_price» /-<br/>(Rupees «m_5_in_words»)</td>
+                    </tr>
+                <tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;margin-bottom:1px;color:black;width:8%;text-align: center !important; padding:1px;;" >5.</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: justify !important; padding:5px;width:45%;">Completion of the staircases, lift wells, lobbies up to the floor level of the said Premises</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;width:15%;">5%</td>
+                    <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:32%;">Rs.«m_5_sale_price»/-<br/>(Rupees «m_5_in_words»)</td>
+                    </tr>
+                
+                <tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;margin-bottom:1px;color:black;width:8%;text-align: center !important; padding:1px;;" >6.</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: justify !important; padding:5px;width:45%;">Completion of External Plumbing, External Plaster, elevation, terraces with water proofing of the Real Estate Project</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;width:15%;">5%</td>
+                    <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:32%;">Rs.«m_5_sale_price» /-<br/>(Rupees «m_5_in_words»)</td>
+                    </tr>
+                <tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;margin-bottom:1px;color:black;width:8%;text-align: center !important; padding:1px;;" >7.</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: justify !important; padding:5px;width:45%;">Completion of the lifts, water pumps, electrical fittings, electro, mechanical and environment requirements, entrance lobby/s, paving of areas appertain of the Real Estate Project</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;width:15%;">10%</td>
+                    <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:32%;">Rs.«m_10_sale_price»/-<br/>(Rupees «m_10_in_words»)</td>
+                    </tr>
+                <tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;margin-bottom:1px;color:black;width:8%;text-align: center !important; padding:1px;;" >8.</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: justify !important; padding:5px;width:45%;">At the time of handing over of the possession of the said Premises to the Allottee/s on/after receipt of the Occupation Certificate with respect to the said Premises and after completion/installation of the door to the said premises and installation of sanitary fittings in the said premises</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;width:15%;">BalanceAmount</td>
+                    <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:32%;">Rs.«m_fbal_sale_price2» /-<br/>(Rupees «m_fbal_in_words2»)</td>
+                    </tr>
+            </table>
+            
+            <div style='page-break-after: always;'></div>
+            <p style='font-size:11pt;text-align:center;font-family:Times;font-weight: bold;'><u>THE NINETH SCHEDULE ABOVE REFERRED TO</u></p>
+            <table width = "100%" class="maintable" border="background-color:black;border-collapse: collapse;" cellpadding='1'>
+            		<tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;margin-bottom:4px;color:black;font-weight: bold;width:5%;text-align: center !important; padding:1px;background-color:#d3d3d3;" >Sr. No.</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: center !important; padding:1px;font-weight: bold;background-color:#d3d3d3;width:55%;">Particulars</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: center !important; padding:1px;font-weight: bold;background-color:#d3d3d3;width:40%;">Amount(Rs.)</td>
+                	</tr>
+                <tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;margin-bottom:4px;color:black;width:5%;text-align: center !important; padding:1px;" >1.</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: justify !important; padding:1px;width:55%;">Charges towards formation and registration of the Society and the Apex Body, along with applicable taxes</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: left !important; padding:1px;width:40%;">«w_cond_amt7»/-</td>
+                	</tr>
+                <tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;margin-bottom:4px;color:black;width:5%;text-align: center !important; padding:1px;" >2.</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: justify !important; padding:1px;width:55%;">Deposit towards water, electricity, and other utility and services connection charges</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: left !important; padding:1px;width:40%;">To be paid to the utility supplier at actuals</td>
+                	</tr>
+                <tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;margin-bottom:4px;color:black;width:5%;text-align: center !important; padding:1px;" >3.</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: justify !important; padding:1px;width:55%;">One-time non-refundable membership fee with respect to the club house forming part of the Real Estate Project (taxes to be paid separately by the Allottee/s at applicable rates)  </td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: left !important; padding:1px;width:40%;">«w_cond_amt1»/-</td>
+                	</tr>
+                <tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;margin-bottom:4px;color:black;width:5%;text-align: center !important; padding:1px;" >4.</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: justify !important; padding:1px;width:55%;">All legal costs, charges and expenses (taxes to be paid separately by the Allottee/s at applicable rates)</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: left !important; padding:1px;width:40%;">«w_cond_amt4»/-</td>
+                	</tr>
+                <tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;margin-bottom:4px;color:black;width:5%;text-align: center !important; padding:1px;" >5.</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: justify !important; padding:1px;width:55%;">Development charges (taxes to be paid separately by the Allottee/s at applicable rates)</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: left !important; padding:1px;width:40%;">«w_cond_amt2»/-</td>
+                	</tr>
+            </table>
+            
+            <p style='font-size:11pt;text-align:center;font-family:Times;font-weight: bold;'><u>THE NINETH SCHEDULE ABOVE REFERRED TO</u></p>
+            <table width = "100%" class="maintable" border="background-color:black;border-collapse: collapse;" cellpadding='1'>
+            		<tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;margin-bottom:4px;color:black;font-weight: bold;width:5%;text-align: center !important; padding:1px;background-color:#d3d3d3;" >Sr. No.</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: center !important; padding:1px;font-weight: bold;background-color:#d3d3d3;width:55%;">Particulars</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: center !important; padding:1px;font-weight: bold;background-color:#d3d3d3;width:40%;">Amount(Rs.)</td>
+                	</tr>
+                <tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;margin-bottom:4px;color:black;width:5%;text-align: center !important; padding:1px;" >1.</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: justify !important; padding:1px;width:55%;">Share application money of the Society</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: left !important; padding:1px;width:40%;">«w_cond_amt6»/-</td>
+                	</tr>
+                <tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;margin-bottom:4px;color:black;width:5%;text-align: center !important; padding:1px;" >2.</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: justify !important; padding:1px;width:55%;">Corpus fund contribution</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: left !important; padding:1px;width:40%;">«w_cond_amt8»/-</td>
+                	</tr>
+                <tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;margin-bottom:4px;color:black;width:5%;text-align: center !important; padding:1px;" >3.</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: justify !important; padding:1px;width:55%;">Proportionate share of taxes and other charges/levies in respect of the Society** and the Apex Body (taxes to be paid separately by the Allottee/s at applicable rates)</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: left !important; padding:1px;width:40%;" rowspan='2'>«w_cond_amt9»/-</td>
+                	</tr>
+                <tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;margin-bottom:4px;color:black;width:5%;text-align: center !important; padding:1px;" >4.</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 12pt;color:black;text-align: justify !important; padding:1px;width:55%;">Deposit towards provisional monthly contribution towards outgoings of the Society and the Apex Body (taxes to be paid separately by the Allottee/s at applicable rates)</td>
+                        
+                	</tr>
+            </table>
+            
+            <div style='page-break-after: always;'></div>
+            <p style='font-size:11pt;text-align:center;font-family:Times;font-weight: bold;'><u>THE NINETH SCHEDULE ABOVE REFERRED TO</u></p>
+            
+            <p style='font-size:11pt;text-align:justify;font-family:Times;margin-right:80mm;'><b>SIGNED AND DELIVERED</b> by the withinnamed “Promoter” Oberoi Realty Limited through its Authorised Signatory/s</p>
+            <p style='font-size:11pt;text-align:justify;font-family:Times;margin-right:80mm;'>1. _________________________</p>
+            <p style='font-size:11pt;text-align:justify;font-family:Times;margin-right:80mm;'>pursuant to a Board Resolution dated 6th March 2021 in the presence of…</p>
+            <p style='font-size:11pt;text-align:justify;font-family:Times;margin-right:80mm;'>1.</p>
+            <p style='font-size:11pt;text-align:justify;font-family:Times;margin-right:80mm;'><b>SIGNED AND DELIVERED</b> by the   withinnamed “Allottee/s” </p>
+            <p style='font-size:11pt;text-align:justify;font-family:Times;margin-right:80mm;'><b>1) «name_1»</b></p>
+            <p style='font-size:11pt;text-align:justify;font-family:Times;margin-right:80mm;'>in the presence of...</p>
+            <p style='font-size:11pt;text-align:justify;font-family:Times;margin-right:80mm;'>1.</p>
+            
+            <div style='page-break-after: always;'></div>
+            <p style='font-size:11pt;text-align:center;font-family:Times;'>Dated this ____ day of ___________________, «pyear»</p>
+            <p style='font-size:11pt;text-align:center;font-family:Times;font-weight: bold;'>Between</p>
+            <p style='font-size:11pt;text-align:center;font-family:Times;font-weight: bold;'>Oberoi Realty Limited</p>
+            <p style='font-size:11pt;text-align:center;font-family:Times;font-weight: bold;'>And</p>
+            
+            <p style='font-size:11pt;text-align:center;font-family:Times;font-weight: bold;'><u>AGREEMENT FOR SALE OF PREMISES</u></p>
+            <p style='font-size:11pt;text-align:center;font-family:Times;font-weight: bold;'>ELYSIAN, Tower  «tower»</p>
+            <p style='font-size:11pt;text-align:center;font-family:Times;font-weight: bold;'>Premises No. «flat_no»</p>
+            <p style='font-size:11pt;text-align:center;font-family:Times;font-weight: bold;'>«floor»«sufx»  floor</p>
+            
+            
+            
+            
+        </body>
+    </html>
+</apex:page>

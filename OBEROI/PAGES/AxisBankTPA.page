@@ -1,0 +1,169 @@
+<apex:page renderAs="PDF" showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false">
+    <html>
+        
+    
+    <head>
+          <style type="text/css" media="print">
+                @page {
+                size:4in 4in;
+                margin:20mm 20mm 60mm 20mm;
+                }
+                body{
+                margin:0;
+                padding:0;
+                font-family: Times;
+                font-size:18px;
+                line-height:1.2;
+                }
+                @page {
+                size: 8.26in 11.69in;
+                margin:30mm;
+                }
+                
+                table {
+        		page-break-inside: auto;
+      			}
+                
+                tr{
+                page-break-inside: avoid;
+        		page-break-after: auto;
+                }
+                
+                .maintable {
+                border:1px solid black;       
+                border-collapse: collapse;
+                margin:0;
+                }
+                .maintable tr td {
+                
+                border:1px solid black;
+                border-collapse: collapse;
+                }
+             
+               
+            </style>  
+        </head>
+    <body>
+        
+        <p style='font-size:12pt;text-align:center;font-family:Times;font-weight: bold;'><u>TRIPARTITE AGREEMENT</u></p><br/>
+        <p style='font-size:11pt;text-align:justify;font-family:Times;'>This Tripartite Agreement (“Agreement”) made at Mumbai on this _____ day of _______________________, 2021 amongst Oberoi Realty Ltd, a Company incorporated under the Companies Act, 1956 and having its registered office at Commerz, 3rd Floor, International Business Park, Oberoi Garden City, Off Western Express Highway, Goregaon (East), Mumbai-400 063 acting through its Authorized Signatory, the Party of the First Part hereinafter referred as “Developer”;</p>
+        <p style='font-size:11pt;text-align:center;font-family:Times;font-weight: bold;'>And</p>
+        <p style='font-size:11pt;text-align:justify;font-family:Times;'>Axis Bank Ltd., a Company incorporated under the Companies Act, 1956 and a Banking Company within the meaning of the Banking Regulation Act, 1949 and having its registered office at ‘Trishul’, 3rd Floor, Opposite Samartheshwar Temple, Law Garden, Ellis Bridge, Ahmedabad 380 006, Gujarat, hereinafter called ‘the Bank’, acting through its Authorised Signatory, Party of the Second Part.</p>
+    	<p style='font-size:11pt;text-align:center;font-family:Times;font-weight: bold;'>And</p>
+        <p style='font-size:11pt;text-align:justify;font-family:Times;'>_____________________, having his/her/their address at -__________________________, hereinafter called the Customer /s Borrower/s and/or the party/ies of the Third Part The expressions Party of the First Part, Party of the Second Part and Party/ies of the Third Part shall unless repugnant to the context include its successors, assigns etc.</p>
+    	<p style='font-size:11pt;text-align:left;font-family:Times;font-weight: bold;'>WHEREAS</p>
+        <ol type = "A">
+         <li style='font-size:11pt;text-align:justify;font-family:Times;'>The Borrower/s desires to purchase Flat No. ____ on ____ floor of Tower “A” in the building known as “Elysian” situated at Oberoi Garden City, Off Western Express Highway, Goregaon (East), Mumbai-400 063 from the Developer and for financing the same has applied to the Bank for housing loan.</li>
+         <li style='font-size:11pt;text-align:justify;font-family:Times;'>The Borrower/s and the Developer and the Bank have also entered into separate respective agreements with each other which shall be duly observed by the concerned parties.</li>
+         <li style='font-size:11pt;text-align:justify;font-family:Times;'>The Parties are executing the present Agreement setting out mutual obligations required to be necessarily performed forming consideration for each other.</li>
+        </ol>
+        <p style='font-size:12pt;text-align:Justify;font-family:Times;font-weight: bold;'><u>NOW THIS AGREEMENT WITNESSETH AND IT IS EXPRESSLY AGREED BY AND BETWEEN THE PARTIES AS UNDER:</u></p><br/>
+    	<ol type = "A">
+            <li style='font-size:11pt;text-align:justify;font-family:Times;margin-bottom:7px;'>In consideration of the Developer and the Borrower/s performing their obligations under the Agreement executed between them, the Bank has agreed to give a loan of Rs.___________/- (Rupees ________________ Only) to the Borrower/s in terms of sanction letter dated and on payment of interest, processing fee, administration fee and compliance of all sanction conditions etc. as agreed/ contracted.</li>
+            <li style='font-size:11pt;text-align:justify;font-family:Times;margin-bottom:7px;'>The Borrower/s have mandated and have authorized the Bank to pay the loan amount sanctioned by the Bank directly to the Developer. The Borrower/s unequivocally and expressly acknowledge and consent that payment to the “Developer” shall be deemed to have been done directly by the Borrower/s.</li>
+            <li style='font-size:11pt;text-align:justify;font-family:Times;margin-bottom:7px;'>In case there is any delay in payment of instalment by the Bank or the Borrower/s, in either case it shall be treated as a default on the part of the Borrower/s, and the Borrower/s shall be liable to pay penalty to the Developer, on the delayed instalment as per the terms of the agreement executed by and between the Borrower/s and the Developer.</li>
+            <li style='font-size:11pt;text-align:justify;font-family:Times;margin-bottom:7px;'>It is agreed by and between the Parties to this Agreement that in case if the Borrower/s fail(s) to pay the sale consideration to the Developer, the Developer shall inform the Bank and the Bank shall have the right to pay the sale consideration and get it registered either in the Bank’s name or its nominee</li>
+            <li style='font-size:11pt;text-align:justify;font-family:Times;margin-bottom:7px;'>The Borrower/s agree/s and confirm/s that in the event of the Bank enforcing its rights as stated in clause 4 above, the Borrower/s shall not object/contest the same in any manner whatsoever neither against the Bank nor against the Developer.  </li>
+            <li style='font-size:11pt;text-align:justify;font-family:Times;margin-bottom:7px;'>It is further specifically agreed by the Builder that in the event of failure on the part of the Builder in honoring the subvention interest payment as due to the Bank, the Bank shall have the right to take all such necessary steps to recover such an amount from the Builder that would also include filing of necessary suit against the Builder for recovery of the said amount. </li>
+            <li style='font-size:11pt;text-align:justify;font-family:Times;margin-bottom:7px;'>The Borrower/s shall be obliged to pay to the Bank the entire loan amount in accordance with the loan agreement to be executed / executed and the Bank can recall the entire loan from the Borrower/s on any default made by the Borrower/s and/or in circumstances detailed/ set out in the said loan agreement without affecting the Borrower’s obligations to the Developer under the agreement with Developer</li>
+            <li style='font-size:11pt;text-align:justify;font-family:Times;margin-bottom:7px;'>In the event of default by the Borrower/s, the Bank will be at liberty to substitute a “New Borrower” to the housing loan advanced to the Borrower/s by the Bank in its sole discretion, after payment of transfer charges, if any, to the Developer, and the same shall be secured by first mortgage of the residential flat for which loan was advanced by the Bank in the project and the Borrower/s hereby subrogate/s all its/his/their rights in the said flat in favour of the Bank.</li>
+            <li style='font-size:11pt;text-align:justify;font-family:Times;margin-bottom:7px;'>The Developer shall deliver to the Bank the sale deed relating to the flat in question as and when executed and registered and shall also inform the Bank in writing at least a week in advance regarding the time, date and venue of registration so that the Bank can detail its representative to collect the original sale deed on registration. The Borrower/s expressly and irrevocably authorizes Developer, and the Bank in this regard. The Developer shall not deliver and / or cause to deliver the sale deed as and when executed and registered to the Borrower/s without the written consent of the Bank.</li>
+            <li style='font-size:11pt;text-align:justify;font-family:Times;margin-bottom:7px;'>The Developer affirms that it has a clear and marketable title to the impartible and proportionate share of the land underneath the flat being sold to the Borrower/s. The Developer confirms that the flat being sold to the Borrower/s is free from encumbrances and requisite sanctions and permissions from appropriate authorities have been obtained.</li>
+            <li style='font-size:11pt;text-align:justify;font-family:Times;margin-bottom:7px;'>Upon the express and irrevocable consent/authorization of the Borrower/s, the Developer recognizes and acknowledges the Bank as a duly authorized agent of the Borrower/s for the purpose of implementation of this Agreement.</li>
+            <li style='font-size:11pt;text-align:justify;font-family:Times;margin-bottom:7px;'>The Developer specifically agrees that in case of cancellation and/or termination of the agreement between the Developer and the customer/s, prior to handing over of the possession of the Property to the respective customer/s, the Developer shall, after retaining the amounts due to the Developer under the respective agreement for sale, refund the balance amount to the Bank within a reasonable time of the termination/cancellation as the case may be. However, the amount refunded to the Bank shall in no case be an amount lesser than the gross amount (total amount after adjusting the proportionate upfront interest collected from the Developer for the remaining/unexpired subvention tenure) disbursed by the Bank in favour of the Developer on behalf of the customer/s.</li>
+            <li style='font-size:11pt;text-align:justify;font-family:Times;margin-bottom:7px;'>The Borrower/s has paid his own contribution in full to the Developer i.e. the cost of the dwelling unit (including escalation, if any) less the loan and the Amount Payable at Possession. However, this would be without prejudice to any right available to the Developer against the Borrower/s under the Agreement executed with the Developer. </li>
+            <li style='font-size:11pt;text-align:justify;font-family:Times;margin-bottom:7px;'>Prior to handing over of possession of the Property to the respective customer/s, the Developer shall note the lien of the Bank on the Property handed over to the customer/s respectively and the Developer shall not allow any sale, transfer, sublet, disposal or re-mortgage of the Property to any other financial institute or third party without written consent of the Bank. The Developer further undertakes to intimate such lien to the appropriate society as formed/to be formed of the flat purchasers/customer/s.  </li>
+            <li style='font-size:11pt;text-align:justify;font-family:Times;margin-bottom:7px;'>The Builder shall raise the demand for payment linked to the stage of construction which is more particularly defined in the Annexure A attached to this agreement. However, it is agreed by the Borrower/s that the Bank shall not be responsible or liable to ensure or ascertain the progress of construction and mere demand for payment would be sufficient for the Bank to effect disbursement as aforesaid. Without prejudice to the above and notwithstanding anything to the contrary contained herein, the Bank may in its sole discretion refuse to disburse the loan until Bank has ascertained the stage of construction.</li>
+            <li style='font-size:11pt;text-align:justify;font-family:Times;margin-bottom:7px;'>The Borrower/s has paid his own contribution in full to the Developer i.e. the cost of the dwelling unit (including escalation, if any) less the loan and the amount payable at possession. However, this would be without prejudice to any right available to the Developer against the Borrower/s under the agreement executed with the Developer. </li>
+            <li style='font-size:11pt;text-align:justify;font-family:Times;margin-bottom:7px;'>The Borrower/s is/are aware that the Bank, for operational/technical reasons, shall open two separate loan accounts of the Borrower/s in the Bank's system. One loan account which shall be live only for the subvention period in order to facilitate subvention process and post the subvention period, the said loan shall be closed in the Bank’s system (subject to no dues pending at the end of subvention period) herein referred to as the "Secondary loan" and another loan account which shall be live for the entire loan tenure herein referred to as " Primary loan account". Both, primary as well as the secondary loan account shall be opened at the time of first disbursement itself. However, during the subvention period, all disbursements shall happen only from the secondary loan account (no disbursement shall be done from the primary loan account) and secondary loan account number shall be used by the borrower as reference for any communication/inquiries with the Bank during/for the Subvention Period. Post the Subvention Period, primary loan shall be disbursed by the Bank equal to the total amount disbursed from the secondary loan account during the subvention period and the disbursement proceeds shall be credited in the secondary loan account and the secondary loan account shall be closed (subject to no dues pending in the same) Borrower shall use the primary account number as reference for any communication/inquiries with Bank for post subvention period.</li>
+            <li style='font-size:11pt;text-align:justify;font-family:Times;margin-bottom:7px;'>The Borrower/s is/are aware and understand the Subvention Scheme and the Subvention Period, as detailed in clause 23 and 24 hereinbelow.</li>
+            <li style='font-size:11pt;text-align:justify;font-family:Times;margin-bottom:7px;'>The Borrower/s understand/s and hereby confirm/s that in case the Borrower/s want/s to foreclose the said loan during the Subvention Period, the Borrower/s shall be liable to pay all the amounts due from the Borrower/s to the Bank including but not limited to entire loan amount (gross amount without adjusting the upfront interest collected from the Developer for the remaining/unexpired subvention tenure) disbursed by the Bank to the Borrower/s or to any other party on his behalf, charges, penalty, unpaid interest etc. </li>
+            <li style='font-size:11pt;text-align:justify;font-family:Times;margin-bottom:7px;'>The Borrower/s hereby declare/s that the Borrower/s shall not claim the income tax exemption on the interest paid by the Developer on behalf of the Borrower/s under the Subvention Scheme.</li>
+            <li style='font-size:11pt;text-align:justify;font-family:Times;margin-bottom:7px;'>The Developer will maintain a separate account for the Borrower/s and adjust payment of housing loan received by it from the Bank/Borrower/s against the cost of the particular category of flat/house applied by them.</li>
+            <li style='font-size:11pt;text-align:justify;font-family:Times;margin-bottom:7px;'>The Borrower/s will not further mortgage/ charge the said property to any person/ financial institution for raising any loan without the prior written consent of the Bank.</li>
+            <li style='font-size:11pt;text-align:justify;font-family:Times;margin-bottom:7px;'>The Developer has agreed to pay the interest on behalf of the borrower/s from the date of disbursement up to the offer of the Developer to hand over of the premises to the Purchaser or ______________, whichever is earlier to the Bank and this period is defined as ‘Subvention period’ and has agreed to hand over the possession of the said Flat / dwelling unit to the borrower/s on or before ____________. However, if the Developer is not able to hand over the possession as agreed, the Bank shall be liable to charge the EMI comprising interest and principal from the borrower/s, and all the terms and conditions as per the loan agreement executed by and between the customer and the bank will remain in force till the repayment of the entire dues of the bank by the customer and customer will liable to pay the dues to the bank as per the agreed terms and conditions.</li>
+            <li style='font-size:11pt;text-align:justify;font-family:Times;margin-bottom:7px;'>That the Developer by way of a separate undertaking has unconditionally agreed to and have accordingly authorized the Bank to deduct upfront interest from the Disbursement to be made by the bank. After disbursement of loan to the borrower/s, the Developer shall give a receipt for the full amount disbursed by the bank. However, for each tranche of the disbursement the future interest will be deducted upfront by the bank from the disbursement date till ______________ and may be extended further as mutually agreed to by the Developer and the bank till ______________ or the date of offer for possession made by the developer to the borrower, whichever is earlier. The balance interest as per the sanction letter terms will be paid by the customer. </li>
+            <li style='font-size:11pt;text-align:justify;font-family:Times;margin-bottom:7px;'>Developer and the Borrower hereby understand and confirm that in case the borrower sells the property viz the flat / unit or forecloses the loan during the subvention tenure, or the bank recalls the loan, or the bank takes over the property in case of event of default and finds a new buyer and the subvention period is yet not over, then the bank shall have the right to not refund the balance unutilized pre-EMI interest, collected upfront at the time of disbursement from the Developer to the Developer. Also, the bank shall have the right to not refund the balance unutilized pre-EMI interest collected upfront at the time of disbursement from the Developer to the borrower in any manner including but not limited to adjustment of such unutilized Pre-EMI interest against the loan outstanding or any other dues. Such unutilized amount shall be retained by the Bank at all times, and it is for the Developer and customer to resolve the same for the balance period (unexpired subvention period).</li>
+            <li style='font-size:11pt;text-align:justify;font-family:Times;margin-bottom:7px;'>The Borrower/s confirms that the Borrower/s has/have no objection to the above arrangement and further undertake/s and confirm/s that the Borrower/s is/are aware that none of these provisions under this Agreement shall release the Borrower/s from the liability to repay the loan together with interest in terms of the sanction letter no. _____________ dated _________ and /or the loan agreement no.___________ dated______________.</li>
+            <li style='font-size:11pt;text-align:justify;font-family:Times;margin-bottom:7px;'>This Agreement is executed in Mumbai and only Mumbai Courts will have jurisdiction.</li> 
+        </ol>
+        <p style='font-size:11pt;text-align:justify;font-family:Times;margin-bottom:7px;'>In witness whereof the parties hereto have signed this Agreement on the day, month and year first above written in the presence of the following witnesses.</p><br/>
+        <p style='font-size:11pt;text-align:justify;font-family:Times;margin-right:50mm;'>Signed and Delivered by the within-named “Borrower”</p>
+        <p style='font-size:11pt;text-align:justify;font-family:Times;margin-right:50mm;'>1)  Applicant Name</p>
+        <p style='font-size:11pt;text-align:justify;font-family:Times;margin-right:50mm;'>Witness:</p>
+        <p style='font-size:11pt;text-align:justify;font-family:Times;margin-right:60mm;'>Signed and Delivered by the within-named “Developer” Oberoi Realty Limited through its Authorized Signatories</p>
+        <p style='font-size:11pt;text-align:justify;font-family:Times;margin-right:60mm;'>1._____________________________________</p>
+        <p style='font-size:11pt;text-align:justify;font-family:Times;margin-right:60mm;'>Pursuant to a Board Resolution dated _____________</p>
+        <p style='font-size:11pt;text-align:justify;font-family:Times;margin-right:60mm;'>Witness:</p>
+        <p style='font-size:11pt;text-align:justify;font-family:Times;margin-right:60mm;'>Signed and delivered by the within-named Axis Bank Limited by the hand of</p>
+        <p style='font-size:11pt;text-align:justify;font-family:Times;margin-right:60mm;'>Mr./Ms._______________________________</p>
+        <p style='font-size:11pt;text-align:justify;font-family:Times;margin-right:60mm;'>Its___________________________________</p>
+        <p style='font-size:11pt;text-align:justify;font-family:Times;margin-right:60mm;'>Witness:</p>
+        
+        <div style='page-break-after: always;'></div>
+        <p style='font-size:12pt;text-align:center;font-family:Times;font-weight: bold;'>Annexure A (Payment Plan)</p>
+        <table width = "100%" class="maintable" border="background-color:black;border-collapse: collapse;" cellpadding='3'>
+            		<tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;margin-bottom:4px;color:black;font-weight: bold;width:5%;text-align: center !important; padding:5px;background-color:#d3d3d3;" >Sr. No.</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;font-weight: bold;background-color:#d3d3d3;">Milestone</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;font-weight: bold;background-color:#d3d3d3;">Percentage</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;font-weight: bold;background-color:#d3d3d3;">Amount</td>
+                    </tr>
+            		<tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;  width:5%;" >1</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: justify !important; padding:5px;">At the time of Booking i.e. on Executing the Acceptance Form (being part of the Earnest Money)</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;" rowspan='2'>10%</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;">Amount</td>
+                    </tr>
+            		<tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;  width:5%;" >2</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: justify !important; padding:5px;">To be paid on or before ______________ (being part of the Earnest Money)</td>
+                        
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;">Amount</td>
+                    </tr>
+            		<tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;  width:5%;" >3</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: justify !important; padding:5px;">Construction linked payment from time to time as per RERA (including balance 50% of Earnest Money) and subject to Execution and Registration of the Agreement </td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;">45%</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;">Amount</td>
+                    </tr>
+            		<tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;  width:5%;" >4</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: justify !important; padding:5px;">To be paid on or before ________________</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;">15%</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;">Amount</td>
+                    </tr>
+            		<tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;  width:5%;" >5</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: justify !important; padding:5px;">Completion of the walls, internal plaster, flooring and windows of the said Premises </td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;">5%</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;">Amount</td>
+                    </tr>
+            		<tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;  width:5%;" >6</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: justify !important; padding:5px;">Completion of the staircases, lift wells, lobbies up to the floor level of the said Premises</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;">5%</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;">Amount</td>
+                    </tr>
+            		<tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;  width:5%;" >7</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: justify !important; padding:5px;">Completion of External Plumbing, External Plaster, elevation, terraces with water proofing of the said Real Estate Project</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;">5%</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;">Amount</td>
+                    </tr>
+            		<tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;  width:5%;" >8</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: justify !important; padding:5px;">Completion of the lifts, water pumps, electrical fittings, electro, mechanical and environment requirements, entrance lobby/s, paving of areas appertain of the said Real Estate Project.</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;">10%</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;">Amount</td>
+                    </tr>
+            		<tr >
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;  width:5%;" >9</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: justify !important; padding:5px;">At the time of handing over of the possession of the said Premises to the Allottee/s on/after receipt of the Occupation Certificate with respect to the said Premises and after completion/installation of the door to the said Premises and installation of sanitary fittings in the said Premises</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;">Balance amount</td>
+                        <td style = "font-family:Times;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;">Amount</td>
+                    </tr>
+        </table>
+        </body>
+  </html>
+</apex:page>

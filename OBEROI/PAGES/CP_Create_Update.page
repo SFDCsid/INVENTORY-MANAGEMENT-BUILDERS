@@ -1,0 +1,8 @@
+<apex:page controller="CP_Create_Update" action="{!process}" lightningStylesheets="True">
+    <apex:form id="fm1">
+        <apex:pageMessages >
+        </apex:pageMessages>
+        <br/>
+        <apex:commandButton action="{!BackToAccount}" value="Go to Account"/>
+    </apex:form>
+</apex:page>

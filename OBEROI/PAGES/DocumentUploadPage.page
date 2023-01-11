@@ -1,0 +1,273 @@
+<apex:page standardStylesheets="false" standardController="Document_Template__c" showHeader="false" extensions="DocumentUpload" docType="html-5.0" title="Document Template">
+    
+    <style>
+        .hideClass{
+            display:none;
+        }
+        .showClass{
+            display:block;
+        }
+    </style>
+    <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"/>
+    <apex:slds />
+
+    <apex:form >
+        
+    <apex:outputPanel id="validationfieldRegion">
+      <script type="text/javascript">
+        
+      errorMsg = {!hasError};
+        var temp ='{!doc.Clause_0__c}';
+        globalCharCount = temp.length;
+      </script>
+    </apex:outputPanel>
+        <apex:outputPanel id="refreshId">
+            <apex:pageMessage summary="{!successmsg}" severity="confirm"></apex:pageMessage>
+            <script>
+            var suceeMsg='{!successmsg}';
+            if(suceeMsg != '')
+                alert(suceeMsg);
+                globalPdfId = '{!currentDocId}';
+            </script>
+        </apex:outputPanel>
+        
+        
+        <!-- ===================================================Changed code starts ===============================================-->
+        <div class="slds-grid" style="margin-left:25%">
+            
+           
+              <apex:outputPanel id="errorSection" >
+              <apex:outputPanel rendered="{!showErrorMessage}" >
+              <div class="slds-box" style="height: 15%;border-color: sandybrown;border-width: thick;">
+                <span style="margin-bottom: 1%;color:red" >
+                  <b><apex:pageMessages escape="false"></apex:pageMessages></b>
+                </span>
+                <br/>
+              </div>
+            </apex:outputPanel>
+              </apex:outputPanel>
+            
+        </div>
+        <div class="main" style="margin-left:2%">
+            
+            <div class="slds-grid" >
+            <apex:actionStatus id="status">
+                <apex:facet name="start">
+                    <div class="fadeMe">
+                        &nbsp;
+                    </div>
+                    <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 15% 5%">
+                        <div style="display: inline-block; padding: 2px; background-color: #fff; width: 125px;">
+                            <img src="/img/loading.gif" style="float: left; margin: 0px;" />
+                            <span style="display: inline-block;">Please Wait...</span>
+                        </div>
+                    </div>
+                </apex:facet>
+            </apex:actionStatus>
+                     <div class="slds-col slds-size--1-of-6" style="margin-top:2%">
+                           <div class="slds-grid" >
+                                  <div class="slds-col slds-size--6-of-6" style="margin-top:2%">
+                                      <label class="slds-form-element__label" for="input-unique-id"><b>Selected Project Name : </b></label>
+                                      
+                                      <apex:outputText value="{!projectName}"/>
+
+                                  </div>
+                               
+                            </div>
+                         <!--   <div class="slds-grid" >
+                                  <div class="slds-col slds-size--6-of-6" style="margin-top:2%">
+                                      <label class="slds-form-element__label" for="input-unique-id"><b>Selected Cluster Name: </b></label>
+                                      <apex:outputField value="{!Document_Template__c.Cluster__c}"/>
+                                      <!-- <apex:outputText value="{!clusterName}"/> 
+
+                                  </div>
+                               
+                            </div> -->
+                           <div class="slds-grid" >
+                                  <div class="slds-col slds-size--6-of-6" style="margin-top:2%">
+                                      <label class="slds-form-element__label" for="input-unique-id"><b>Select Document Type</b></label>
+                                      
+                                      <apex:selectList styleClass="slds-select" size="1" value="{!selectedDocType}" onChange="changeObjectList()">
+                                          <apex:selectOptions value="{!docTypeLst }"/>
+                                      </apex:selectList>
+
+                                  </div>
+                               
+                            </div>
+                            
+                            <div class="slds-grid" >
+                                    
+                                  <div class="slds-col slds-size--6-of-6" style="margin-top:2%">
+
+                                      <label class="slds-form-element__label" for="input-unique-id"><b>Select Object</b></label>
+
+                                     <apex:outputPanel id="dependentObj">
+                                      <apex:selectList styleClass="slds-select" size="1" value="{!selectedObject}" onchange="changeFieldList()" >
+                                          <apex:selectOptions value="{!objectLst }" />
+                                      </apex:selectList>
+                                    </apex:outputPanel>
+                                  </div>
+                            </div>
+                            <div class="slds-grid" >
+                                <div class="slds-col slds-size--6-of-6" style="margin-top:2%;">
+                                    
+                                    <label class="slds-form-element__label" for="input-unique-id"><b>Select Field</b></label>
+                                      
+                                    <apex:outputPanel id="fieldRegion">
+
+                                           <apex:selectList styleClass="slds-select" size="1" value="{!selectedField}" onchange="preparemergefieldname()" >
+                                              <apex:selectOptions value="{!fieldLst}"/>
+                                          </apex:selectList>
+
+                                    </apex:outputPanel>
+                                  </div>
+                            </div>
+                            <div class="slds-grid" >
+                                <div class="slds-col slds-size--6-of-6" style="margin-top:2%;">
+                                     <label class="slds-form-element__label" for="CC"><b>Merge Field</b></label>
+                                                   <div class="slds-form-element__control">
+                                                            
+                                                        <apex:outputPanel id="mergefieldRegion">
+                                                            <apex:inputText styleClass="slds-input" value="{!mergeField}" />
+                                                        </apex:outputPanel>
+                                                      
+                                                   </div>
+                                </div>
+                            </div>
+                            <div class="slds-grid" >
+                                <div class="slds-col slds-size--6-of-6" style="margin-top:2%;">
+                                     <!--<label class="slds-form-element__label" for="CC">Current Char Count</label>-->
+                                                   <div class="slds-form-element__control">
+                                                   
+                                                   </div>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <div class="slds-col slds-size--4-of-6" style="margin-top:2%;margin-left:5%">
+                            
+                            <b>Disable Page No/ Footer:</b>&nbsp;
+                            <apex:inputField value="{!doc['Disable_Page_No__c']}" label="Disable Page No/ Footer:" />&nbsp;&nbsp;
+                             <br/> <br/>
+                            <apex:repeat value="{!strings}" var="string" id="theRepeat">
+                                <div id="{!string}" class="slds-scope">
+                                    <apex:inputField value="{!doc[string]}" onchange="validateCharCountname()"/> 
+                                    <button type="" class="slds-button slds-button_brand" onclick="addRow();return false;">Add Row</button>
+                                    <button type="" onclick="removeRow('{!string}');return false;" class="{! IF(string == 'Clause_0__c', 'hideClass ', 'slds-button slds-button_brand')}" >Remove Row</button>
+                                </div>
+                                
+                            </apex:repeat>
+                           
+                            <apex:outputPanel id="inputArea">
+                            </apex:outputPanel>
+
+                        </div>
+                    </div>
+        </div>
+        <!-- ===================================================Changed code ends =================================================-->
+        <div class="slds-grid slds-grid--align-center">
+            <!-- <apex:commandButton action="{!save}" title="Save"  value="Save Documents" reRender="refreshId" immediate="false" styleClass="slds-button slds-button_brand" ></apex:commandButton> -->
+
+            <button type="" onclick="saveDataAfterValidation();return false;" class="slds-button slds-button_brand" >Save Documents</button>
+            
+        </div>
+        <!-- Added by Ashik -->
+        <apex:actionFunction name="saveData" action="{!save}" reRender="refreshId,validationfieldRegion" status="status"/>
+        <!-- <apex:actionFunction name="seeProjectList" action="{!seeProjectList}" reRender="errorSection,validationfieldRegion"/> -->
+        <apex:actionFunction name="changeObjectList" action="{!prepareObjectList}" reRender="projectSection,dependentObj" status="status"/>
+        <!--@@-->
+         <apex:actionFunction name="deleteRowValue" action="{!removeRow}" reRender="inputArea" oncomplete="window.location.reload();" status="status">       
+             <apex:param id="rowtodelete" name="rowtodelete" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction name="changeFieldList" action="{!prepareFieldList}" reRender="fieldRegion,mergefieldRegion" status="status"/>
+        <apex:actionFunction name="preparemergefieldname" action="{!preparemergefield}" reRender="mergefieldRegion" status="status"/>
+        <!-- <apex:actionFunction name="validateCharCountname" action="{!null}" oncomplete="validateCharCount()" reRender="validationfieldRegion" /> -->
+        
+    </apex:form>
+    <script type="text/javascript">
+        var errorMsg=false;
+        var globalIndex = 1;
+        var globalPdfId = '';
+        var globalCharCount = 0 ;
+        j$ = jQuery.noConflict();
+        
+        if(j$) {
+            var clauseList=['{!JSINHTMLENCODE(doc.Clause_0__c)}','{!JSINHTMLENCODE(doc.Clause_1__c)}','{!JSINHTMLENCODE(doc.Clause_2__c)}','{!JSINHTMLENCODE(doc.Clause_3__c)}','{!JSINHTMLENCODE(doc.Clause_4__c)}','{!JSINHTMLENCODE(doc.Clause_5__c)}','{!JSINHTMLENCODE(doc.Clause_6__c)}','{!JSINHTMLENCODE(doc.Clause_7__c)}','{!JSINHTMLENCODE(doc.Clause_8__c)}','{!JSINHTMLENCODE(doc.Clause_9__c)}','{!JSINHTMLENCODE(doc.Clause_10__c)}'];
+            var clauseListwithoutValue=['Clause_0__c','Clause_1__c','Clause_2__c','Clause_3__c','Clause_4__c','Clause_5__c','Clause_6__c','Clause_7__c','Clause_8__c','Clause_9__c','Clause_10__c'];
+
+            var temp='';
+            var flag = true;
+            for(var i = 0;i<clauseList.length;i++){
+               debugger;
+                temp=clauseList[i];
+                console.log(temp);
+                
+                if(temp == '' && i != 0){
+                  console.log(temp); 
+                    //j$('[id$=Clause_1__c]').hide();
+                    console.log(clauseListwithoutValue[i]);
+                    if(flag==true){
+                      globalIndex=i;
+                      flag=false;
+                    }
+                    //document.getElementById(clauseListwithoutValue[i]).style.display='none';
+                    j$('[id$='+clauseListwithoutValue[i]+']').hide();
+                }
+            }
+            
+        }else{
+            alert('Jquery not loaded successfull....');
+        }
+        function saveDataAfterValidation(){
+            //alert(errorMsg);
+          if(errorMsg == false){
+            saveData();
+          }
+          else{                   
+            alert('Please change project type to proceed further');
+          }
+
+        }
+        
+        function addRow(){
+        
+            //alert(globalIndex);
+            //j$('#Clause_1__c').show();
+            var tempFiledName='Clause_'+globalIndex.toString()+'__c';
+            //j$('[id$=tempFiledName]').show();
+            j$('#'+tempFiledName).show();
+            globalIndex++;
+        }
+        function removeRow(rowIndex){
+
+            if(rowIndex !='Clause_0__c')
+            j$('#'+rowIndex).hide();
+            else
+            alert('Fill atleast one field');
+            //alert(rowIndex);
+            
+            deleteRowValue(rowIndex);
+           
+        }
+        function viewPdf(){
+
+            var idd='{!currentDocId}';
+            window.open('/apex/HOH_DocumentGenrationPdf?id='+globalPdfId,'_blank');
+        }
+        function validateCharCount(){
+
+          if(true){
+
+            var stringFormOfField ='Clause_'+(globalIndex-1).toString()+'__c';
+
+            console.log(stringFormOfField);
+
+          }
+        }
+        function validateCharCountname(){
+
+        }
+    
+    </script>
+
+</apex:page>

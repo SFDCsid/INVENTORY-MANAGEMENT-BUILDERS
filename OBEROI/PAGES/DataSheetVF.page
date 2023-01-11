@@ -1,0 +1,215 @@
+<apex:page standardController="Lead" extensions="DataSheetPDF" renderAs="PDF">
+    
+    <apex:form > 
+        <head>
+            <style>
+                
+                body { 
+                font-family: Verdana ; 
+                font-size: 6px;
+                margin-top: 12px;
+                } 
+                .ctlHead{
+                text-align: left;
+                font-weight: bold;
+                font-size: 9px;
+                padding: 2px;
+                margin-top: 5px;                        
+                }  
+                .dtlHead{
+                text-align: left;
+                font-weight: medium;
+                font-size: 9px;
+                padding: 2px;
+                margin-top:3px;
+                
+                }    
+                #aa {           
+                height: 20px;
+                border: 1px solid #000;
+                overflow: hidden;
+                } 
+                #centerSt{
+                height: 300px;
+                border: 1px solid #000;
+                overflow: hidden; 
+                position: fixed;
+                
+                
+                }
+                #ab{
+                height: 20px;
+                border: 1px solid #000;
+                overflow: hidden; 
+                margin-top: 2000px;
+                }
+                #footer {position: relative;
+                margin-top: -500px;  
+                height: 2px;
+                clear:both;} 
+            </style>
+            
+        </head>
+        <body>
+            
+            <!--   <div style="font-size:14px">-->
+            <center><apex:image id="theImage" value="{!$Resource.logoOberoi}"  width="100" height="100"/></center>
+            <table  width="100%"><tr><td width= "80%"><b>{!Lead.Lead_Number__c}</b></td>
+                <!-- <td width = "5%"><b>Date: <apex:outputText value="{0,date,dd'/'MM'/'yyyy}">
+<apex:param value="{!Lead.Data_sheet_Submitted_Date__c}" /> 
+</apex:outputText>
+</b>
+</td>--></tr></table>
+            <table bgcolor="#808080"  width="100%" style="text-align:Left" ><tr ><td ><b>CUSTOMER DETAILS</b></td></tr></table>
+            <table width="100%" cellpadding="7" cellspacing="0">
+                <tr><td width="25%" >Name:</td><td width="40%" style="border-bottom: 1px solid;" align="left">1. {!Lead.Salutation} {!Lead.Name}</td><td style="border-bottom: 1px solid;" width="35%"></td></tr>
+                <!--    <tr><td width="25%" ></td><td width="40%" style="border-bottom: 1px solid;" align="left">2. {!FirstContact}</td><td style="border-bottom: 1px solid;" width="35%"></td></tr>
+<tr><td width="25%" ></td><td width="40%" style="border-bottom: 1px solid;" align="left">3. {!SecondContact}</td><td style="border-bottom: 1px solid;" width="35%"></td></tr>
+<tr><td width="25%" ></td><td width="40%" style="border-bottom: 1px solid;" align="left">4. {!Thirdcontact}</td><td style="border-bottom: 1px solid;" width="35%"></td></tr>
+<tr><td width="25%" ></td><td width="40%" style="border-bottom: 1px solid;" align="left">5. {!FourthContact}</td><td style="border-bottom: 1px solid;" width="35%"></td></tr>
+<tr><td width="25%" ></td><td width="40%" style="border-bottom: 1px solid;" align="left">6. {!FiveContact}</td><td style="border-bottom: 1px solid;" width="35%"></td></tr> 
+-->    <apex:outputText rendered="{!Lead.Resident_Status__c == 'Indian'}">
+                <tr><td width="25%">Nationality:</td><td style="border-bottom: 1px solid;" width="35%">{!Lead.Nationality__c}</td><td style="border-bottom: 1px solid;" width="40%">Resident Status: <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479818023000/Checked_Radio" />&nbsp;&nbsp;Indian  &nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;&nbsp;&nbsp;NRI </td></tr>
+                </apex:outputText>
+                <apex:outputText rendered="{!Lead.Resident_Status__c == 'NRI'}">
+                    <tr><td width="25%">Nationality:</td><td style="border-bottom: 1px solid;" width="35%">{!Lead.Nationality__c}</td><td style="border-bottom: 1px solid;" width="40%">Resident Status: <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;Indian &nbsp;&nbsp;&nbsp;&nbsp; <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479818023000/Checked_Radio" />&nbsp;&nbsp;&nbsp;&nbsp;NRI</td></tr>
+                </apex:outputText>
+                <!-- <tr><td width="25%">Residential Address:</td><td style="border-bottom: 1px solid;" width="40%"> House No: {!con.House_No__c}</td><td style="border-bottom: 1px solid;" width="35%">Street: {!con.Street3__c}</td></tr> 
+<tr><td width="25%"></td><td width="40%" style="border-bottom: 1px solid;" > Street 2:{!con.Street_2__c} </td><td width="35%" style="border-bottom: 1px solid;"></td></tr>
+<tr><td width="25%"></td><td width="40%" style="border-bottom: 1px solid;" > Street 3:{!con.Street3_other__c}</td><td style="border-bottom: 1px solid;" width="35%"></td></tr>            
+<tr><td width="25%"></td><td width="30%" style="border-bottom: 1px solid;" > City: {!con.City__c} </td><td width="35%" style="border-bottom: 1px solid;" > PinCode: {!con.Pincode__c}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Country: {!con.Country__c} </td></tr>
+<tr><td width="25%"></td><td width="40%"></td><td width="35%"></td></tr>
+--> </table>
+            <table width="100%" cellpadding="7" cellspacing="0">
+                <apex:outputText rendered="{!Lead.Occupation__c == 'Business'}">
+                    <tr><td width="25%">Occupation:</td> <td width="19%"> Business &nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="https://oberoirealty--oberoidev--c.visualforce.com/resource/1549960699000/Checked_Radio"/></td><td width="18%">Service &nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="https://oberoirealty--oberoidev--c.visualforce.com/resource/1549960721000/uncheck_radio" /></td><td width="19%">Professional &nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="https://oberoirealty--oberoidev--c.visualforce.com/resource/1549960721000/uncheck_radio" /></td><td width="19%">Others &nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="https://oberoirealty--oberoidev--c.visualforce.com/resource/1549960721000/uncheck_radio" /></td></tr>
+                </apex:outputText>
+                <apex:outputText rendered="{!Lead.Occupation__c == 'Service'}">
+                    <tr><td width="25%">Occupation:</td> <td width="19%"> Business &nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="https://oberoirealty--oberoidev--c.visualforce.com/resource/1549960721000/uncheck_radio" /></td><td width="18%">Service &nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="https://oberoirealty--oberoidev--c.visualforce.com/resource/1549960699000/Checked_Radio" /></td><td width="19%">Professional &nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="https://oberoirealty--oberoidev--c.visualforce.com/resource/1549960721000/uncheck_radio" /></td><td width="19%">Others &nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="https://oberoirealty--oberoidev--c.visualforce.com/resource/1549960721000/uncheck_radio" /></td></tr>
+                </apex:outputText>
+                <apex:outputText rendered="{!Lead.Occupation__c == 'Professional'}">
+                    <tr><td width="25%">Occupation:</td> <td width="19%"> Business &nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="https://oberoirealty--oberoidev--c.visualforce.com/resource/1549960721000/uncheck_radio" /></td><td width="18%">Service &nbsp;&nbsp;&nbsp;&nbsp;<img  height="8" width="8" src="https://oberoirealty--oberoidev--c.visualforce.com/resource/1549960721000/uncheck_radio" /></td><td width="19%">Professional &nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="https://oberoirealty--oberoidev--c.visualforce.com/resource/1549960699000/Checked_Radio" /></td><td width="19%">Others &nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="https://oberoirealty--oberoidev--c.visualforce.com/resource/1549960721000/uncheck_radio" /></td></tr>
+                </apex:outputText>
+                <apex:outputText rendered="{!Lead.Occupation__c == 'Others'}">
+                    <tr><td width="20%">Occupation:</td> <td width="19%"> Business <img height="8" width="8" src="https://oberoirealty--oberoidev--c.visualforce.com/resource/1549960721000/uncheck_radio" /></td><td width="18%">Service &nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="https://oberoirealty--oberoidev--c.visualforce.com/resource/1549960721000/uncheck_radio" /></td><td width="19%">Professional &nbsp;&nbsp;&nbsp;&nbsp;<img  height="8" width="8" src="https://oberoirealty--oberoidev--c.visualforce.com/resource/1549960721000/uncheck_radio" /></td><br/><td width="5%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Others &nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="https://oberoirealty--oberoidev--c.visualforce.com/resource/1549960699000/Checked_Radio" />
+                        
+                        {!Lead.Occupation_in_case_of_other__c} </td></tr>
+                    
+                    
+                </apex:outputText>
+            </table>
+            <table width="100%" cellpadding="7" cellspacing="0"> 
+                
+                <tr><td width="25%">Company you are Working for: </td><td style="border-bottom: 1px solid;" width="40%">{!Lead.Company}</td><td style="border-bottom: 1px solid;" width="35%"></td></tr>
+                <tr><td width="25%">Designation:</td><td style="border-bottom: 1px solid;" width="40%">{!Lead.Designation__c}</td><td style="border-bottom: 1px solid;" width="35%"></td></tr>
+                
+                <!-- <tr><td width="25%">Company Address:</td><td style="border-bottom: 0.5px solid;" width="40%"> {!Lead.Address}</td><td style="border-bottom: 1px solid;" width="35%"></td></tr>-->
+                
+                
+                <!-- <tr><td width="25%">&nbsp;</td><td style="border-bottom: 1px solid;" width="40%">City: &nbsp;{!Lead.City__c}</td><td style="border-bottom: 1px solid;" width="35%">Pin Code:&nbsp; {!con.Company_Pincode__c} </td></tr> -->
+                <tr><td width="25%">Telephone No:</td><td style="border-bottom: 1px solid;" width="40%" align="left">Residence:{!Lead.Phone} </td><td style="border-bottom: 1px solid;" width="35%" align="left"></td></tr>    
+                <tr><td width="25%">Mobile No: </td><td style="border-bottom: 1px solid;" width="40%">1){!Lead.MobilePhone} </td><td style="border-bottom: 1px solid;" width="35%">2) </td></tr>
+                <tr><td width="25%">Email:</td><td style="border-bottom: 1px solid;" width="40%">{!Lead.email}</td><td style="border-bottom: 1px solid;" width="35%"></td></tr>
+                <tr><td width="25%">Project of Interest:</td><td style="border-bottom: 1px solid;" width="40%">{!Lead.Project__r.Name}</td><td style="border-bottom: 1px solid;" width="35%"></td></tr>
+                <!--    <apex:outputText rendered="{!con.Details_Same_as_Applicant1__c  == 'Yes'}">
+<tr><td width="25%">Contact Person: </td><td style="border-bottom: 1px solid;" width="40%">Details same as Applicant-1 </td><td style="border-bottom: 1px solid;" width="35%">YES&nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479818023000/Checked_Radio" />&nbsp;&nbsp;&nbsp;&nbsp; NO &nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" /></td></tr>
+<tr><td width="25%">Name of Contact Person:</td><td style="border-bottom: 1px solid;" width="35%" align="left">{!con.Name} </td><td style="border-bottom: 1px solid;" width="40%" align="left">Relation /Designation: {!con.Contact_Person_Relation_Designation__c}</td></tr>
+<tr><td width="25%"></td><td width="50%" style="border-bottom: 1px solid;" >Telephone:&nbsp; {!Con.Phone}</td><td style="border-bottom: 1px solid;" width="25%">Mobile:&nbsp; {!con.MobilePhone} </td></tr>
+<tr><td width="25%"></td><td width="50%" style="border-bottom: 1px solid;" >Email:&nbsp; {!con.email}</td><td style="border-bottom: 1px solid;" width="25%"></td></tr>
+</apex:outputText>
+<apex:outputText rendered="{!con.Details_Same_as_Applicant1__c  == 'No'}">
+<tr><td width="25%">Contact Person: </td><td style="border-bottom: 1px solid;" width="40%">Details same as Applicant-1 </td><td style="border-bottom: 1px solid;" width="35%">YES&nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NO &nbsp;&nbsp;&nbsp;&nbsp;<img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479818023000/Checked_Radio" /></td></tr>
+<tr><td width="25%">Name of Contact Person:</td><td style="border-bottom: 1px solid;" width="35%" align="left">{!con.Contact_Person_Name__c} </td><td style="border-bottom: 1px solid;" width="40%" align="left">Relation /Designation: {!con.Contact_Person_Relation_Designation__c}</td></tr>
+<tr><td width="25%"></td><td width="50%" style="border-bottom: 1px solid;" >Telephone:&nbsp; {!Con.Contact_Person_Telephone__c}</td><td style="border-bottom: 1px solid;" width="25%">Mobile:&nbsp; {!con.Contact_Person_Mobile__c} </td></tr>
+<tr><td width="25%"></td><td width="50%" style="border-bottom: 1px solid;" >Email:&nbsp; {!con.Contact_Person_Email__c}</td><td style="border-bottom: 1px solid;" width="25%"></td></tr>
+</apex:outputText>-->
+                <div style="page-break-after:always;"/>
+                
+                <div style="page-break-before:always;"/>       
+            </table>  
+            
+            
+            <table width="100%" cellpadding="1" cellspacing="0">
+                <apex:outputText rendered="{!Lead.Budget__c == '1.5 cr - 2.5 cr'}">    
+                    <tr><td width="25%">Budget:</td><td width="25%"><img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/Checked_Radio" /> &nbsp;&nbsp;1.5 cr - 2.5 cr </td><td width="25%"><img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;2.5 cr - 3.5 cr </td><td width="25%"><img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;3.5 cr - 4.5 cr </td></tr> 
+                    <tr><td width="25%"></td><td width="25%"><img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" /> &nbsp;&nbsp; 4.5 cr - 6 cr</td><td width="25%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" /> &nbsp;&nbsp; 6 cr - 8 cr </td><td width="25%"><img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;Above 8 cr</td> </tr> 
+                    <!---       <tr><td width="25%"></td><td width="25%"><img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;3 - 6 Cr </td> <td width="25%"><img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;7 - 10 Cr </td> <td width="25%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;10 Cr +</td></tr>    ---->
+                </apex:outputText>
+                <apex:outputText rendered="{!Lead.Budget__c == '2.5 cr - 3.5 cr'}">    
+                    <tr><td width="25%">Budget:</td><td width="25%">  <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;1.5 cr - 2.5 cr</td><td width="25%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479818023000/Checked_Radio" /> &nbsp;&nbsp;2.5 cr - 3.5 cr</td><td width="25%"><img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;3.5 cr - 4.5 cr</td></tr> 
+                    <tr><td width="25%"></td><td width="25%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;4.5 cr - 6 cr</td><td width="25%"><img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;6 cr - 8 cr</td><td width="25%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;Above 8 cr</td> </tr> 
+                    <!---       <tr><td width="25%"></td><td width="25%"><img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;3 - 6 Cr </td> <td width="25%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;7 - 10 Cr</td> <td width="25%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;10 Cr +</td></tr>    ---->
+                </apex:outputText>
+                <apex:outputText rendered="{!Lead.Budget__c == '3.5 cr - 4.5 cr'}">    
+                    <tr><td width="25%">Budget:</td><td width="25%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;1.5 cr - 2.5 cr </td><td width="25%"><img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;2.5 cr - 3.5 cr </td><td width="25%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479818023000/Checked_Radio" />&nbsp;&nbsp;3.5 cr - 4.5 cr</td></tr> 
+                    <tr><td width="25%"></td><td width="25%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;4.5 cr - 6 cr</td><td width="25%"><img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;6 cr - 8 cr </td><td width="25%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;Above 8 cr</td> </tr> 
+                    <!---       <tr><td width="25%"></td><td width="25%"><img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;3 - 6 Cr</td> <td width="25%"><img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;7 - 10 Cr</td> <td width="25%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;10 Cr +</td></tr>     ---->
+                </apex:outputText>
+                <apex:outputText rendered="{!Lead.Budget__c == '4.5 cr - 6 cr'}">    
+                    <tr><td width="25%">Budget:</td><td width="25%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;1.5 cr - 2.5 cr </td><td width="25%"><img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;2.5 cr - 3.5 cr </td><td width="25%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479818023000/uncheck_radio" />&nbsp;&nbsp;3.5 cr - 4.5 cr</td></tr> 
+                    <tr><td width="25%"></td><td width="25%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/Checked_radio" />&nbsp;&nbsp;4.5 cr - 6 cr</td><td width="25%"><img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;6 cr - 8 cr </td><td width="25%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;Above 8 cr</td> </tr> 
+                    <!---       <tr><td width="25%"></td><td width="25%"><img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;3 - 6 Cr</td> <td width="25%"><img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;7 - 10 Cr</td> <td width="25%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;10 Cr +</td></tr>    ---->
+                </apex:outputText>
+                <apex:outputText rendered="{!Lead.Budget__c == '6 cr - 8 cr'}">    
+                    <tr><td width="25%">Budget:</td><td width="25%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;1.5 cr - 2.5 cr </td><td width="25%"><img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;2.5 cr - 3.5 cr </td><td width="25%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479818023000/uncheck_radio" />&nbsp;&nbsp;3.5 cr - 4.5 cr</td></tr> 
+                    <tr><td width="25%"></td><td width="25%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;4.5 cr - 6 cr</td><td width="25%"><img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/Checked_radio" />&nbsp;&nbsp;6 cr - 8 cr </td><td width="25%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;Above 8 cr</td> </tr> 
+                    <!---       <tr><td width="25%"></td><td width="25%"><img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;3 - 6 Cr</td> <td width="25%"><img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;7 - 10 Cr</td> <td width="25%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;10 Cr +</td></tr>    ---->
+                </apex:outputText>
+                <apex:outputText rendered="{!Lead.Budget__c == 'Above 8 cr'}">    
+                    <tr><td width="25%">Budget:</td><td width="25%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;1.5 cr - 2.5 cr </td><td width="25%"><img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;2.5 cr - 3.5 cr </td><td width="25%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479818023000/uncheck_radio" />&nbsp;&nbsp;3.5 cr - 4.5 cr</td></tr> 
+                    <tr><td width="25%"></td><td width="25%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;4.5 cr - 6 cr</td><td width="25%"><img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;6 cr - 8 cr </td><td width="25%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/Checked_Radio" />&nbsp;&nbsp;Above 8 cr</td> </tr> 
+                    <!---       <tr><td width="25%"></td><td width="25%"><img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;3 - 6 Cr</td> <td width="25%"><img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;7 - 10 Cr</td> <td width="25%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;10 Cr +</td></tr>    ---->
+                </apex:outputText>
+                
+                <apex:outputText rendered="{!Lead.Budget__c ==null}">    
+                    <tr><td width="25%">Budget:</td><td width="25%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;1.5 cr - 2.5 cr </td><td width="25%"><img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;2.5 cr - 3.5 cr </td><td width="25%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479818023000/uncheck_radio" />&nbsp;&nbsp;3.5 cr - 4.5 cr</td></tr> 
+                    <tr><td width="25%"></td><td width="25%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;4.5 cr - 6 cr</td><td width="25%"><img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;6 cr - 8 cr </td><td width="25%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479818023000/uncheck_radio" />&nbsp;&nbsp;Above 8 cr</td> </tr> 
+                    <!---       <tr><td width="25%"></td><td width="25%"><img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;3 - 6 Cr</td> <td width="25%"><img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;7 - 10 Cr</td> <td width="25%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;10 Cr +</td></tr>    ---->
+                </apex:outputText>
+                
+                
+                
+                <apex:outputText rendered="{!Lead.How_Soon_Do_You_Want_To_Buy__c== 'Immediately'}">
+                    <tr><td width="25%">How Soon Do You Want To Buy:</td><td width="19%"><img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479818023000/Checked_Radio" />&nbsp;&nbsp; Immediately</td><td width="25%"><img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;3-6 Month</td><td width="19%"><img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;> 6 Months</td><td width="12%"></td></tr>          
+                </apex:outputText>
+                <apex:outputText rendered="{!Lead.How_Soon_Do_You_Want_To_Buy__c== '3-6 months'}">
+                    <tr><td width="25%">How Soon Do You Want To Buy:</td><td width="19%"><img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp; Immediately</td><td width="25%"><img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/Checked_radio" />&nbsp;&nbsp;3-6 Month</td><td width="19%"><img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;> 6 Months</td><td width="12%"></td></tr>          
+                </apex:outputText>
+                <apex:outputText rendered="{!Lead.How_Soon_Do_You_Want_To_Buy__c== '> 6 Months'}">
+                    <tr><td width="25%">How Soon Do You Want To Buy:</td><td width="19%"><img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp; Immediately</td><td width="25%"><img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;3-6 Month</td><td width="19%"><img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/Checked_radio" />&nbsp;&nbsp;> 6 Months</td><td width="12%"></td></tr>          
+                </apex:outputText>
+                
+                <apex:outputText rendered="{!Lead.Purpose_of_Buying__c== 'End Use'}">
+                    <tr><td width="25%">Purpose of Buying:</td><td width="19%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479818023000/Checked_Radio" />&nbsp;&nbsp;End Use</td><td width="25%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;Investment</td><td width="19%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;Second Home</td></tr>          
+                </apex:outputText>             
+                <apex:outputText rendered="{!Lead.Purpose_of_Buying__c== 'Investment'}">
+                    <tr><td width="25%">Purpose of Buying:</td><td width="19%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479818023000/uncheck_radio" />&nbsp;&nbsp;End Use</td><td width="25%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/Checked_radio" />&nbsp;&nbsp;Investment</td><td width="19%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;Second Home</td></tr>          
+                </apex:outputText>
+                <apex:outputText rendered="{!Lead.Purpose_of_Buying__c== 'Second Home'}">
+                    <tr><td width="25%">Purpose of Buying:</td><td width="19%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479818023000/uncheck_radio" />&nbsp;&nbsp;End Use</td><td width="25%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;Investment</td><td width="19%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/Checked_radio" />&nbsp;&nbsp;Second Home</td></tr>          
+                </apex:outputText>
+                
+                <apex:outputText rendered="{!Lead.Purpose_of_Buying__c==null}">
+                    <tr><td width="25%">Purpose of Buying:</td><td width="19%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479818023000/uncheck_radio" />&nbsp;&nbsp;End Use</td><td width="25%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479880494000/uncheck_radio" />&nbsp;&nbsp;Investment</td><td width="19%"> <img height="8" width="8" src="https://oberoirealty--oberoidev.my.salesforce.com/resource/1479818023000/uncheck_radio" />&nbsp;&nbsp;Second Home</td></tr>          
+                </apex:outputText>
+                
+                
+         <!--       <table width = "100%" cellpadding="1" cellspacing="0">
+                    <apex:outputText >
+                        <tr><td width="23%" >Possession Timeline:</td><td>&nbsp;&nbsp;&nbsp;&nbsp;<apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(Lead.Possession_Timeliness__c, 'Ready Possession'))}"/>   
+                            <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(Lead.Possession_Timeliness__c, 'Ready Possession') && Lead.Possession_Timeliness__c!=null}"/>&nbsp;&nbsp;Ready Possession</td>
+                            
+                            <td width = "27%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(Lead.Possession_Timeliness__c, 'within a year'))}"/>   
+                                <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(Lead.Possession_Timeliness__c, 'within a year') && Lead.Possession_Timeliness__c!=null}"/>&nbsp;&nbsp;within a year </td>
+                            
+                            <td width = "27%">&nbsp;&nbsp;&nbsp;&nbsp;<apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!Not(Contains(Lead.Possession_Timeliness__c, '2 to 3 years'))}"/>   
+                                
+                                <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(Lead.Possession_Timeliness__c, '2 to 3 years') && Lead.Possession_Timeliness__c!=null}"/>&nbsp;&nbsp;2 to 3 years</td></tr>             
+                        
+                        <tr><td><td>&nbsp;&nbsp;&nbsp;&nbsp;<apex:image url="{!$Resource.uncheck_radio}" width="8px" height="8px" rendered="{!NOT(Contains(Lead.Possession_Timeliness__c, 'above 3 years'))}"/>   
+                            <apex:image url="{!$Resource.Checked_Radio}" width="8px" height="8px" rendered="{!Contains(Lead.Possession_Timeliness__c, 'above 3 years') && Lead.Possession_Timeliness__c!=null}"/>&nbsp;&nbsp;above 3 years</td></tr></apex:outputText>
+                </table>-->
+            </table>
+        </body>
+    </apex:form>
+</apex:page>

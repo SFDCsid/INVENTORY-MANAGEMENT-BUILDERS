@@ -1,0 +1,1675 @@
+<apex:page controller="BookingClassNew" sidebar="false" lightningStylesheets="true" showHeader="false" Doctype="html-5.0"
+    action="{!updateUnit}">
+
+    <head>
+        <title>Booking Page</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+
+
+
+        <style>
+            body .bPageBlock .pbSubheader,
+            .slds-vf-scope .bPageBlock .pbSubheader {
+                background-color: pink;
+            }
+
+            body {
+                /* width: 1400px;*/
+                width: 100%;
+                app height: 200px;
+                margin: 0px auto 0 auto;
+                font-family: Arial, Helvetica;
+                font-size: small;
+                background-color: white;
+                /*background-image:"house1.jpg";*/
+            }
+
+            #resizable {
+                margin: 10px 20px 20px 170px;
+                width: 1000px;
+                height: 500px;
+                padding: 0.5em;
+            }
+
+            #resizable h3 {
+                text-align: center;
+                margin: 0;
+            }
+
+            /* ------------------------------------------------- */
+
+            #tabs {
+                overflow: hidden;
+                width: 100%;
+                margin: 0;
+                padding: 0;
+                list-style: none;
+            }
+
+            #tabs li {
+                float: left;
+                margin: 0 -15px 0 0;
+            }
+
+            #tabs a {
+                float: left;
+                position: relative;
+                padding: 0 60px;
+                height: 0;
+                line-height: 30px;
+                text-transform: uppercase;
+                text-decoration: none;
+                color: #fff;
+                border-right: 30px solid transparent;
+                border-bottom: 30px solid #3D3D3D;
+                border-bottom-color: #777\9;
+                opacity: .3;
+                filter: alpha(opacity=30);
+            }
+
+            #tabs a:hover,
+            #tabs a:focus {
+                border-bottom-color: #2ac7e1;
+                opacity: 1;
+                filter: alpha(opacity=100);
+            }
+
+            #tabs a:focus {
+                outline: 0;
+            }
+
+            #tabs #current {
+                z-index: 3;
+                border-bottom-color: #3d3d3d;
+                opacity: 2;
+                filter: alpha(opacity=100);
+            }
+
+            /* ----------- */
+
+            #content {
+                background: #D6DDDD;
+                border-top: 0px solid #3d3d3d; //padding: 2em;
+                //height: 500px;
+                /*background-image:"house1.jpg";*/
+            }
+
+            #content h2,
+            #content h3,
+            #content p {
+                //margin: 0 0 15px 0;
+            }
+
+            /* Demo page only */
+
+            #about {
+                color: #0ad;
+                text-align: center;
+                font: 0.9em Arial, Helvetica;
+            }
+
+            #about a {
+                color: #777;
+            }
+
+            redtext {
+                color: black;
+            }
+
+            table.tableApp1A {
+                width: 90%;
+            }
+
+            table.tableApp1B {
+                display: none;
+                border: 3px Solid Black;
+                width: 100%;
+
+            }
+
+            table.tableApp1B td {
+
+                border: 1px Solid Black;
+                padding: 10px;
+            }
+
+            table.tableApp1B th {
+                text-align: center;
+            }
+
+            table.tableApp1B tr {
+                fixed-width: 100%;
+            }
+
+            }
+        </style>
+        <script>
+
+            //alert(document.getElementById('{!$Component.ApplicantForm.appliBlock1.apl1.ApplicantSubType}').innerHTML);
+            //alert('{!$Component.ApplicantForm.appliBlock1.apl1.ApplicantSubType}');
+            //alert('ApplicantTable1');
+
+            function showDiv(thisselect, thisselect1) {
+                //alert('Hi');
+                //alert(document.getElementById("{!$Component.ApplicantForm.p1}").value);
+                var selected = thisselect.options[thisselect.selectedIndex].value;
+                //alert('subtype : ' +selected);
+                document.getElementById(thisselect1).style.display = "block";
+                var i;
+                for (i = 1; i <= 14; i++) {
+                    document.getElementById(thisselect1).rows[i].style.display = "none";
+                    document.getElementById(thisselect1).rows[i].setAttribute("style", "width:100%");
+
+                }
+                if (selected == 'Indian National') {
+                    for (i = 4; i <= 14; i++) {
+                        document.getElementById(thisselect1).rows[i].style.display = "none";
+                    }
+                }
+                if (selected == 'For NRI') {
+                    for (i = 5; i <= 12; i++) {
+                        document.getElementById(thisselect1).rows[i].style.display = "none";
+                    }                      
+                    document.getElementById(thisselect1).rows[14].style.display = "none";
+                    //document.getElementById(thisselect1).rows[2].style.display = "none";
+                }
+                if (selected == 'For Company') {
+                    document.getElementById(thisselect1).rows[1].style.display = "none";
+                    document.getElementById(thisselect1).rows[2].style.display = "none";
+                    document.getElementById(thisselect1).rows[3].style.display = "none";
+                    document.getElementById(thisselect1).rows[4].style.display = "none";
+                    document.getElementById(thisselect1).rows[10].style.display = "none";
+                    document.getElementById(thisselect1).rows[11].style.display = "none";
+                    document.getElementById(thisselect1).rows[12].style.display = "none";
+                    document.getElementById(thisselect1).rows[14].style.display = "none";
+                }
+                if (selected == 'Partnership Firm') {
+                    document.getElementById(thisselect1).rows[1].style.display = "none";
+                    document.getElementById(thisselect1).rows[2].style.display = "none";
+                    document.getElementById(thisselect1).rows[4].style.display = "none";
+                    document.getElementById(thisselect1).rows[7].style.display = "none";
+                    document.getElementById(thisselect1).rows[8].style.display = "none";
+                    document.getElementById(thisselect1).rows[11].style.display = "none";
+                    document.getElementById(thisselect1).rows[12].style.display = "none";
+                    document.getElementById(thisselect1).rows[13].style.display = "none";
+                    document.getElementById(thisselect1).rows[14].style.display = "none";
+                    
+                }
+                if (selected == 'HUF') {
+                    document.getElementById(thisselect1).rows[1].style.display = "none";
+                    document.getElementById(thisselect1).rows[2].style.display = "none";
+                    document.getElementById(thisselect1).rows[3].style.display = "none";
+                    document.getElementById(thisselect1).rows[4].style.display = "none";
+                    document.getElementById(thisselect1).rows[6].style.display = "none";
+                    document.getElementById(thisselect1).rows[7].style.display = "none";
+                    document.getElementById(thisselect1).rows[8].style.display = "none";
+                    document.getElementById(thisselect1).rows[10].style.display = "none";
+                    document.getElementById(thisselect1).rows[11].style.display = "none";
+                    document.getElementById(thisselect1).rows[12].style.display = "none";
+                    document.getElementById(thisselect1).rows[13].style.display = "none";                    
+                }
+                if (selected == 'Proprietorship') {
+                    document.getElementById(thisselect1).rows[1].style.display = "none";
+                    document.getElementById(thisselect1).rows[2].style.display = "none";
+                    document.getElementById(thisselect1).rows[3].style.display = "none";
+                    document.getElementById(thisselect1).rows[4].style.display = "none";
+                    document.getElementById(thisselect1).rows[5].style.display = "none";
+                    document.getElementById(thisselect1).rows[7].style.display = "none";
+                    document.getElementById(thisselect1).rows[8].style.display = "none";
+                    document.getElementById(thisselect1).rows[10].style.display = "none";
+                    document.getElementById(thisselect1).rows[11].style.display = "none";
+                    document.getElementById(thisselect1).rows[13].style.display = "none";
+                    document.getElementById(thisselect1).rows[6].style.display = "none";
+                }
+                if (selected == 'Trust') {
+                    document.getElementById(thisselect1).rows[1].style.display = "none";
+                    document.getElementById(thisselect1).rows[2].style.display = "none";
+                    document.getElementById(thisselect1).rows[3].style.display = "none";
+                    document.getElementById(thisselect1).rows[4].style.display = "none";
+                    document.getElementById(thisselect1).rows[7].style.display = "none";
+                    document.getElementById(thisselect1).rows[8].style.display = "none";
+                    document.getElementById(thisselect1).rows[9].style.display = "none";
+                    document.getElementById(thisselect1).rows[11].style.display = "none";
+                    document.getElementById(thisselect1).rows[12].style.display = "none";
+                    document.getElementById(thisselect1).rows[13].style.display = "none";
+                }
+
+                if (selected == 'LLP') {
+                    document.getElementById(thisselect1).rows[1].style.display = "none";
+                    document.getElementById(thisselect1).rows[2].style.display = "none";
+                    document.getElementById(thisselect1).rows[3].style.display = "none";
+                    document.getElementById(thisselect1).rows[4].style.display = "none";
+                    document.getElementById(thisselect1).rows[7].style.display = "none";
+                    document.getElementById(thisselect1).rows[8].style.display = "none";
+                    document.getElementById(thisselect1).rows[12].style.display = "none";
+                    document.getElementById(thisselect1).rows[13].style.display = "none";
+                }
+                if (selected == '') {
+                    for (i = 1; i <= 18; i++) {
+                        document.getElementById(thisselect1).rows[i].style.display = "none";
+                    }
+
+                }
+
+
+            }
+        </script>
+        <script>
+            function ShowPaymentTable(thisselect) {
+                var selected = thisselect.options[thisselect.selectedIndex].value;
+                //alert('subtype : ' +selected);
+                var i;
+                document.getElementById("paymenttable").style.display = "Block";
+
+                for (i = 1; i <= 6; i++) {
+                    document.getElementById("paymenttable").rows[i].style.display = "Block";
+                    document.getElementById("paymenttable").rows[i].setAttribute("style", "width:100%");
+                }
+                if (selected == '') {
+                    document.getElementById("paymenttable").style.display = "none";
+                }
+                if (selected == 'Cheque') {
+                    for (i = 2; i <= 6; i++) {
+                        document.getElementById("paymenttable").rows[i].style.display = "none";
+                    }
+                }
+                if (selected == 'DD/Pay Order') {
+                    for (i = 3; i <= 6; i++) {
+                        document.getElementById("paymenttable").rows[i].style.display = "none";
+                    }
+                    document.getElementById("paymenttable").rows[1].style.display = "none";
+                }
+
+                /* if(selected == 'Demand Draft')
+                 {
+                      for(i = 3; i <= 6 ; i++)
+                      {
+                          document.getElementById("paymenttable").rows[i].style.display ="none";
+                      }
+                      document.getElementById("paymenttable").rows[1].style.display ="none";
+                 }
+                 if(selected == 'NEFT')
+                 {
+                      for(i = 4; i <= 6 ; i++)
+                      {
+                          document.getElementById("paymenttable").rows[i].style.display ="none";
+                      }
+                       document.getElementById("paymenttable").rows[1].style.display ="none";
+                       document.getElementById("paymenttable").rows[2].style.display ="none";
+                 }*/
+                if (selected == 'EFT') {
+                    for (i = 4; i <= 6; i++) {
+                        document.getElementById("paymenttable").rows[i].style.display = "none";
+                    }
+                    document.getElementById("paymenttable").rows[1].style.display = "none";
+                    document.getElementById("paymenttable").rows[2].style.display = "none";
+                }
+                if (selected == 'RTGS') {
+                    for (i = 5; i <= 6; i++) {
+                        document.getElementById("paymenttable").rows[i].style.display = "none";
+                    }
+                    for (i = 1; i <= 3; i++) {
+                        document.getElementById("paymenttable").rows[i].style.display = "none";
+                    }
+                }
+                if (selected == 'TDS') {
+                    for (i = 1; i <= 4; i++) {
+                        document.getElementById("paymenttable").rows[i].style.display = "none";
+                    }
+
+                    document.getElementById("paymenttable").rows[6].style.display = "none";
+
+                }
+                /* if(selected == 'Pay Order')
+                 {
+                      for(i = 1; i <= 5 ; i++)
+                      {
+                          document.getElementById("paymenttable").rows[i].style.display ="none";
+                      }
+                      
+                 }*/
+            }
+        </script>
+        <script>
+            function ShowPaymentTablest(thisselect) {
+                var selected = thisselect.options[thisselect.selectedIndex].value;
+                //alert('subtype : ' +selected);
+                var i;
+                document.getElementById("paymenttablest").style.display = "Block";
+
+                for (i = 1; i <= 6; i++) {
+                    document.getElementById("paymenttablest").rows[i].style.display = "Block";
+                    document.getElementById("paymenttablest").rows[i].setAttribute("style", "width:100%");
+                }
+                if (selected == '') {
+                    document.getElementById("paymenttablest").style.display = "none";
+                }
+                if (selected == 'Cheque') {
+                    for (i = 2; i <= 6; i++) {
+                        document.getElementById("paymenttablest").rows[i].style.display = "none";
+                    }
+                }
+                if (selected == 'DD/Pay Order') {
+                    for (i = 3; i <= 6; i++) {
+                        document.getElementById("paymenttablest").rows[i].style.display = "none";
+                    }
+                    document.getElementById("paymenttablest").rows[1].style.display = "none";
+                }
+                /* if(selected == 'Demand Draft')
+                 {
+                      for(i = 3; i <= 6 ; i++)
+                      {
+                          document.getElementById("paymenttablest").rows[i].style.display ="none";
+                      }
+                      document.getElementById("paymenttablest").rows[1].style.display ="none";
+                 }
+                 if(selected == 'NEFT')
+                 {
+                      for(i = 4; i <= 6 ; i++)
+                      {
+                          document.getElementById("paymenttablest").rows[i].style.display ="none";
+                      }
+                       document.getElementById("paymenttablest").rows[1].style.display ="none";
+                       document.getElementById("paymenttablest").rows[2].style.display ="none";
+                 }*/
+                if (selected == 'EFT') {
+                    for (i = 4; i <= 6; i++) {
+                        document.getElementById("paymenttablest").rows[i].style.display = "none";
+                    }
+                    document.getElementById("paymenttablest").rows[1].style.display = "none";
+                    document.getElementById("paymenttablest").rows[2].style.display = "none";
+                }
+                if (selected == 'RTGS') {
+                    for (i = 5; i <= 6; i++) {
+                        document.getElementById("paymenttablest").rows[i].style.display = "none";
+                    }
+                    for (i = 1; i <= 3; i++) {
+                        document.getElementById("paymenttablest").rows[i].style.display = "none";
+                    }
+                }
+                if (selected == 'TDS') {
+                    for (i = 1; i <= 4; i++) {
+                        document.getElementById("paymenttablest").rows[i].style.display = "none";
+                    }
+
+                    document.getElementById("paymenttablest").rows[6].style.display = "none";
+
+                }
+                if (selected == 'Pay Order') {
+                    for (i = 1; i <= 5; i++) {
+                        document.getElementById("paymenttablest").rows[i].style.display = "none";
+                    }
+
+                }
+            }
+        </script>
+    </head>
+
+    <body>
+        <apex:actionStatus id="status">
+            <apex:facet name="start">
+                <div class="fadeMe">
+                    &nbsp;
+                </div>
+                <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 15% 50%">
+                    <div style="display: inline-block; padding: 2px; background-color: #fff; width: 125px;">
+                        <img src="/img/loading.gif" style="float: left; margin: 8px;" />
+                        <span style="display: inline-block; padding: 10px 0px;">Please Wait...</span>
+                    </div>
+                </div>
+            </apex:facet>
+        </apex:actionStatus>
+        <apex:outputPanel id="messages">
+            <apex:pageMessages escape="false" />
+        </apex:outputPanel>
+
+        <apex:form id="ApplicantForm">
+
+            <apex:outputPanel id="out"></apex:outputPanel>
+            <center>
+                <apex:commandButton value="SAVE" action="{!Save}" Rerender="messages" status="status" />
+                <apex:commandButton value="CANCEL" action="{!Cancel}" immediate="true" />
+            </center>
+            <!--------------------------------------------Buttons--------------------------------------------->
+            <apex:pageBlock id="pgBlck1">
+
+                <!-----------------------------------Booking Details--------------------------------------------->
+                <apex:pageBlockSection title="Booking Details">
+
+                    <apex:outputText >Mandatory fields are marked with an asterisk (*) </apex:outputText>
+                    <apex:outputText >&nbsp;</apex:outputText>
+
+                    <apex:inputField value="{!boookingObj.Opportunity__c}" label="Opportunity<redtext></redtext>">
+                        <apex:actionsupport event="onchange" action="{!getquotation}" Rerender="messages,selectquoteId,otherdetails,sourceOfBooking,SubsourceOfBooking,ApplicantPAddress,appincode,ApplicantDOB,,apcity,apMob,apEmail,apCntry"
+                            status="status">
+                            <apex:param name="optyidparam" assignTo="{!OptyId}" value="{!boookingObj.Opportunity__c}" />
+                        </apex:actionsupport>
+                    </apex:inputField>
+                    <apex:selectList id="selectquoteId" value="{!selectedQuote}" size="1" label="Quotation *">
+                        <apex:selectOptions value="{!getQuote}" />
+                        <apex:actionSupport event="onchange" action="{!getTokenAmount}" status="status">
+                            <apex:param name="selectedQuote" value="{!getQuote}" assignTo="{!selectedQuote}" />
+                        </apex:actionSupport>
+                    </apex:selectList>
+                    <!-- <apex:OutputText id="token" value="{!tokenamt}" label="Token Amount"/>
+       <apex:OutputText value="{!STamt}" label="Tax On Token Amount"/> -->
+
+                    <!-- <apex:inputField value="{!boookingObj.Application_No__c}" label="Application Number<redtext> *</redtext>"/> -->
+
+                    <apex:inputField id="futureCorrContact" value="{!boookingObj.Future_Correspondence_Contact__c}" label="Future Correspondence Contact<redtext>*</redtext>">
+                        <apex:actionSupport event="onchange" status="status" />
+                    </apex:inputField>
+
+                    <!--<apex:inputField id="DefaltAddress" value="{!boookingObj.Default_Address_of__c}" label="Default Address(Mailing)<redtext>*</redtext>">
+                        <apex:actionSupport event="onchange" status="status" />
+                    </apex:inputField>-->
+
+                    <apex:inputField value="{!boookingObj.Mode_of_Funding__c}" label="Mode of Funding<redtext> *</redtext>" />
+                    <apex:inputField value="{!boookingObj.TDS_Paid_By__c}" label="TDS Paid By<redtext> *</redtext>" />
+                    <apex:inputField value="{!boookingObj.Booking_Date__c}" label="Booking Date<redtext> *</redtext>" />
+                    <!-- <apex:inputField value="{!boookingObj.Date_for_offer_of_Possession__c}" label="Date of offer possession (for fit-outs)<redtext> *</redtext>"/> -->
+                    <!--<apex:input type="date" value="{!dateOfOfferPossesion}" label="Date of offer possession (for fit-outs)*" style="font-family:Times New Roman, Times, serif;font-size:15px;"/> //removed by Shahbaj 29/11/2017-->
+
+                </apex:pageBlockSection>
+                <apex:pageBlockSection id="futuredetail" Rendered="{!If(boookingObj.Future_Correspondence_Contact__c == 'Other',True,False)}">
+
+                    <apex:inputField id="futureCorrContactRelation" value="{!boookingObj.Future_Correspondence_Contact_Relation__c}" />
+                    <apex:inputField id="futureCorrContactName" value="{!boookingObj.Future_Correspondence_Contact_Name__c}" label="Future Correspondence Contact Name<redtext> *</redtext>"
+                    />
+                    <apex:inputField id="futureCorrContactPhone" value="{!boookingObj.Future_Correspondence_Contact_Phone__c}" label="Future Correspondence Contact Phone<redtext> *</redtext>"
+                    />
+                    <apex:inputField id="futureCorrContactEmail" value="{!boookingObj.Future_Correspondence_Contact_Email__c}" label="Future Correspondence Contact Email<redtext> *</redtext>"
+                    />
+
+                </apex:pageBlockSection>
+
+                <apex:pageBlockSection title="Property Details">
+                    <apex:OutputField id="Token" value="{!boookingObj.Token_Amount__c}" />
+                    <apex:OutputField id="projetName" value="{!boookingObj.Project__c}" />
+                    <apex:OutputField id="projetUnit" value="{!boookingObj.Property_Name__c}" />
+                    <apex:OutputField id="towerName" value="{!boookingObj.Tower_Name2__c}" />
+                    <apex:OutputField id="Property_Type_Name" value="{!boookingObj.Property_Type_Name__c }" />
+                    <apex:OutputField id="Site" value="{!boookingObj.Site__c}" />
+                </apex:pageBlockSection>
+                <!--<apex:OutputText escape="false" value="<b>FLAT COST DETAILS</b>" style="padding-left: 150px;"/>
+        <apex:OutputText escape="false" value="<b>GST DETAILS</b>" style="padding-left: 150px;"/>
+        <apex:OutputField value="{!boookingObj.Stock__c}" label="Account Name"/>
+        <apex:OutputField value="{!boookingObj.Account_Name_Service_Tax__c}"  label="Account Name"/>
+        <apex:OutputField value="{!boookingObj.Account_Number__c}" label="Account Number"/>
+        <apex:OutputField value="{!boookingObj.Account_Number_Service_tax__c}" label="Account Number"/>
+        <apex:OutputField value="{!boookingObj.Bank__c}" label="Bank Name"/>
+        <apex:OutputField value="{!boookingObj.Bank_Name_Service_tax__c}"  label="Bank Name"/>
+        <apex:OutputField value="{!boookingObj.IFSC_Code_Flat_Cost__c}" label="IFSC Code"/>
+        <apex:OutputField value="{!boookingObj.IFSC_Code_Service_Tax__c}" label="IFSC Code"/>
+       
+        
+        
+         <apex:pageBlockSection title="Other Details" id="otherdetails" >
+        <apex:OutputField id="sourceOfBooking" value="{!boookingObj.Source_of_Booking__c}"/>
+        <apex:OutputField id="SubsourceOfBooking" value="{!boookingObj.Sub_Source__c}"/>-->
+                <!-- <apex:OutputField id="channelpartner" value="{!boookingObj.Channel_Partner__c}" />
+        <apex:OutputField id="XcelerateId" value="{!boookingObj.Xcelerate_ID__c}" /> 
+        <apex:OutputField value="{!boookingObj.Booking_Source_Details__c}" />-->
+
+                <!-- <apex:inputField id="referredBy" value="{!boookingObj.Referred_By__c}" /> 
+        <apex:inputField id="directCorpBook" value="{!boookingObj.Name_of_Referer_Direct_Corporate_Book__c}" />
+       
+        <apex:OutputField id="clusterName" value="{!boookingObj.Cluster__c}" />
+        <apex:OutputField id="towerName" value="{!boookingObj.Tower__c}" />
+        -->
+                <!-- <apex:OutputText id="projetUnitcode" label="Unique Unit Code" value="{!uniqueCode}"/> -->
+                <!--    <apex:inputField id="bookingdate" value="{!boookingObj.Booking_Date__c}" required="false"/>
+        <apex:OutputField id="bookingdate" value="{!boookingObj.Booking_Date__c}" /> 
+        
+        <apex:Outputfield value="{!boookingObj.Sales_Manager__c}" />
+        -->
+                <!-- <apex:OutputField value="{!boookingObj.Sourcing_Mananger__c}"  /> 
+        </apex:pageBlockSection>-->
+            </apex:pageBlock>
+            <!--------------------------------------------Applicant Form--------------------------------------------->
+            <ul id="tabs">
+                <li>
+                    <a href="#" name="#tab1">Applicant 1</a>
+                </li>
+                <li>
+                    <a href="#" name="#tab2">Applicant 2</a>
+                </li>
+                <li>
+                    <a href="#" name="#tab3">Applicant 3</a>
+                </li>
+                <li>
+                    <a href="#" name="#tab4">Applicant 4</a>
+                </li>
+                <li>
+                    <a href="#" name="#tab5">Applicant 5</a>
+                </li>
+            </ul>
+            <div id="content">
+                <div id="tab1">
+                    <!-- <h1>Applicant 1</h1> -->
+                    <apex:pageBlock id="appliBlock1">
+                        <apex:pageBlockSection columns="3">
+                            <apex:inputField value="{!applicant.Salutation__c}" label="Salutation<redtext> *</redtext>" />
+                            <apex:inputField id="ApplicantName" value="{!applicant.Name}" label="Applicant Name<redtext> *</redtext>" />
+                            <apex:inputField id="ApplicantGender" value="{!applicant.Gender__c}" label="Gender<redtext>*</redtext>" />
+                            <apex:input type="date" value="{!firstApplicantDOB}" label="DOB*" style="font-family:Times New Roman, Times, serif;font-size:15px;"/>
+                            <apex:inputField id="apMob" value="{!applicant.Mobile_Number__c}" label="Mobile Number<redtext> *</redtext>" />
+                            <apex:inputField id="apEmail" value="{!applicant.Email_Address__c}" label="Email Address<redtext> *</redtext>" />
+                            <apex:inputField id="alapEmail" value="{!applicant.Alternate_Email_Id__c}" label="Alternate Email Address"/>
+                            <apex:inputField id="alapMob" value="{!applicant.Alternate_Mobile_No__c}" label="Alternate Mobile Number"/>
+                            &nbsp;
+                            <apex:inputField id="phouseName" value="{!applicant.House_No__c}" label="House No<redtext>*</redtext>" />
+                            <apex:inputField value="{!applicant.Street_1__c}" label="Street 1<redtext>*</redtext>" />
+                            <apex:inputField id="apcity" value="{!applicant.Street_2__c}" label="Street 2<redtext>*</redtext>" />
+                            <apex:inputField value="{!applicant.Street_3__c}" label="Street 3<redtext>*</redtext>" />
+                            <apex:inputField value="{!applicant.Locality__c}" label="Locality<redtext>*</redtext>" />
+                            <apex:inputField value="{!applicant.City__c}" label="City<redtext>*</redtext>" />
+                            <apex:inputField value="{!applicant.State__c}" label="State<redtext>*</redtext>" />
+                            <apex:inputField value="{!applicant.Pincode__c}" label="Pincode<redtext>*</redtext>" />
+                            <apex:inputField value="{!applicant.Country__c}" label="Country<redtext>*</redtext>" />
+                            
+
+                            <!--<apex:inputField id="ApplicantCorddress" value="{!applicant.Preferred_address_for_all_correspondence__c}" label="Preferred address for all correspondence<redtext>*</redtext>"/>-->
+                            <apex:inputCheckbox label="Mailing address same as Permanent address *" value="{!addressCheck}">
+
+                                <apex:actionSupport event="onchange" Rerender="m1" status="status" />
+                            </apex:inputcheckbox>
+                        </apex:pageBlockSection>
+                        <!-- <br></br> -->
+                        <apex:pageBlockSection columns="3" id="m1">
+                            <apex:inputField value="{!applicant.Mailing_House_No__c}" label="Mailing House No" rendered="{!addressCheck == false}" />
+                            <apex:inputField value="{!applicant.Mailing_Street_1__c}" label="Mailing Street 1" rendered="{!addressCheck == false}" />
+                            <apex:inputField value="{!applicant.Mailing_Street_2__c}" label="Mailing Street 2" rendered="{!addressCheck == false}" />
+                            <apex:inputField value="{!applicant.Mailing_Street_3__c}" label="Mailing Street 3" rendered="{!addressCheck == false}" />
+                            <apex:inputField label="Mailing Locality*" value="{!applicant.Mailing_City__c}" rendered="{!addressCheck == false}" />
+                            <apex:inputField label="Mailing City*" value="{!applicant.Mailing_Locality__c}" rendered="{!addressCheck == false}" />
+                            <apex:inputField label="Mailing Country*" value="{!applicant.Mailing_Country__c}" rendered="{!addressCheck == false}" />
+                            <apex:inputField label="Mailing State*" value="{!applicant.Mailing_State__c}" rendered="{!addressCheck == false}" />
+                            <apex:inputField label="Mailing Pincode*" value="{!applicant.Mailing_Pincode__c}" rendered="{!addressCheck == false}" />
+                            <apex:outputText ></apex:outputText>
+                        </apex:pageBlockSection>
+                        <!-- <br></br> -->
+                        <apex:pageBlockSection columns="3">
+                            <apex:inputField value="{!applicant.Nationality__c}" label="Nationality<redtext>*</redtext>" />
+                            <apex:inputField value="{!applicant.Occupation__c}" />
+                            <apex:inputField value="{!applicant.Company_Name__c}" />
+                            <apex:inputField value="{!applicant.Designation__c}" />
+                            <apex:inputField id="GST_No" value="{!applicant.GSTN__c}" label="GST Number" />
+                            &nbsp;
+                            <apex:inputField id="ApplicantType" value="{!applicant.Type_Of_Applicant__c}" label="Type Of Applicant<redtext>*</redtext>"/>
+                            <apex:inputField id="ApplicantSubType" value="{!applicant.Subtype_Of_Applicant__c}" label="Nationality<redtext>*</redtext>"
+                                onchange="showDiv(this,'ApplicantTable1')" />
+                            
+                        </apex:pageBlockSection>
+                    </apex:pageBlock>
+
+                    <!-- <br/> -->
+                    <table id="ApplicantTable1" class="tableApp1B">
+                        <tr style="width:100%;">
+                            <th style="width:5%;">&nbsp;</th>
+                            <th style="width:55%;">Document Name</th>
+                            <th style="width:20%;">Document Type</th>
+                            <th style="width:20%;">Document Details</th>
+                        </tr>
+
+                        <tr id="row1">
+                            <td>
+                                <apex:inputField value="{!applicant.Pancard__c}" />
+                            </td>
+                            <td>Pan Card</td>
+                            <td>N/A</td>
+                            <td>
+                                <apex:inputField value="{!applicant.PancardNo__c }" />
+                            </td>
+                        </tr>
+                        
+                        <tr id="row2">
+                            <td>
+                                <apex:inputField value="{!applicant.Aadhar_Card__c}" />
+                            </td>
+                            <td>Aadhar Card</td>
+                            <td>N/A</td>
+                            <td>
+                                <apex:inputField value="{!applicant.Aadhar_Card_No__c}" />
+                            </td>
+                        </tr>
+              
+
+
+                        <tr id="row3">
+                            <td>
+                                <apex:inputField value="{!applicant.Address_Proof__c}" />
+                            </td>
+                            <td>Address Proof: Passport / Voter’s ID Card.</td>
+                            <td>
+                                <apex:inputField value="{!applicant.Address_Proof_Document__c}" />
+                            </td>
+                            <td>
+                                <apex:inputField value="{!applicant.Address_Proof_Number__c}" />
+                            </td>
+                        </tr>
+                        
+                        <tr id="row4">
+                            <td>
+                                <apex:inputField value="{!applicant.Self_attested_copy_of_PIO_or_OCI_Card__c}" />
+                            </td>
+                            <td>PIO (Person of Indian Origin) Card or OCI (Overseas Citizen of India) Card</td>
+                            <td>
+                                <apex:inputField value="{!applicant.Type_Of_Origin__c}" />
+                            </td>
+                            <td>
+                                <apex:inputField value="{!applicant.Origin_Details__c}" />
+                            </td>
+                        </tr>
+                        
+                        <tr id="row5">
+                            <td>
+                                <apex:inputField value="{!applicant.Self_attested_List_of_Directors__c}" />
+                            </td>
+                            <td>List of Directors/Members/Partners/Trustee.</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                        
+                        <tr id="row6">
+                            <td>
+                                <apex:inputField value="{!applicant.Certified_copy_of_Board_Resolution__c}" />
+                            </td>
+                            <td>Board Resolution</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                        
+                        <tr id="row7">
+                            <td>
+                                <apex:inputField value="{!applicant.Copy_of_Memorandum_of_Association__c}" />
+                            </td>
+                            <td>Certified copy of Memorandum of Association</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+
+                        <tr id="row8">
+                            <td>
+                                <apex:inputField value="{!applicant.Certified_copy_of_Article_of_Association__c}" />
+                            </td>
+                            <td>Certified copy of Articles of Association.</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                        
+                        <tr id="row9">
+                            <td>
+                                <apex:inputField value="{!applicant.PanCard_of_Authority_Signatory__c}" />
+                            </td>
+                            <td>Pan Card (HUF/Company/Partnership/Proprietorship/Trust/LLP).</td>
+                            <td>N/A</td>
+                            <td>
+                                <apex:inputField value="{!applicant.Pan_Card_Number_of_Authority_Signatory__c}" />
+                            </td>
+                        </tr>
+                        
+                        <tr id="row10">
+                            <td>
+                                <apex:inputField value="{!applicant.Certified_copy_of_Partnership_Deed__c}" />
+                            </td>
+                            <td>Registered Partnership/Trust Deed / LLP Agreement.</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                        
+                        <tr id="row11">
+                            <td>
+                                <apex:inputField value="{!applicant.Certified_copy_of_ROC_Incorporation__c}" />
+                            </td>
+                            <td>Certificate of Incorporation.</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                        
+                        <tr id="row12">
+                            <td>
+                                <apex:inputField value="{!applicant.Certified_extract_of_Registration__c}" />
+                            </td>
+                            <td>Latest ITR (Optional).</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                        
+                         <tr id="row13">
+                            <td>
+                                <apex:inputField value="{!applicant.Copy_of_Workpermit_Employment_contract__c}" />
+                            </td>
+                            <td>NRI Declaration</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                        <tr id="row14">
+                            <td>
+                                <apex:inputField value="{!applicant.PassportNumber__c}" />
+                            </td>
+                            <td>Bank confirmation Letter</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="tab2">
+                    <!-- <h1>Applicant 2</h1> -->
+                    <br/>
+                    <apex:pageBlock id="pgblck2">
+                        <apex:pageBlockSection columns="3">
+                            <apex:inputField value="{!applicant2.Salutation__c}" label="Salutation<redtext> *</redtext>" />
+                            <apex:inputField id="ApplicantName" value="{!applicant2.Name}" label="Applicant Name<redtext> *</redtext>" />
+                            <apex:inputField id="ApplicantGender" value="{!applicant2.Gender__c}" label="Gender<redtext>*</redtext>" />
+                            <apex:input type="date" value="{!SecondApplicantDOB}" label="DOB*" style="font-family:Times New Roman, Times, serif;font-size:15px;"/>
+                            <apex:inputField id="apMob" value="{!applicant2.Mobile_Number__c}" label="Mobile Number<redtext> *</redtext>" />
+                            <apex:inputField id="apEmail" value="{!applicant2.Email_Address__c}" label="Email Address<redtext> *</redtext>" />
+                            <apex:inputField id="alapEmail" value="{!applicant2.Alternate_Email_Id__c}" label="Alternate Email Address"/>
+                            <apex:inputField id="alapMob" value="{!applicant2.Alternate_Mobile_No__c}" label="Alternate Mobile Number"/>
+                            &nbsp;
+                            <!--<apex:inputField id="phouseName" value="{!applicant2.House_No__c}" label="House No<redtext>*</redtext>" />
+                            <apex:inputField value="{!applicant2.Street_1__c}" label="Street 1<redtext>*</redtext>" />
+                            <apex:inputField id="apcity" value="{!applicant2.Street_2__c}" label="Street 2<redtext>*</redtext>" />
+                            <apex:inputField value="{!applicant2.Street_3__c}" label="Street 3<redtext>*</redtext>" />
+                            <apex:inputField value="{!applicant2.Locality__c}" label="Locality<redtext>*</redtext>" />
+                            <apex:inputField value="{!applicant2.City__c}" label="City<redtext>*</redtext>" />
+                            <apex:inputField value="{!applicant2.State__c}" label="State<redtext>*</redtext>" />
+                            <apex:inputField value="{!applicant2.Pincode__c}" label="Pincode<redtext>*</redtext>" />
+                            <apex:inputField value="{!applicant2.Country__c}" label="Country<redtext>*</redtext>" />
+                            
+                            <apex:inputField id="ApplicantCorddress" value="{!applicant2.Preferred_address_for_all_correspondence__c}" label="Preferred address for all correspondence<redtext>*</redtext>"
+                            />
+                            <apex:inputCheckbox label="Mailing address same as Permanent address :" value="{!addressCheckApplicant2}">
+                                <apex:actionSupport event="onchange" Rerender="m2" status="status" />
+                            </apex:inputcheckbox>
+                        </apex:pageBlockSection>
+                        <br></br>
+                        <apex:pageBlockSection columns="3" id="m2">
+                            <apex:inputField value="{!applicant2.Mailing_House_No__c}" label="Mailing House No" rendered="{!addressCheckApplicant2 == false}"/>
+                            <apex:inputField value="{!applicant2.Mailing_Street_1__c}" label="Mailing Street 1" rendered="{!addressCheckApplicant2 == false}"/>
+                            <apex:inputField value="{!applicant2.Mailing_Street_2__c}" label="Mailing Street 2" rendered="{!addressCheckApplicant2 == false}"/>
+                            <apex:inputField value="{!applicant2.Mailing_Street_3__c}" label="Mailing Street 3" rendered="{!addressCheckApplicant2 == false}"/>
+                            <apex:inputField label="Mailing Locality*" value="{!applicant2.Mailing_City__c}" rendered="{!addressCheckApplicant2 == false}" />
+                            <apex:inputField label="Mailing City*" value="{!applicant2.Mailing_Locality__c}" rendered="{!addressCheckApplicant2 == false}" />
+                            <apex:inputField label="Mailing Country*" value="{!applicant2.Mailing_Country__c}" rendered="{!addressCheckApplicant2 == false}" />
+                            <apex:inputField label="Mailing State*" value="{!applicant2.Mailing_State__c}" rendered="{!addressCheckApplicant2 == false}" />
+                            <apex:inputField label="Mailing Pincode*" value="{!applicant2.Mailing_Pincode__c}" rendered="{!addressCheckApplicant2 == false}" />
+                            
+                            <apex:outputText ></apex:outputText>-->
+
+                        </apex:pageBlockSection>
+                        <apex:pageBlockSection columns="3">
+                            <apex:inputField value="{!applicant2.Nationality__c}" label="Nationality<redtext>*</redtext>" />
+                            <apex:inputField value="{!applicant2.Occupation__c}" />
+                            <apex:inputField value="{!applicant2.Company_Name__c}" />
+                            <apex:inputField value="{!applicant2.Designation__c}" />
+                            <apex:inputField id="ApplicantType2" value="{!applicant2.Type_Of_Applicant__c}" label="Type Of Applicant<redtext>*</redtext>"
+                            />
+                            <apex:inputField id="ApplicantSubType2" label="Residential Status<redtext>*</redtext>" value="{!applicant2.Subtype_Of_Applicant__c}"
+                                onchange="showDiv(this,'ApplicantTable2')" />
+                        </apex:pageBlockSection>
+                    </apex:pageBlock>
+
+                    <br/>
+                    <table id="ApplicantTable2" class="tableApp1B">
+                        <tr style="width:100%;">
+                            <th style="width:5%;">&nbsp;</th>
+                            <th style="width:55%;">Document Name</th>
+                            <th style="width:20%;">Document Type</th>
+                            <th style="width:20%;">Document Details</th>
+                        </tr>
+
+                        <tr id="row1">
+                            <td>
+                                <apex:inputField value="{!applicant2.Pancard__c}" />
+                            </td>
+                            <td>Pan Card</td>
+                            <td>N/A</td>
+                            <td>
+                                <apex:inputField value="{!applicant2.PancardNo__c }" />
+                            </td>
+                        </tr>
+
+                        <tr id="row2">
+                            <td>
+                                <apex:inputField value="{!applicant2.Aadhar_Card__c}" />
+                            </td>
+                            <td>Aadhar Card</td>
+                            <td>N/A</td>
+                            <td>
+                                <apex:inputField value="{!applicant2.Aadhar_Card_No__c}" />
+                            </td>
+                        </tr>
+
+                        <tr id="row3">
+                            <td>
+                                <apex:inputField value="{!applicant2.Address_Proof__c}" />
+                            </td>
+                            <td>Address Proof: Passport / Voter’s ID Card.</td>
+                            <td>
+                                <apex:inputField value="{!applicant2.Address_Proof_Document__c}" />
+                            </td>
+                            <td>
+                                <apex:inputField value="{!applicant2.Address_Proof_Number__c}" />
+                            </td>
+                        </tr>
+                        
+                        <tr id="row4">
+                            <td>
+                                <apex:inputField value="{!applicant2.Self_attested_copy_of_PIO_or_OCI_Card__c}" />
+                            </td>
+                            <td>PIO (Person of Indian Origin) Card or OCI (Overseas Citizen of India) Card</td>
+                            <td>
+                                <apex:inputField value="{!applicant2.Type_Of_Origin__c}" />
+                            </td>
+                            <td>
+                                <apex:inputField value="{!applicant2.Origin_Details__c}" />
+                            </td>
+                        </tr>
+                        
+                        <tr id="row5">
+                            <td>
+                                <apex:inputField value="{!applicant2.Self_attested_List_of_Directors__c}" />
+                            </td>
+                            <td>List of Directors/Members/Partners/Trustee.</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                        
+                        <tr id="row6">
+                            <td>
+                                <apex:inputField value="{!applicant2.Certified_copy_of_Board_Resolution__c}" />
+                            </td>
+                            <td>Board Resolution</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                        
+                        <tr id="row7">
+                            <td>
+                                <apex:inputField value="{!applicant2.Copy_of_Memorandum_of_Association__c}" />
+                            </td>
+                            <td>Certified copy of Memorandum of Association</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+
+                        <tr id="row8">
+                            <td>
+                                <apex:inputField value="{!applicant2.Certified_copy_of_Article_of_Association__c}" />
+                            </td>
+                            <td>Certified copy of Articles of Association.</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                        
+                        <tr id="row9">
+                            <td>
+                                <apex:inputField value="{!applicant2.PanCard_of_Authority_Signatory__c}" />
+                            </td>
+                            <td>Pan Card (HUF/Company/Partnership/Proprietorship/Trust/LLP).</td>
+                            <td>N/A</td>
+                            <td>
+                                <apex:inputField value="{!applicant2.Pan_Card_Number_of_Authority_Signatory__c}" />
+                            </td>
+                        </tr>
+                        
+                        <tr id="row10">
+                            <td>
+                                <apex:inputField value="{!applicant2.Certified_copy_of_Partnership_Deed__c}" />
+                            </td>
+                            <td>Registered Partnership/Trust Deed / LLP Agreement.</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                        
+                        <tr id="row11">
+                            <td>
+                                <apex:inputField value="{!applicant2.Certified_copy_of_ROC_Incorporation__c}" />
+                            </td>
+                            <td>Certificate of Incorporation.</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                        
+                        <tr id="row12">
+                            <td>
+                                <apex:inputField value="{!applicant2.Certified_extract_of_Registration__c}" />
+                            </td>
+                            <td>Latest ITR (Optional).</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                        
+                         <tr id="row13">
+                            <td>
+                                <apex:inputField value="{!applicant2.Copy_of_Workpermit_Employment_contract__c}" />
+                            </td>
+                            <td>NRI Declaration</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                        <tr id="row14">
+                            <td>
+                                <apex:inputField value="{!applicant2.PassportNumber__c}" />
+                            </td>
+                            <td>Bank confirmation Letter</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="tab3">
+                    <!--  <h1>Applicant 3</h1> -->
+                    <br/>
+                    <apex:pageBlock >
+                        <apex:pageBlockSection columns="3">
+                            <apex:inputField value="{!applicant3.Salutation__c}" label="Salutation<redtext> *</redtext>" />
+                            <apex:inputField id="ApplicantName" value="{!applicant3.Name}" label="Applicant Name<redtext> *</redtext>" />
+                            <apex:inputField id="ApplicantGender" value="{!applicant3.Gender__c}" label="Gender<redtext>*</redtext>" />
+                            <apex:input type="date" value="{!ThirdApplicantDOB}" label="DOB*" style="font-family:Times New Roman, Times, serif;font-size:15px;"/>
+                            <apex:inputField id="apMob" value="{!applicant3.Mobile_Number__c}" label="Mobile Number<redtext> *</redtext>" />
+                            <apex:inputField id="apEmail" value="{!applicant3.Email_Address__c}" label="Email Address<redtext> *</redtext>" />
+                            <apex:inputField id="alapEmail" value="{!applicant3.Alternate_Email_Id__c}" label="Alternate Email Address"/>
+                            <apex:inputField id="alapMob" value="{!applicant3.Alternate_Mobile_No__c}" label="Alternate Mobile Number"/>
+                            &nbsp;
+                            <!--<apex:inputField id="phouseName" value="{!applicant3.House_No__c}" label="House No<redtext>*</redtext>" />
+                            <apex:inputField value="{!applicant3.Street_1__c}" label="Street 1<redtext>*</redtext>" />
+                            <apex:inputField id="apcity" value="{!applicant3.Street_2__c}" label="Street 2<redtext>*</redtext>" />
+                            <apex:inputField value="{!applicant3.Street_3__c}" label="Street 3<redtext>*</redtext>" />
+                            <apex:inputField value="{!applicant3.Locality__c}" label="Locality<redtext>*</redtext>" />
+                            <apex:inputField value="{!applicant3.City__c}" label="City<redtext>*</redtext>" />
+                            <apex:inputField value="{!applicant3.State__c}" label="State<redtext>*</redtext>" />
+                            <apex:inputField value="{!applicant3.Pincode__c}" label="Pincode<redtext>*</redtext>" />
+                            <apex:inputField value="{!applicant3.Country__c}" label="Country<redtext>*</redtext>" />
+                            <apex:inputField id="ApplicantCorddress" value="{!applicant3.Preferred_address_for_all_correspondence__c}" label="Preferred address for all correspondence<redtext>*</redtext>"/>
+                            <apex:inputCheckbox label="Mailing address same as Permanent address :" value="{!addressCheckApplicant3}">
+                                <apex:actionSupport event="onchange" rerender="m3" status="status" />
+                            </apex:inputcheckbox>
+                        </apex:pageBlockSection>
+                        <br></br>
+                        <apex:pageBlockSection columns="3" id="m3">
+                            <apex:inputField value="{!applicant3.Mailing_House_No__c}" label="Mailing House No" rendered="{!addressCheckApplicant3 == false}"/>
+                            <apex:inputField value="{!applicant3.Mailing_Street_1__c}" label="Mailing Street 1" rendered="{!addressCheckApplicant3 == false}"/>
+                            <apex:inputField value="{!applicant3.Mailing_Street_2__c}" label="Mailing Street 2" rendered="{!addressCheckApplicant3 == false}"/>
+                            <apex:inputField value="{!applicant3.Mailing_Street_3__c}" label="Mailing Street 3" rendered="{!addressCheckApplicant3 == false}"/>
+                            <apex:inputField label="Mailing Locality*" value="{!applicant3.Mailing_City__c}" rendered="{!addressCheckApplicant3 == false}" />
+                            <apex:inputField label="Mailing City*" value="{!applicant3.Mailing_Locality__c}" rendered="{!addressCheckApplicant3 == false}" />
+                            <apex:inputField label="Mailing Country*" value="{!applicant3.Mailing_Country__c}" rendered="{!addressCheckApplicant3 == false}" />
+                            <apex:inputField label="Mailing State*" value="{!applicant3.Mailing_State__c}" rendered="{!addressCheckApplicant3 == false}" />
+                            <apex:inputField label="Mailing Pincode*" value="{!applicant3.Mailing_Pincode__c}" rendered="{!addressCheckApplicant3 == false}" />
+                            <apex:outputText ></apex:outputText>-->
+                        </apex:pageBlockSection>
+                        <apex:pageBlockSection columns="3">
+                            <apex:inputField value="{!applicant3.Nationality__c}" label="Nationality<redtext>*</redtext>" />
+                            <apex:inputField value="{!applicant3.Occupation__c}" />
+                            <apex:inputField value="{!applicant3.Company_Name__c}" />
+                            <apex:inputField value="{!applicant3.Designation__c}" />
+                            <apex:inputField id="ApplicantType3" value="{!applicant3.Type_Of_Applicant__c}" label="Type Of Applicant<redtext>*</redtext>"
+                            />
+                            <apex:inputField id="ApplicantSubType3" label="Residential Status<redtext>*</redtext>" value="{!applicant3.Subtype_Of_Applicant__c}"
+                                onchange="showDiv(this,'ApplicantTable3')" />
+
+                        </apex:pageBlockSection>
+                    </apex:pageBlock>
+                    <br/>
+                    <table id="ApplicantTable3" class="tableApp1B">
+                        <tr style="width:100%;">
+                            <th style="width:5%;">&nbsp;</th>
+                            <th style="width:55%;">Document Name</th>
+                            <th style="width:20%;">Document Type</th>
+                            <th style="width:20%;">Document Details</th>
+                        </tr>
+
+                        <tr id="row1">
+                            <td>
+                                <apex:inputField value="{!applicant3.Pancard__c}" />
+                            </td>
+                            <td>Pan Card</td>
+                            <td>N/A</td>
+                            <td>
+                                <apex:inputField value="{!applicant3.PancardNo__c }" />
+                            </td>
+                        </tr>
+
+                        <tr id="row2">
+                            <td>
+                                <apex:inputField value="{!applicant3.Aadhar_Card__c}" />
+                            </td>
+                            <td>Aadhar Card</td>
+                            <td>N/A</td>
+                            <td>
+                                <apex:inputField value="{!applicant3.Aadhar_Card_No__c}" />
+                            </td>
+                        </tr>
+                        
+                        <tr id="row3">
+                            <td>
+                                <apex:inputField value="{!applicant3.Address_Proof__c}" />
+                            </td>
+                            <td>Address Proof: Passport / Voter’s ID Card.</td>
+                            <td>
+                                <apex:inputField value="{!applicant3.Address_Proof_Document__c}" />
+                            </td>
+                            <td>
+                                <apex:inputField value="{!applicant3.Address_Proof_Number__c}" />
+                            </td>
+                        </tr>
+                        
+                        <tr id="row4">
+                            <td>
+                                <apex:inputField value="{!applicant3.Self_attested_copy_of_PIO_or_OCI_Card__c}" />
+                            </td>
+                            <td>PIO (Person of Indian Origin) Card or OCI (Overseas Citizen of India) Card</td>
+                            <td>
+                                <apex:inputField value="{!applicant3.Type_Of_Origin__c}" />
+                            </td>
+                            <td>
+                                <apex:inputField value="{!applicant3.Origin_Details__c}" />
+                            </td>
+                        </tr>
+                        
+                        <tr id="row5">
+                            <td>
+                                <apex:inputField value="{!applicant3.Self_attested_List_of_Directors__c}" />
+                            </td>
+                            <td>List of Directors/Members/Partners/Trustee.</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                        
+                        <tr id="row6">
+                            <td>
+                                <apex:inputField value="{!applicant3.Certified_copy_of_Board_Resolution__c}" />
+                            </td>
+                            <td>Board Resolution</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                        
+                        <tr id="row7">
+                            <td>
+                                <apex:inputField value="{!applicant3.Copy_of_Memorandum_of_Association__c}" />
+                            </td>
+                            <td>Certified copy of Memorandum of Association</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+
+                        <tr id="row8">
+                            <td>
+                                <apex:inputField value="{!applicant3.Certified_copy_of_Article_of_Association__c}" />
+                            </td>
+                            <td>Certified copy of Articles of Association.</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                        
+                        <tr id="row9">
+                            <td>
+                                <apex:inputField value="{!applicant3.PanCard_of_Authority_Signatory__c}" />
+                            </td>
+                            <td>Pan Card (HUF/Company/Partnership/Proprietorship/Trust/LLP).</td>
+                            <td>N/A</td>
+                            <td>
+                                <apex:inputField value="{!applicant3.Pan_Card_Number_of_Authority_Signatory__c}" />
+                            </td>
+                        </tr>
+                        
+                        <tr id="row10">
+                            <td>
+                                <apex:inputField value="{!applicant3.Certified_copy_of_Partnership_Deed__c}" />
+                            </td>
+                            <td>Registered Partnership/Trust Deed / LLP Agreement.</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                        
+                        <tr id="row11">
+                            <td>
+                                <apex:inputField value="{!applicant3.Certified_copy_of_ROC_Incorporation__c}" />
+                            </td>
+                            <td>Certificate of Incorporation.</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                        
+                        <tr id="row12">
+                            <td>
+                                <apex:inputField value="{!applicant3.Certified_extract_of_Registration__c}" />
+                            </td>
+                            <td>Latest ITR (Optional).</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                        
+                         <tr id="row13">
+                            <td>
+                                <apex:inputField value="{!applicant3.Copy_of_Workpermit_Employment_contract__c}" />
+                            </td>
+                            <td>NRI Declaration</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                        <tr id="row14">
+                            <td>
+                                <apex:inputField value="{!applicant3.PassportNumber__c}" />
+                            </td>
+                            <td>Bank confirmation Letter</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="tab4">
+                    <!-- <h1>Applicant 4</h1> -->
+                    <br/>
+                    <apex:pageBlock >
+                        <apex:pageBlockSection columns="3">
+                            <apex:inputField value="{!applicant4.Salutation__c}" label="Salutation<redtext> *</redtext>" />
+                            <apex:inputField id="ApplicantName" value="{!applicant4.Name}" label="Applicant Name<redtext> *</redtext>" />
+                            <apex:inputField id="ApplicantGender" value="{!applicant4.Gender__c}" label="Gender<redtext>*</redtext>" />
+                            <apex:input type="date" value="{!fourthApplicantDOB}" label="DOB*" style="font-family:Times New Roman, Times, serif;font-size:15px;"/>
+                            <apex:inputField id="apMob" value="{!applicant4.Mobile_Number__c}" label="Mobile Number<redtext> *</redtext>" />
+                            <apex:inputField id="apEmail" value="{!applicant4.Email_Address__c}" label="Email Address<redtext> *</redtext>" />
+                            <apex:inputField id="alapEmail" value="{!applicant4.Alternate_Email_Id__c}" label="Alternate Email Address"/>
+                            <apex:inputField id="alapMob" value="{!applicant4.Alternate_Mobile_No__c}" label="Alternate Mobile Number"/>
+                            &nbsp;
+                            <!--<apex:inputField id="phouseName" value="{!applicant4.House_No__c}" label="House No<redtext>*</redtext>" />
+                            <apex:inputField value="{!applicant4.Street_1__c}" label="Street 1<redtext>*</redtext>" />
+                            <apex:inputField id="apcity" value="{!applicant4.Street_2__c}" label="Street 2<redtext>*</redtext>" />
+                            <apex:inputField value="{!applicant4.Street_3__c}" label="Street 3<redtext>*</redtext>" />
+                            <apex:inputField value="{!applicant4.Locality__c}" label="Locality<redtext>*</redtext>" />
+                            <apex:inputField value="{!applicant4.City__c}" label="City<redtext>*</redtext>" />
+                            <apex:inputField value="{!applicant4.State__c}" label="State<redtext>*</redtext>" />
+                            <apex:inputField value="{!applicant4.Pincode__c}" label="Pincode<redtext>*</redtext>" />
+                            <apex:inputField value="{!applicant4.Country__c}" label="Country<redtext>*</redtext>" />
+                            <apex:inputField id="ApplicantCorddress" value="{!applicant4.Preferred_address_for_all_correspondence__c}" label="Preferred address for all correspondence<redtext>*</redtext>"/>
+                            <apex:inputCheckbox label="Mailing address same as Permanent address :" value="{!addressCheckApplicant4}">
+                                <apex:actionSupport event="onchange" rerender="m4" status="status" />
+                            </apex:inputcheckbox>
+                        </apex:pageBlockSection>
+                        <br></br>
+                        <apex:pageBlockSection columns="3" id="m4">
+                            <apex:inputField value="{!applicant4.Mailing_House_No__c}" label="Mailing House No" rendered="{!addressCheckApplicant4 == false}"/>
+                            <apex:inputField value="{!applicant4.Mailing_Street_1__c}" label="Mailing Street 1" rendered="{!addressCheckApplicant4 == false}"/>
+                            <apex:inputField value="{!applicant4.Mailing_Street_2__c}" label="Mailing Street 2" rendered="{!addressCheckApplicant4 == false}"/>
+                            <apex:inputField value="{!applicant4.Mailing_Street_3__c}" label="Mailing Street 3" rendered="{!addressCheckApplicant4 == false}"/>
+                            <apex:inputField label="Mailing Locality*" value="{!applicant4.Mailing_City__c}" rendered="{!addressCheckApplicant4 == false}" />
+                            <apex:inputField label="Mailing City*" value="{!applicant4.Mailing_Locality__c}" rendered="{!addressCheckApplicant4 == false}" />
+                            <apex:inputField label="Mailing Country*" value="{!applicant4.Mailing_Country__c}" rendered="{!addressCheckApplicant4 == false}" />
+                            <apex:inputField label="Mailing State*" value="{!applicant4.Mailing_State__c}" rendered="{!addressCheckApplicant4 == false}" />
+                            <apex:inputField label="Mailing Pincode*" value="{!applicant4.Mailing_Pincode__c}" rendered="{!addressCheckApplicant4 == false}" />
+                            <apex:outputText ></apex:outputText>-->
+                        </apex:pageBlockSection>
+                        <br></br>
+                        <apex:pageBlockSection columns="3">
+                            <apex:inputField value="{!applicant4.Nationality__c}" label="Nationality<redtext>*</redtext>" />
+                            <apex:inputField value="{!applicant4.Occupation__c}" />
+                            <apex:inputField value="{!applicant4.Company_Name__c}" />
+                            <apex:inputField value="{!applicant4.Designation__c}" />
+                            <apex:inputField id="ApplicantType4" value="{!applicant4.Type_Of_Applicant__c}" label="Type Of Applicant<redtext>*</redtext>"
+                            />
+                            <apex:inputField id="ApplicantSubType4" label="Residential Status<redtext>*</redtext>" value="{!applicant4.Subtype_Of_Applicant__c}"
+                                onchange="showDiv(this,'ApplicantTable4')" />
+                        </apex:pageBlockSection>
+                    </apex:pageBlock>
+
+                    <br/>
+                    <table id="ApplicantTable4" class="tableApp1B">
+                        <tr style="width:100%;">
+                            <th style="width:5%;">&nbsp;</th>
+                            <th style="width:55%;">Document Name</th>
+                            <th style="width:20%;">Document Type</th>
+                            <th style="width:20%;">Document Details</th>
+                        </tr>
+
+                        <tr id="row1">
+                            <td>
+                                <apex:inputField value="{!applicant4.Pancard__c}" />
+                            </td>
+                            <td>Pan Card</td>
+                            <td>N/A</td>
+                            <td>
+                                <apex:inputField value="{!applicant4.PancardNo__c }" />
+                            </td>
+                        </tr>
+
+                        <tr id="row2">
+                            <td>
+                                <apex:inputField value="{!applicant4.Aadhar_Card__c}" />
+                            </td>
+                            <td>Aadhar Card</td>
+                            <td>N/A</td>
+                            <td>
+                                <apex:inputField value="{!applicant4.Aadhar_Card_No__c}" />
+                            </td>
+                        </tr>
+
+                        <tr id="row3">
+                            <td>
+                                <apex:inputField value="{!applicant4.Address_Proof__c}" />
+                            </td>
+                            <td>Address Proof: Passport / Voter’s ID Card.</td>
+                            <td>
+                                <apex:inputField value="{!applicant4.Address_Proof_Document__c}" />
+                            </td>
+                            <td>
+                                <apex:inputField value="{!applicant4.Address_Proof_Number__c}" />
+                            </td>
+                        </tr>
+                        
+                        <tr id="row4">
+                            <td>
+                                <apex:inputField value="{!applicant4.Self_attested_copy_of_PIO_or_OCI_Card__c}" />
+                            </td>
+                            <td>PIO (Person of Indian Origin) Card or OCI (Overseas Citizen of India) Card</td>
+                            <td>
+                                <apex:inputField value="{!applicant4.Type_Of_Origin__c}" />
+                            </td>
+                            <td>
+                                <apex:inputField value="{!applicant4.Origin_Details__c}" />
+                            </td>
+                        </tr>
+                        
+                        <tr id="row5">
+                            <td>
+                                <apex:inputField value="{!applicant4.Self_attested_List_of_Directors__c}" />
+                            </td>
+                            <td>List of Directors/Members/Partners/Trustee.</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                        
+                        <tr id="row6">
+                            <td>
+                                <apex:inputField value="{!applicant4.Certified_copy_of_Board_Resolution__c}" />
+                            </td>
+                            <td>Board Resolution</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                        
+                        <tr id="row7">
+                            <td>
+                                <apex:inputField value="{!applicant4.Copy_of_Memorandum_of_Association__c}" />
+                            </td>
+                            <td>Certified copy of Memorandum of Association</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+
+                        <tr id="row8">
+                            <td>
+                                <apex:inputField value="{!applicant4.Certified_copy_of_Article_of_Association__c}" />
+                            </td>
+                            <td>Certified copy of Articles of Association.</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                        
+                        <tr id="row9">
+                            <td>
+                                <apex:inputField value="{!applicant4.PanCard_of_Authority_Signatory__c}" />
+                            </td>
+                            <td>Pan Card (HUF/Company/Partnership/Proprietorship/Trust/LLP).</td>
+                            <td>N/A</td>
+                            <td>
+                                <apex:inputField value="{!applicant4.Pan_Card_Number_of_Authority_Signatory__c}" />
+                            </td>
+                        </tr>
+                        
+                        <tr id="row10">
+                            <td>
+                                <apex:inputField value="{!applicant4.Certified_copy_of_Partnership_Deed__c}" />
+                            </td>
+                            <td>Registered Partnership/Trust Deed / LLP Agreement.</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                        
+                        <tr id="row11">
+                            <td>
+                                <apex:inputField value="{!applicant4.Certified_copy_of_ROC_Incorporation__c}" />
+                            </td>
+                            <td>Certificate of Incorporation.</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                        
+                        <tr id="row12">
+                            <td>
+                                <apex:inputField value="{!applicant4.Certified_extract_of_Registration__c}" />
+                            </td>
+                            <td>Latest ITR (Optional).</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                        
+                         <tr id="row13">
+                            <td>
+                                <apex:inputField value="{!applicant4.Copy_of_Workpermit_Employment_contract__c}" />
+                            </td>
+                            <td>NRI Declaration</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                        <tr id="row14">
+                            <td>
+                                <apex:inputField value="{!applicant4.PassportNumber__c}" />
+                            </td>
+                            <td>Bank confirmation Letter</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="tab5">
+                    <!-- <h1>Applicant 5</h1> -->
+                    <br/>
+                    <apex:pageBlock >
+                        <apex:pageBlockSection columns="3">
+                            <apex:inputField value="{!applicant5.Salutation__c}" label="Salutation<redtext> *</redtext>" />
+                            <apex:inputField id="ApplicantName" value="{!applicant5.Name}" label="Applicant Name<redtext> *</redtext>" />
+                            <apex:inputField id="ApplicantGender" value="{!applicant5.Gender__c}" label="Gender<redtext>*</redtext>" />
+                            <apex:input type="date" value="{!fifthApplicantDOB}" label="DOB*" style="font-family:Times New Roman, Times, serif;font-size:15px;"/>
+                            <apex:inputField id="apMob" value="{!applicant5.Mobile_Number__c}" label="Mobile Number<redtext> *</redtext>" />
+                            <apex:inputField id="apEmail" value="{!applicant5.Email_Address__c}" label="Email Address<redtext> *</redtext>" />
+                            <apex:inputField id="alapEmail" value="{!applicant5.Alternate_Email_Id__c}" label="Alternate Email Address"/>
+                            <apex:inputField id="alapMob" value="{!applicant5.Alternate_Mobile_No__c}" label="Alternate Mobile Number"/>
+                            &nbsp;
+                            <!--<apex:inputField id="phouseName" value="{!applicant5.House_No__c}" label="House No<redtext>*</redtext>" />
+                            <apex:inputField value="{!applicant5.Street_1__c}" label="Street 1<redtext>*</redtext>" />
+                            <apex:inputField id="apcity" value="{!applicant5.Street_2__c}" label="Street 2<redtext>*</redtext>" />
+                            <apex:inputField value="{!applicant5.Street_3__c}" label="Street 3<redtext>*</redtext>" />
+                            <apex:inputField value="{!applicant5.Locality__c}" label="Locality<redtext>*</redtext>" />
+                            <apex:inputField value="{!applicant5.City__c}" label="City<redtext>*</redtext>" />
+                            <apex:inputField value="{!applicant5.State__c}" label="State<redtext>*</redtext>" />
+                            <apex:inputField value="{!applicant5.Pincode__c}" label="Pincode<redtext>*</redtext>" />
+                            <apex:inputField value="{!applicant5.Country__c}" label="Country<redtext>*</redtext>" />
+                            <apex:inputField id="ApplicantCorddress" value="{!applicant5.Preferred_address_for_all_correspondence__c}" label="Preferred address for all correspondence<redtext>*</redtext>"/>
+                            <apex:inputCheckbox label="Mailing address same as Permanent address :" value="{!addressCheckApplicant5}">
+                                <apex:actionSupport event="onchange" rerender="m5" status="status" />
+                            </apex:inputcheckbox>
+                        </apex:pageBlockSection>
+                        <apex:pageBlockSection columns="3" id="m5">
+                            <apex:inputField value="{!applicant5.Mailing_House_No__c}" label="Mailing House No" rendered="{!addressCheckApplicant5 == false}"/>
+                            <apex:inputField value="{!applicant5.Mailing_Street_1__c}" label="Mailing Street 1" rendered="{!addressCheckApplicant5 == false}"/>
+                            <apex:inputField value="{!applicant5.Mailing_Street_2__c}" label="Mailing Street 2" rendered="{!addressCheckApplicant5 == false}"/>
+                            <apex:inputField value="{!applicant5.Mailing_Street_3__c}" label="Mailing Street 3" rendered="{!addressCheckApplicant5 == false}"/>
+                            <apex:inputField label="Mailing Locality*" value="{!applicant5.Mailing_City__c}" rendered="{!addressCheckApplicant5 == false}" />
+                            <apex:inputField label="Mailing City*" value="{!applicant5.Mailing_Locality__c}" rendered="{!addressCheckApplicant5 == false}" />
+                            <apex:inputField label="Mailing Country*" value="{!applicant5.Mailing_Country__c}" rendered="{!addressCheckApplicant5 == false}" />
+                            <apex:inputField label="Mailing State*" value="{!applicant5.Mailing_State__c}" rendered="{!addressCheckApplicant5 == false}" />
+                            <apex:inputField label="Mailing Pincode*" value="{!applicant5.Mailing_Pincode__c}" rendered="{!addressCheckApplicant5 == false}" />
+                            <apex:outputText ></apex:outputText>-->
+                        </apex:pageBlockSection>
+                        <apex:pageBlockSection columns="3">
+                            <apex:inputField value="{!applicant5.Nationality__c}" label="Nationality<redtext>*</redtext>" />
+                            <apex:inputField value="{!applicant5.Occupation__c}" />
+                            <apex:inputField value="{!applicant5.Company_Name__c}" />
+                            <apex:inputField value="{!applicant5.Designation__c}" />
+                            <apex:inputField id="ApplicantType5" value="{!applicant5.Type_Of_Applicant__c}" label="Type Of Applicant<redtext>*</redtext>"
+                            />
+                            <apex:inputField id="ApplicantSubType5" label="Residential Status<redtext>*</redtext>" value="{!applicant5.Subtype_Of_Applicant__c}"
+                                onchange="showDiv(this,'ApplicantTable5')" />
+
+                        </apex:pageBlockSection>
+                    </apex:pageBlock>
+                    <br/>
+                    <table id="ApplicantTable5" class="tableApp1B">
+                        <tr style="width:100%;">
+                            <th style="width:5%;">&nbsp;</th>
+                            <th style="width:55%;">Document Name</th>
+                            <th style="width:20%;">Document Type</th>
+                            <th style="width:20%;">Document Details</th>
+                        </tr>
+
+                        <tr id="row1">
+                            <td>
+                                <apex:inputField value="{!applicant5.Pancard__c}" />
+                            </td>
+                            <td>Pan Card</td>
+                            <td>N/A</td>
+                            <td>
+                                <apex:inputField value="{!applicant5.PancardNo__c }" />
+                            </td>
+                        </tr>
+
+                        <tr id="row2">
+                            <td>
+                                <apex:inputField value="{!applicant5.Aadhar_Card__c}" />
+                            </td>
+                            <td>Aadhar Card</td>
+                            <td>N/A</td>
+                            <td>
+                                <apex:inputField value="{!applicant5.Aadhar_Card_No__c}" />
+                            </td>
+                        </tr>
+
+                        <tr id="row3">
+                            <td>
+                                <apex:inputField value="{!applicant5.Address_Proof__c}" />
+                            </td>
+                            <td>Address Proof: Passport / Voter’s ID Card.</td>
+                            <td>
+                                <apex:inputField value="{!applicant5.Address_Proof_Document__c}" />
+                            </td>
+                            <td>
+                                <apex:inputField value="{!applicant5.Address_Proof_Number__c}" />
+                            </td>
+                        </tr>
+                        
+                        <tr id="row4">
+                            <td>
+                                <apex:inputField value="{!applicant5.Self_attested_copy_of_PIO_or_OCI_Card__c}" />
+                            </td>
+                            <td>PIO (Person of Indian Origin) Card or OCI (Overseas Citizen of India) Card</td>
+                            <td>
+                                <apex:inputField value="{!applicant5.Type_Of_Origin__c}" />
+                            </td>
+                            <td>
+                                <apex:inputField value="{!applicant5.Origin_Details__c}" />
+                            </td>
+                        </tr>
+                        
+                        <tr id="row5">
+                            <td>
+                                <apex:inputField value="{!applicant5.Self_attested_List_of_Directors__c}" />
+                            </td>
+                            <td>List of Directors/Members/Partners/Trustee.</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                        
+                        <tr id="row6">
+                            <td>
+                                <apex:inputField value="{!applicant5.Certified_copy_of_Board_Resolution__c}" />
+                            </td>
+                            <td>Board Resolution</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                        
+                        <tr id="row7">
+                            <td>
+                                <apex:inputField value="{!applicant5.Copy_of_Memorandum_of_Association__c}" />
+                            </td>
+                            <td>Certified copy of Memorandum of Association</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+
+                        <tr id="row8">
+                            <td>
+                                <apex:inputField value="{!applicant5.Certified_copy_of_Article_of_Association__c}" />
+                            </td>
+                            <td>Certified copy of Articles of Association.</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                        
+                        <tr id="row9">
+                            <td>
+                                <apex:inputField value="{!applicant5.PanCard_of_Authority_Signatory__c}" />
+                            </td>
+                            <td>Pan Card (HUF/Company/Partnership/Proprietorship/Trust/LLP).</td>
+                            <td>N/A</td>
+                            <td>
+                                <apex:inputField value="{!applicant5.Pan_Card_Number_of_Authority_Signatory__c}" />
+                            </td>
+                        </tr>
+                        
+                        <tr id="row10">
+                            <td>
+                                <apex:inputField value="{!applicant5.Certified_copy_of_Partnership_Deed__c}" />
+                            </td>
+                            <td>Registered Partnership/Trust Deed / LLP Agreement.</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                        
+                        <tr id="row11">
+                            <td>
+                                <apex:inputField value="{!applicant5.Certified_copy_of_ROC_Incorporation__c}" />
+                            </td>
+                            <td>Certificate of Incorporation.</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                        
+                        <tr id="row12">
+                            <td>
+                                <apex:inputField value="{!applicant5.Certified_extract_of_Registration__c}" />
+                            </td>
+                            <td>Latest ITR (Optional).</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                        
+                         <tr id="row13">
+                            <td>
+                                <apex:inputField value="{!applicant5.Copy_of_Workpermit_Employment_contract__c}" />
+                            </td>
+                            <td>NRI Declaration</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                        <tr id="row14">
+                            <td>
+                                <apex:inputField value="{!applicant5.PassportNumber__c}" />
+                            </td>
+                            <td>Bank confirmation Letter</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <!--------------------------------------------Receipts--------------------------------------------->
+
+
+
+            <!--------------------------------------------Payment Details --------------------------------------------->
+            <div id="Receipt">
+                <apex:pageBlock id="ReceiptBlock">
+                    <apex:pageblockSection title="Receipt Details" rendered="{!IF(AND(ReceiptDetails.size == 0 && STReceiptDetails.size==0),True,False)}">
+                        <apex:pageBlock id="header">
+                            <apex:variable var="rowNumber" value="{!0}" />
+
+                            <apex:pageBlockTable value="{!receiptlist}" var="reciept" id="page" style="align:center;">
+
+                                <apex:column headerValue="No." style="width:60px; text-align:center;">
+                                    <apex:outputText value="{0}" style="text-align:center;">
+                                        <apex:param value="{!rowNumber+1}" />
+                                    </apex:outputText>
+                                </apex:column>
+
+                                <apex:column headerValue="Instrument.*">
+                                    <apex:inputField value="{!reciept.Payment_Mode__c}" />
+                                </apex:column>
+
+                                <apex:column headerValue="Instrument No.*">
+                                    <apex:inputField value="{!reciept.RTGS_Cheque_Draft_No__c}" />
+                                </apex:column>
+
+                                <apex:column headerValue="Date.*">
+                                    <apex:inputField value="{!reciept.Instrument_Date__c}" />
+                                </apex:column>
+
+                                <apex:column headerValue="Amount.*">
+                                    <apex:inputField value="{!reciept.Amount__c }" />
+                                </apex:column>
+
+                                <apex:column headerValue="Drawee Bank.*">
+                                    <apex:inputField value="{!reciept.Bank_Name__c}" />
+                                </apex:column>
+                                
+                                <apex:column headerValue="Branch Name.*">
+                                    <apex:inputField value="{!reciept.Branch_Name__c}" />
+                                </apex:column>
+
+                                <apex:column headerValue="Action">
+                                    <apex:commandButton value="Delete Reciept Row" action="{!deleteReciept}" reRender="header" status="status" rendered="{!If(AND(receiptlist.size > 1),True,false)}">
+                                        <apex:param name="rowIndex" value="{!rowNumber}" />
+                                    </apex:commandButton>
+                                    <apex:variable var="rowNumber" value="{!rowNumber+1}" />
+                                </apex:column>
+
+                            </apex:pageBlockTable>
+                            <center>
+                                <apex:commandButton value="Add Reciept Row" action="{!addReciept}" reRender="header" status="status" />
+                            </center>
+                        </apex:pageBlock>
+                    </apex:pageblockSection>
+                </apex:pageBlock>
+
+            </div>
+        </apex:form>
+
+        <script>
+            function resetTabs() {
+                $("#content > div").hide(); //Hide all content
+                $("#tabs a").attr("id", ""); //Reset id's      
+            }
+
+            var myUrl = window.location.href; //get URL
+            var myUrlTab = myUrl.substring(myUrl.indexOf("#")); // For localhost/tabs.html#tab2, myUrlTab = #tab2     
+            var myUrlTabName = myUrlTab.substring(0, 4); // For the above example, myUrlTabName = #tab
+
+            (function () {
+                $("#content > div").hide(); // Initially hide all content
+                $("#tabs li:first a").attr("id", "current"); // Activate first tab
+                $("#content > div:first").fadeIn(); // Show first tab content
+
+                $("#tabs a").on("click", function (e) {
+                    e.preventDefault();
+                    if ($(this).attr("id") == "current") { //detection for current tab
+                        return
+                    }
+                    else {
+                        resetTabs();
+                        $(this).attr("id", "current"); // Activate this
+                        $($(this).attr('name')).fadeIn(); // Show content for current tab
+                    }
+                });
+
+                for (i = 1; i <= $("#tabs li").length; i++) {
+                    if (myUrlTab == myUrlTabName + i) {
+                        resetTabs();
+                        $("a[name='" + myUrlTab + "']").attr("id", "current"); // Activate url tab
+                        $(myUrlTab).fadeIn(); // Show url tab content        
+                    }
+                }
+            })()
+        </script>
+        <script>
+//var abc = document.getElementById('{!$Component.ApplicantForm.appliBlock1.apl1.ApplicantSubType}');
+//showDiv(abc,'ApplicantTable1');
+        </script>
+    </body>
+</apex:page>

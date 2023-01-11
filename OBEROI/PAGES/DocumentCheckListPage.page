@@ -1,0 +1,411 @@
+<apex:page controller="DocumentCheckListController" standardStylesheets="false" sidebar="false" lightningStylesheets="true" showHeader="false">
+<head>
+    <title>Document Checklist</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
+    
+<style>
+body{
+     /* width: 1400px;*/
+      width: 100%;
+      height : 200px;
+      margin: 0px auto 0 auto;
+      font-family: Arial, Helvetica;
+      font-size: small;
+      background-color: white;
+     /*background-image:"house1.jpg";*/
+      
+    }
+    
+    #resizable { margin:10px 20px 20px 170px; width: 1000px; height: 500px; padding: 0.5em; }
+    #resizable h3 { text-align: center; margin: 0; }
+
+    /* ------------------------------------------------- */
+
+    #tabs {
+      overflow: hidden;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    #tabs li {
+      float: left;
+      margin: 0 -15px 0 0;
+  }
+
+    #tabs a {
+      float: left;
+      position: relative;
+      padding: 0 60px;
+      height: 0;
+      line-height: 30px;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: #fff;      
+      border-right: 30px solid transparent;
+      border-bottom: 30px solid #3D3D3D;
+      border-bottom-color: #777\9;
+      opacity: .3;
+      filter: alpha(opacity=30);      
+    }
+
+    #tabs a:hover,
+    #tabs a:focus {
+      border-bottom-color: #2ac7e1;
+      opacity: 1;
+      filter: alpha(opacity=100);
+    }
+
+    #tabs a:focus {
+      outline: 0;
+    }
+
+    #tabs #current {
+      z-index: 3;
+      border-bottom-color: #3d3d3d;
+      opacity: 2;
+      filter: alpha(opacity=100);      
+    }
+
+    /* ----------- */
+    #content {
+        background: #D6DDDD;
+        border-top: 0px solid #3d3d3d;
+        padding: 2em;
+        //height: 500px;
+        /*background-image:"house1.jpg";*/
+    }
+
+    #content h2,
+      #content h3,
+      #content p {
+        margin: 0 0 15px 0;
+    }  
+
+    /* Demo page only */
+    #about {
+        color: #0ad;
+        text-align: center;
+        font: 0.9em Arial, Helvetica;
+    }
+
+    #about a {
+        color: #777;
+    }     
+    table.tableApp1A {
+        width:90%;        
+    }
+    table.tableApp1A th{
+        text-align : center;        
+    }
+    
+    
+    table.tableApp1B {
+        
+        //display : none ;
+        border : 3px Solid Black;
+        width:100%;
+        
+    }
+    table.tableApp1B th{
+        text-align : center;        
+    }
+    table.tableApp1B td {
+        
+        border : 1px Solid Black;
+        padding: 10px;
+        fixed-width : 80%;
+       }
+     table.tableApp1B tr{
+       
+       fixed-width : 80%;
+      }
+    
+    }
+          
+ </style>
+ </head>
+    <body>
+        <apex:form id="ApplicantForm"> 
+            <apex:actionStatus id="status">
+                <apex:facet name="start">
+                <div class="fadeMe">
+                    &nbsp;
+                </div>
+                <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 15% 50%">
+                    <div style="display: inline-block; padding: 2px; background-color: #fff; width: 125px;">
+                        <img src="/img/loading.gif" style="float: left; margin: 8px;" />
+                        <span style="display: inline-block; padding: 10px 0px;">Please Wait...</span>
+                    </div>
+                </div>
+                </apex:facet>
+             </apex:actionStatus>
+            <apex:outputPanel id="messages">
+                <apex:pageMessages />
+            </apex:outputPanel>
+            
+            <apex:outputPanel id="ccd">
+
+            </apex:outputPanel>
+            
+            <apex:OutputPanel rendered="{!If(LEN(error)== 0,True,False)}"> 
+            <apex:outputPanel id="buttons">
+            <div align="center">
+                <h1>Document Verification Checklist</h1>
+                <apex:commandButton value="Accept" style="color: #fff; background-color: #5cb85c; border-color: #4cae4c;user-select: none; background-image: none; border: 1px solid transparent; border-radius: 4px; display: inline-block; padding: 6px 12px; margin-bottom: 0; font-size: 14px; font-weight: normal; line-height: 1.42857143; text-align: center; white-space: nowrap; vertical-align: middle; -ms-touch-action: manipulation; touch-action: manipulation;" action="{!accept}" reRender="mainPanel,messages,buttons" disabled="{!(isAccepted) || (isMailSend) || (isRejected)}" status="status"/>&nbsp;
+                <apex:commandButton value="Reject" style="color: #fff; background-color: #5cb85c; border-color: #4cae4c;user-select: none; background-image: none; border: 1px solid transparent; border-radius: 4px; display: inline-block; padding: 6px 12px; margin-bottom: 0; font-size: 14px; font-weight: normal; line-height: 1.42857143; text-align: center; white-space: nowrap; vertical-align: middle; -ms-touch-action: manipulation; touch-action: manipulation;" action="{!reject}" reRender="mainPanel,messages,buttons" disabled="{!(isAccepted) || (isMailSend) || (isRejected)}" rendered="{!level=='Level2'}" status="status"/> &nbsp;
+                <!-- <apex:commandButton value="Send Email" style="color: #fff; background-color: #5cb85c; border-color: #4cae4c;user-select: none; background-image: none; border: 1px solid transparent; border-radius: 4px; display: inline-block; padding: 6px 12px; margin-bottom: 0; font-size: 14px; font-weight: normal; line-height: 1.42857143; text-align: center; white-space: nowrap; vertical-align: middle; -ms-touch-action: manipulation; touch-action: manipulation;" action="{!SendMail}" reRender="mainPanel,messages,buttons" disabled="{!(isAccepted) || (isRejected) || (isMailSend)}" rendered="{!level=='Level2'}" status="status"/> &nbsp; -->
+                <apex:commandButton value="Home" style="color: #fff; background-color: #5cb85c; border-color: #4cae4c;user-select: none; background-image: none; border: 1px solid transparent; border-radius: 4px; display: inline-block; padding: 6px 12px; margin-bottom: 0; font-size: 14px; font-weight: normal; line-height: 1.42857143; text-align: center; white-space: nowrap; vertical-align: middle; -ms-touch-action: manipulation; touch-action: manipulation;" action="{!home}" rendered="{!(isAccepted) || (isRejected) || (isMailSend)}" status="status"/> 
+            </div>
+            </apex:outputPanel>
+            <apex:outputPanel id="mainPanel">
+            <div>
+                <br/>
+                <table id="checklist" class="tableApp1B">
+                    <tr style="width:90%;"><th style="width:45%;">Description</th><th style="width:20%;">Values</th><th style="width:10%;">&nbsp;</th><th style="width:5%;">Verified</th> <th style="width:20%;">Rejection Remarks</th> </tr>
+                    <apex:repeat value="{!headerList}" var="header">
+                        <tr style="background:#edf3f3;text-align:center;" id="row103"><td colspan="5"><apex:OutputText value="{!header}"/></td> </tr>
+                        <apex:repeat value="{!docMap[header]}" var="key">
+                          <tr>
+                            <td><apex:outputText value="{!descriptionMap['line_item_name'&TEXT(key)&'__c']}" style="height:10px;" escape="false"/></td>
+                            <td> {!documentDetailsMap[key]} </td>
+                            <td> {!WP[key].required} </td>
+                            <td><apex:inputField value="{!docHeader['Level_1_Verified'&TEXT(key)&'__c']}" style="border:1px solid blue;" rendered="{!level=='Level1'}"/>
+                                <apex:inputField value="{!docHeader['Level_2_Verified'&TEXT(key)&'__c']}" style="border:1px solid blue;" rendered="{!level=='Level2'}"/>
+                            </td> 
+                            <td><apex:inputField value="{!docHeader['Remarks'&TEXT(key)&'__c']}" style="height:30px;width:200px;{!IF(WP[key].isError == true,'border:1px solid red;','')}"/></td>   
+                          </tr>
+                        </apex:repeat> 
+                    </apex:repeat>
+                </table>
+            </div>
+            </apex:outputPanel>
+  <!------------------------------------------------------- APPLICANT DETAILS ---------------------------------------------------->          
+            <br/><br/>
+            <apex:outputPanel id="out"></apex:outputPanel>
+            <ul id="tabs">
+            <li><a href="#" name="#tab1">Applicant 1</a></li>
+            <li><a href="#" name="#tab2">Applicant 2</a></li>
+            <li><a href="#" name="#tab3">Applicant 3</a></li>
+            <li><a href="#" name="#tab4">Applicant 4</a></li>
+            <li><a href="#" name="#tab5">Applicant 5</a></li>
+            </ul>
+            
+            <div id="content">
+              <div id="tab1">
+                    <table  class="tableApp1A">
+                    <tr><td>
+                    <apex:outputLabel value="Applicant Name 1: " for="ApplicantName"/>
+                    <apex:OutputText id="ApplicantName"  value="{!applicant1.Name}"/>
+                    </td><td>
+                    <apex:outputLabel value="Applicant Type: " for="ApplicantType" />
+                    <apex:OutputText id="ApplicantType"  value="{!applicant1.Type_Of_Applicant__c}" />
+                    </td><td>
+                    <apex:outputLabel value="Applicant SubType: " for="ApplicantSubType" />
+                    <apex:OutputText id="ApplicantSubType"  value="{!applicant1.Subtype_Of_Applicant__c}"/>
+                    </td></tr>
+                    </table>
+                     
+                    <table id="ApplicantTable1" class="tableApp1B">
+                    <!-------------------------------------Applicant 1 Detail-------------------------------------->
+                      <apex:outputPanel rendered="{!applicantList.size > 0}">  
+                        <tr style="width:100%;" id="row112"><th colspan="6"><h4>Applicant 1 Detail<!--<apex:OutputText value="{!DocRow12.Description__c}"/>--></h4></th> </tr>
+                        <apex:repeat value="{!seqList}" var="seq">
+                          <tr>
+                            <td style="width:40%;"><apex:OutputText value="{!applicantDocMap['line_item_name'&TEXT(seq)&'__c']}" /></td>
+                            <td style="width:20%;">{!applicantDetailsMap['Primary Applicant'&TEXT(seq)]}</td>
+                            <td style="width:5%;"> {!WPAPP[seq].required} </td> 
+                            <td style="width:5%;"><apex:inputField value="{!applicantDocument1['Level_1_Verified'&TEXT(seq)&'__c']}" style="border:1px solid blue;" rendered="{!level == 'Level1'}"/>
+                                    <apex:inputField value="{!applicantDocument1['Level_2_Verified'&TEXT(seq)&'__c']}" style="border:1px solid blue;" rendered="{!level == 'Level2'}"/>
+                            </td>
+                            <td style="width:10%;"><apex:inputField value="{!applicantDocument1['Remarks'&TEXT(seq)&'__c']}" style="height:30px;width:200px;{!IF(WPAPP[seq].isError == true,'border:1px solid red;','')}"/></td>
+                          </tr>     
+                        </apex:repeat>
+                      </apex:outputPanel>
+                    </table>
+              </div>
+              <div id="tab2">
+                    <table  class="tableApp1A">
+                    <tr><td>
+                    <apex:outputLabel value="Applicant Name 2: " for="ApplicantName2"/>
+                    <apex:OutputText id="ApplicantName2"  value="{!applicant2.Name}"/>
+                    </td><td>
+                    <apex:outputLabel value="Applicant Type: " for="ApplicantType2" />
+                    <apex:OutputText id="ApplicantType2"  value="{!applicant2.Type_Of_Applicant__c}" />
+                    </td><td>
+                    <apex:outputLabel value="Applicant SubType: " for="ApplicantSubType2" />
+                    <apex:OutputText id="ApplicantSubType2"  value="{!applicant2.Subtype_Of_Applicant__c}"/>
+                    </td></tr>
+                    </table>
+                     
+                    <table id="ApplicantTable2" class="tableApp1B">
+                    <!-------------------------------------Applicant 2 Detail-------------------------------------->
+                      <apex:outputPanel rendered="{!applicantList.size > 1}">  
+                        <tr style="width:100%;"><th colspan="6"><h4>Applicant 2 Detail<!--<apex:OutputText value="{!DocRow12.Description__c}"/>--></h4></th> </tr>
+                        <apex:repeat value="{!seqList}" var="seq">
+                          <tr>
+                            <td style="width:40%;"><apex:OutputText value="{!applicantDocMap['line_item_name'&TEXT(seq)&'__c']}" /></td>
+                             <!-- <td style="width:5%;">
+                                 
+                             </td> -->
+                            <td style="width:20%;">{!applicantDetailsMap['Second Applicant'&TEXT(seq)]}</td> 
+                            <td style="width:5%;"> {!WPAPP[seq].required} </td>
+                            <td style="width:5%;"><apex:inputField value="{!applicantDocument2['Level_1_Verified'&TEXT(seq)&'__c']}" style="border:1px solid blue;" rendered="{!level == 'Level1'}"/>
+                                    <apex:inputField value="{!applicantDocument2['Level_2_Verified'&TEXT(seq)&'__c']}" style="border:1px solid blue;" rendered="{!level == 'Level2'}"/>
+                            </td>
+                            <td style="width:10%;"><apex:inputField value="{!applicantDocument2['Remarks'&TEXT(seq)&'__c']}" style="height:30px;width:200px;"/></td>
+                          </tr>     
+                        </apex:repeat>
+                      </apex:outputPanel>
+                    </table>
+              </div>
+              <div id="tab3">
+                    <table  class="tableApp1A">
+                    <tr><td>
+                    <apex:outputLabel value="Applicant Name 3: " for="ApplicantName3"/>
+                    <apex:OutputText id="ApplicantName3"  value="{!applicant3.Name}"/>
+                    </td><td>
+                    <apex:outputLabel value="Applicant Type: " for="ApplicantType3" />
+                    <apex:OutputText id="ApplicantType3"  value="{!applicant3.Type_Of_Applicant__c}" />
+                    </td><td>
+                    <apex:outputLabel value="Applicant SubType: " for="ApplicantSubType3" />
+                    <apex:OutputText id="ApplicantSubType3"  value="{!applicant3.Subtype_Of_Applicant__c}"/>
+                    </td></tr>
+                    </table>
+                     
+                    <table id="ApplicantTable3" class="tableApp1B">
+                    <!-------------------------------------Applicant 3 Detail-------------------------------------->
+                      <apex:outputPanel rendered="{!applicantList.size > 2}">  
+                        <tr style="width:100%;"><th colspan="6"><h4>Applicant 3 Detail<!--<apex:OutputText value="{!DocRow12.Description__c}"/>--></h4></th> </tr>
+                        <apex:repeat value="{!seqList}" var="seq">
+                          <tr>
+                            <td style="width:40%;"><apex:OutputText value="{!applicantDocMap['line_item_name'&TEXT(seq)&'__c']}" /></td>
+                             <!-- <td style="width:5%;">
+                                 
+                             </td> -->
+                            <td style="width:20%;">{!applicantDetailsMap['Third Applicant'&TEXT(seq)]}</td> 
+                            <td style="width:5%;"> {!WPAPP[seq].required} </td>
+                            <td style="width:5%;"><apex:inputField value="{!applicantDocument3['Level_1_Verified'&TEXT(seq)&'__c']}" style="border:1px solid blue;" rendered="{!level == 'Level1'}"/>
+                                                <apex:inputField value="{!applicantDocument3['Level_2_Verified'&TEXT(seq)&'__c']}" style="border:1px solid blue;" rendered="{!level == 'Level2'}"/>
+                            </td>
+                            <td style="width:10%;"><apex:inputField value="{!applicantDocument3['Remarks'&TEXT(seq)&'__c']}" style="height:30px;width:200px;"/></td>
+                          </tr>     
+                        </apex:repeat>
+                      </apex:outputPanel>
+                    </table>
+              </div>
+              <div id="tab4">
+                    <table  class="tableApp1A">
+                    <tr><td>
+                    <apex:outputLabel value="Applicant Name 4: " for="ApplicantName4"/>
+                    <apex:OutputText id="ApplicantName4"  value="{!applicant4.Name}"/>
+                    </td><td>
+                    <apex:outputLabel value="Applicant Type: " for="ApplicantType4" />
+                    <apex:OutputText id="ApplicantType4"  value="{!applicant4.Type_Of_Applicant__c}" />
+                    </td><td>
+                    <apex:outputLabel value="Applicant SubType: " for="ApplicantSubType4" />
+                    <apex:OutputText id="ApplicantSubType4"  value="{!applicant4.Subtype_Of_Applicant__c}"/>
+                    </td></tr>
+                    </table>
+                     
+                    <table id="ApplicantTable4" class="tableApp1B">
+                    <!-------------------------------------Applicant 4 Detail-------------------------------------->
+                      <apex:outputPanel rendered="{!applicantList.size > 3}">  
+                        <tr style="width:100%;"><th colspan="6"><h4>Applicant 4 Detail<!--<apex:OutputText value="{!DocRow12.Description__c}"/>--></h4></th> </tr>
+                        <apex:repeat value="{!seqList}" var="seq">
+                          <tr>
+                            <td style="width:40%;"><apex:OutputText value="{!applicantDocMap['line_item_name'&TEXT(seq)&'__c']}" /></td>
+                             <!-- <td style="width:5%;">
+                                 
+                             </td> -->
+                            <td style="width:20%;">{!applicantDetailsMap['Fourth Applicant'&TEXT(seq)]}</td> 
+                            <td style="width:5%;"> {!WPAPP[seq].required} </td>
+                            <td style="width:5%;"><apex:inputField value="{!applicantDocument4['Level_1_Verified'&TEXT(seq)&'__c']}" style="border:1px solid blue;" rendered="{!level == 'Level1'}"/>
+                                                  <apex:inputField value="{!applicantDocument4['Level_2_Verified'&TEXT(seq)&'__c']}" style="border:1px solid blue;" rendered="{!level == 'Level2'}"/>
+                            </td>
+                            <td style="width:10%;"><apex:inputField value="{!applicantDocument4['Remarks'&TEXT(seq)&'__c']}" style="height:30px;width:200px;"/></td>
+                          </tr>     
+                        </apex:repeat>
+                      </apex:outputPanel>
+                    </table>
+              </div>
+              <div id="tab5">
+                    <table  class="tableApp1A">
+                    <tr><td>
+                    <apex:outputLabel value="Applicant Name 5: " for="ApplicantName5"/>
+                    <apex:OutputText id="ApplicantName5"  value="{!applicant5.Name}"/>
+                    </td><td>
+                    <apex:outputLabel value="Applicant Type: " for="ApplicantType5" />
+                    <apex:OutputText id="ApplicantType5"  value="{!applicant5.Type_Of_Applicant__c}" />
+                    </td><td>
+                    <apex:outputLabel value="Applicant SubType: " for="ApplicantSubType5" />
+                    <apex:OutputText id="ApplicantSubType5"  value="{!applicant5.Subtype_Of_Applicant__c}"/>
+                    </td></tr>
+                    </table>
+                     
+                    <table id="ApplicantTable5" class="tableApp1B">
+                    <!-------------------------------------Applicant 5 Detail-------------------------------------->
+                      <apex:outputPanel rendered="{!applicantList.size > 4}">  
+                        <tr style="width:100%;"><th colspan="6"><h4>Applicant 5 Detail<!--<apex:OutputText value="{!DocRow12.Description__c}"/>--></h4></th> </tr>
+                        <apex:repeat value="{!seqList}" var="seq">
+                          <tr>
+                            <td style="width:40%;"><apex:OutputText value="{!applicantDocMap['line_item_name'&TEXT(seq)&'__c']}" /></td>
+                             <!-- <td style="width:5%;">
+                                 
+                             </td> -->
+                            <td style="width:20%;">{!applicantDetailsMap['Fifth Applicant'&TEXT(seq)]}</td> 
+                            <td style="width:5%;"> {!WPAPP[seq].required} </td>
+                            <td style="width:5%;"><apex:inputField value="{!applicantDocument5['Level_1_Verified'&TEXT(seq)&'__c']}" style="border:1px solid blue;" rendered="{!level == 'Level1'}"/>
+                                                  <apex:inputField value="{!applicantDocument5['Level_2_Verified'&TEXT(seq)&'__c']}" style="border:1px solid blue;" rendered="{!level == 'Level2'}"/>
+                            </td>
+                            <td style="width:10%;"><apex:inputField value="{!applicantDocument5['Remarks'&TEXT(seq)&'__c']}" style="height:30px;width:200px;"/></td>
+                          </tr>     
+                        </apex:repeat>
+                      </apex:outputPanel>
+                    </table>
+              </div>
+             </div>
+            </apex:outputPanel>
+        </apex:form>
+        <script>
+            function resetTabs(){
+                        $("#content > div").hide(); //Hide all content
+                        $("#tabs a").attr("id",""); //Reset ids      
+                    }
+            
+                    var myUrl = window.location.href; //get URL
+                    var myUrlTab = myUrl.substring(myUrl.indexOf("#")); // For localhost/tabs.html#tab2, myUrlTab = #tab2     
+                    var myUrlTabName = myUrlTab.substring(0,4); // For the above example, myUrlTabName = #tab
+            
+                    (function(){
+                        $("#content > div").hide(); // Initially hide all content
+                        $("#tabs li:first a").attr("id","current"); // Activate first tab
+                        $("#content > div:first").fadeIn(); // Show first tab content
+                        
+                        $("#tabs a").on("click",function(e) {
+                            e.preventDefault();
+                            if ($(this).attr("id") == "current"){ //detection for current tab
+                             return       
+                            }
+                            else{             
+                            resetTabs();
+                            $(this).attr("id","current"); // Activate this
+                            $($(this).attr('name')).fadeIn(); // Show content for current tab
+                            }
+                        });
+            
+                        for (i = 1; i <= $("#tabs li").length; i++) {
+                          if (myUrlTab == myUrlTabName + i) {
+                              resetTabs();
+                              $("a[name='"+myUrlTab+"']").attr("id","current"); // Activate url tab
+                              $(myUrlTab).fadeIn(); // Show url tab content        
+                          }
+                        }
+                    })()
+            </script>
+    </body>
+    
+</apex:page>

@@ -1,0 +1,147 @@
+<apex:page standardController="Booking__c" extensions="BookingFormHandler" showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" renderAs="PDF">
+    <html lang="en">
+        <style type="text/css">
+            .container
+            {
+            max-width: 1200px;
+            padding: 0 5px;
+            width: 96%;
+            margin: auto;
+            border-style: groove;
+            }
+            .formTitle{text-align: center; color: #000; font-size: 17px; font-weight: bold; margin-bottom: 15px;}
+            .header {
+            margin-top: 30px;
+            position: running(header);
+            }
+            .body{font-family:Verdana, Arial, Helvetica, sans-serif;font-size:14px;line-height:18px;color:#7c7c7c;}
+        </style>
+        <body>
+            <div class="container">
+                <div class="body">
+                    <div class="header">
+                        <table width="100%">
+                            <tr><td width="40%">PROJECT NAME:&nbsp;{!booking.Project__c}</td>
+                                <td align="right" colspan="2"><apex:image url="http://oberoirealty.com/images/oberoi_logo.png"/></td></tr>
+                        </table>
+                    </div>
+                </div>
+                <h1><center><b>BOOKING FORM</b></center></h1>
+                <br/>
+                <div style = "float:right;"><b>DATE: {!todaydate}</b></div>
+                <br/>
+                <table width="100%" cellpadding="3" cellspacing="0" >
+                    <tr><th align="left" style ="border:1px solid black;background-color: #CCCFCF;" height = '10px' colspan="2"><b>CUSTOMER/S DETAILS (TO BE FILLED IN BLOCK LETTERS)</b></th></tr>
+                    <tr><td height = '10px'></td></tr>
+                    <tr>
+                        <td width="10%" align="left">Name:</td>
+                        <td width="70%" style="border-bottom:1pt solid black;">1.&nbsp;{!booking.Contact_Name__c}</td>
+                    </tr>
+                    <tr>
+                        <td width="30%" align="left"></td>
+                        <td width="70%" style="border-bottom:1pt solid black;">2.&nbsp;ABCD</td>
+                    </tr>
+                    <tr>
+                        <td width="30%" align="left"></td>
+                        <td width="70%" style="border-bottom:1pt solid black;">3.</td>
+                    </tr>
+                    <table width="100%" cellpadding="3" cellspacing="0">
+                        <tr>
+                            <td width="30%" align="left">Nationality:</td>
+                            <td width="40%" style="border-bottom:1pt solid black;"></td>
+                            <td>Resident Status:</td>
+                            <td><input type="checkbox" name="Indian"/></td>
+                            <td>Indian</td>
+                            <td><input type="checkbox" name="NRI"/></td>
+                            <td>NRI</td>             
+                </tr>
+            </table>
+                    <table width="100%" cellpadding="5" cellspacing="0">
+                        <tr><td height = '10px'></td></tr>
+                    <tr>
+                        <td width="29.5%" align="left">Residential Address</td>
+                        <td width="7%" align="left">House No.</td>
+                        <td width="10%" align="left" style="border-bottom:1pt solid black;"></td>
+                        <td width="5%" align="left">Street</td>
+                        <td  align="left" style="border-bottom:1pt solid black;"></td>
+                    </tr>
+                    </table>
+                    <table width="100%" cellpadding="3" cellspacing="0">
+                       <tr>
+                           <td width="30%" align="left">Company Address:</td>
+                           <td width="30%" style="border-bottom:1pt solid black;"></td>
+                       </tr>
+                       <tr>
+                           <td width="30%" align="left">&nbsp;</td>
+                           <td width="30%" style="border-bottom:1pt solid black;"></td>
+                       </tr>
+                       <tr>
+                           <td width="10%" align="left">&nbsp;</td>
+                           <td width="10%" align="left">City</td>
+                           <td width="10%" style="border-bottom:1pt solid black;"></td>
+                           <td>&nbsp;&nbsp;&nbsp;Pin code</td>  
+                           <td width="10%" style="border-bottom:1pt solid black;"></td>
+                       </tr>
+                       <tr>
+                           <td width="30%" align="left">Name:</td>
+                           <td width="30%" style="border-bottom:1pt solid black;"></td>
+                           <td>&nbsp;&nbsp;&nbsp;Relation / Designation:</td> 
+                           <td width="30%" style="border-bottom:1pt solid black;"></td>
+                       </tr>
+                   </table>
+                   <table width="100%" cellpadding="3" cellspacing="0">
+                       <tr>
+                           <td width="30%" align="left">Telephone:</td>
+                           <td width="30%" style="border-bottom:1pt solid black;"></td>
+                           <td>&nbsp;&nbsp;&nbsp;Mobile:</td>  
+                           <td width="30%" style="border-bottom:1pt solid black;"></td>
+                       </tr>
+                       <tr>
+                           <td width="10%" align="left">Email:</td>
+                           <td width="30%" style="border-bottom:1pt solid black;"></td>
+                       </tr>
+                   </table>
+                   
+                   <table width="100%" cellpadding="3" cellspacing="0">
+                       <tr>
+                           <td width="30%" align="left">Customer/s Category</td>
+                           <td><input type="checkbox" name="End User"/>End User</td>
+                           <td><input type="checkbox" name="Investor"/>Investor</td>  
+                           <td><input type="checkbox" name="Second Home"/>Second Home</td> 
+                       </tr>
+                       <tr>
+                           <td width="30%" align="left">How do we contact you</td>
+                           <td><input type="checkbox" name="Residence"/>Residence</td>
+                           <td><input type="checkbox" name="Mobile"/>Mobile</td>  
+                           <td><input type="checkbox" name="Email"/>Email</td>
+                           <td><input type="checkbox" name="Office"/>Office</td> 
+                       </tr>
+                       <tr>
+                           <td width="30%" align="left">Address for Correspondence</td>
+                           <td><input type="checkbox" name="Residence"/>Residence</td>
+                           <td><input type="checkbox" name="Office"/>Office</td> 
+                       </tr>
+                       <tr>
+                           <td width="30%" align="left">How did you hear about us</td>
+                           <td><input type="checkbox" name="Print Media"/>Print Media</td>
+                           <td><input type="checkbox" name="Digital"/>Digital</td>  
+                           <td><input type="checkbox" name="Hoardings"/>Hoardings</td>
+                           <td><input type="checkbox" name="Friends & Relatives"/>Friends And Relatives</td>
+                       </tr>
+                       <tr>
+                           <td width="30%" align="left"></td>
+                           <td><input type="checkbox" name="Property Consultant (Broker)"/>Property Consultant (Broker)</td> 
+                           <td><input type="checkbox" name="Elite Member"/>Elite Member</td> 
+                           <td><input type="checkbox" name="Walk – In"/>Walk – In</td>
+                       </tr>
+                       <tr>
+                           <td width="30%" align="left">Source of Booking</td>
+                           <td><input type="checkbox" name="Direct"/>Direct</td>
+                           <td><input type="checkbox" name="Property Consultant (Broker)"/>Property Consultant (Broker)</td>
+                       </tr>
+                   </table>                  
+        </table>
+    </div>
+</body>
+</html>
+</apex:page>

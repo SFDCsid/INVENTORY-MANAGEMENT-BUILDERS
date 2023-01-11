@@ -1,0 +1,17 @@
+<apex:page controller="SuccessController">
+    <apex:form >  
+      
+        <apex:pageBlock >  
+          
+            <apex:pageMessages />   
+              
+            <apex:pageBlockButtons location="bottom">  
+              
+                <apex:commandButton value="Home" action="{!Home}"/>  
+                  
+            </apex:pageBlockButtons>  
+              
+        </apex:pageBlock>  
+          
+    </apex:form>
+</apex:page>

@@ -1,0 +1,20 @@
+<apex:page showHeader="false" sidebar="false">
+
+   <!--  <apex:iframe src="https://oberoirealty--oberoidev.my.salesforce.com/00Op0000000fa71" scrolling="true"  height="1588px"  width="100%"/> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
+    </script>-->
+    <apex:form >
+    <apex:pageBlock >
+    <apex:pageBlockSection title="My Report" id="MyReport" columns="1" /> 
+        </apex:pageBlock>
+         <apex:iframe src="/00Qp0000004gFH3"/>  
+         
+         <apex:outputPanel id="MissingAttRpt" layout="block">
+<apex:iframe src="/00Qp0000004gFH3" scrolling="true"  height="158px"  width="100%"/>   
+</apex:outputPanel>
+</apex:form>
+<!--
+<script language="JavaScript">
+    $('[id$="MyReport"] > .pbSubsection > .detailList').load('/00Op0000000fAWt');
+</script>-->
+  </apex:page>

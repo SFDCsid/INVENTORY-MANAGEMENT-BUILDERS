@@ -1,0 +1,25 @@
+<apex:page showHeader="false" sidebar="false">
+<html>
+<head><title>Car Parking</title></head>
+    <apex:includeLightning />    
+    <div id="LightningComponentid" />    
+    <script>
+    var oppId;
+    var bookId;
+    window.onload=function()
+        {
+         oppId = "{!$CurrentPage.parameters.oppId}";
+         bookId = "{!$CurrentPage.parameters.bookId}";
+        };
+    
+    $Lightning.use("c:AddCarParkApp", function() {
+        $Lightning.createComponent("c:addCarPark",
+          {"oppId":oppId,"bookId":bookId},
+          "LightningComponentid",
+          function(cmp) {
+             console.log('LWC Componenet added in VF page');
+          });
+    });
+    </script>
+</html>
+</apex:page>

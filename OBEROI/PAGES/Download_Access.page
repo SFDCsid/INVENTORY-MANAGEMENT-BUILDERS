@@ -1,0 +1,11 @@
+<apex:page controller="IRMController" lightningStylesheets="true">
+    <apex:slds />
+    
+    File Cannot be download . Please find the details here .<br/>
+    VersionNumber :  {!versionDetails.VersionNumber}<br/>
+    Description :     {!versionDetails.Description}<br/>
+    SharingOption :   {!versionDetails.SharingOption}<br/>
+    SharingPrivacy:    {!versionDetails.SharingPrivacy}<br/>
+    Title:   {!versionDetails.Title}
+    
+</apex:page>

@@ -1,0 +1,556 @@
+<apex:page controller="CustomerSurveyController" sidebar="false" showHeader="false" applyHtmlTag="false" standardStylesheets="true" docType="html-5.0">
+    <apex:form >
+        <html lang="en">
+            <head>
+                <meta charset="UTF-8"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                <meta http-equiv="X-UA-Compatible" content="ie=edge" />            
+                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>           
+                <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" />
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+                <link rel="stylesheet" type="text/css" href="style.css"/>
+                  
+                
+                <title>Customer Feedback</title>             
+                <style>  
+                    header{
+                    position:sticky;
+                    background-color: #253746;
+                    top:0;
+                    z-index:111;
+                    border-bottom:1px solid #ced4da;
+                    }
+                    .logo {
+                    height: 64px;
+                    }                    
+                    fieldset, label {
+                    margin: 0; 
+                    padding: 0;
+                    }                    
+                    h1 {
+                    font-size: 1.5em; 
+                    margin: 10px; 
+                    }
+                    
+                    /*----- Style Star Rating Widget -------*/                    
+                    .rating { 
+                    border: none;
+                    float: left;
+                    }
+                    .rating > input { 
+                    display: none; 
+                    } 
+                    .rating > label:before { 
+                    margin: 5px 10px;
+                    font-size: 1.9em;
+                    font-family: FontAwesome;
+                    display: inline-block;
+                    content: "\f005";
+                    }
+                    .rating > .half:before { 
+                    content: "\f089";
+                    position: absolute;
+                    }
+                    .rating > label { 
+                    color: #ddd; 
+                    float: right; 
+                    }
+                    .textfeedback{
+                    width:90% !important;
+                    }
+                    
+                    /* -------CSS Magic to Highlight Stars on Hover -----*/
+                    
+                    .rating > input:checked ~ label,
+                    .rating:not(:checked) > label:hover, 
+                    .rating:not(:checked) > label:hover ~ label { color: #FFD700;  }
+                    
+                    .rating > input:checked + label:hover, 
+                    .rating > input:checked ~ label:hover,
+                    .rating > label:hover ~ input:checked ~ label,
+                    .rating > input:checked ~ label:hover ~ label { 
+                    color: #FFED85;  
+                    }
+                    .savebutton{
+                    height: 30px;
+                    background: #FE4612;
+                    color: #ffffff;
+                    border-radius: 4px;
+                    width: 10%;
+                    border: none;
+                    outline: none;
+                    font-size: 15px;
+                    cursor: pointer;
+                    font-weight: bold;
+                    letter-spacing: 1px;
+                    margin-bottom:30px !important;                    
+                    } 
+                    label.full{                    
+                    margin-bottom: 0 !important; 
+                    }
+                    ul {
+                    margin-top: 0;
+                    margin-bottom: 0;
+                    }
+                    .mainContainer{
+                    width:30%;
+                    margin:auto;
+                    }
+                    .textareaCED{
+                    width:380px;
+                    }
+                    p{
+                    margin-bottom:0 !important;
+                    }
+                    @media screen and (max-width: 480px) {    
+                    h2{
+                    font-size:25px;
+                    }    
+                    p{
+                    margin-bottom:0;
+                    }
+                    .textfeedback{
+                    width:90% !important;
+                    }
+                    textarea {
+                    overflow: hidden !important;
+                    resize: vertical !important;
+                    width: fit-content !important;
+                    }
+                    .container {
+                    width: 100%;
+                    padding-right: 5px !important;
+                    padding-left: 5px !important;                    
+                    }
+                    *, ::after, ::before {
+                    box-sizing: inherit !important;
+                    }
+                    .savebutton{
+                    height: 30px;
+                    background: #FE4612;
+                    color: #ffffff;
+                    border-radius: 4px;
+                    width: 18%;
+                    border: none;
+                    outline: none;
+                    font-size: 15px;
+                    cursor: pointer;
+                    font-weight: bold;
+                    letter-spacing: 1px;
+                    margin-bottom:30px !important;                    
+                    }  
+                    .mainContainer{
+                    width:94% !important;
+                    margin:auto;                            
+                    }
+                    .rating > label:before { 
+                    margin: 5px;
+                    font-size: 1.40em;
+                    }
+                    .container {
+                    width: 97% !important;
+                    }
+                    .textareaCED {
+                    width: 90% !important;
+                    }
+                    }    
+                    @media screen and (max-width: 768px) { 
+                    .mainContainer{
+                    width:80%;
+                    margin:auto;
+                    }
+                    .rating > label:before { 
+                    margin: 5px;
+                    font-size: 1.40em;
+                    }
+                    .textfeedback{
+                    width:90%;
+                    
+                    }
+                    }
+                    .starTable1{
+                    width:100%;
+                    border-collpase:collapse;
+                    }
+                    .slidecontainer {
+                    width: 90%;
+                    margin:12px 5%;
+                    }
+                    .slider {
+                    -webkit-appearance: none;
+                    width: 100%;
+                    height: 5px;
+                    background: #d3d3d3;
+                    outline: none;
+                    opacity: 0.7;
+                    -webkit-transition: .2s;
+                    transition: opacity .2s;
+                    }
+                    
+                    .slider:hover {
+                    opacity: 1;
+                    }
+                    
+                    .slider::-webkit-slider-thumb {
+                    cursor: pointer;
+                    }
+                    
+                    .slider::-moz-range-thumb {
+                    cursor: pointer;
+                    }
+                    
+                    /*******************Blur Background Loading CSS*****************/
+                    
+                    #cover-spin {
+                    position:fixed;
+                    width:100%;
+                    left:0;right:0;top:0;bottom:0;
+                    background-color: rgba(255,255,255,0.7);
+                    z-index:9999;
+                    display:none;
+                    }
+                    @-webkit-keyframes spin {
+                    from {-webkit-transform:rotate(0deg);}
+                    to {-webkit-transform:rotate(360deg);}
+                    }
+                    @keyframes spin {
+                    from {transform:rotate(0deg);}
+                    to {transform:rotate(360deg);}
+                    }
+                    #cover-spin::after {
+                    content:'';
+                    display:block;
+                    position:absolute;
+                    left:48%;top:40%;
+                    width:40px;height:40px;
+                    border-style:solid;
+                    border-color:black;
+                    border-top-color:transparent;
+                    border-width: 4px;
+                    border-radius:50%;
+                    -webkit-animation: spin .8s linear infinite;
+                    animation: spin .8s linear infinite;
+                    }
+                    
+                    /* ------- Star Rating CSS -----*/
+                    
+                    *{
+                        margin: 0;
+                        padding: 0;
+                    }
+                    .rate {
+                        float: left;
+                        height: 46px;
+                        padding: 0 10px;
+                    }
+                    .rate:not(:checked) > input {
+                        position:absolute;
+                        top:-9999px;
+                    }
+                    .rate:not(:checked) > label {
+                        float:right;
+                        width:2em;
+                        overflow:hidden;
+                        white-space:nowrap;
+                        cursor:pointer;
+                        font-size:30px;
+                        color:#ccc;
+                    }
+                    .rate:not(:checked) > label:before {
+                        content: '★ ';
+                    }
+                    .rate > input:checked ~ label {
+                        color: #ffc700;    
+                    }
+                    .rate:not(:checked) > label:hover,
+                    .rate:not(:checked) > label:hover ~ label {
+                        color: #deb217;  
+                    }
+                    .rate > input:checked + label:hover,
+                    .rate > input:checked + label:hover ~ label,
+                    .rate > input:checked ~ label:hover,
+                    .rate > input:checked ~ label:hover ~ label,
+                    .rate > label:hover ~ input:checked ~ label {
+                        color: #c59b08;
+                    }
+                    
+                </style>
+            </head>
+            <body>
+                <div id="cover-spin"></div> 
+                <!-------------------------------------------- Header -------------------------------------------------> 
+                <header>
+                    <div class="navbar">  
+                        <a class="navbar-brand" href="/"><img src="{!$Resource.HomeBtn}" height="50px" width="50px"/></a>
+                        <div class="form-inline">
+                            <img class="logo" src="{!$Resource.ORL_Logo}"/>   
+                        </div>
+                    </div>
+                </header>           
+                <apex:outputPanel id="msgId">
+                    <center><apex:outputText value="{!isError}"  style="color:red; font-weight: 500;" ></apex:outputText></center>
+                    <center><apex:outputText value="{!successMessage}"  style="color:green; font-weight: 500;" ></apex:outputText></center>
+                </apex:outputPanel>
+                
+                <apex:outputPanel id="mainblockparent">
+                    <apex:outputPanel id="main" > 
+                        <div class="container mt-4" >
+                            <h2 align="center">Feedback Form</h2>
+                            <p align="center" style="font-size:24px;">“Your feedback will help us serve you better”</p>
+                        </div>
+                        <hr/>
+                        <div class="container mainContainer">
+                             
+                            <div>
+                                <p>1. Please rate your overall experience in our site office.</p>
+                                <table class="starTable1">
+                                    <tr>
+                                        <td>
+                                            
+                                              <div class="rate">
+                                                  
+                                                <!-- <input type="radio" id="star1" name="rate" value="1" /> -->
+                                                <input type="radio" id="star1" name="rating7" value="1" onclick="checkVal('OverallExp','5');" />
+                                                <label for="star1" title="text"></label>
+                                                  
+                                                <!-- <input type="radio" id="star2" name="rate" value="2" /> -->
+                                                <input type="radio" id="star2" name="rating7" value="2" onclick="checkVal('OverallExp','4');" />
+                                                <label for="star2" title="text"></label>
+                                                  
+                                                <!-- <input type="radio" id="star3" name="rate" value="3" /> -->
+                                                <input type="radio" id="star3" name="rating7" value="3" onclick="checkVal('OverallExp','3');" />
+                                                <label for="star3" title="text"></label>
+                                                  
+                                                <!-- <input type="radio" id="star4" name="rate" value="4" /> -->
+                                                <input type="radio" id="star4" name="rating7" value="4" onclick="checkVal('OverallExp','2');" />
+                                                <label for="star4" title="text"></label>
+                                                  
+                                                <!-- <input type="radio" id="star5" name="rate" value="5" /> -->
+                                                <input type="radio" id="star5" name="rating7" value="5" onclick="checkVal('OverallExp','1');" />
+                                                <label for="star5" title="text"></label>
+                                                  
+                                                <apex:inputtext value="{!overAllExpValue}" id="overAllExpValue"/>
+                                              </div>
+                                            
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            
+                     <div>
+                         
+                         
+                               <p>2. How would you rate our Sales Manager who attended you?</p>
+                                <table class="starTable1">
+                                    <tr>
+                                               <td>
+                                                <div class="rate">
+                                                  
+                                                <!-- <input type="radio" id="star1" name="rate" value="1" /> -->
+                                                <input type="radio" id="star0000001" name="rating6" value="1" onclick="checkVal('salesExpValue','5');" />
+                                                <label for="star0000001" title="text"></label>
+                                                  
+                                                <!-- <input type="radio" id="star2" name="rate" value="2" /> -->
+                                                <input type="radio" id="star0000002" name="rating6" value="2" onclick="checkVal('salesExpValue','4');" />
+                                                <label for="star0000002" title="text"></label>
+                                                  
+                                                <!-- <input type="radio" id="star3" name="rate" value="3" /> -->
+                                                <input type="radio" id="star0000003" name="rating6" value="3" onclick="checkVal('salesExpValue','3');" />
+                                                <label for="star0000003" title="text"></label>
+                                                  
+                                                <!-- <input type="radio" id="star4" name="rate" value="4" /> -->
+                                                <input type="radio" id="star0000004" name="rating6" value="4" onclick="checkVal('salesExpValue','2');" />
+                                                <label for="star0000004" title="text"></label>
+                                                  
+                                                <!-- <input type="radio" id="star5" name="rate" value="5" /> -->
+                                                <input type="radio" id="star0000005" name="rating6" value="5" onclick="checkVal('salesExpValue','1');" />
+                                                <label for="star0000005" title="text"></label>
+                                                  
+                                                <apex:inputtext value="{!salesExpValue}" id="salesExpValue"/>
+                                                </div>
+                                              </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div>
+                                <p>3. On a scale of 0 to 10, how likely are you to recommend our properties to your relatives / friends / colleagues ?</p>
+                                <div class="slidecontainer">
+                                    <input type="range" min="0" max="10" value="0" class="slider" id="myRange" />
+                                    
+                                    <p style="margin-top:14px;">Value: <span id="demo"></span></p>
+                                    <apex:inputtext value="{!recommendValue}" id="recommendValue" style="Display:none;" />
+                                </div>
+                                <script>
+                                var slider = document.getElementById("myRange");
+                                var output = document.getElementById("demo");
+                                
+                                output.innerHTML = slider.value;
+                                
+                                
+                                slider.oninput = function() {
+                                    document.getElementById('j_id0:j_id1:recommendValue').value = slider.value;
+                                    output.innerHTML = this.value;
+                                }
+                                </script>
+                            </div><br/>
+                            <div>
+                                <p>4. Are you planning to visit us again?</p>
+                                <div class="col-md-10 col-sm-12 mb-3" >
+                                    <apex:selectRadio value="{!cf.Planning_Revisit__c}"  style="padding-left:0px; margin-left:0px;" id="occu" >
+                                        <apex:selectoptions value="{!Revisit}"  ></apex:selectoptions>
+                                    </apex:selectRadio>
+                                </div>  
+                            </div><br/>
+                            <div>
+                                <p>5. If No, please mention the reason.</p>
+                                <apex:inputTextarea id="feedbackReason" value="{!cf.Not_Revisiting_Reason__c}"  styleclass="textfeedback"/> 
+                            </div><br/><br/> 
+                            
+                            <!-- <div>
+                                <p>6. If No, Please list out the reason</p>
+                                <apex:inputField id="feedbackReason" value="{!cf.No_Revisiting_Reasons__c}"  styleclass="textfeedback"/> 
+                            </div><br/><br/> -->
+                            
+                            <div>
+                                <p>We would like to know your suggestions.</p>
+                                <apex:inputTextarea id="feedbackText" value="{!cf.Your_valuable_suggestions_feedback__c}"  styleclass="textfeedback"/> 
+                                <br/><br/>
+                                <table width="100%">
+                                    <tr>
+                                        <td style="text-align:left;">Customer Name:</td>
+                                        <td style="text-align:right;">Sales Manager Name:</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:left;">{!sv[0].opportunity__r.Name}</td>
+                                       <!--<td style="text-align:right;">{!sv[0].opportunity__r.owner.name}</td>-->
+                                        <td style="text-align:right;">Upendra Shukla</td>
+                                    
+                                    </tr>
+                                </table>
+                            </div>
+                        </div><br/><br/> 
+                         
+                        <apex:outputPanel >
+                            <center><apex:commandButton id="saveButtonId" value="Save" style="color:white; text-decoration:none;background: #ff5722; width: 10%; margin-bottom:30px;"  action="{!submit}" reRender="msg,main" /></center>
+                            
+                            <!-- <apex:commandButton styleClass="primary-button" id="printpagebutton"  value="Save/Assign"  onclick="Validate2();return false;" /> -->
+                            <!-- <apex:actionFunction name="sub" action="{!submit}" reRender="msg,main" />  -->
+                        </apex:outputPanel>
+                        
+    				<!-- <apex:commandButton value="Submit" action="{!submit}" reRender ="msgId" onclick="validate();"/> -->
+						
+                        
+                    </apex:outputPanel>
+                </apex:outputPanel>
+            </body>
+            <script type="text/javascript">
+            function validate(){
+                var OverallExpValue=document.getElementById('j_id0:j_id1:overAllExpValue').value;
+                var LocationValue=document.getElementById('j_id0:j_id1:locationValue').value;
+                var amenitiesValue=document.getElementById('j_id0:j_id1:amenitiesValue').value;
+                var priceValue=document.getElementById('j_id0:j_id1:priceValue').value;
+                var possTimeValue=document.getElementById('j_id0:j_id1:possTimeValue').value;
+                var salesExpValue=document.getElementById('j_id0:j_id1:salesExpValue').value;
+                var remarks = document.getElementById('j_id0:j_id1:recommendValue').value;
+                var FR = document.getElementById('j_id0:j_id1:Revisit').value;
+                
+                if(FR==''){
+                    alert('Please select Revisit');
+                    return false;
+                }
+                
+                if(OverallExpValue==''){
+                    alert('Please select Overall Experience');
+                    return false;
+                }else
+                {
+                    if( OverallExpValue==1 ||OverallExpValue==2 ||OverallExpValue==3 || OverallExpValue==4 || OverallExpValue==5 )
+                    {
+                        if(LocationValue==''){
+                            alert('Please select Location Value');
+                            return false;
+                        }else if(amenitiesValue==''){
+                            alert('Please select Amenities Value');
+                            return false;
+                        }else if(priceValue==''){
+                            alert('Please select Price Value');
+                            return false;
+                        }else if(possTimeValue==''){
+                            alert('Please select Possession timelines Value');
+                            return false;
+                        }else if(salesExpValue==''){
+                            alert('Please select Sales Manager Value');
+                            return false;
+                        }else if(remarks==''){
+                            alert('Please Select how likely are you to recommend this company?');
+                            return false;
+                        }else{
+                            $('#cover-spin').show(0);
+                            sub();
+                        }
+                    }
+                }
+                return false;
+            }
+            
+            function checkVal(type, score){
+                //alert('hiiii::: '+score+':: type::'+type);
+                if(type != null && type != ''){
+                    if(type == 'OverallExp'){
+                        document.getElementById('j_id0:j_id1:overAllExpValue').value = score;
+                    }
+                    if(type == 'locationValue'){
+                        document.getElementById('j_id0:j_id1:locationValue').value = score;
+                    }
+                    if(type == 'amenitiesValue'){
+                        document.getElementById('j_id0:j_id1:amenitiesValue').value = score;
+                    }
+                    if(type == 'priceValue'){
+                        document.getElementById('j_id0:j_id1:priceValue').value = score;
+                    }
+                    if(type == 'possTimeValue'){
+                        document.getElementById( 'j_id0:j_id1:possTimeValue').value = score;
+                    }
+                    if(type == 'salesExpValue'){
+                        document.getElementById( 'j_id0:j_id1:salesExpValue').value = score;
+                    }
+                    if(type == 'developmentVal'){
+                        document.getElementById( 'j_id0:j_id1:developmentVal').value = score;
+                    }
+                    if(type == 'hospitalityValue'){
+                        document.getElementById( 'j_id0:j_id1:hospitalityValue').value = score;
+                    }
+                }
+            }
+            </script>
+            
+            <script type="text/javascript">
+            
+           function Validate2()
+	       {
+    			var OverallExpValue=document.getElementById('j_id0:j_id1:overAllExpValue').value;
+                var nameofcustomer = document.getElementById('j_id0:j_id1:customername').value;
+                var FeedbackText = document.getElementById('j_id0:j_id1:feedbackText').value;
+                
+                if(OverallExpValue==''){
+                    alert('Please select Overall Experience');
+                    return false;
+                }
+                
+                if(FeedbackText == '' or FeedbackText == Null)
+                {
+                    alert('Please enter feedbackText!'); 
+                    return false;  
+                }       
+             
+            }
+             
+            </script>
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/rangeslider.js/2.3.2/rangeslider.min.css"></script>
+            
+        </html>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,749 @@
+<apex:page standardcontroller="Lead" showHeader="false" sidebar="False" lightningStylesheets="True" docType="html-5.0" extensions="CustomerDataSheet"><!-- standardStylesheets="false"-->
+    <html lang="en">
+        
+        <head>
+            <meta charset="utf-8" />
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+            <title></title>
+            <meta name="keywords" content="" />
+            <meta name="description" content="" />
+            <apex:stylesheet value="{!$Resource.IntellCSS}" />
+            <!-- [if  IE ]>
+
+[endif]  -->
+            <!--<apex:includescript value="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js" />-->
+            <apex:includeScript value="{!$Resource.HTML5shiv}"/>
+            <apex:includeScript value="{!$Resource.Respond}"/>
+            <!-- <apex:includescript value="https://oss.maxcdn.com/respond/1.4.2/respond.min.js" />-->
+            
+            <style type="text/css">
+                body {
+                font-family: Verdana, Arial, Helvetica, sans-serif;
+                font-size: 14px;
+                line-height: 18px;
+                color: #7c7c7c;
+                }
+                
+                .col-4 {
+                width: 33.33333333333333%;
+                }
+                
+                .col-5 {
+                width: 41.66666666666667%;
+                }
+                
+                .col-6 {
+                width: 50%;
+                }
+                
+                .col-3,
+                .col-4,
+                .col-5,
+                .col-6 {
+                float: left;
+                }
+                
+                .container {
+                max-width: 1200px;
+                padding: 0 5px;
+                width: 96%;
+                margin: auto
+                }
+                
+                .FieldTitle {
+                color: #000;
+                padding: 10px;
+                font-weight: bold;
+                margin-bottom: 15px;
+                text-align: center;
+                color: #000;
+                font-size: 17px;
+                font-weight: bold;
+                margin-bottom: 15px;
+                }
+                
+                body {
+                font-size: 16px;
+                }
+                
+                td {
+                padding-top: 5px;
+                padding-bottom: 25px;
+                position: relative;
+                }
+                
+                input[type='text'] {
+                width: 95%;
+                }
+                
+                input[type='text'],
+                select {
+                display: block;
+                width: 100%;
+                height: 28px;
+                line-height: 1.42857143;
+                background-color: #ffffff;
+                background-image: none;
+                border: 1px solid #cccccc;
+                border-radius: 4px;
+                -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+                box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+                -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+                transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+                padding: 1px 0px;
+                }
+                
+                .btn {
+                background-color: #ec6810 !important;
+                color: #fff !important;
+                padding: 7px 25px;
+                font-size: 16px;
+                border: 0px;
+                cursor: pointer;
+                }
+                
+                label.error {
+                color: #f00;
+                position: absolute;
+                bottom: 10px;
+                left: 0;
+                line-height: 14px;
+                font-size: 12px;
+                }
+                
+                table td:first-child {
+                width: 25%;
+                padding-left: 0px;
+                }
+                
+                table td:last-child {
+                width: 75%;
+                }
+                
+                .subCatExCustomer,
+                .subCatNewCustomer,
+                .categoryOther,
+                .subCatProCons,
+                .sub_categoryOther,
+                .subCatBanker {
+                display: none;
+                }
+                
+                input[type='text'],
+                select {
+                margin-top: 7px;
+                }
+                
+                .showDetails {
+                display: none;
+                }
+                
+                input[type="radio"] {
+                margin: 0px;
+                margin-right: 5px;
+                vertical-align: middle;
+                margin-top: -4px;
+                }
+                
+                .radioBtn td {
+                padding-top: 0px;
+                padding-bottom: 5px;
+                }
+                
+                .IPadShowBr {
+                display: none;
+                }
+                
+                @media (max-width:1024px) {
+                .IPadShowBr {
+                display: block;
+                }
+                }
+                
+                .sub_categoryOther input {
+                width: 99%;
+                }
+                
+                .iti-flag {
+                
+                background-image: url({!$Resource.images});
+                
+                }
+                
+                @media only screen and (-webkit-min-device-pixel-ratio: 2),
+                only screen and (min--moz-device-pixel-ratio: 2),
+                only screen and (-o-min-device-pixel-ratio: 2 / 1),
+                only screen and (min-device-pixel-ratio: 2),
+                only screen and (min-resolution: 192dpi),
+                only screen and (min-resolution: 2dppx) {
+                .iti-flag {
+                background-image: url({!$Resource.images});
+                }
+                }
+                
+                .otpPanel input[type="number"]::-webkit-outer-spin-button,
+                input[type="number"]::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+                }
+                
+                .otpPanel input[type="number"] {
+                -moz-appearance: textfield;
+                }
+                
+                .dup_table{
+                width:100%;
+                
+                border-collapse:collapse;
+                }
+                .dup_table_col{
+                width:20%;
+                
+                padding : 10px;
+                }
+            </style>
+            
+        </head>
+        
+        <body>
+            
+            <div class="container">
+                <table style="border-radius: 10px; padding: 20px 15px;  font-size: 14px;width: 100%;">
+                    <tr>
+                        <td align="right" colspan="2">
+                            <!--<img src="http://oberoirealty.com/images/oberoi_logo.png"> -->
+                            <apex:image url="http://oberoirealty.com/images/oberoi_logo.png" />
+                        </td>
+                    </tr>
+                </table>
+                <div class="form1">
+                    <!--<form accept-charset='UTF-8' action='/site/customer_contact' id='customerFeedback' method='post' novalidate='novalidate'> -->
+                    <apex:pageMessages id="pgMsg"></apex:pageMessages>
+                    
+                    <apex:outputPanel id="dup" >
+                        <apex:outputPanel rendered="{!hasDuplicate}"> <!-- rendered="{!hasDuplicate}"-->
+                            
+                            <!--lead table-->
+                            <table class="dup_table">
+                                <tr class="dup_table_row">
+                                    
+                                    <th class="dup_table_col">
+                                        Lead No.
+                                        
+                                    </th>
+                                    
+                                    <th class="dup_table_col">Name</th>
+                                    <th class="dup_table_col">Status</th>
+                                    <th class="dup_table_col">Mobile</th>
+                                    <th class="dup_table_col">Email</th>
+                                </tr>                    
+                                <apex:repeat value="{!leadList}" var="ll" >
+                                    
+                                    <tr class="dup_table_row" Style="display: {!IF(ll.IsConverted == false, '', 'none')};">
+                                        <td class="dup_table_col">
+                                            <a href="https://oberoirealty--oberoidev.my.salesforce.com/{!ll.id}" target="_blank">
+                                                
+                                                {! ll.Lead_Number__c}
+                                            </a>
+                                        </td>                       
+                                        <td class="dup_table_col">{! ll.name}</td>                       
+                                        <td class="dup_table_col">{! ll.Status}</td>
+                                        <td class="dup_table_col">{! ll.Mobile_No__c}</td>
+                                        <td class="dup_table_col">{! ll.Email}</td>
+                                    </tr>
+                                    
+                                </apex:repeat>
+                            </table>
+                            <br/>
+                            <br/>
+                            <!--opportunity table-->
+                            <table class="dup_table" Style="display:{!IF(Opportunity_List!=null,'','none')};">
+                                <tr class="dup_table_row">
+                                    
+                                    <th class="dup_table_col">Opportunity No.</th>
+                                    <th class="dup_table_col">Name</th>
+                                    <th class="dup_table_col">Status</th>
+                                    <th class="dup_table_col">Mobile</th>
+                                    <th class="dup_table_col">Email</th>
+                                </tr>                    
+                                <apex:repeat value="{!Opportunity_List}" var="opll" >
+                                    <tr class="dup_table_row">
+                                        <td class="dup_table_col">
+                                            <a href="https://oberoirealty--oberoidev.my.salesforce.com/{!opll.id}" target="_blank">
+                                                
+                                                {! opll.Opportunity_Number__c}
+                                            </a>
+                                        </td>                       
+                                        <td class="dup_table_col">{! opll.name}</td>                       
+                                        <td class="dup_table_col">{! opll.StageName}</td>
+                                        <td class="dup_table_col">{! opll.Mobile__c}</td>
+                                        <td class="dup_table_col">{! opll.Email__c}</td>
+                                    </tr>
+                                    
+                                </apex:repeat>
+                            </table>
+                            
+                        </apex:outputPanel>
+                    </apex:outputPanel> 
+                    
+                    
+                    <apex:form id="frm">
+                        
+                        <apex:actionStatus id="loadingA" stopText="">
+                            <apex:facet name="start">
+                                <div id="blockUIDiv">
+                                    <div class="blockUI blockOverlay" style="z-index: 1000; border: none; margin: 0px; padding: 0px; width: 100%; 
+                                                                             height: 100%; top: 0px; left: 0px; opacity: 0.6; cursor: wait; position: fixed; background-color: rgb(0, 0, 0);"></div>
+                                    <div class="blockUI blockMsg blockPage" style="z-index: 1011; position: fixed; padding: 15px; margin: 0px; width: 30%; 
+                                                                                   top: 40%; left: 35%; text-align: center; color: rgb(0, 0, 0); border: none; cursor: wait; border-radius: 10px; 
+                                                                                   opacity: 0.9; background-color: rgb(255, 255, 255);"><img src="/img/loading32.gif" /><br />
+                                        <h1>Please Wait....</h1>
+                                    </div>
+                                </div>
+                            </apex:facet>
+                        </apex:actionStatus>
+                        <!-- <apex:actionFunction name="afunction" action="{!receiveInput}" onComplete="alert('Completed');">
+<apex:param id="aname" name="input1" value="" />
+<apex:param id="aname" name="input2" value="" />
+</apex:actionFunction>   -->
+                        
+                        <table style="border-radius: 10px; padding: 20px 15px;  font-size: 14px;width: 100%;">
+                            <tr>
+                                <td colspan="2" align="center">
+                                    <div class="FieldTitle">VISITOR’S DETAILS</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td valign="top">
+                                    <span class="red">*</span>Category: 
+                                </td>
+                                <td>
+                                    <div class="radioWrap">
+                                        
+                                        <div class="col-4"><input type="radio" name="customer_feedback[category]" value="Existing Customer" class="required categoryInput" /> Existing Customer</div>
+                                        <div class="col-4"><input type="radio" name="customer_feedback[category]" value="New Customer" class="required categoryInput" /> New Customer</div>
+                                        <!-- <div class="col-4"><input type="radio" name="customer_feedback[category]" value="Property Consultant" class="required categoryInput" /> Property Consultant/Broker/Channel Partner</div>
+<div class="col-4"><input type="radio" name="customer_feedback[category]" value="Banker" class="required categoryInput" /> Banker&nbsp;&nbsp;&nbsp;</div>
+--><div class="col-4"><input type="radio" name="customer_feedback[category]" value="Others" class="required categoryInput" /> Others</div>
+                                        <div class="categoryOther"><input type='text' name='customer_feedback[other_category]' class="required categoryInput" /></div>
+                                        
+                                        <!--   <apex:selectRadio value="{!customerType}" styleClass="radioWrap">
+<apex:selectOption itemLabel="Existing Customer" itemvalue="ExistingCustomer"></apex:selectOption>
+<apex:selectOption itemLabel="New Customer" itemvalue="NewCustomer"></apex:selectOption>
+<apex:selectOption itemLabel="Property Consultant" itemvalue="PropertyConsultant"></apex:selectOption>
+<apex:selectOption itemLabel="Banker" itemvalue="Banker"></apex:selectOption>
+<apex:selectOption itemLabel="Others" itemvalue="Others"></apex:selectOption></apex:selectRadio>  -->
+                                        
+                                    </div>
+                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <table width="100%" cellpadding="0" class="showDetails">
+                                        <tr class="subCatExCustomer">
+                                            <td valign="top">
+                                                <span class="red">*</span>Sub Category:
+                                            </td>
+                                            <td colspan="2" valign="top">
+                                                <div class="radioWrap">
+                                                    <div class="col-4"><input type="radio" name="customer_feedback[sub_category]" value="View Show Flat" class="required subCategoryInput" /> View Show Flat</div>
+                                                    <div class="col-4"><input type="radio" name="customer_feedback[sub_category]" value="Documentation" class="required subCategoryInput" /> Documentation</div>
+                                                    <div class="col-4"><input type="radio" name="customer_feedback[sub_category]" value="Cheque" class="required subCategoryInput" /> Cheque</div>
+                                                    <div class="col-4"><input type="radio" name="customer_feedback[sub_category]" value="Service Request" class="required subCategoryInput" /> Service Request</div>
+                                                    <div class="col-4"><input type="radio" name="customer_feedback[sub_category]" value="Feedback" class="required subCategoryInput" /> Feedback</div>
+                                                    <div class="col-4"><input type="radio" name="customer_feedback[sub_category]" value="Enquiry for New Flat" class="required subCategoryInput" /> Enquiry for New Flat</div>
+                                                    <div class="col-4"><input type="radio" name="customer_feedback[sub_category]" value="Other" class="required subCategoryInput" /> Other</div>
+                                                    <div class="sub_categoryOther"><input type='text' name='customer_feedback[other_sub_category]' class="required subCategoryInput" /></div>
+                                                    
+                                                    <!--  <apex:selectRadio value="{!customerType}" style="width=100%;">
+<apex:selectOption itemLabel="View Show Flat" itemvalue="Viewflt" ></apex:selectOption> 
+<apex:selectOption itemLabel="Documentation" itemvalue="Documentation"></apex:selectOption>
+<apex:selectOption itemLabel="Cheque" itemvalue="Cheque"></apex:selectOption>
+<apex:selectOption itemLabel="Service Request" itemvalue="ServiceRequest"></apex:selectOption>
+<apex:selectOption itemLabel="Feedback" itemvalue="Feedback"></apex:selectOption>
+<apex:selectOption itemLabel="Enquiry for New Flat" itemvalue="NewFlat"></apex:selectOption>
+<apex:selectOption itemLabel="Other" itemvalue="Other"></apex:selectOption>
+</apex:selectRadio>  -->
+                                                    
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="subCatNewCustomer">
+                                            <td valign="top">
+                                                <span class="red">*</span>Sub Category:
+                                            </td>
+                                            <td colspan="2" valign="top">
+                                                <div class="radioWrap">
+                                                    <div class="col-4"><input type="radio" name="customer_feedback[sub_category]" value="First Visit" class="required subCategoryInput" /> First Visit</div>
+                                                    <div class="col-4"><input type="radio" name="customer_feedback[sub_category]" value="Re-Visit" class="required subCategoryInput" /> Re – Visit</div>
+                                                    
+                                                    <!--<apex:selectRadio value="{!customerType}" style="width=500px;">
+<apex:selectOption itemLabel="First Visit" itemvalue="FirstVisit" ></apex:selectOption> 
+<apex:selectOption itemLabel="Re – Visit" itemvalue="ReVisit"></apex:selectOption>
+
+</apex:selectRadio> -->
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="subCatProCons">
+                                            <td valign="top">
+                                                <span class="red">*</span>Sub Category:
+                                            </td>
+                                            <td colspan="2" valign="top">
+                                                <div class="radioWrap">
+                                                    <div class="col-4"><input type="radio" name="customer_feedback[sub_category]" value="Enq. for New Contact" class="required subCategoryInput" /> Enq. for New Contact</div>
+                                                    <div class="col-4"><input type="radio" name="customer_feedback[sub_category]" value="Invoice" class="required subCategoryInput" /> Invoice</div>
+                                                    <div class="col-4"><input type="radio" name="customer_feedback[sub_category]" value="Empanelment" class="required subCategoryInput" /> Empanelment</div>
+                                                    <div class="col-4"><input type="radio" name="customer_feedback[sub_category]" value="Service Request" class="required subCategoryInput" /> Service Request</div>
+                                                    <div class="col-4"><input type="radio" name="customer_feedback[sub_category]" value="Other" class="required subCategoryInput" /> Other</div>
+                                                    <!--<apex:selectRadio value="{!customerType}" style="width=100%;">
+<apex:selectOption itemLabel="First Visit" itemvalue="FirstVisit" ></apex:selectOption> 
+<apex:selectOption itemLabel="Re – Visit" itemvalue="ReVisit"></apex:selectOption>
+</apex:selectRadio> -->
+                                                </div>                                                
+                                                <div class="sub_categoryOther"><input type='text' name='customer_feedback[other_sub_category]' class="required subCategoryInput" /></div>
+                                            </td>
+                                        </tr>
+                                        <tr class="subCatBanker">
+                                            <td valign="top">
+                                                <span class="red">*</span>Sub Category:
+                                            </td>
+                                            <td colspan="2" valign="top">
+                                                <div class="radioWrap">
+                                                    <div class="col-4"><input type="radio" name="customer_feedback[sub_category]" value="Valuation" class="required subCategoryInput" /> Valuation </div>
+                                                    <div class="col-4"><input type="radio" name="customer_feedback[sub_category]" value="Other" class="required subCategoryInput" /> Other</div>
+                                                    <!--  <apex:selectRadio value="{!customerType}" style="width=100%;">
+<apex:selectOption itemLabel="Valuation" itemvalue="Valuation" ></apex:selectOption> 
+<apex:selectOption itemLabel="Other" itemvalue="Other"></apex:selectOption>
+</apex:selectRadio> --><br/>
+                                                    <div class="sub_categoryOther">
+                                                        <input type='text'  name='customer_feedback[other_sub_category]'  class="required" /> -
+                                                        <apex:inputText styleClass="required" />
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td valign="top">
+                                                <span class="red">*</span>Name:
+                                            </td>
+                                            <td colspan="2">
+                                                <table width="100%" cellpadding="10%">
+                                                    <tr width="100%">
+                                                        <!-- <td width="33%">First Name:<br/><input type='text'  name='customer_feedback[first_name]'  class="required lettersonly" /></td>
+<td width="33%">Middle Name:<br/><input type='text'  name='customer_feedback[middle_name]'  class="lettersonly" /></td>
+<td width="5%">Last Name:<br/><input type='text'  name='customer_feedback[last_name]' class="required lettersonly" /></td> -->
+                                                        <td width="5%">Sal:<br />
+                                                            <apex:inputField value="{!Lead.Salutation}" styleClass="required lettersonly nameInput" />
+                                                        </td>
+                                                        <td width="25%">First Name:<br />
+                                                            <apex:inputField value="{!Lead.FirstName}" styleClass="required lettersonly nameInput" />
+                                                        </td>
+                                                        <td width="25%">Middle Name:<br />
+                                                            <apex:inputtext value="{!Lead.Middlename}" styleClass="lettersonly nameInput" />
+                                                        </td>
+                                                        <td width="25%">Last Name:<br />
+                                                            <apex:inputtext value="{!Lead.LastName}" styleClass="required lettersonly nameInput" />
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td valign="top">
+                                                <span class="red">*</span>Project of Interest:
+                                            </td>
+                                            <td colspan="2" valign="top">
+                                                <!--<select name="customer_feedback[project]" class="required">
+<option value="">Select Project</option>
+<option value="Esquire by Oberoi Realty">Esquire by Oberoi Realty</option><option value="Eternia and Enigma by Oberoi Realty">Eternia &amp; Enigma by Oberoi Realty</option><option value="Exquisite">Exquisite by Oberoi Realty</option><option value="Prisma by Oberoi Realty">Prisma by Oberoi Realty</option><option value="Priviera">Priviera by Oberoi Realty</option><option value="SkyCity by Oberoi Realty">SkyCity by Oberoi Realty</option>
+</select> -->
+                                                <!--  <apex:outputtext value="{!ProjectName}" id="prjIntrst" Rendered="{!showProj}"  /> -->
+                                                <apex:selectList value="{!slctProj}"  styleClass="prj" size="1">
+                                                    <apex:selectOptions value="{!optnlst}">
+                                                    </apex:selectOptions>
+                                                </apex:selectList>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width:25%;">
+                                                <span class="red">*</span>Mobile:
+                                            </td>
+                                            <td style="width:25%;" >
+                                                <!--<input type='text' class='required' id='contact_mobile_1' name='customer_feedback[mobile]'  value="" /> -->
+                                                <!--<apex:inputField value="{!conObj.MobilePhone}"/> -->
+                                                <!--<apex:inputText value="{!mbno}"/> -->
+                                                <table width="20%" cellpadding="10%">
+                                                    <tr width = "20%">
+                                                        
+                                                        <td> <apex:inputText value="{!mbnoflg}" rendered="true" styleClass="required phone_field validname" style="width:90px;"/> </td>
+                                                        <td> <apex:inputText value="{!mbno}" style="width:150px;" /></td> 
+                                                        
+                                                        
+                                                    </tr>
+                                                </table>
+                                                
+                                            </td></tr>
+                                        <tr>
+                                            <td valign="top">
+                                                <apex:outputPanel id="otpPanelHeading">
+                                                    <apex:outputPanel rendered="{!displayOTPPanel}">OTP:</apex:outputPanel>
+                                                </apex:outputPanel>
+                                            </td>
+                                            <td valign="top">
+                                                <apex:outputPanel id="otpPanelValue" styleClass="otpPanel">
+                                                    <apex:outputPanel rendered="{!displayOTPPanel}">
+                                                        <table width="25%">
+                                                            <tr>
+                                                                <td width="25%">
+                                                                    <input type="number" Class="otpInput" onkeyup="validateOTP(this.value,0);" maxlength="1" size="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');"  min="0" max="9" style="text-align: center;" />
+                                                                </td>
+                                                                <td width="25%">
+                                                                    <input type="number" Class="otpInput" onkeyup="validateOTP(this.value,1);" min="0" max="9" style="text-align: center;" />
+                                                                </td>
+                                                                <td width="25%">
+                                                                    <input type="number" Class="otpInput" onkeyup="validateOTP(this.value,2);" min="0" max="9" style="text-align: center;" />
+                                                                </td>
+                                                                <td width="25%">
+                                                                    <input type="number" Class="otpInput" onkeyup="validateOTP(this.value,3);" min="0" max="9" style="text-align: center;" />
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                        <apex:inputHidden id="otpId" value="{!otpCharString}" />
+                                                        <apex:commandLink value="Resend OTP" action="{!resetOTP}" status="loadingA" reRender="otpPanel"/>
+                                                        <!--<apex:actionPoller action="{!resetOTP}" reRender="counter" interval="600"  />-->
+                                                    </apex:outputPanel>
+                                                </apex:outputPanel>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width:25%;" align="left">
+                                                Other Mobile
+                                            </td>
+                                            <td style="width:25%;" >
+                                                <!--<input type='text' class='' id='contact_mobile_2' name='customer_feedback[other_mobile]'  value=""/> -->
+                                                <!--<apex:inputText value="{!otMo}" disabled="true"/>-->
+                                                <table width="20%" cellpadding="10%">
+                                                    <tr width = "20%">
+                                                        
+                                                        <td> <apex:inputText value="{!mbnoOtherflg}" rendered="true" styleClass="required phone_field validname" style="width:90px;"/> </td>
+                                                        <td> <apex:inputText value="{!Lead.Other_Mobile_Number__c}" style="width:150px;" /></td>
+                                                        
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span class="red">*</span>Email:
+                                            </td>
+                                            <td colspan="2" valign="top">
+                                                <!--<input type='text'  name='customer_feedback[email]' class="required email" /> -->
+                                                <!--<apex:inputField value="{!conobj.Email}" styleClass="required number"/> -->
+                                                <apex:inputField value="{!Lead.Email}" styleClass="emailInput" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p>&nbsp;</p>
+                                            </td>
+                                            <td>
+                                                <!--<input class="btn" type="submit" value="Register"/> -->
+                                                <apex:outputPanel id="btnPanel">
+                                                    <apex:commandButton value="Generate OTP" action="{!saveDetails}" styleClass="btn" rerender="dup,otpPanelHeading,otpPanelValue,pgMsg,btnPanel" status="loadingA" rendered="{! !displayOTPPanel}" oncomplete="disableFieldsOnRegister();" />
+                                                    <apex:commandButton value="Verify" action="{!redirectToPage}" styleClass="btn" rerender="otpPanelHeading,otpPanelValue,pgMsg,btnPanel" status="loadingA" rendered="{! displayOTPPanel}" />
+                                                </apex:outputPanel>
+                                            </td>
+                                        </tr>
+                                        
+                                    </table>
+                                </td>
+                            </tr>
+                            
+                        </table>
+                        <apex:inputhidden value="{!customerType}" id="cat" />
+                        <apex:inputhidden value="{!subcustomerType}" id="subcat" />
+                        <!--<apex:inputtext value="{!mbnoflg}"  id="mbflg"/>
+<apex:inputtext value="{!mbnoOtherflg}"  id="mbOthrflg"/> 
+
+-->
+                        <!--</form>-->
+                        
+                    </apex:form>
+                    
+                </div>
+                
+                <div style="line-height: 16px;font-size: 12px;">
+                    Head Office: Commerz, 3rd Floor, International Business Park, Oberoi Garden City, Off Western Express Highway, Goregaon (East), Mumbai-400 063. India.
+                    T: +91 22 6677 3333 (Board) F: +91 22 6677 3334 (Corporate)
+                    <!-- <a href="www.oberoirealty.com" target="_blank" style="color: #ec6810;text-decoration: none"> -->www.oberoirealty.com
+                </div>
+                
+                <div class="footerline" style="bottom: 0px;border-bottom: 7px solid #ec6810;width: 100%;background-color: #fff;padding: 10px 10px;left:0;line-height: 16px;font-size: 12px;">
+                </div>
+                
+                <div class="form1_thankyou" style="display: none; text-align:center;  padding: 25% 15px; width: 100%; font-size: 24px;   font-weight: bold; line-height: 36px;">
+                    Thank you for submitting the details.<br /> We look forward to assisting you.
+                    
+                </div>
+            </div>
+            
+            <!--<script type="text/javascript" src="http://oberoirealty.com/elite_club/js/jquery.min.js"></script>
+
+<script type="text/javascript" src="http://oberoirealty.com/elite_club/js/jquery.validate.js"></script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.js"></script>-->
+            
+            <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js" />
+            <apex:includeScript value="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.js" />
+            <apex:includeScript value="https://code.jquery.com/jquery-1.12.4.js" />
+            <apex:includeScript value="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.js" />
+            <apex:includeScript value="{!$Resource.intlTelInput}" />
+            
+            <script type="text/javascript">
+            var selectedCat;
+            $(document).ready(function($) {
+                $('.otpInput').keydown(function(e) {
+                    // Allow: backspace, delete, tab, escape, enter and .
+                    if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+                        // Allow: Ctrl/cmd+A
+                        (e.keyCode == 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+                        // Allow: Ctrl/cmd+C
+                        (e.keyCode == 67 && (e.ctrlKey === true || e.metaKey === true)) ||
+                        // Allow: Ctrl/cmd+X
+                        (e.keyCode == 88 && (e.ctrlKey === true || e.metaKey === true)) ||
+                        // Allow: home, end, left, right
+                        (e.keyCode >= 35 && e.keyCode <= 39)) {
+                        // let it happen, don't do anything
+                        return;
+                    }
+                    // Ensure that it is a number and stop the keypress
+                    if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                        e.preventDefault();
+                    }
+                });
+                $("input[name='customer_feedback[category]']").change(function() {
+                    $('.showDetails').show();
+                    var val = $("input[type='radio'][name='customer_feedback[category]']:checked").val();
+                    //alert('+++Calte+++{!$Component.frm.cat}');
+                    //alert(selectedCat  + '===='+ val);
+                    selectedCat = val;
+                    var cmpID = '{!$Component.frm.cat}';
+                    document.getElementById(cmpID).value = val;
+                    $('.subCatExCustomer,.subCatNewCustomer,.subCatProCons,.subCatBanker,.categoryOther').hide();
+                    if (val == 'Existing Customer') {
+                        $('.subCatExCustomer').show();
+                    }
+                    if (val == 'New Customer') {
+                        $('.subCatNewCustomer').show();
+                    }
+                    if (val == 'Property Consultant') {
+                        $('.subCatProCons').show();
+                    }
+                    if (val == 'Banker') {
+                        $('.subCatBanker').show();
+                    }
+                    if (val == 'Others') {
+                        $('.categoryOther').show();
+                    }
+                    $("input[name='customer_feedback[sub_category]']").attr("checked", false);
+                });
+                $("input[name='customer_feedback[sub_category]']").change(function() {
+                    var val = $("input[type='radio'][name='customer_feedback[sub_category]']:checked").val();
+                    var cmpID = '{!$Component.frm.subcat}';
+                    document.getElementById(cmpID).value = val;
+                    if (val == 'Other') {
+                        $('.sub_categoryOther').show();
+                    } else {
+                        $('.sub_categoryOther').hide();
+                    }
+                });
+                $.validator.setDefaults({
+                    submitHandler: function() {
+                        $('.btn').attr("disabled", "true");
+                        $.ajax({
+                            type: "POST",
+                            dataType: "json",
+                            url: $("#customerFeedback").attr("action"),
+                            data: $("#customerFeedback").serialize(),
+                            success: function(resp, status, xhr) {
+                                console.log(resp+'****');
+                                if (status == "success") {
+                                    console.log('***'+resp.data.customer_feedback["category"]);
+                                    if (($("input[type='radio'][name='customer_feedback[category]']:checked").val() == "New Customer") || ($("input[type='radio'][name='customer_feedback[sub_category]']:checked").val() == "First Visit")) {
+                                        if (resp.already_exist) {
+                                            $('.form1').hide();
+                                            $('.form1_thankyou').show();
+                                            $('.form1_thankyou').html("Thank you for submitting the details. We look forward to assisting you.");
+                                            $('.btn').attr("disabled", "false");
+                                        } else {
+                                            $('.form1_thankyou').html("Please wait ...");
+                                            window.location.href = "/site/Customer_Data_Sheet?id=" + resp.data.customer_feedback["id"];
+                                        }
+                                    } else {
+                                        $('.form1').hide();
+                                        $('.form1_thankyou').show();
+                                        $('.btn').attr("disabled", "false");
+                                    }
+                                } else {}
+                            },
+                            error: function(resp, status, xhr) {}
+                        });
+                    }
+                });
+                $("#customerFeedback").validate();
+                $(".phone_field").intlTelInput({
+                    defaultCountry: "in",
+                    preferredCountries: ['in', 'gb'],
+                    autoHideDialCode: false
+                });
+            });
+            
+            function validateOTP(otpCharNum, inputId) {
+                if(inputId == 0){
+                    initial = '';
+                }
+                var otpChar = otpCharNum.toString();                
+                var initial = $('[id$=otpId]').val();
+                
+                if (otpChar != null && otpChar != '') {
+                    var current = initial.concat(otpChar);
+                    if (inputId < 3) {
+                        var inputElement = $('.otpInput')[inputId + 1];
+                        //inputElement.removeAttr("disabled");
+                        inputElement.focus();
+                    }
+                } else {
+                    var current = initial.slice(0, -1);
+                    if (inputId > 0) {
+                        $('.otpInput')[inputId - 1].focus();
+                    }
+                }
+                //  $('[id$=otpId]').val(current);                
+                console.log(current);
+                var str = "";
+                $(".otpInput").each(function(index) {
+                    str = str + $(this).val()
+                });
+                $('[id$=otpId]').val(str);
+            }
+            
+            function disableFieldsOnRegister() {
+                $(".prj").attr('disabled', 'disabled');
+                /*   $(".categoryInput").attr('disabled', 'disabled');
+                $(".subCategoryInput").attr('disabled', 'disabled');
+                $(".nameInput").attr('disabled', 'disabled');
+                $(".mobNoInput").attr('disabled', 'disabled');
+                $(".emailInput").attr('disabled', 'disabled');*/
+            }
+            </script>
+        </body>
+        
+    </html>
+</apex:page>

@@ -1,0 +1,179 @@
+<apex:page standardController="Booking__c" extensions="BookingFormHandler" showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" renderAs="PDF">
+    <html lang="en">
+        <head>
+            <style type="text/css">
+                .pleft{padding-left: 50px}
+                .pleft10{padding-left: 10px}
+                .pleft17{padding-left: 17px}
+                .pleft37{padding-left: 37px}
+                .pleft20{padding-left: 20px}
+                .pleft90{padding-left: 90px}
+                .pleft80{padding-left: 80px}
+                .pleft70{padding-left: 70px}
+                .pleft40{padding-left: 40px}
+                .pleft95{padding-left: 95px}
+                .pleft100{padding-left: 100px}
+                .pleft120{padding-left: 120px}
+                .pleft130{padding-left: 130px}
+                .pleft150{padding-left: 150px}
+                .pleft165{padding-left: 165px}
+                .pleft205{padding-left: 205px}
+                .bk_header{
+                border: 1px black solid;
+                background-color: #CCCFCF;
+                height: 30PX;
+                display: table-cell;
+                vertical-align: middle;
+                width: 1200px;
+                text-transform: uppercase;
+                font-weight: bold;
+                }
+                .bold{
+                font-weight: bold
+                }
+                .bk_container{font-family: sans-serif; font-size: 13px}
+                .bk_line150{border-bottom: 1px solid black; padding-left: 150px}
+                .bk_line200{border-bottom: 2px solid black; padding-left: 200px}
+                .bk_line200thin{border-bottom: 1px solid black; padding-left: 200px}
+                .bk_line300{border-bottom: 1px solid black; padding-left: 300px}
+                .bk_line382{border-bottom: 1px solid black; padding-left: 382px}
+                .bk_line350{border-bottom: 1px solid black; padding-left: 350px}
+                .bk_line500{border-bottom: 1px solid black; padding-left: 500px}
+                .bk_line600{border-bottom: 1px solid black; padding-left: 600px}
+                .bk_line650{border-bottom: 1px solid black; padding-left: 650px}
+                .bk_line75{border-bottom: 1px solid black; padding-left: 40px}
+                
+                .bkrow{padding-top:10px}
+                .bkrow40{padding-left:40px}
+                .bkrow100{padding-left:100px}
+                .bkrow20{padding-top:10px}
+                .bk_note{padding-left:10px}
+                .square {border: 1px black solid;padding-left: 15px;margin-left: 65px;}
+                .body{font-family:Verdana, Arial, Helvetica, sans-serif;font-size:5px;line-height:18px;color:#7c7c7c;}
+                .header { margin-top: 30px;position: running(header);}
+                .center {text-align: center;}
+                .bk_pleftimage{padding-right:100%}
+                .dateSquare {border: 1px black solid;padding-left: 15px;}
+                }
+            </style>  
+        </head>       
+        <body>
+            <div class="bk_container">
+                <div>
+                    <span class="header">PROJECT NAME:&nbsp;{!booking.Project__c}</span>                    
+                </div>
+                <div style="text-align: right">
+                    <apex:image url="http://oberoirealty.com/images/oberoi_logo.png"/>
+                </div >
+                <div class="center bold">BOOKING FORM</div><br/>
+                <div align="right">
+                <span><b>Date:&nbsp;</b></span><span class="dateSquare">{!todaydate}&nbsp;&nbsp;</span><br/><br/>
+                </div>
+                <div class="bk_header">&nbsp;CUSTOMER/S DETAILS (TO BE FILLED IN BLOCK LETTERS)</div>
+                <div class="bkrow bkrow1">
+                   <span>Name:</span>
+                   <span Class="pleft50"></span>
+                   <span>1.</span><span class="bk_line600"></span>     
+                </div>
+                <div class="bkrow20 pleft90">2.<span class="bk_line600"></span></div>
+                <div class="bkrow20 pleft90">3.<span class="bk_line600"></span></div>
+            </div>
+            <div class="bkrow">
+            <span>Nationality:</span>
+            <span Class="pleft50"></span>
+            <span class="bk_line382"></span>
+            <span>Resident Status:</span>
+            <span Class="dateSquare"></span>
+             <span>&nbsp;Indian</span>
+             <span Class="dateSquare"></span>
+             <span>&nbsp;NRI</span>
+            </div>
+            <div class="bkrow">
+            <span>Residential Address</span>
+            <span Class="pleft50"></span>
+            <span>House No.</span>
+            <span class="bk_line150"></span>
+            <span>Street</span>
+            <span class="bk_line382"></span>
+            </div>
+            <div class="bkrow20 pleft95">
+            <span>Street 2</span>
+            <span class="bk_line600"></span>
+            </div>
+            <div class="bkrow20 pleft95">
+            <span>Street 3</span>
+            <span class="bk_line600"></span>
+            </div>
+            <div class="bkrow20 pleft95">
+            <span>City</span>
+            <span class="bk_line350"></span>
+            <span>Pin Code</span>
+            <span class="bk_line200thin"></span>
+            </div>
+            <div class="bkrow">
+            <span>Occupation:</span>
+            <span Class="pleft130"></span>
+            <span Class="dateSquare"></span>
+             <span>&nbsp;&nbsp;Business</span>
+             <span Class="pleft20"></span>
+             <span Class="dateSquare"></span>
+             <span>&nbsp;Service</span>
+             <span Class="pleft20"></span>
+             <span Class="dateSquare"></span>
+             <span>&nbsp;Profession</span>
+             <span Class="pleft20"></span>
+             <span Class="dateSquare"></span>
+             <span>&nbsp;Others</span>
+             <span class="bk_line200thin"></span>
+            </div>
+            <div class="bkrow">
+            <span>Company you are Working For:</span>
+            <span Class="pleft50"></span>
+            <span class="bk_line300"></span>
+            <span>Designation</span>
+            <span class="bk_line200thin"></span>
+            </div>
+            <div class="bkrow10">
+            <span class="pleft210">(Please attach your business card)</span>
+            </div>
+            <div class="bkrow">
+            <span>Company Address:</span>
+            <span Class="pleft80"></span>
+            <span class="bk_line650"></span>
+            </div>
+            <div class="bkrow">
+            <span class="pleft205">City</span>
+            <span class="bk_line200thin"></span>
+             <span class=""></span>
+            </div>
+            <div class="bkrow">
+            <span>Telephone No:</span>
+            <span Class="pleft50"></span>
+            <span>Residence</span>
+            <span class="bk_line150"></span>
+            <span>Office</span>
+            <span class="bk_line382"></span>
+            </div>
+            <div class="bkrow">
+            <span>Mobile No:</span>
+            <span class="pleft50">1</span>
+             <span class="bk_line300"></span>
+             <span>2</span>
+            <span class="bk_line300"></span>
+            </div>
+            <div class="bkrow">
+            <span>Email</span>
+            <span Class="pleft50">1.</span>
+            <span class="bk_line650"></span>
+            </div>
+            <div class="bkrow20 pleft95">
+            <span>2.</span>
+            <span class="bk_line650"></span>
+            </div>
+            <div class="bkrow">
+            <span>Contact Person:</span>
+            <span Class="pleft50">Details same as Applicant - 1</span>
+            </div>
+        </body>
+    </html>
+</apex:page>

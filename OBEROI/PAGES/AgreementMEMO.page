@@ -1,0 +1,155 @@
+<apex:page renderAs="PDF" showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false">
+    <head>
+          <style type="text/css" media="print">
+                @page {
+                
+                
+                
+                size:4in 4in;
+                margin:20mm 20mm 60mm 20mm;
+                
+                }
+                body{
+                margin:0;
+                padding:0;
+                font-family: SansSerif;
+                font-size:18px;
+                line-height:1.5;
+                }
+                @page {
+                size: 8.26in 11.69in;
+                margin:12mm;
+                
+                }
+                
+                table {
+        		page-break-inside: auto;
+      			}
+                
+                tr{
+                page-break-inside: avoid;
+        		page-break-after: auto;
+                }
+                
+                .maintable {
+                border:1px solid black;       
+                border-collapse: collapse;
+                margin:0;
+                
+                }
+                .maintable tr td {
+                
+                border:1px solid black;
+                border-collapse: collapse;
+                }
+             
+               
+            </style>  
+        </head>
+    <body>
+        <table width = "100%" class="maintable" border="background-color:black;border-collapse: collapse;" cellpadding='3'>
+            <tr>
+                <td style='font-size:13pt;font-family:SansSerif;text-align: center;color:black;'><b>INTER OFFICE MEMO</b></td>
+            </tr>
+        </table><br/>
+        
+        <table width = "100%" class="maintable" border="background-color:black;border-collapse: collapse;" cellpadding='3'> 
+                    
+                    <tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;font-weight: bold;width:13%;" >To :</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;font-weight: bold;width:50%;">Mr. Ashish Gupta / Mr. Hitesh Naik</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;font-weight: bold;width:10%;">Date :</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;font-weight: bold;"></td>
+                    </tr>
+        </table>
+        <table width = "100%" class="maintable" border="background-color:black;border-collapse: collapse;" cellpadding='3'>
+            		<tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;font-weight: bold;width:13%;" >From :</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;font-weight: bold;width:87%;">(Project Name) Sales Team</td>
+            		</tr>
+            		<tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;font-weight: bold;width:13%;" >Subject :</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;font-weight: bold;width:87%;">Agreement Signing</td>
+            		</tr>
+            		<tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;font-weight: bold;width:13%;" >Project :</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;font-weight: bold;width:87%;">from Project Master</td>
+            		</tr>
+            		<tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;font-weight: bold;width:13%;" >Company :</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;font-weight: bold;width:87%;">Oberoi Constructions Limited-to be fectched from Project Master</td>
+            		</tr>
+        </table>
+        <table width = "100%" class="maintable" border="background-color:black;border-collapse: collapse;" cellpadding='3'>
+            		<tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:35%;" >Name of the Party :</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:60%;">(Project Name) Sales Team</td>
+            		</tr>
+            		<tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:35%;" >Sales Channel :</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:60%;">(Project Name) Sales Team</td>
+            		</tr>
+            		<tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:35%;" >Agency Name – Broker Name :</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:60%;">(Project Name) Sales Team</td>
+            		</tr>
+            		<tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:35%;" >DETAILS :</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:60%;">(Project Name) Sales Team</td>
+            		</tr>
+            		<tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:35%;" >Flat no. :</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:60%;">(Project Name) Sales Team</td>
+            		</tr>
+            		<tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:35%;" >Floor :</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:60%;">(Project Name) Sales Team</td>
+            		</tr>
+            		<tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:35%;" >Carpet Area as per RERA (sq ft) :</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:60%;">(Project Name) Sales Team</td>
+            		</tr>
+            		<tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:35%;" >Car Park count and Configuration. :</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:60%;">(Project Name) Sales Team</td>
+            		</tr>
+            		<tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:35%;" >Sale Price :</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:60%;">(Project Name) Sales Team</td>
+            		</tr>
+            		<tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:35%;" >Booking Date / Transfer Date :</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:60%;">(Project Name) Sales Team</td>
+            		</tr>
+            		<tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:35%;" >Allotment Date :</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:60%;">(Project Name) Sales Team</td>
+            		</tr>
+            		<tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:35%;" >Sale Price Due Till Date :-</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:60%;">(Project Name) Sales Team</td>
+            		</tr>
+            		<tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:35%;" >Sale Price Received Till Date :-</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:60%;">(Project Name) Sales Team</td>
+            		</tr>
+            		<tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:35%;" >GST Due Till Date :</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:60%;">(Project Name) Sales Team</td>
+            		</tr>
+            		<tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:35%;" >GST Receieved Till Date :</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:60%;">(Project Name) Sales Team</td>
+            		</tr>
+            		<tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:35%;" >Loan :</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:60%;">(Project Name) Sales Team</td>
+            		</tr>
+                    <tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:35%;" >Deviations / Remarks :</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: left !important; padding:5px;width:60%;">(Project Name) Sales Team</td>
+            		</tr>
+        </table>
+    </body>
+    
+</apex:page>

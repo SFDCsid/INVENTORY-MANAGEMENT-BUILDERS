@@ -1,0 +1,3 @@
+<apex:page controller="CustomBillingPlan" action="{!saveAttach}" >
+    <!--<c:BasicBillingPlanTemplate billingPlanIdAttr="{!recordId}"/>-->
+</apex:page>

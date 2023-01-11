@@ -1,0 +1,1027 @@
+<apex:page sidebar="false" standardController="EOI__c" extensions="channelPartnerPageController" showHeader="false" applyHtmlTag="true" standardStylesheets="true" id="page">
+    <apex:form id="form1">
+        <html lang="en">
+            <head>
+                <meta charset="utf-8"/> 
+                <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                <meta http-equiv="X-UA-Compatible" content="ie=edge"   />  
+                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+                <title>ORL</title>
+                <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" />
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+                <style>
+                    body{
+                    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+                    font-size: 15px;
+                    line-height: 1.42857143;
+                    color: #333;
+                    background-color: #fff;
+                    }
+                    .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+                    max-width: 1000px;
+                    }
+                    .navbar-brand img {
+                    height: 39px;
+                    width: 85px;
+                    }
+                    .navbar {
+                    border-bottom: 7px solid #F79621;
+                    }
+                    .psgContainer{
+                    padding:20px 40px;
+                    }
+                    .psgContainer p{
+                    padding-top:8px;
+                    }
+                    .Note p{
+                    font-size:11px;
+                    padding:8px 0;
+                    }
+                    Span.Note{
+                    font-size:11px;
+                    }
+                    .btn-info {
+                    color: #fff;
+                    background-color: #5bc0de;
+                    border-color: #46b8da;
+                    }
+                    .btn {
+                    display: inline-block;
+                    padding: 6px 12px;
+                    margin-bottom: 0;
+                    font-size: 14px;
+                    font-weight: 400;
+                    line-height: 1.42857143;
+                    text-align: center;
+                    white-space: nowrap;
+                    vertical-align: middle;
+                    cursor: pointer;
+                    -webkit-user-select: none;
+                    -moz-user-select: none;
+                    -ms-user-select: none;
+                    user-select: none;
+                    background-image: none;
+                    border: 1px solid transparent;
+                    border-radius: 4px;
+                    }
+                    .btn-info:hover, .btn-info:focus, .btn-info:active, .btn-info.active, .open>.dropdown-toggle.btn-info {
+                    color: #fff;
+                    background-color: #31b0d5;
+                    border-color: #269abc;
+                    }
+                    .btn:hover, .btn:focus {
+                    color: #fff;
+                    text-decoration: none;
+                    }
+                    .btn:focus, .btn:active:focus, .btn.active:focus {
+                    outline: thin dotted;
+                    outline: 5px auto -webkit-focus-ring-color;
+                    outline-offset: -2px;
+                    }
+                    .panel{
+                    border-color: #bce8f1;
+                    margin-bottom: 20px;
+                    background-color: #fff;
+                    padding: 0 15px;
+                    border: 1px solid #bce8f1;
+                    border-radius: 4px;
+                    -webkit-box-shadow: 0 1px 1px rgb(0 0 0 / 5%);
+                    box-shadow: 0 1px 1px rgb(0 0 0 / 5%);
+                    }
+                    .panel-info h3 {
+                    margin-top:20px;
+                    padding: 20px 15px 0 15px;
+                    border-bottom: 1px solid transparent;
+                    border-top-left-radius: 3px;
+                    border-top-right-radius: 3px;
+                    height: 43px;
+                    font-size:14px ;
+                    color: #31708f;
+                    background-color: #d9edf7;
+                    border-color: #bce8f1;
+                    }
+                    .col-form-label {
+                    padding-bottom: 0;
+                    }
+                    .radioButton fieldset table tbody tr td label {
+                    padding: 0 5px;
+                    }
+                    .radioButton fieldset table tbody tr td {
+                    -webkit-appearance: listbox;
+                    }
+                    .wrapper {
+                    width:300px;
+                    margin:3% auto;
+                    }
+                    .dropdown dd, .dropdown dt, .dropdown ul {
+                    margin: 0px;
+                    padding: 0px;
+                    }
+                    .dropdown dd ul li a span:first-child, .dropdown dt a span span:first-child {
+                    background-image: url('https://i.imgur.com/OQiDoZe.png');
+                    background-repeat: no-repeat;
+                    width: 16px;
+                    height: 11px;
+                    display: inline-block;
+                    margin:5px;
+                    vertical-align: top;
+                    }
+                    .dropdown dt a span {
+                    cursor: pointer;
+                    display: block;
+                    padding: 5px;
+                    white-space: nowrap;
+                    }
+                    .dropdown dt a img {
+                    position: relative;
+                    z-index: 1;
+                    }
+                    .dropdown dt a span span:first-child:before {
+                    position: absolute;
+                    content: '';
+                    width: 15px;
+                    height: 10px;
+                    box-shadow: 0 1px 1px rgba(0,0,0,0.2) inset;
+                    }
+                    .dropdown dt a span span {
+                    display: inline-block;
+                    padding: 0;
+                    }
+                    .dropdown dt a span span:first-child {
+                    padding: 0;
+                    }
+                    .dropdown dd {
+                    position: relative;
+                    }
+                    .dropdown a, .dropdown a:visited {
+                    color: #4a535f;
+                    text-decoration: none;
+                    outline: none;
+                    }
+                    .dropdown a:hover {
+                    color: #5d4617;
+                    }
+                    .dropdown dt a:hover, .dropdown dt a:focus {
+                    color: #5d4617;
+                    }
+                    .dropdown dt a {
+                    position: relative;
+                    background: #e3e6ef;
+                    display: block;
+                    padding-right: 20px;
+                    overflow: hidden;
+                    border:1px solid #ed4267;
+                    width:250px;
+                    }
+                    .dropdown dt a:after {
+                    content: '';
+                    background: #ed4267;
+                    position: absolute;
+                    height: 32px;
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                    width: 35px;
+                    }
+                    .dropdown dt a:before {
+                    background: none repeat scroll 0 0 #FFFFFF;
+                    content: "";
+                    height: 3px;
+                    position: absolute;
+                    right: 7px;
+                    top: 6px;
+                    width: 20px;
+                    z-index: 2;
+                    box-shadow:0 8px 0 #FFFFFF, 0 16px 0 #FFFFFF;
+                    }
+                    .dropdown dd ul {
+                    background: #f0f2f7;
+                    color: #C5C0B0;
+                    display: none;
+                    left: 0px;
+                    padding: 5px 0px;
+                    position: absolute;
+                    width: 270px;
+                    border:1px solid #ed4267;
+                    list-style: none;
+                    max-height: 170px;
+                    overflow-y: scroll;
+                    top:10px;
+                    z-index: 2;
+                    }
+                    li a {
+                    font-size:13px;
+                    }
+                    li a span:nth-child(2) {
+                    line-height: 2em;
+                    }
+                    .dropdown dd ul::-webkit-scrollbar-track {
+                    -webkit-box-shadow: inset 0 0 1px rgba(0,0,0,0.3);
+                    border-left:1px solid rgba(0,0,0,0.1);
+                    }
+                    .dropdown dd ul::-webkit-scrollbar-thumb {
+                    background: rgba(0,0,0,0.4);
+                    /*-webkit-box-shadow: inset 0 0 1px rgba(0,0,0,0.5), 1px 0 0 #5cace9 inset, 2px 0 0 #b3d5ee inset;
+                    border-radius:10px;*/
+                    }
+                    .dropdown dd ul::-webkit-scrollbar-thumb:window-inactive {
+                    background: blue;
+                    }
+                    .dropdown span.value {
+                    display: none;
+                    }
+                    .dropdown dd ul li a {
+                    padding: 5px;
+                    display: block;
+                    font-size: 12px !important;
+                    }
+                    .dropdown dd ul li a:hover {
+                    background-color: rgba(0,0,0,0.05);
+                    }
+                    dl.dropdown {
+                    display: inline-block;
+                    width: 240px;
+                    margin: -3px 0 0 1px;
+                    }
+                    dl.dropdown span:nth-child(3) {
+                    color: rgba(0,0,0,0.4)
+                    }
+                    dl.dropdown > span:nth-child(2) {
+                    overflow: hidden;
+                    white-space: nowrap;
+                    display: inline-block;
+                    }
+                    dl.dropdown span:nth-child(3) {
+                    float: right;
+                    }
+                    dl.dropdown dt span:nth-child(2) {
+                    color: rgba(0, 0, 0, 0.6);
+                    font-size: 14px;
+                    font-weight: bold;
+                    line-height: 1.6em;
+                    }
+                    dl.dropdown dt span:nth-child(3) {
+                    display: none;
+                    }
+                    .countryFlag {
+                    padding: 0;
+                    background-image: url("https://i.imgur.com/OQiDoZe.png");
+                    background-repeat: no-repeat;
+                    display: inline-block;
+                    height: 11px;
+                    margin-right: 4px;
+                    width: 16px;
+                    cursor: pointer;
+                    white-space: nowrap;
+                    -moz-border-bottom-colors: none;
+                    -moz-border-left-colors: none;
+                    -moz-border-right-colors: none;
+                    -moz-border-top-colors: none;
+                    border-color: #BFBFC1 #B6B6B6 #969696;
+                    border-image: none;
+                    border-radius: 2px 2px 2px 2px;
+                    border-style: solid;
+                    border-width: 1px;
+                    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.09);
+                    }
+                    .navbar-brand img {
+                    height: 60px;
+                    width: 100px;
+                    }
+                    .btn{
+                    background: none !important;
+                    background-image:none !important;
+                    display: inline-block;
+                    color: #fff;
+                    background-color: #5bc0de !important;
+                    padding: 6px 12px;
+                    margin-bottom: 0;
+                    font-size: 14px;
+                    font-weight: 400;
+                    line-height: 1.42857143;
+                    text-align: center;
+                    white-space: nowrap;
+                    vertical-align: middle;
+                    cursor: pointer;
+                    -webkit-user-select: none;
+                    -moz-user-select: none;
+                    -ms-user-select: none;
+                    user-select: none;
+                    background-image: none;
+                    border: 1px solid transparent;
+                    border-radius: 4px;
+                    }
+                    .form-check-input[type=checkbox] {
+                    border-radius: .25em;
+                    height: 25px;
+                    position: relative;
+                    bottom: 6px;
+                    left:10px;
+                    }
+                    .radioButton {
+                    padding-top: 5px;
+                    }
+                    label.col-md-3.col-form-label.fixedlabel {
+                    position: relative;
+                    top: 30px;
+                    }
+                </style>
+            </head>
+            <body>
+                <nav class="navbar navbar-default navbar-fixed-top">
+                    <div class="container">
+                        <a class="navbar-brand" href="#">
+                            <apex:image url="{!$Resource.logoOberoi}"/>
+                        </a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>                        
+                    </div>
+                </nav>
+                <div class="container">
+                    <div class="panel-info">
+                        <h3 class="panel-title" style="margin-bottom: 0px;"><span id="useraction">Property Consultant's Details</span></h3>
+                    </div>
+                    <div class="panel mb-0">
+                        <div class="form-group row mb-3 mt-3">
+                            <label for="Name" class="col-md-3 col-form-label">Property Consultant's Firm Name <span style="color:red;">*</span></label>
+                            <div class="col-md-9">
+                                <apex:inputField value="{!e.Property_Consultant_s_Firm_Name__c}" required="true" styleClass="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3 mt-3">
+                            <label for="Name" class="col-md-3 col-form-label">Property Consultant's Name <span style="color:red;">*</span></label>
+                            <div class="col-md-9">
+                                <apex:inputField value="{!e.Property_Consultant_s_Name__c}" required="true" styleClass="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3 mt-3">
+                            <label for="Name" class="col-md-3 col-form-label">RERA Registration No <Span style="color:red;">*</Span></label>
+                            <div class="col-md-9">
+                                <apex:inputField value="{!e.RERA_Registration_No__c}" required="true" styleClass="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label for="Name" class="col-md-3 col-form-label ">Email <Span style="color:red;">*</Span></label>
+                            <div class="col-md-9">
+                                <apex:inputField value="{!e.Property_Consultant_s_Email__c}" required="true" styleClass="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label for="Name" class="col-md-3 col-form-label ">Project Name <span style="color:red;">*</span></label>
+                            <div class="col-md-9">
+                                <apex:selectList value="{!projs}" size="1" id="pn" styleClass="form-control">
+                                    <apex:selectOptions value="{!dynamiclist}"  />
+                                </apex:selectList>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label for="Name" class="col-md-3 col-form-label fixedlabel">Telephone <span style="color:red;">*</span></label>
+                            <div class="col-md-1">
+                                <label for="Name" class="col-form-label">(Mobile)</label>
+                                <apex:inputField value="{!e.Country_Code_Property_Consultant_Mobile__c}" required="true"  styleClass="form-control" />
+                            </div>
+                            <div class="col">
+                                <label for="Name" class="col-form-label"> &nbsp;</label>
+                                <apex:inputText value="{!parttel}" styleClass="form-control" />
+                            </div>
+                            <div class="col-md-1">
+                                <label for="Name" class="col-form-label">(Office)</label>
+                                <apex:inputField value="{!e.Country_Code_Property_Consult_Telephone__c}" styleClass="form-control"/>
+                            </div> 
+                            <div class="col">
+                                <label for="Name" class="col-form-label">&nbsp;</label>
+                                <apex:inputText value="{!partmob}"  styleClass="form-control"/>
+                            </div>
+                            <br/><br/><br/><br/>
+                            <center>
+                                <apex:pageMessages id="showmsg"/>
+                                <apex:outputPanel id="OTP">
+                                    <apex:outputPanel rendered="{!showOTPField}" >
+                                        <div class="form-group row mb-3">
+                                            <label for="Name" class="col-md-3 col-form-label ">&nbsp;</label>
+                                            <div class="col-md-6">
+                                                <label for="Name" class="col-form-label enterOTP" >Enter OTP:</label>
+                                                <apex:inputText value="{!otp}" styleClass="form-control" id="EnterOTP"/>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <apex:actionPoller action="{!callMethod}" reRender="out,sendButton" interval="5" enabled="{!startTimer}" />
+                                            <apex:outputText value="{!seconds}  {!OTPtext}" id="out"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <br/><apex:commandButton action="{!ValidateOTP}" styleClass="btn btn-default" reRender="OTP,sendButton,submitButton" value="Validate" /> 
+                                        </div>
+                                    </apex:outputPanel>
+                                </apex:outputPanel>
+                                <apex:outputPanel id="sendButton">
+                                    <apex:commandButton action="{!sendOTP}" rendered="{!showSendButton}" styleClass="btn btn-default" value="Send OTP" reRender="OTP,sendButton,showmsg,submitButton" /><br/>
+                                    <apex:commandButton action="{!ResendOTP}" rendered="{!showResendOTP}" styleClass="btn btn-default" reRender="out,showmsg" value="Re-Send OTP" />
+                                </apex:outputPanel>
+                            </center>
+                        </div>
+                    </div>
+                    
+                    <div class="container">
+                        <div class="panel-info">
+                            <h3 class="panel-title" style="margin-bottom: 0px;"><span id="useraction">Customer Details</span></h3>
+                        </div>
+                        <div class="panel">
+                            <div class="form-group row mb-3 mt-3">
+                                <label for="Name" class="col-md-3 col-form-label">Applicant 1 Name <span style="color:red;">*</span></label>
+                                <div class="col-md-3">
+                                    <apex:inputField value="{!e.Salutation_1__c}" id="sal" styleClass="form-control" />
+                                </div>
+                                <div class="col-md-4">
+                                    <apex:inputField value="{!e.Applicant_Name_1__c}" id="capname" styleClass="form-control" />
+                                </div>
+                                <div class="col-md-1">
+                                    <apex:commandLink value="+Add" action="{!add2}" />
+                                </div>
+                            </div>
+                            <apex:pageBlock rendered="{!ap2}">
+                                <div class="form-group row mb-3">
+                                    <label for="Name" class="col-md-3 col-form-label">Applicant 2 Name</label>
+                                    <div class="col-md-3">
+                                        <apex:inputField value="{!e.Salutation_2__c}"  styleClass="form-control" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <apex:inputField value="{!e.Applicant_Name_2__c}"  styleClass="form-control"/>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <apex:commandLink value="+Add" action="{!add3}"/>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <apex:commandLink value="-Rem" action="{!rem2}"/>
+                                    </div>
+                                </div>
+                            </apex:pageBlock>
+                            <apex:pageBlock rendered="{!ap3}">
+                                <div class="form-group row mb-3">
+                                    <label for="Name" class="col-md-3 col-form-label">Applicant 3 Name</label>
+                                    <div class="col-md-3">
+                                        <apex:inputField value="{!e.Salutation_3__c}"  styleClass="form-control" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <apex:inputField value="{!e.Applicant_Name_3__c}"  styleClass="form-control"/>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <apex:commandLink value="+Add" action="{!add4}"/>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <apex:commandLink value="-Rem" action="{!rem3}"/>
+                                    </div>
+                                </div>
+                            </apex:pageBlock>
+                            <apex:outputPanel rendered="{!ap4}">
+                                <div class="form-group row mb-3">
+                                    <label for="Name" class="col-md-3 col-form-label">Applicant 4 Name</label>
+                                    <div class="col-md-3">
+                                        <apex:inputField value="{!e.Salutation_4__c}"  styleClass="form-control" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <apex:inputField value="{!e.Applicant_Name_4__c}"  styleClass="form-control"/>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <apex:commandLink value="+Add" action="{!add5}"/>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <apex:commandLink value="-Rem" action="{!rem4}"/>
+                                    </div>
+                                </div>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!ap5}">
+                                <div class="form-group row mb-3">
+                                    <label for="Name" class="col-md-3 col-form-label">Applicant 5 Name</label>
+                                    <div class="col-md-3">
+                                        <apex:inputField value="{!e.Salutation_5__c}"  styleClass="form-control" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <apex:inputField value="{!e.Applicant_Name_5__c}"  styleClass="form-control"/>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <apex:commandLink value="-Rem" action="{!rem5}"/>
+                                    </div>
+                                </div>
+                            </apex:outputPanel>
+                            <div class="form-group row mb-3">
+                                <label for="Name" class="col-md-3 col-form-label">Nationality <span style="color:red;">*</span></label>
+                                <div class="col-md-3">
+                                    <apex:actionRegion >
+                                        <apex:inputField value="{!e.Nationality__c}" id="nato" styleClass="form-control" >
+                                            <apex:actionSupport event="onchange" rerender="nat,nat1"/>
+                                        </apex:inputField>
+                                    </apex:actionRegion>
+                                </div>
+                                <div class="col-md-4">
+                                    <apex:outputPanel id="nat">
+                                        <apex:pageBlock rendered="{!IF(e.Nationality__c == 'India', true, false)}">
+                                            <label for="Name" class="col-form-label">(if nationality "Indian") &nbsp; Resident Status <span style="color:red;">*</span></label>
+                                        </apex:pageBlock>
+                                    </apex:outputPanel>
+                                </div>
+                                <div class="col-md-2 radioButton">
+                                    <apex:outputPanel id="nat1">
+                                        <apex:pageBlock rendered="{!IF(e.Nationality__c == 'India', true, false)}">
+                                            <label for="Name" class="col-form-label"></label>
+                                            <apex:selectRadio value="{!resStat}" id="cpsa" onchange="submitForm()" >
+                                                <apex:selectOptions value="{!ResidenceStatuslist}"/>
+                                            </apex:selectRadio>
+                                        </apex:pageBlock>
+                                    </apex:outputPanel>
+                                </div>
+                            </div>
+                            <!-- <div class="form-group row mb-0">
+<label for="trfu" class="col-md-3 col-form-label">Select Pincode <span style="color:red;">*</span></label>
+<div class="col">
+<apex:inputField value="{!e.Pincode_Obj__c}" styleClass="form-control1" id="pin">
+<apex:actionSupport event="onchange"  action="{!pincoderoll}" status="status"/>
+</apex:inputField>
+</div>
+</div> -->
+                            <div class="form-group row mt-1">
+                                <label for="Pincode" class="col-md-2 col-form-label fixedlabel">Search Pincode <span style="color:red;">*</span></label>
+                                <div class="col-md-4" >
+                                    <input autocomplete="off" type="text" size="20" name="cp" id="cp"  onkeyup="loadXMLDoc(this.value)" style="width:100%;"/>
+                                    
+                                    <apex:inputHidden value="{!pincode1}" id="cp1"> </apex:inputHidden>                                    
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row mt-1">
+                                <label for="Pincode" class="col-md-3 col-form-label" style="visibility: hidden;"></label>
+                                <div class="col-md-4">
+                                    <div align="center" id="searchResult" name="searchResult" styleClass="form-control" style="width : 500px ;cursor: pointer;background: #D3D3D3;"></div>
+                                </div>
+                            </div>                  
+                            
+                          <!--<apex:inputText id="ChannelPartnerName" value="{!SelectedPincodeid}" style="display:Block"></apex:inputText>-->                             
+                            
+                            <div class="form-group row mb-0">
+                                <label for="Name" class="col-md-3 col-form-label fixedlabel">Residential Address  <span style="color:red;">*</span></label>
+                                <div class="col">
+                                    <label for="Name" class="col-form-label">House No.</label>
+                                    <apex:inputField value="{!e.House_No__c}"  styleClass="form-control"/>
+                                </div>
+                                <div class="col">
+                                    <label for="Name" class="col-form-label">Building/Society Name <span style="color:red;">*</span></label>
+                                    <apex:inputField value="{!e.Street_1__c}" id="str1" styleClass="form-control" />
+                                </div>                            
+                            </div>
+                            <div class="form-group row mb-0">
+                                <label for="Name" class="col-md-3 col-form-label"></label>
+                                <div class="col-md-9">
+                                    <label for="Name" class="col-md-3 col-form-label">Street 2 </label>
+                                    <apex:inputField value="{!e.Street_2__c}"  styleClass="form-control"/>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-0">
+                                <label for="Name" class="col-md-3 col-form-label"></label>
+                                <div class="col-md-9">
+                                    <label for="Name" class="col-md-3 col-form-label">Street 3 </label>
+                                    <apex:inputField value="{!e.Street_3__c}"  styleClass="form-control"/>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-0">
+                                <label for="Name" class="col-md-3 col-form-label"></label>
+                                <div class="col-md-9">
+                                    <label for="Name" class="col-md-3 col-form-label">Locality </label>
+                                    <apex:inputText id="lo" value="{!locality}"  styleClass="form-control"/>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group  row mb-3">
+                                <label for="Name" class="col-md-3 col-form-label"></label>
+                                <div class="col">
+                                    <label for="Name" class="col-form-label">City <span style="color:red;">*</span></label>
+                                    <apex:inputText value="{!city}" id="city" styleClass="form-control" />
+                                </div>
+                                <div class="col">
+                                    <label for="Name" class="col-form-label">Pincode <span style="color:red;">*</span></label>
+                                    <apex:inputText value="{!pincode1}" id="pincode" styleClass="form-control" />
+                                </div>                            
+                            </div>  
+                            <div class="form-group  row mb-3">
+                                <label for="Name" class="col-md-3 col-form-label"></label>
+                                <div class="col">
+                                    <label for="Name" class="col-form-label">State <span style="color:red;">*</span></label>
+                                    <apex:inputText value="{!state}" id="state" styleClass="form-control" />
+                                </div>
+                                <div class="col">
+                                    <label for="Name" class="col-form-label">Country <span style="color:red;">*</span></label>
+                                    <apex:inputText value="{!country}" id="country" styleClass="form-control" />
+                                </div>                            
+                            </div>  
+                            <div class="form-group row mb-1">
+                                <label for="Name" class="col-md-3 col-form-label">Occupation <span style="color:red;">*</span></label>
+                                <div class="col-md-9 radioButton">
+                                    <apex:actionRegion >
+                                        <apex:selectRadio value="{!occup}" id="occu">
+                                            <apex:selectOptions value="{!Occupationlist}" />
+                                            <apex:actionSupport event="onchange" rerender="occ" />
+                                        </apex:selectRadio>
+                                    </apex:actionRegion>
+                                </div>
+                            </div>
+                            <apex:outputPanel id="occ">
+                                <apex:pageBlock rendered="{!IF(occup == 'Others', true, false)}">
+                                    <div class="row">
+                                        <label for="Name" class="col-md-3 col-form-label">&nbsp;</label>
+                                        <div class="col-md-9">
+                                            <apex:inputField value="{!e.Other_Occupation__c}" required="true" styleClass="form-control"  />
+                                        </div>
+                                    </div> 
+                                </apex:pageBlock>
+                            </apex:outputPanel>
+                            <br/>
+                            <div class="form-group row mb-3">
+                                <label for="Name" class="col-md-3 col-form-label fixedlabel ">Company you are Working for</label>
+                                <div class="col">
+                                    <label for="Name" class="col-form-label"> &nbsp;</label>
+                                    <apex:inputField value="{!e.Company_Name__c}"  styleClass="form-control"/>
+                                </div>
+                                <div class="col">
+                                    <label for="Name" class="col-form-label">Designation</label>
+                                    <apex:inputField value="{!e.Designation__c}"  styleClass="form-control"/>
+                                </div>                            
+                            </div>
+                            <div class="form-group row mb-0">
+                                <label for="Name" class="col-md-3 col-form-label ">Company Address</label>
+                                <div class="col-md-9">
+                                    <apex:inputField value="{!e.Company_Address__c}"  styleClass="form-control"/>
+                                </div>                      
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="Name" class="col-md-3 col-form-label "></label>
+                                <div class="col">
+                                    <label for="Name" class="col-form-label">City</label>
+                                    <apex:inputField value="{!e.Company_City__c}"  styleClass="form-control"/>
+                                </div>
+                                <div class="col">
+                                    <label for="Name" class="col-form-label">Pin Code</label>
+                                    <apex:inputField value="{!e.Company_Pincode__c}"  styleClass="form-control"/>
+                                </div>                            
+                            </div>
+                            <div class="form-group row mb-1">
+                                <label for="Name" class="col-md-3 col-form-label ">Email <span style="color:red;">*</span></label>
+                                <div class="col-md-9">
+                                    <apex:inputField value="{!e.Email__c}"  styleClass="form-control" id="email1"/>
+                                </div>                      
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="Name" class="col-md-3 col-form-label fixedlabel">Telephone No</label>
+                                <div class="col-md-1">
+                                    <label for="Name" class="col-form-label">Res</label>
+                                    <label for="Name" class="col-form-label"> &nbsp;</label>
+                                    <apex:inputField value="{!e.Country_Code_Residense__c}" id="telrc" styleClass="form-control"/>
+                                </div>
+                                <div class="col">
+                                    <label for="Name" class="col-form-label"> &nbsp;</label>
+                                    <apex:inputText value="{!telres}" id="telr" styleClass="form-control"/>
+                                </div>
+                                <div class="col-md-1">
+                                    <label for="Name" class="col-form-label">Office</label>
+                                    <label for="Name" class="col-form-label"> &nbsp;</label>
+                                    <apex:inputField value="{!e.Country_Code_Office__c}"  styleClass="form-control"/>
+                                </div> 
+                                <div class="col">
+                                    <label for="Name" class="col-form-label">&nbsp;</label>
+                                    <apex:inputText value="{!teloff}"  styleClass="form-control"/>
+                                </div> 
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="Name" class="col-md-3 col-form-label ">Mobile No <span style="color:red;">*</span></label>
+                                <div class="col-md-1">
+                                    
+                                    <apex:inputField value="{!e.Country_Code_Mobile_1__c}"  id="concode" styleClass="form-control" />
+                                </div>
+                                <div class="col">
+                                    
+                                    <apex:inputText value="{!phone}" id="mobile1" styleClass="form-control" />
+                                </div>
+                                <div class="col-md-1">
+                                    
+                                    <apex:inputField value="{!e.Country_Code_Mobile_2__c}"  styleClass="form-control"/>
+                                </div> 
+                                <div class="col">
+                                    
+                                    <apex:inputText value="{!phone2}"  styleClass="form-control" />
+                                </div> 
+                            </div>
+                            <div class="form-group row mb-1">
+                                <label for="Name" class="col-md-3 col-form-label">Contact Person(Same as applicant-1) <span style="color:red;">*</span></label>
+                                <div class="col-md-9 radioButton">
+                                    <apex:selectRadio value="{!cpsa1}" id="cpsa" onchange="submitForm()">
+                                        <apex:selectOptions value="{!ContactPersonlist}"/>
+                                    </apex:selectRadio>
+                                </div>                                                       
+                            </div> 
+                            <div class="form-group row mb-3">
+                                <label for="Name" class="col-md-3 col-form-label fixedlabel">Name <span style="color:red;">*</span></label>
+                                <div class="col">
+                                    <label for="Name" class="col-form-label"> &nbsp;</label>
+                                    <apex:inputField value="{!e.Contact_Person_Name__c}" id="cname" styleClass="form-control" />
+                                </div>
+                                <div class="col">
+                                    <label for="Name" class="col-form-label">Relation /Designation <span style="color:red;">*</span> </label>
+                                    <apex:inputField value="{!e.Contact_Person_Relation_Designation__c}" id="cdesig"  styleClass="form-control"/>
+                                </div>                            
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="Name" class="col-md-3 col-form-label fixedlabel">Telephone</label>
+                                <div class="col-md-1">
+                                    <label for="Name" class="col-form-label"> &nbsp;</label>
+                                    <apex:inputField value="{!e.Country_Code_Contact_Person_Telephone__c}" id="contc" styleClass="form-control"/>
+                                </div>
+                                <div class="col">
+                                    <label for="Name" class="col-form-label"> &nbsp;</label>
+                                    <apex:inputText value="{!contpertel}" id="contel" styleClass="form-control"/>
+                                </div>
+                                <div class="col-md-1">
+                                    <label for="Name" class="col-form-label">Mobile <span style="color:red;">*</span></label>
+                                    <apex:inputField value="{!e.Country_Code_Contact_Person_Mobile__c}"  id="ccode" styleClass="form-control"/>
+                                </div> 
+                                <div class="col">
+                                    <label for="Name" class="col-form-label">&nbsp;</label>
+                                    <apex:inputText value="{!contpermob}" id="cmob" styleClass="form-control" />
+                                </div> 
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="Name" class="col-md-3 col-form-label ">Email</label>
+                                <div class="col-md-9">
+                                    <apex:inputField value="{!e.Contact_Person_Email__c}" id="contperemail" styleClass="form-control"/>
+                                </div>                      
+                            </div>
+                            <div class="form-group row mb-3">
+                                <apex:pageMessage severity="Error" id="er"/>
+                                <label for="Name" class="col-md-3 col-form-label ">Customer Category <span style="color:red;">*</span></label>
+                                <div class="col-md-9 radioButton">
+                                    <apex:selectRadio value="{!custCat}" id="custcat" >
+                                        <apex:selectOptions value="{!CustomerCategorylist}"/>
+                                    </apex:selectRadio>
+                                </div>                      
+                            </div>
+                            <!--div class="form-group row mb-3">
+<label for="Name" class="col-md-3 col-form-label ">How do we contact you <span style="color:red;">*</span></label>
+<div class="col-md-9 radioButton">
+<apex:selectRadio value="{!hdwcy1}" id="hdwcy">
+<apex:selectOptions value="{!Howdowecontactyoulist}"/>
+</apex:selectRadio>
+</div>                      
+</div-->
+                            <!--div class="form-group row mb-3">
+<label for="Name" class="col-md-3 col-form-label ">Address of correspondence <span style="color:red;">*</span></label>
+<div class="col-md-9 radioButton">
+<apex:selectRadio value="{!aoc1}" id="aoc">
+<apex:selectOptions value="{!Addressofcorrespondencelist}"/>
+</apex:selectRadio>
+</div>                      
+</div-->
+                            <div class="form-group row mb-3">
+                                <label for="Name" class="col-md-3 col-form-label ">How did you hear about us <span style="color:red;">*</span></label>
+                                <div class="col-md-9 radioButton">
+                                    <apex:selectRadio value="{!hdyhau1}" id="hdyhau">
+                                        <apex:selectOptions value="{!Howdidyouhearaboutuslist}"/>
+                                    </apex:selectRadio>
+                                </div>                      
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="Name" class="col-md-3 col-form-label ">Budget <span style="color:red;">*</span></label>
+                                <div class="col-md-9 radioButton">
+                                    <apex:selectRadio value="{!budget1}" id="budget">
+                                        <apex:selectOptions value="{!Budgetlist}"/>
+                                    </apex:selectRadio>
+                                </div>                      
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="Name" class="col-md-3 col-form-label ">Requirements <span style="color:red;">*</span></label>
+                                <div class="col-md-9 radioButton">
+                                    <apex:selectRadio value="{!req}" id="req">
+                                        <apex:selectOptions value="{!Requirementslist}"/>
+                                    </apex:selectRadio>
+                                </div>                      
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="Name" class="col-md-3 col-form-label ">Carpet Area(in sq. ft.) <span style="color:red;">*</span></label>
+                                <div class="col-md-9 radioButton">
+                                    <apex:selectRadio value="{!ca1}" id="ca">
+                                        <apex:selectOptions value="{!CarpetArealist}"/>
+                                    </apex:selectRadio>
+                                </div>                      
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="Name" class="col-md-3 col-form-label ">Source of Booking <span style="color:red;">*</span></label>
+                                <div class="col-md-9">
+                                    <apex:inputText html-placeholder="Partner" id="sob" styleClass="form-control" disabled="true" /> 
+                                </div>                      
+                            </div>
+                            <div class="form-group row mb-3">
+                                <apex:inputCheckbox value="{!tc}" styleclass="form-check-input"/>
+                                <div class="col-md-9">
+                                    <label class="form-check-label" for="exampleCheck1">&nbsp; &nbsp; I agree to <a style="color:#000;" href="{!$Label.EOITerms_Conditions}" target="_blank">Terms and conditions</a></label> 
+                                </div>    
+                            </div>
+                            <center>  
+                                <apex:pageMessages id="showmesg"/>
+                                <!--apex:outputPanel id="submitButton" >
+<apex:commandButton action="{!validateData}" value="Submit" rendered="true" reRender="sb,submitButton,showmesg" styleClass="btn btn-default" onclick="this.style.display = 'none'"/>
+</apex:outputPanel-->
+                                <apex:outputPanel id="submitButton" >
+                                    <apex:commandButton action="{!save}" value="Submit" rendered="{!savebutton}" reRender="showmesg,payButton,skipButton,submitButton" styleClass="btn btn-default" onclick="this.style.display = 'none'"/>&nbsp;&nbsp;
+                                </apex:outputPanel>
+                                <apex:outputPanel id="payButton">
+                                    <apex:commandButton action="{!pay}" reRender="hiddenForm,skipButton" value="Make Payment" oncomplete="getHMACResult();" styleClass="btn btn-default" onclick="this.style.display = 'none'" rendered="{!OR(showPayButton,showSkipButton)}"/>&nbsp;&nbsp; 
+                                </apex:outputPanel>
+                                <apex:outputPanel id="skipButton">
+                                    <apex:commandButton action="{!thank}" reRender="hiddenForm" value="Skip Payment" styleClass="btn btn-default" onclick="this.style.display = 'none'" rendered="{!showSkipButton}" />
+                                </apex:outputPanel>
+                            </center>  
+                            <br/>
+                        </div>
+                    </div>
+                </div>                
+            </body>
+        </html>
+    </apex:form>
+    
+    <apex:outputPanel id="hiddenForm">
+        <form id='myform' name='myForm' action="{!$Label.PayPhiRequest}" 
+              method='post' enctype="application/x-www-form-urlencoded">
+            <input hidden="true" name="aggregatorID" value="AM_00024" id="aid"/>
+            <input hidden="true" name="merchantID" value="{!mid}" id="mid" />
+            <input hidden="true" name="merchantTxnNo" value="{!merchantTxnNo}" id="txnNo" />
+            <input hidden="true" name="amount" value="{!amount}" id="amt" />
+            <input hidden="true" name="currencyCode" value="356" id="cc" />
+            <input hidden="true" name="payType" value="0" id="pt"/>
+            <input hidden="true" name="customerEmailId" value="{!customerEmailId}" id="email" />
+            <input hidden="true" name="transactionType" value="SALE" id="tt" />
+            <input hidden="true" name="returnURL" value="{!$Label.PayPhiResponse}" id="retUrl"/>
+            <input hidden="true" name="txnDate" value="{!txnDate}" id="td"/>
+            <input hidden="true" name="customerMobileNo" value="{!customerMobileNo}" id="mob" />
+            <input hidden="true" name="secureHash" value="" id="secureHash" />
+            <input hidden="true" name="key" value="{!key}" id="key" />
+        </form>
+    </apex:outputPanel>
+    
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="{! $Resource.SHA_payphi}"></script>
+    <script src="{! $Resource.HTML_payphi}"></script>
+    
+    <script>
+        function getHMACResult(){
+        // alert('inside getHMACResult'+document.getElementById('mobile1').value);
+        //debugger;
+        
+        var hashInput = "";
+        var ke = document.getElementById('key').value;
+        
+        hashInput =
+            document.getElementById('aid').value + document.getElementById('amt').value + document.getElementById('cc').value + document.getElementById('email').value +
+            document.getElementById('mob').value + document.getElementById('mid').value + document.getElementById('txnNo').value +
+            document.getElementById('pt').value + document.getElementById('retUrl').value + document.getElementById('tt').value +
+            document.getElementById('td').value;
+        
+        console.log('hashInput  ' + hashInput);
+        console.log('ke'+ke);
+        var shaObj = new jsSHA("SHA-256", 'TEXT');
+        shaObj.setHMACKey(ke, "TEXT");
+        // alert('hashInput'+hashInput);
+        shaObj.update(hashInput);   
+        
+        var result = shaObj.getHMAC("HEX");
+        console.log('result  ---- ' + result);
+        document.getElementById('secureHash').value = result;
+        // alert('result'+result); 
+        
+        document.querySelector("#myform").submit();
+    }
+    
+    function submitForm(){
+        var cpsa = document.getElementsByName('{!$component.page.form1.cpsa}');
+        for (var x = 0; x < cpsa.length; x++) 
+        {
+            if (cpsa[x].checked) {
+                //alert('You checked : ' + cpsa[x].value);
+                if(cpsa[x].value == 'Yes'){
+                    document.getElementById('page:form1:cdesig').value = 'Self';
+                    document.getElementById('page:form1:cname').value = document.getElementById('page:form1:sal').value + ' '+ document.getElementById('page:form1:capname').value;
+                    document.getElementById('page:form1:cmob').value = document.getElementById('page:form1:mobile1').value;
+                    document.getElementById('page:form1:ccode').value = document.getElementById('page:form1:concode').value;
+                    document.getElementById('page:form1:contperemail').value = document.getElementById('page:form1:email1').value;
+                    document.getElementById('page:form1:contc').value = document.getElementById('page:form1:telrc').value;
+                    document.getElementById('page:form1:contel').value = document.getElementById('page:form1:telr').value;
+                }
+                if(cpsa[x].value == 'No'){
+                    document.getElementById('page:form1:cdesig').value = null;
+                    document.getElementById('page:form1:cname').value = null;
+                    document.getElementById('page:form1:cmob').value = null;
+                    //document.getElementById('page:form1:ccode').value = null;
+                    document.getElementById('page:form1:contperemail').value = null;
+                    //document.getElementById('page:form1:contc').value = null;
+                    document.getElementById('page:form1:contel').value = null;
+                }
+            }
+        }   
+    }
+    </script>
+    
+    <script>
+    function search(){
+        doSearch();
+    }
+    
+    function loadXMLDoc(typed) {
+        //alert('typed: '+typed);
+        if(typed =='') {
+            document.getElementById("searchResult").style.display = 'none';
+        } else {
+            document.getElementById("searchResult").style.display = 'block';
+            var records = [];
+            
+            Visualforce.remoting.Manager.invokeAction(
+                '{!$RemoteAction.channelPartnerPageController.getpincodeDetails}',
+                typed,
+                function(result, event) {
+                    
+                    if(event.status) {
+                        onSuccess(result);
+                    } else if (event.type === 'exception') {
+                        alert('Event Exception:' + event.message);
+                    } else {
+                        alert('Event Exception:' + event.message);
+                    }
+                },
+                {escape: false}
+            );
+            //alert('records:: '+records.getArray()); 
+        }
+    }
+    
+    function onSuccess(result) {
+         
+        let listofresults=[]
+        for(let str of result){
+            listofresults.push(JSON.parse(str))
+            console.log(listofresults)
+        }
+        //let resultobj =JSON.parse(result[0].substring(1,result[0].length-2 ));
+        //console.table(resultobj);
+        var sb = "";
+        for(let resultobj of listofresults){
+            //let address = resultobj.name +"&&"+ resultobj.locality+"&&"+ resultobj.city+"&&"+ resultobj.state+"&&"+ resultobj.country  ;
+            //alert(address);
+            sb += "<span id="+resultobj.id +" onclick='divFunction(this.id,this.innerText);'>"+resultobj.name +","+ resultobj.locality+","+ resultobj.city+","+ resultobj.state+","+ resultobj.country  + "</span><br>"; 
+        }
+        /*for (var i = 0; i < result.length && i < 10; i++) {
+            sb += "<span id="+result[i] +" onclick='divFunction(this.innerText);'>"+result[i] + "</span><br>";
+        }*/
+        //alert('hiii inside onsucc::'+sb);
+        getObject("searchResult").innerHTML = sb;
+        //$('#sai').load('#sai');               
+    }
+    
+    function getObject(name) {
+        //alert('name:: '+name);
+        var ns4 = (document.layers) ? true : false;
+        var w3c = (document.getElementById) ? true : false;
+        var ie4 = (document.all) ? true : false;
+        
+        if (ns4) return eval('document.' + name);
+        if (w3c) return document.getElementById(name);
+        if (ie4) return eval('document.all.' + name);
+        return false;
+    }
+    
+    window.onload = function() {
+        getObject("cp");
+        //alert('cp:: '+cp);
+        document.getElementById("searchResult").style.display = 'none';
+        //alert('searchRes::'+searchResult);  
+    }
+    
+    function divFunction(id,value){
+        
+        //alert('id::'+id);
+        //alert('name::'+value);
+        let [name,locality,city,state,country] = value.split(',');
+        
+        document.getElementById("cp").value = name;
+         
+        var pincode1 = document.getElementById("cp").value = name;
+        //document.getElementById("page:form1:ChannelPartnerName").value =id;
+        document.getElementById("page:form1:lo").value =locality;
+        document.getElementById("page:form1:city").value =city;
+        document.getElementById("page:form1:state").value =state;
+        document.getElementById("page:form1:pincode").value =name;
+        document.getElementById("page:form1:country").value =country;
+        document.getElementById("searchResult").style.display = 'none';
+        //alert('searchRes '+searchResult);
+        //$( "#here" ).load(window.location.href + " #here" );
+        //alert('You have selected '+name);
+        
+    }
+    
+    </script>
+</apex:page>

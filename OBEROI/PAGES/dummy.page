@@ -1,0 +1,22 @@
+<apex:page controller="dummy" renderAs="pdf">
+  
+  <html>
+  
+  <body>
+      <table border="1" cellspacing="0" cellpadding="0">
+          <tr><td> total booking ::: {!bl.size}</td></tr>
+          <apex:repeat value="{!intList}" var="i">
+              <tr>
+                  <apex:repeat value="{!bMap[i]}" var="j">
+                      <td>
+                          {!j.id} -- {!j.Name}
+                      </td>
+                  </apex:repeat>
+              </tr>
+          
+          </apex:repeat>
+      </table>
+  </body>
+  </html>
+  
+</apex:page>

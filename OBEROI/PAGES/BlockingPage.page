@@ -1,0 +1,215 @@
+<apex:page StandardController="Blocking_Detail__c" extensions="BlockingExtension" showHeader="false" standardStylesheets="False" lightningStylesheets="True" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
+<html
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink">
+<head>
+<title>Block Unit</title>
+<apex:stylesheet value="{!URLFOR($Resource.SLDS090, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript">__sfdcSessionId = '{!$Api.Session_Id}';</script>
+<script src="/soap/ajax/9.0/connection.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Lato:400,700&subset=latin,latin-ext" rel="stylesheet" type="text/css" />
+<link href="https://fonts.googleapis.com/css?family=Buda:300" rel="stylesheet" type="text/css"/>
+<script type="text/javascript">
+var optyid =  "{!$CurrentPage.parameters.optyid}";
+//alert('optyid'+ optyid);
+</script>
+</head>
+
+
+<style>
+    .slds h1, .slds h2, .slds h3, .slds h4, .slds h5, .slds h6, .slds th, .slds td {
+        font-family: 'Lato';
+    }
+    .slds .slds-theme--shade {
+    background-color: aliceblue;
+    }
+    .slds .slds-button {
+        background-color: #838B8B;
+        
+    }
+    body .bPageBlock .pbBody .pbSubheader {
+        background-color:#ffffff ;
+        border-color:#838B8B;
+               
+    }
+    .slds table {
+        font-size: 16px;
+        empty-cells:show;
+        
+    }
+    .slds td {
+        text-align:left;
+        padding-left: 120px;
+        padding-bottom: 10px;
+        padding-top: 10px;
+    }
+    div.fadeMe {
+      opacity:    0.5; 
+      background: #D9E9FF; 
+      width:      100%;
+      height:     100%; 
+      z-index:    1000;
+      top:        0; 
+      left:       0; 
+      position:   fixed; 
+    }
+    .readOnly {
+        background-color: aliceblue;
+        border-color: #003F87;
+        padding: 2.5px;
+        color: #333366;
+    }
+    .penalties {
+        background-color: aliceblue;
+        border-color: #003F87;
+        padding: 2.5px;
+        color: #FC1501 !important;
+    }
+    .Edit {
+        border-color:#ff69b4;
+        border-width: 1px;
+        border-style: dotted dotted dotted dotted;
+    }.error {
+        border-color: red !important;
+        background-color: light blue;
+        border-width: 2px;
+    }
+    .settled {
+        color: green;
+        font-weight:bold;
+    }
+    .due {
+        color: red;
+        font-weight:bold;
+    }
+    .info {
+        color: green; font-weight: strong;
+        border-color: green !important;
+    }
+    .styled-button-5 {
+    background-color:#ed8223;
+    color:#fff;
+    font-size:10px;
+    line-height:30px;
+    border-radius:20px;
+    -webkit-border-radius:20px;
+    -moz-border-radius:20px;
+    border:0;
+    text-shadow:#C17C3A 0 -1px 0;
+    width:120px;
+    height:32px
+    }              
+    </style>
+        <body>
+         
+        <br/><br/>
+            <!-- REQUIRED SLDS WRAPPER -->
+            <div class="slds">
+                <!-- PRIMARY CONTENT WRAPPER -->
+                <div class="myapp">
+                    <!-- CREATE RECEIPT -->
+                    <div aria-labelledby="newreceiptform">
+                        <!-- BOXED AREA -->
+                        <fieldset class="slds-box slds-theme--shade slds-container--large slds-container--center slds-grid--align-spread">
+                            <legend id="newreceiptform" class="slds-text-heading--medium slds-p-vertical--medium"><b>Reserve Unit</b></legend>
+                            <!-- CREATE NEW RECEIPT FORM -->
+                            <apex:form id="newreceiptform" styleClass="slds-form--inline">
+                                <apex:actionStatus id="status">
+                                    <apex:facet name="start">
+                                        <div class="fadeMe">
+                                            &nbsp;
+                                        </div>
+                                        <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 15% 50%">
+                                            <div style="display: inline-block; padding: 2px; background-color: #fff; width: 125px;">
+                                                <img src="/img/loading.gif" style="float: left; margin: 8px;" />
+                                                <span style="display: inline-block; padding: 10px 0px;">Please Wait...</span>
+                                            </div>
+                                        </div>
+                                    </apex:facet>
+                                </apex:actionStatus>
+                                
+                                <apex:pageBlock id="pgBlock" mode="edit">
+                                    <apex:pageBlockButtons id="editButtons" location="top" style="float:centre" rendered="true" >
+                                        <apex:commandButton id="saveBtn" value="Save" action="{!save}" onclick="return validationfunc();" styleClass="slds-button slds-button--brand slds-button--small"/>
+                                        &nbsp;
+                                        <apex:commandButton id="cancelBtn" value="Cancel" action="{!cancel}" styleClass="slds-button slds-button--brand slds-button--small" />
+                                    </apex:pageBlockButtons>
+                                    
+                                    <apex:outputText id="errormsg1" value="{!errormsgreserved}" rendered="{!LEN(errormsgreserved)>0}" style="color:red;font-weight:bold;"/>       
+                                    <apex:PageMessages id="topMessage" rendered="{!LEN(errorMsg) > 0}" />
+                                    <br/><br/>
+                                
+                                    <apex:outputPanel id="customerPanel">
+                                    
+                                    <apex:pageBlockSection id="mainBlock" title="Opportunity Details">
+                                                                                                                                    
+                                    <apex:outputField styleclass="slds-form-element__label" value="{!blockingobj.Opportunity__c}"  id="optyvalue1" rendered="{!IF(AND(inputTextErrorMessage == 'Released'), True,False)}"/>    
+                                      <apex:outputField styleclass="slds-form-element__label" value="{!blockingobj.Opportunity__c}"  id="optyvalue2"  rendered="{!IF(AND(inputTextErrorMessage == 'Blocked', errormsgchanged == 'Changed'), True,False)}"> 
+                                              <apex:actionsupport event="onchange" action="{!setAccDtls}" >
+                                                    <apex:param name="optyidparam" assignTo="{!test}" value="{!blockingobj.Opportunity__c}"/>
+                                              </apex:actionsupport><br></br>    
+                                      </apex:outputField>
+                                      <apex:OutputText id="errormsg1" value="{!errormsgchanged}" style="visibility : hidden;" />
+                                      <apex:OutputField styleclass="slds-form-element__label" value="{!blockingobj.Opportunity__c}"  id="optyvalue"  rendered="{!IF(AND(inputTextErrorMessage == 'Blocked',errormsgchanged !='Changed'), True,False)}"/>
+                                      </apex:pageBlockSection>
+                                    
+                                    <apex:actionFunction name="rerenderTopPanel" rerender="TopPanel" />
+                                    </apex:outputPanel>
+                                    
+                                    
+                                     <apex:outputPanel id="TopPanel" rendered="{!IF(AND(blockingobj.Opportunity__c != '' ,errormsgreserved == ''), TRUE ,FALSE)}">
+                                        <apex:pageBlockSection title="Blocked / Unblocked Details" columns="2" id="pgBlckSct1">
+                                           <!-- For Both - Block and unblock --> 
+                                           <apex:outputField value="{!blockingobj.Unit_No__c}" />
+                                           <apex:OutputField value="{!blockingobj.Account_Name__c}" rendered="{!IF(AND(inputTextErrorMessage == 'Blocked'), True,False)}"/>                 
+                                           <apex:OutputField value="{!blockingobj.Account_Name__c}"   rendered="{!IF(AND(inputTextErrorMessage == 'Released'), True,False)}"/>
+                                           <apex:inputField value="{!blockingobj.PersonMobilePhone__c}" rendered="{!IF(AND(inputTextErrorMessage == 'Blocked'), True,False)}"/>
+                                           <apex:outputText value="{!blockingobj.PersonMobilePhone__c}" rendered="{!IF(AND(inputTextErrorMessage == 'Released'), True,False)}"/>
+                                           <apex:inputField value="{!blockingobj.Comments__c}" rendered="{!IF(AND(inputTextErrorMessage == 'Blocked'), True,False)}"/>  
+                                           <apex:inputField value="{!blockingobj.Release_Comments__c}" rendered="{!IF(AND(inputTextErrorMessage == 'Released'), True,False)}"/>  
+                                           <apex:inputField value="{!blockingobj.Person_Email__c}" rendered="{!IF(AND(inputTextErrorMessage == 'Blocked'), True,False)}"/>
+                                           <apex:outputText value="{!blockingobj.Person_Email__c}" rendered="{!IF(AND(inputTextErrorMessage == 'Released'), True,False)}"/>
+                                           <!--<apex:OutputField value="{!blockingobj.Sales_Manager__c}"   rendered="{!IF(AND(inputTextErrorMessage == 'Released'), True,False)}"/>
+                                           <apex:OutputField value="{!blockingobj.Sales_Manager_Email__c}"   rendered="{!IF(AND(inputTextErrorMessage == 'Released'), True,False)}"/>
+                                           -->
+                                           
+                                           
+                                    </apex:pageBlockSection>
+                                        
+                                           <apex:pageBlockSection title="Instrument Details" columns="2" id="pgBlckSct2" rendered="{!IF(AND(inputTextErrorMessage == 'Blocked'), True,False)}">
+                                           
+                                           <apex:inputField value="{!blockingobj.Instrument_Date__c}"/> 
+                                           <apex:inputField label="Instrument Number" value="{!blockingobj.Cheque_Number__c}" /> 
+                                           <apex:inputField value="{!blockingobj.Token_Amount__c}"/> 
+                                        </apex:pageBlockSection>
+                                        
+                                        <apex:pageBlockSection title="Instrument Details" columns="2" id="pgBlckSct3" rendered="{!IF(AND(inputTextErrorMessage == 'Released',blockingobj.Token_Amount__c != NULL), True,False)}">
+                                           
+                                            <apex:outputText label="Instrument Date" value="{0, date, MMMM d','  yyyy}">
+                                            <apex:param value="{!blockingobj.Instrument_Date__c}" />
+                                                </apex:outputText>
+                                           <apex:outputText label="Instrument Number" value="{!blockingobj.Cheque_Number__c}"/>
+                                           <apex:outputText value="{!blockingobj.Token_Amount__c}"/>
+                                        </apex:pageBlockSection>
+                                    
+                                    </apex:outputPanel> 
+                                    
+                                    </apex:pageblock>
+                                    
+                           
+                        
+                            </apex:form>
+                            <!-- CREATE NEW RECEIPT FORM -->
+                        </fieldset>
+                        <!-- / BOXED AREA -->
+                    </div>
+                    <!-- / CREATE RECEIPT -->
+                </div>
+                <!-- / PRIMARY CONTENT WRAPPER -->
+            </div>
+            <!-- / REQUIRED SLDS WRAPPER -->
+            
+        </body>
+    </html>
+</apex:page>

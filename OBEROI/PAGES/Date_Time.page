@@ -1,0 +1,50 @@
+<apex:page controller="Date_Time">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+       <head>
+           <meta charset="utf-8" />
+           <meta http-equiv="x-ua-compatible" content="ie=edge" />
+           <meta name="viewport" content="width=device-width, initial-scale=1" />
+           <apex:slds />
+           <style>
+           .center {
+               color:white;
+               width:40%;
+               height:350px;
+               background:transparent;
+               background:rgba(40,54,75,1);
+               border:1px solid #000000;
+               border-top-left-radius:20px;
+               border-bottom-right-radius:20px;
+               margin-top: 50px;
+               margin-bottom: 100px;
+               margin-right: 30%;
+               margin-left: 30%;
+               }
+           </style></head>
+        <body>
+            
+            <apex:outputPanel rendered="{!isNull}"> <center><p Style="font-size:18px; color:Red"><b>There is no Record</b></p></center></apex:outputPanel>
+            <apex:outputPanel rendered="{!!isNull}">
+            
+                <div class="center">
+                               <center><p Style="font-size:18px;"><b>Please Fill It</b></p><br/>
+                               <div Style="padding:50px 60px 5px;">
+                                   
+                                   <apex:form >
+                                   
+                                       
+                                       <p>
+                                           <apex:inputField Style="width:50%; color:black;" styleClass="slds-input" value="{!leadRecord.Date_of_Site_Visit__c}">
+                                               
+                                           </apex:inputField>                                            
+                                       </p><br/><br/><br/><br/><br/>
+                                         
+                                       <apex:commandButton value="Save" action="{!Save}" styleClass="slds-button slds-button_brand"/>
+                                   </apex:form>
+                               </div>
+                               </center>
+                           </div>
+                </apex:outputPanel>
+        </body>
+    </html>
+</apex:page>
