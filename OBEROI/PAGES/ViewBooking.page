@@ -1,0 +1,1922 @@
+<apex:page renderAs="pdf" controller="ViewBooking" showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false">
+    <html>
+        <head>
+            <style type="text/css" media="print">
+                @page {
+                size: A4;
+                margin:35px;
+                border:1px solid #000;
+                
+                padding:10px 12px;
+                @bottom-center {          
+                content: "Page " counter(page) " of " counter(pages);                
+                }
+                }
+                @page {
+                size: 8.87in 10.0in;
+                }
+                body{
+                margin:0;
+                padding:0;            
+                font-family:"Google Sans", Roboto, arial, sans-serif !important;
+                font-family: 'cambria';
+                font-size:13px;
+                }
+                .table1{
+                width:100%;
+                border-collapse:collapse;
+                } 
+                .table1 tr td{
+                padding:5px 6px;
+                }
+                .table3{
+                width:100%;
+                border-collapse:collapse;
+                } 
+                .table3 tr td{
+                padding:6px 10px;
+                }
+                .table2{
+                width:100%;
+                border-width:1;
+                border-collapse:collapse;
+                }
+                .table2 tr th{
+                border:1px solid #000;
+                font-size:11px;
+                padding:3px 5px;
+                background:#ddd;
+                }
+                .table2 tr td{
+                font-size:11px;
+                border:1px solid #000;
+                padding:3px 5px;
+                }
+                .letterList{
+                list-style-type: upper-alpha;
+                }
+                
+                @page {
+                margin-bottom: 80px;
+                margin-top: 30px;
+                
+                @top-center {
+                content: element(header,first-except);
+                }
+                @bottom-center {
+                content: element(footer,first-except);
+                }
+                }            
+                .header{
+                position: running(header);
+                display:block;
+                margin-top:30px;
+                }
+                .footer {
+                display:block;
+                position: running(footer);
+                z-index:-999;
+                text-align:center;
+                }     
+                .form1{
+                
+                }                
+            </style>  
+        </head>
+        <apex:form >
+            <body>
+                <!-----------------------------Header--------------------------->
+                <div class="header">
+                    <table class="table1">
+                        <tr>
+                            <td style="text-align:left;">PROJECT NAME :&nbsp; &nbsp;{!bookingObj.Property__r.Project_Name__r.Name}</td>
+                            <td style="text-align:center;">CATEGORY :&nbsp; &nbsp;{!bookingObj.Property_Type_Name__c}</td>
+                            <td style="text-align:right;"><apex:image url="{!$Resource.OberoiRealtyLogo}" width="100"/></td>
+                        </tr>
+                    </table>
+                </div>
+                <!-----------------------------Footer--------------------------->
+                <div class="footer">
+                    <span style="font-size:10px;"><b>{!bookingObj.Property__r.Project_Name__r.Subsidiary_Company_Name__c}</b>
+                    {!bookingObj.Property__r.Project_Name__r.Subsidiary_Company_Address__c} - {!bookingObj.Property__r.Project_Name__r.Other_Company_Postal_Code__c} <br/>Tel: {!bookingObj.Property__r.Project_Name__r.Other_Company_Phone__c} Fax: {!bookingObj.Property__r.Project_Name__r.Other_Company_Fax__c} {!bookingObj.Property__r.Project_Name__r.Other_Company_Website__c}<br/>{!BookingObj.Project__r.RERA_Description__c} </span><br/>
+                    
+                    <!--Incline Realty Private Limited: Commerz, 3 rd Floor, International Business Park, Oberoi Garden City, Off Western Express Highway, Goregaon  (E),
+                    <span style="font-size:10px;">Mumbai – 400 063. Tel:+91 22 6677 3333 Fax:+91 22 6677 3334 www.oberoirealty.com </span>-->
+                </div>
+                <!---------------------------- Page1 ---------------------------->
+                <div style="page-break-after:always;margin-top:50px;">                    
+                    <table class="table1">
+                        <tr>
+                            <td colspan="2" style="text-align:center;"><h2>Booking Form </h2></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="text-align:right;">Date</td>
+                            <td  style="border:1px solid #000;width:8%">
+                                <apex:outputText value="{0,date,dd-MM-yyyy}"> 
+                                    <apex:param value="{!bookingObj.Booking_Date__c}" /> 
+                                </apex:outputText>
+                            </td>
+                        </tr>
+                    </table>
+                    <div style="background:#ddd;border:1px solid;padding:2px 6px;font-weight:bold;font-size:14px;margin-top:8px;">                    
+                        CUSTOMER/S DETAILS                    
+                    </div>
+                    <table  class="table1">
+                        <tr>
+                            <td rowspan="5" width="30%" style="vertical-align: text-top;">Name :</td>
+                            <td>
+                            <apex:outputText rendered="{!if(app1Name != Null,True,False)}">1.&nbsp;&nbsp;{!app1Name}</apex:outputText>
+                            <apex:outputText rendered="{!if(app1Name == Null,True,False)}">1.___________________________________________________________</apex:outputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            <apex:outputText rendered="{!if(app2Name != Null,True,False)}">2.&nbsp;&nbsp;{!app2Name}</apex:outputText> 
+                            <apex:outputText rendered="{!if(app2Name == Null,True,False)}">2.___________________________________________________________</apex:outputText> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            <apex:outputText rendered="{!if(app3Name != Null,True,False)}">3.&nbsp;&nbsp;{!app3Name}</apex:outputText> 
+                            <apex:outputText rendered="{!if(app3Name == Null,True,False)}">3.___________________________________________________________</apex:outputText> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            <apex:outputText rendered="{!if(app4Name != Null,True,False)}">4.&nbsp;&nbsp;{!app4Name}</apex:outputText>
+                            <apex:outputText rendered="{!if(app4Name == Null,True,False)}">4.___________________________________________________________</apex:outputText> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            <apex:outputText rendered="{!if(app5Name != Null,True,False)}">5.&nbsp;&nbsp;{!app5Name}</apex:outputText>
+                            <apex:outputText rendered="{!if(app5Name == Null,True,False)}">5.___________________________________________________________</apex:outputText> 
+                            </td>
+                        </tr>
+                    </table>
+                    <table  class="table1">
+                        <tr>
+                            <td rowspan="3" width="30%" style="vertical-align: text-top;">Nationality :</td>
+                            <td width="18%">{!nationality} </td>
+                            <td>Resident Status :</td>
+                            <td>
+                                <apex:outputText rendered="{!residentstatus != null}">
+                                    <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'For NRI'))}"/>
+                                    <apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'For NRI')}"/>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!residentstatus == null}">
+                                    <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px"/>
+                                </apex:outputText>
+                            &nbsp;Resident&nbsp;&nbsp;&nbsp;
+                            </td>
+                            <td>
+                            <apex:outputText rendered="{!residentstatus != null}">
+                                    <apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'For NRI'))}"/>
+                                    <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'For NRI')}"/>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!residentstatus == null}">
+                                    <apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px"/>
+                                </apex:outputText>
+                                &nbsp;NRI
+                                </td>
+                        </tr>
+                    </table>
+                    <table  class="table1">
+                        <tr>
+                            <td rowspan="5" width="30%" style="vertical-align: text-top;">Residential Address :</td>
+                            <td>
+                            <apex:outputText rendered="{!if(houseNo != Null,True,False)}">House No.&nbsp;&nbsp;{!houseNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputText>
+                            <apex:outputText rendered="{!if(houseNo == Null,True,False)}">House No.___________</apex:outputText>
+                            <apex:outputText rendered="{!if(street != Null,True,False)}">Street :&nbsp;&nbsp;{!street}</apex:outputText>
+                            <apex:outputText rendered="{!if(street == Null,True,False)}">Street __________________________________________</apex:outputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            <apex:outputText rendered="{!if(street1 != Null,True,False)}">Street 2 :&nbsp;&nbsp;{!street1}</apex:outputText>
+                            <apex:outputText rendered="{!if(street1 == Null,True,False)}">Street 2 ___________________________________________________________</apex:outputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            <apex:outputText rendered="{!if(street2 != Null,True,False)}">Street 3 :&nbsp;&nbsp;{!street2}</apex:outputText>
+                            <apex:outputText rendered="{!if(street2 == Null,True,False)}">Street 3 ___________________________________________________________</apex:outputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <apex:outputText rendered="{!if(locality != Null,True,False)}">Locality :&nbsp;&nbsp;{!locality}</apex:outputText>
+                                <apex:outputText rendered="{!if(locality == Null,True,False)}">Locality ___________________________________________________________</apex:outputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            <apex:outputText rendered="{!if(city != Null,True,False)}">City :&nbsp;&nbsp;{!city}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputText>
+                            <apex:outputText rendered="{!if(city == Null,True,False)}">City _________________________________</apex:outputText>
+                            <apex:outputText rendered="{!if(pincode != Null,True,False)}">Pin code :&nbsp;&nbsp;{!pincode}</apex:outputText>
+                            <apex:outputText rendered="{!if(pincode == Null,True,False)}">Pin code _________________________________</apex:outputText>
+                            </td>
+                        </tr>
+                    </table>
+                    <table  class="table1">
+                        <tr>
+                            <td rowspan="2" width="30%" style="vertical-align: text-top;">Company you are Working For :</td>
+                            <td>
+                            <apex:outputText rendered="{!if(companyname != Null,True,False)}">&nbsp;{!companyname}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputText>
+                            <apex:outputText rendered="{!if(companyname == Null,True,False)}">__________________________________</apex:outputText>
+                            <apex:outputText rendered="{!if(designation != Null,True,False)}"> Designation :&nbsp;&nbsp;{!designation}</apex:outputText>
+                            <apex:outputText rendered="{!if(designation == Null,True,False)}"> Designation :______________________</apex:outputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>(Please attach your business card)</td>
+                        </tr>
+                        
+                    </table>
+                   <!-- <table  class="table1">
+                        <tr>
+                            <td rowspan="3" width="30%" style="vertical-align: text-top;">Company Address :</td>
+                            <td>
+                            <apex:outputText rendered="{!if(companyadd != Null,True,False)}">&nbsp;&nbsp;{!companyadd}&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputText>
+                            <apex:outputText rendered="{!if(companyadd == Null,True,False)}">____________________________________________________________________</apex:outputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            <apex:outputText rendered="{!if(companyadd == Null,True,False)}">____________________________________________________________________</apex:outputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>City ___________________________________ Pin code _____________________</td>
+                        </tr>
+                    </table> -->
+                    <table  class="table1">
+                        <tr>
+                            <td width="30%" style="vertical-align: text-top;">Telephone No:</td>
+                            <td>Residence_______________________ Office_______________________________</td>
+                        </tr>
+                    </table>
+                    <table  class="table1">
+                        <tr>
+                            <td width="30%" style="vertical-align: text-top;">Mobile No :</td>
+                            <td>
+                            <apex:outputText rendered="{!if(mobileno1 != Null,True,False)}">1.&nbsp;&nbsp;{!mobileno1}&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputText>
+                            <apex:outputText rendered="{!if(mobileno1 == Null,True,False)}">1. _______________________________</apex:outputText>
+                            <apex:outputText rendered="{!if(mobileno2 != Null,True,False)}">2.&nbsp;&nbsp;{!mobileno2}&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputText>
+                            <apex:outputText rendered="{!if(mobileno2 == Null,True,False)}">2. _______________________________</apex:outputText>
+                            </td>
+                        </tr>
+                    </table>
+                    <table  class="table1">
+                        <tr>
+                            <td rowspan="2" width="30%" style="vertical-align: text-top;">Email :</td>
+                            <td>
+                            <apex:outputText rendered="{!if(emailid != Null,True,False)}">1.&nbsp;&nbsp;{!emailid}&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputText>
+                            <apex:outputText rendered="{!if(emailid == Null,True,False)}">1. __________________________________________________________________</apex:outputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            <apex:outputText rendered="{!if(altemailid != Null,True,False)}">2.&nbsp;&nbsp;{!altemailid }&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputText>
+                            <apex:outputText rendered="{!if(altemailid == Null,True,False)}">2. __________________________________________________________________</apex:outputText>
+                            </td>
+                        </tr>
+                    </table>
+                    <table  class="table1">
+                        <tr>
+                            <td width="30%" style="vertical-align: text-top;">Contact Person :   </td>
+                            <td>
+                            Details same as Applicant - 1 
+                                <apex:outputText rendered="{!ContactPersonisSameasApplicant != Null}">
+                                    <apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(ContactPersonisSameasApplicant, 'Yes'))}"/>
+                                    <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(ContactPersonisSameasApplicant, 'Yes')}"/>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!ContactPersonisSameasApplicant == Null}">
+                                    <apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px"/>
+                                </apex:outputText>
+                                
+                                &nbsp;Yes (Ignore below fields)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                
+                                <apex:outputText rendered="{!ContactPersonisSameasApplicant != Null}">
+                                    <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!NOT(Contains(ContactPersonisSameasApplicant, 'Yes'))}"/>
+                                    <apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!Contains(ContactPersonisSameasApplicant, 'Yes')}"/>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!ContactPersonisSameasApplicant == Null}">
+                                    <apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px"/>
+                                </apex:outputText>
+                                &nbsp;No (Please fill below fields)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </td>
+                        </tr>                    
+                    </table>
+                    <table  class="table1">
+                        <tr>
+                            <td>
+                                <apex:outputText rendered="{!if((ContactPersonisSameasApplicant != Null) && (ContactPersonisSameasApplicant == 'Yes') && (BookingObj.Future_Correspondence_Contact_Name__c != Null),True,False)}">Name :&nbsp;&nbsp;{!BookingObj.Future_Correspondence_Contact_Name__c}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputText>
+                                <apex:outputText rendered="{!if((ContactPersonisSameasApplicant != Null) && (ContactPersonisSameasApplicant == 'No') && (contactpName != Null),True,False)}">Name :&nbsp;&nbsp;{!contactpName}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputText>
+                                <apex:outputText rendered="{!if((ContactPersonisSameasApplicant == Null) && ((BookingObj.Future_Correspondence_Contact_Name__c == Null) || (contactpName == Null)),True,False)}">Name : _________________________________________________</apex:outputText>
+                                
+                                <apex:outputText rendered="{!if((ContactPersonisSameasApplicant != Null) && (ContactPersonisSameasApplicant == 'Yes'),True,False)}">Relation / Designation : ______________________ </apex:outputText>
+                                <apex:outputText rendered="{!if((ContactPersonisSameasApplicant != Null) && (ContactPersonisSameasApplicant == 'No') && (contactpRelation != Null),True,False)}">Relation / Designation :&nbsp;&nbsp;{!contactpRelation} </apex:outputText>
+                                <apex:outputText rendered="{!if((ContactPersonisSameasApplicant == Null) && (contactpRelation == Null),True,False)}"> Relation / Designation : ______________________ </apex:outputText>
+                                
+                            </td>
+                        </tr>                    
+                    </table>
+                    <table  class="table1">
+                        <tr>
+                            <td>
+                                Telephone : ___________________________________ 
+                                <apex:outputText rendered="{!if((ContactPersonisSameasApplicant != Null) && (ContactPersonisSameasApplicant == 'Yes') && (BookingObj.Future_Correspondence_Contact_Phone__c != Null),True,false)}">Mobile :&nbsp;&nbsp;{!BookingObj.Future_Correspondence_Contact_Phone__c}&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputText>
+                                <apex:outputText rendered="{!if((ContactPersonisSameasApplicant != Null) && (ContactPersonisSameasApplicant == 'No') && (contactpMobile != Null),True,False)}">Mobile :&nbsp;&nbsp;{!contactpMobile}&nbsp;&nbsp;&nbsp;&nbsp; </apex:outputText>
+                                <apex:outputText rendered="{!if((ContactPersonisSameasApplicant == Null) && ((BookingObj.Future_Correspondence_Contact_Phone__c != Null) || (contactpMobile != Null)),True,False)}">Mobile : ____________________________________________</apex:outputText>
+                            </td>
+                        </tr>                    
+                    </table>
+                    <table  class="table1">
+                        <tr>
+                            <td>
+                                <apex:outputText rendered="{!if((ContactPersonisSameasApplicant != Null) && (ContactPersonisSameasApplicant == 'Yes') && (BookingObj.Future_Correspondence_Contact_Email__c != Null),True,false)}">Email :&nbsp;&nbsp;{!BookingObj.Future_Correspondence_Contact_Email__c}&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputText>
+                                <apex:outputText rendered="{!if((ContactPersonisSameasApplicant != Null) && (ContactPersonisSameasApplicant == 'No') && (contactpEmail != Null),True,False)}">Email :&nbsp;&nbsp;{!contactpEmail}&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputText>
+                                <apex:outputText rendered="{!if((ContactPersonisSameasApplicant == Null) && ((BookingObj.Future_Correspondence_Contact_Email__c != Null) || (contactpEmail != Null)),True,False)}">Email : _________________________________________________________________________________________</apex:outputText>
+                                
+                            </td>
+                        </tr>                    
+                    </table>
+                    <br/>
+                 <!-- <table  class="table1">
+                        <tr>
+                            <td>Preferred Mode of Communication</td>
+                            <td width="18%">
+                                <apex:outputText rendered="{!BookingObj.Opportunity__r.Preferred_Mode_of_Communication__c!= null}">
+                                    <apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(BookingObj.Opportunity__r.Preferred_Mode_of_Communication__c, 'Residence'))}"/>
+                                    <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(BookingObj.Opportunity__r.Preferred_Mode_of_Communication__c, 'Residence')}"/>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!BookingObj.Opportunity__r.Preferred_Mode_of_Communication__c== null}">
+                                    <apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px"/>
+                                </apex:outputText>
+                                Residence&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </td>
+                            <td width="15%">
+                                <apex:outputText rendered="{!BookingObj.Opportunity__r.Preferred_Mode_of_Communication__c!= null}">
+                                    <apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(BookingObj.Opportunity__r.Preferred_Mode_of_Communication__c, 'Mobile'))}"/>
+                                    <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(BookingObj.Opportunity__r.Preferred_Mode_of_Communication__c, 'Mobile')}"/>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!BookingObj.Opportunity__r.Preferred_Mode_of_Communication__c== null}">
+                                    <apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px"/>
+                                </apex:outputText>
+                                &nbsp;Mobile&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </td>
+                            <td width="15%">
+                                <apex:outputText rendered="{!BookingObj.Opportunity__r.Preferred_Mode_of_Communication__c!= null}">
+                                    <apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(BookingObj.Opportunity__r.Preferred_Mode_of_Communication__c, 'Email'))}"/>
+                                    <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(BookingObj.Opportunity__r.Preferred_Mode_of_Communication__c, 'Email')}"/>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!BookingObj.Opportunity__r.Preferred_Mode_of_Communication__c== null}">
+                                    <apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px"/>
+                                </apex:outputText>
+                                &nbsp;Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </td>
+                            <td width="15%">
+                            <apex:outputText rendered="{!BookingObj.Opportunity__r.Preferred_Mode_of_Communication__c!= null}">
+                                    <apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(BookingObj.Opportunity__r.Preferred_Mode_of_Communication__c, 'Office'))}"/>
+                                    <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(BookingObj.Opportunity__r.Preferred_Mode_of_Communication__c, 'Office')}"/>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!BookingObj.Opportunity__r.Preferred_Mode_of_Communication__c== null}">
+                                    <apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px"/>
+                                </apex:outputText>
+                                &nbsp;Office&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </td>
+                        </tr>                    
+                    </table> -->
+                    
+                    <table  class="table1">
+                        <tr>
+                            <td>Address for Correspondence &nbsp; &nbsp;</td>
+                            <td width="18%"><apex:outputText ><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px"/></apex:outputText>&nbsp;Residence</td>
+                            <td width="15%"><apex:outputText ><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px"/></apex:outputText>&nbsp;Office</td>
+                            <td width="15%"><apex:outputText ><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px"/></apex:outputText>&nbsp;Other</td>
+                            <td width="15%">&nbsp;</td>
+                        </tr>                    
+                    </table>
+                    <table  class="table1">
+                        <tr>
+                            <td>
+                                <apex:outputText rendered="{!if(mailingAdd != Null,True,False)}">If other, pls add Correspondence address :&nbsp;&nbsp;{!mailingAdd}</apex:outputText>
+                                <apex:outputText rendered="{!if(mailingAdd == Null,True,False)}">If other, pls add Correspondence address : __________________________________________________</apex:outputText>
+                            </td>
+                        </tr>                    
+                    </table>
+                </div>
+                <!---------------------------- Page2 ---------------------------->
+                <div style="page-break-after:always;margin-top:60px;"> 
+                    <br/>
+                    <table  class="table1">
+                        <tr>
+                            <td colspan="3">Source of Walk in/ Booking (Type)</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <apex:outputText rendered="{!EnquiryType != null}">
+                                    <apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(EnquiryType, 'Direct'))}"/>
+                                    <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(EnquiryType, 'Direct')}"/>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!EnquiryType == null}">
+                                    <apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px"/>
+                                </apex:outputText>
+                                &nbsp;Direct&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </td>
+                            <td>
+                                <apex:outputText rendered="{!EnquiryType != null}">
+                                    <apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(EnquiryType, 'Partner'))}"/>
+                                    <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(EnquiryType, 'Partner')}"/>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!EnquiryType == null}">
+                                    <apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px"/>
+                                </apex:outputText>
+                                &nbsp;Partner&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </td>
+                            <td>
+                                <apex:outputText rendered="{!EnquiryType != null}">
+                                    <apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(EnquiryType, 'Existing Customer'))}"/>
+                                    <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(EnquiryType, 'Existing Customer')}"/>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!EnquiryType == null}">
+                                    <apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px"/>
+                                </apex:outputText>
+                                &nbsp;Existing customer &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <apex:outputText rendered="{!EnquiryType != null}">
+                                    <apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(EnquiryType, 'Customer Referral'))}"/>
+                                    <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(EnquiryType, 'Customer Referral')}"/>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!EnquiryType == null}">
+                                    <apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px"/>
+                                </apex:outputText>
+                                &nbsp;Customer Referral&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </td>
+                            <td>
+                                <apex:outputText rendered="{!EnquiryType != null}">
+                                    <apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(EnquiryType, 'Employee Referral'))}"/>
+                                    <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(EnquiryType, 'Employee Referral')}"/>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!EnquiryType == null}">
+                                    <apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px"/>
+                                </apex:outputText>
+                                &nbsp;Employee Referral&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </td>
+                            <td>
+                                <apex:outputText rendered="{!EnquiryType != null}">
+                                    <apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(EnquiryType, 'Employee'))}"/>
+                                    <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(EnquiryType, 'Employee')}"/>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!EnquiryType == null}">
+                                    <apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px"/>
+                                </apex:outputText>
+                                &nbsp;Employee&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </td>
+                        </tr>
+                    </table>
+                    
+                    <br/>
+                    <div style="background:#ddd;border:1px solid;padding:2px 6px;font-weight:bold;font-size:14px;margin-top:8px;">                    
+                        CHANNEL PARTNER DETAILS <span style="font-size:10px">(Please attach your business card)</span>                   
+                    </div>
+                    <br/>
+                    <table  class="table3">
+                        <tr>
+                            <td>
+                            <apex:outputText rendered="{!if((Contains(EnquiryType, 'Partner')) && (BrokerAccount != Null)  ,True,False)}">Channel Partner’s Name : &nbsp;&nbsp;{!BrokerAccount}</apex:outputText>
+                            <apex:outputText rendered="{!if((BrokerAccount == Null)  ,True,False)}">Channel Partner’s Name :_____________________________________________________________________</apex:outputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>(Name as per RERA Website)</b></td>
+                        </tr>
+                        <tr>
+                            <td>
+                            <apex:outputText rendered="{!if((Contains(EnquiryType, 'Partner')) && (MAHARERARegistration != Null)  ,True,False)}">RERA Registration No : &nbsp;&nbsp;{!MAHARERARegistration}</apex:outputText> 
+                            <apex:outputText rendered="{!if((MAHARERARegistration == Null)  ,True,False)}">RERA Registration No : ___________________________________________________________________________</apex:outputText> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            <apex:outputText rendered="{!if((Contains(EnquiryType, 'Partner')) && (BrokerAccount1 != Null)  ,True,False)}">Channel Partner’s Contact Name : &nbsp;&nbsp;{!BrokerAccount1}</apex:outputText> 
+                            <apex:outputText rendered="{!if((BrokerAccount1 == Null)  ,True,False)}">Channel Partner’s Contact Name : _______________________________________________________________</apex:outputText></td>
+                        </tr>
+                        <tr>
+                            <td>
+                            <apex:outputText rendered="{!if((Contains(EnquiryType, 'Partner')) && (BaMobile != Null)  ,True,False)}">Contact :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Mobile)&nbsp;&nbsp;{!BaMobile}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputText>
+                            <apex:outputText rendered="{!if((BaMobile == Null)  ,True,False)}">Contact : &nbsp;&nbsp;(Mobile) ___________________________________</apex:outputText>
+                            <apex:outputText rendered="{!if((Contains(EnquiryType, 'Partner')) && (PartOffAddress != Null)  ,True,False)}">(Office)&nbsp;&nbsp;{!PartOffAddress}</apex:outputText>
+                            <apex:outputText rendered="{!if((PartOffAddress == Null)  ,True,False)}">(Office)______________________________</apex:outputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            <apex:outputText rendered="{!if((Contains(EnquiryType, 'Partner')) && (BaEmail != Null)  ,True,False)}">Email :&nbsp;&nbsp;{!BaEmail}</apex:outputText>
+                            <apex:outputText rendered="{!if((BaEmail == Null)  ,True,False)}">Email : _________________________________________________________________________________________</apex:outputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Channel Partner’s Signature : ____________________________________________________________________</td>
+                        </tr>
+                    </table>
+                    
+                    <div style="background:#ddd;border:1px solid;padding:2px 6px;font-weight:bold;font-size:14px;margin-top:8px;">                    
+                        REFERRAL DETAILS                  
+                    </div><br/>
+                    
+                    <table  class="table1">
+                        <tr>
+                            <td><apex:outputText rendered="{!if((Contains(EnquiryType, 'Existing Customer') || (Contains(EnquiryType, 'Customer Referral')) || (Contains(EnquiryType, 'Employee Referral'))) && (reffBy != Null)  ,True,False)}">Referred By :&nbsp;&nbsp;{!reffBy}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputText>
+                                <apex:outputText rendered="{!if((reffBy == Null)  ,True,False)}">Referred By :___________________________________ </apex:outputText>
+                                <apex:outputText rendered="{!if((Contains(EnquiryType, 'Existing Customer') || (Contains(EnquiryType, 'Customer Referral')) || (Contains(EnquiryType, 'Employee Referral'))) && (reffByProj != Null)  ,True,False)}">Project :&nbsp;&nbsp;{!reffByProj}&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputText>
+                                <apex:outputText rendered="{!if((reffByProj == Null)  ,True,False)}">Project : _______________ </apex:outputText>
+                                <apex:outputText rendered="{!if((Contains(EnquiryType, 'Existing Customer') || (Contains(EnquiryType, 'Customer Referral')) || (Contains(EnquiryType, 'Employee Referral'))) && (reffBytow != Null)  ,True,False)}">Tower :&nbsp;&nbsp;{!reffBytow }&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputText>
+                                <apex:outputText rendered="{!if((reffBytow == Null)  ,True,False)}">Tower : _____ </apex:outputText>
+                                <apex:outputText rendered="{!if((Contains(EnquiryType, 'Existing Customer') || (Contains(EnquiryType, 'Customer Referral')) || (Contains(EnquiryType, 'Employee Referral'))) && (reffByFlat != Null)  ,True,False)}">Flat : &nbsp;&nbsp;{!reffByFlat }&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputText>
+                                <apex:outputText rendered="{!if((reffByFlat == Null)  ,True,False)}">Flat : ________</apex:outputText> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <apex:outputText rendered="{!if((Contains(EnquiryType, 'Existing Customer')) && (reffEMPcode  != Null)  ,True,False)}">Emp Code :&nbsp;&nbsp;{!reffEMPcode  }&nbsp;(In case of Employee referral).</apex:outputText>
+                                <apex:outputText rendered="{!if((reffEMPcode  == Null)  ,True,False)}">Emp Code_____________ (In case of Employee referral).</apex:outputText> 
+                            </td>
+                        </tr>
+                    </table>
+                    
+                </div>
+                <!---------------------------- Page3 ---------------------------->
+                <div style="margin-top:60px;page-break-after:always;">                     
+                    <div style="background:#ddd;border:1px solid;padding:2px 6px;font-weight:bold;font-size:14px;margin-top:8px;">                    
+                        BOOKING DETAILS                 
+                    </div>
+                    <br/>
+                    <table  class="table3">
+                        <tr>
+                            <td>
+                            <apex:outputText rendered="{!if(BookingObj.Property__r.Material_No__c != Null,True,False)}">Flat No : {!BookingObj.Property__r.House_Unit_No__c}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputText>
+                            <apex:outputText rendered="{!if(BookingObj.Property__r.Material_No__c == Null,True,False)}">Flat No : __________________</apex:outputText>
+                            <apex:outputText rendered="{!if(floorNo != Null,True,False)}">Floor : {!floorNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputText>
+                            <apex:outputText rendered="{!if(floorNo == Null,True,False)}">Floor : ________________</apex:outputText> 
+                            <apex:outputText rendered="{!if(BookingObj.Tower_Name__c != Null,True,False)}">Tower : {!BookingObj.Tower_Name__c}</apex:outputText>
+                            <apex:outputText rendered="{!if(BookingObj.Tower_Name__c == Null,True,False)}">Tower : ________________</apex:outputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            <b>
+                            <apex:outputText rendered="{!if(salesprice != Null,True,False)}">Sale Price : &nbsp;&nbsp;Rs.{!salesprice}(Excluding Taxes &amp; Additional Expenses)</apex:outputText>
+                            <apex:outputText rendered="{!if(salesprice == Null,True,False)}">Sale Price : Rs.____________________________ (Excluding Taxes &amp; Additional Expenses)</apex:outputText>
+                            </b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            <apex:outputText rendered="{!if(carparkDetails != Null,True,False)}">Car Park Details :&nbsp;&nbsp;{!carparkDetails}</apex:outputText>
+                            <apex:outputText rendered="{!if(carparkDetails == Null,True,False)}">Car Park Details : Single ________________ and Tandem ________________ Triple________________</apex:outputText>
+                            </td>
+                        </tr>
+                       
+                        <tr>
+                            <td>Financing options</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <apex:outputText rendered="{!BookingObj.Mode_of_Funding__c != null}">
+                                    <apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(BookingObj.Mode_of_Funding__c, 'Loan'))}"/>
+                                    <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(BookingObj.Mode_of_Funding__c, 'Loan')}"/>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!BookingObj.Mode_of_Funding__c == null}">
+                                    <apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px"/>
+                                </apex:outputText>
+                                &nbsp;Bank Funding assisted&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <apex:outputText rendered="{!BookingObj.Mode_of_Funding__c != null}">
+                                    <apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(BookingObj.Mode_of_Funding__c, 'Self'))}"/>
+                                    <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(BookingObj.Mode_of_Funding__c, 'Self')}"/>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!BookingObj.Mode_of_Funding__c == null}">
+                                    <apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px"/>
+                                </apex:outputText>
+                                &nbsp;Entirely Self;&nbsp;&nbsp;
+                            </td>
+                            
+                         </tr>
+                        <tr>
+                            <td>If Bank Funding assisted then Loan for ₹. _____________________________</td>
+                        </tr>
+                        <tr>
+                            <td>Name of Bank : __________________________________________________________________________________</td>
+                        </tr>
+                    </table>
+                    
+                    <div style="background:#ddd;border:1px solid;padding:2px 6px;font-weight:bold;font-size:14px;margin-top:8px;">                    
+                        <table class="table1">
+                            <tr>
+                                <td width="22%">PAYMENT DETAILS </td>
+                                <!-- <td>
+                                <apex:outputText rendered="{!paymentmode != null}">
+                                    <apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(paymentmode, 'Cheque'))}"/>
+                                    <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(paymentmode, 'Cheque')}"/>
+                               </apex:outputText>
+                                <apex:outputText rendered="{!paymentmode == null}">
+                                    <apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px"/>
+                                </apex:outputText>
+                                 &nbsp;CHEQUE:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                 <apex:outputText rendered="{!paymentmode != null}">
+                                    <apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(paymentmode, 'Demand Draft,Wire Transfer'))}"/>
+                                    <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(paymentmode, 'Demand Draft,Wire Transfer')}"/>
+                               </apex:outputText>
+                                <apex:outputText rendered="{!paymentmode == null}">
+                                    <apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px"/>
+                                </apex:outputText>
+                                &nbsp;NEFT/RTGS:
+                                </td> -->
+                            </tr>
+                        </table>                  
+                    </div><br/>
+                    
+                    
+                        <!-- <tr>
+                            <td>
+                            <apex:outputText rendered="{!if(paymentdate != Null,True,False)}">Date :&nbsp;&nbsp;{!paymentdate}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputText>
+                            <apex:outputText rendered="{!if(paymentdate == Null,True,False)}">Date : ___________________________</apex:outputText> 
+                            <apex:outputText rendered="{!if(chequeno != Null,True,False)}">No. :&nbsp;&nbsp;{!chequeno}</apex:outputText>
+                            <apex:outputText rendered="{!if(chequeno == Null,True,False)}">No. :  __________________________________________________</apex:outputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            <apex:outputText rendered="{!if(bankname != Null,True,False)}">Drawn on Bank :&nbsp;&nbsp;{!bankname}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputText>
+                            <apex:outputText rendered="{!if(bankname == Null,True,False)}">Drawn on Bank : ___________________________________________ </apex:outputText>
+                            Branch : ____________________________
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            <apex:outputText rendered="{!if(cheamount != Null,True,False)}">Amount :&nbsp;&nbsp;Rs.{!cheamount}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputText>
+                            <apex:outputText rendered="{!if(cheamount == Null,True,False)}">Amount : Rs._________________________________________</apex:outputText>
+                            </td>
+                        </tr> -->
+                    <table  class="table2">
+                        <tr>
+                            <th>Sr. No</th>
+                            <th>Payment Mode</th>
+                            <th>RTGS/Cheque/Draft No.</th>
+                            <th>Instrument Date</th>
+                            <th>Amount</th>
+                            <th>Bank Name</th>
+                            <th>Branch</th>
+                        </tr>
+                   
+                        <apex:repeat value="{!PaymentList}" var="p">
+                        <tr>
+                            <td>{!p.count}</td>
+                            <td>{!p.pmode}</td>
+                            <td>{!p.payNo}</td>
+                            <td>{!p.isdate}</td>
+                            <td>{!p.wcheamount}</td>
+                           
+                            <td>{!p.pbankname}</td>
+                            <td>{!p.pbranch}</td>
+                        </tr>
+                        </apex:repeat>
+                        
+                    </table>
+                    <br/><br/><br/>
+                    <table  class="table1">
+                        <tr>
+                            <td width="33%">Signature :</td>
+                            <td width="33%">Signature :</td>
+                            <td width="33%">Signature :</td>
+                        </tr>
+                        <tr>
+                            <td width="33%">________________________</td>
+                            <td width="33%">________________________</td>
+                            <td width="33%">________________________</td>
+                        </tr>
+                        <tr>
+                            <td width="33%">Name : {!BookingObj.CreatedBy.Name}</td>
+                            <td width="33%">Name :</td>
+                            <td width="33%">Name :</td>
+                        </tr>
+                        <tr>
+                            <td width="33%">Prepared By</td>
+                            <td width="33%">Checked By</td>
+                            <td width="33%">Authorized By</td>
+                        </tr>
+                    </table>
+                    
+                </div>
+                <!---------------------------- Page4 ---------------------------->
+                <div style="margin-top:60px;page-break-after:always;">                     
+                    <div>
+                        <CENTER>PAYMENT SCHEDULE</CENTER>
+                    </div>
+                    <table class="table1">
+                        <tr>
+                            <td style="text-align:right;">Date</td>
+                            <td  style="border:1px solid #000;width:8%">
+                                <apex:outputText value="{0,date,dd-MM-yyyy}"> 
+                                    <apex:param value="{!bookingObj.Booking_Date__c}" /> 
+                                </apex:outputText>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table1">
+                        <tr>
+                            <td>
+                            <apex:outputText rendered="{!if(BookingObj.Property__r.Material_No__c != Null,True,False)}">Flat No : {!BookingObj.Property__r.House_Unit_No__c}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputText>
+                            <apex:outputText rendered="{!if(BookingObj.Property__r.Material_No__c == Null,True,False)}">Flat No : __________________</apex:outputText>
+                            </td>
+                            <td>
+                            <apex:outputText rendered="{!if(floorNo != Null,True,False)}">Floor : {!floorNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputText>
+                            <apex:outputText rendered="{!if(floorNo == Null,True,False)}">Floor : ________________</apex:outputText> 
+                            </td>
+                            <td>
+                            <apex:outputText rendered="{!if(BookingObj.Tower_Name__c != Null,True,False)}">Tower : {!BookingObj.Tower_Name__c}</apex:outputText>
+                            <apex:outputText rendered="{!if(BookingObj.Tower_Name__c == Null,True,False)}">Tower : __________</apex:outputText>
+                            </td>
+                        </tr>
+                    </table>
+                    <br/><br/><br/>
+                    <table  class="table2">
+                        <tr>
+                            <th style="text-align:center;">PARTICULARS</th>
+                            <th>&nbsp;</th>
+                            <th style="text-align:center;">AMOUNTS</th>
+                        </tr>
+                        <tr>
+                            <td>SALE PRICE (Excluding Taxes &amp; Additional Expenses)</td>
+                            <td>&nbsp;</td>
+                            <td style="text-align:right;">{!salesprice}</td>
+                        </tr>
+                        <tr>
+                            <th style="text-align:center;">Payment Schedule</th>
+                            <th>&nbsp;</th>
+                            <th style="text-align:center;">Amounts</th>
+                        </tr>
+                        <!--<apex:repeat value="{!pwListFinal}" var="pw">
+                         <tr>
+                            <td>
+                                <apex:outputText value="{!pw.milestoneName}" rendered="{!pw.paymentGroup != 'IN'}"></apex:outputText>
+                                <apex:outputText value="Proportionate {!totalINMilestones} installments upon casting of relevant slabs." rendered="{!pw.paymentGroup == 'IN' && !allMilestoneCompleted}"></apex:outputText>
+                                <apex:outputText value="Proportionate {!totalINMilestones} installments upon casting of relevant slabs. All relevant slabs have been casted." rendered="{!pw.paymentGroup == 'IN' && allMilestoneCompleted}"></apex:outputText>
+                            </td>
+                            <td><apex:outputText value="{!pw.milestonePercentage}%" rendered="{!pw.paymentGroup != 'PS'}"></apex:outputText>
+                                <apex:outputText value="Balance Amount" rendered="{!pw.paymentGroup == 'PS'}"></apex:outputText>
+                            </td>
+                            <td>{!pw.amountSTR}</td>
+                         </tr>    
+                        </apex:repeat>-->
+                        <apex:repeat value="{!pwListFinal}" var="b">
+                                <tr>
+                                <td width="45%" style="display:{!IF((b.paymentGroup != 'IN') || (b.paymentGroup == 'IN' && NOT(b.is_IN001Milestone)),'table-data','none')}"> {!b.milestoneName}</td>
+                                <td width="45%" style="display:{!IF(b.paymentGroup == 'IN' && b.is_IN001Milestone && allMilestoneCompleted,'table-data','none')}"> 
+                                    <!-- Proportionate {!totalINMilestones} instalments upon casting of relevant slabs.
+                                     All relevant slabs have been casted. -->
+                                     {!b.milestoneName}
+                                </td> 
+                                
+                                
+                                <td width="45%" style="display:{!IF(AND(b.paymentGroup == 'IN', NOT(allMilestoneCompleted), b.is_IN001Milestone),'table-data','none')}">
+                                    <table class="topTable">
+                                        <tr>
+                                            <td colspan="2" width="100%"> 
+                                                Proportionate {!totalINMilestones} instalments upon casting of relevant slabs.
+                                                Out of which {!completedMilestoneSize} relevant slabs have been casted and 
+                                                the relevant amount of Rs. {!completedMilestoneAmountSTR} towards the Sale Price.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                           <td width="80%" style="background-color:#737373">
+                                                Particulars
+                                            </td>
+                                            <td width="20%" style="background-color:#737373">
+                                                Amount in Rs.
+                                            </td>
+                                        </tr>
+                                        <apex:repeat value="{!IN_MilestonesList}" var="IN">
+                                            <tr>
+                                                <td> {!IN.name} </td>
+                                                <td> {!IN.amountSTR} </td>
+                                            </tr>
+                                        </apex:repeat>
+                                        <!-- <tr>
+                                            <td>
+                                                To be paid on or before {!lastDateOfCompletedMilestones} along with any further milestones raised till then
+                                            </td>
+                                            <td>
+                                                {!completedMilestoneAmountSTR}
+                                            </td>
+                                        </tr> -->
+                                    </table>
+                                </td>
+                                
+                                <td colspan="1" width="15%" style="text-align:center;display:{!IF(b.paymentGroup != 'PS' && b.Terms_of_Payment_Key != 'INPS','table-data','none')}" > {!b.milestonePercentage}</td>
+                                <td colspan="1" width="15%" style="text-align:center;display:{!IF(b.paymentGroup == 'PS' || b.Terms_of_Payment_Key == 'INPS','table-data','none')}" > Balance Amount</td>
+                                <td colspan="1" width="15%" style="text-align:right;"> {!b.amountSTR}                                    
+                                </td>
+                                </tr>
+                        </apex:repeat> 
+                    </table>
+                    <br/><br/><br/>
+                    <!--<table class="table2">
+                        <tr>
+                            <td><b>Promotional Material :</b> I hereby give consent to Oberoi Realty Limited and / or its group of Companies to
+                                communicate is marketing and promotional communication by letters / email / voice / SMS or otherwise, to my
+                                contact details mentioned in this Customer Data Sheet / Expression of Interest. I confirm that the above
+                                information given by me is true and correct to the best of my knowledge.</td>
+                        </tr>
+                    </table>
+                    
+                    <br/><br/><br/>
+                    <table  class="table1">
+                        <tr>
+                            <td rowspan="5">Signature of Applicant/s:</td>
+                            <td>(1)____________________________________________________________</td>
+                        </tr>
+                        <tr>
+                            <td>(2)____________________________________________________________</td>
+                        </tr>
+                        <tr>
+                            <td>(3)____________________________________________________________</td>
+                        </tr>
+                        <tr>
+                            <td>(4)____________________________________________________________</td>
+                        </tr>
+                        <tr>
+                            <td>(5)____________________________________________________________</td>
+                        </tr>
+                    </table>
+                    <br/><br/>-->
+                </div>
+                <!---------------------------- Page4 ---------------------------->
+                <div style="margin-top:60px;page-break-after:always;">
+                    <table class="table2">
+                        <tr>
+                            <td><b>Promotional Material :</b> I hereby give consent to Oberoi Realty Limited and / or its group of Companies to
+                                communicate is marketing and promotional communication by letters / email / voice / SMS or otherwise, to my
+                                contact details mentioned in this Customer Data Sheet / Expression of Interest. I confirm that the above
+                                information given by me is true and correct to the best of my knowledge.</td>
+                        </tr>
+                    </table>
+                    
+                    <br/><br/><br/>
+                    <table  class="table1">
+                        <tr>
+                            <td rowspan="5">Signature of Applicant/s:</td>
+                            <td>(1)____________________________________________________________</td>
+                        </tr>
+                        <tr>
+                            <td>(2)____________________________________________________________</td>
+                        </tr>
+                        <tr>
+                            <td>(3)____________________________________________________________</td>
+                        </tr>
+                        <tr>
+                            <td>(4)____________________________________________________________</td>
+                        </tr>
+                        <tr>
+                            <td>(5)____________________________________________________________</td>
+                        </tr>
+                    </table>
+                    <br/><br/>
+                </div>
+                <!---------------------------- Page5 ---------------------------->
+                <div style="margin-top:60px;page-break-after:always;">                     
+                   <table class="table1">
+                        <tr>
+                            <td style="text-align:right;">Date</td>
+                            <td  style="border:1px solid #000;width:8%">
+                                <apex:outputText value="{0,date,dd-MM-yyyy}"> 
+                                    <apex:param value="{!bookingObj.Booking_Date__c}" /> 
+                                </apex:outputText>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table1">
+                        <tr>
+                             <td>
+                            <apex:outputText rendered="{!if(BookingObj.Property__r.Material_No__c != Null,True,False)}">Flat No : {!BookingObj.Property__r.House_Unit_No__c}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputText>
+                            <apex:outputText rendered="{!if(BookingObj.Property__r.Material_No__c == Null,True,False)}">Flat No : __________________</apex:outputText>
+                            </td>
+                            <td>
+                            <apex:outputText rendered="{!if(floorNo != Null,True,False)}">Floor : {!floorNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputText>
+                            <apex:outputText rendered="{!if(floorNo == Null,True,False)}">Floor : ________________</apex:outputText> 
+                            </td>
+                            <td>
+                            <apex:outputText rendered="{!if(BookingObj.Tower_Name__c != Null,True,False)}">Tower : {!BookingObj.Tower_Name__c}</apex:outputText>
+                            <apex:outputText rendered="{!if(BookingObj.Tower_Name__c == Null,True,False)}">Tower : __________</apex:outputText>
+                            </td>
+                        </tr>
+                    </table>
+                    <div style="background:#ddd;border:1px solid;padding:2px 6px;font-weight:bold;font-size:14px;margin-top:8px;">                    
+                        KYC DETAILS                    
+                    </div>
+                    <br/><br/>
+                    <table class="table2">
+                        <tr>
+                            <th>CATEGORY</th>
+                            <th colspan="6">MANDATORY DOCUMENTS</th>
+                        </tr>
+                        <tr>
+                            <th><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'Indian National'))}"/>
+                                <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'Indian National')}"/>
+                                &nbsp;Individual</th>
+                            <td><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'Indian National'))}"/>
+                                <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'Indian National')}"/>
+                                &nbsp;Passport / Election ID</td>
+                            <td><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'Indian National'))}"/>
+                                <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'Indian National')}"/>
+                                &nbsp;PAN Card</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <!-- <td>&nbsp;</td> -->
+                        </tr>
+                        <tr>
+                            <th><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'For NRI'))}"/>
+                                <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'For NRI')}"/>
+                                &nbsp;NRI</th>
+                            <td><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'For NRI'))}"/>
+                                <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'For NRI')}"/>
+                                &nbsp;Passport / Election ID</td>
+                            <td><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'For NRI'))}"/>
+                                <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'For NRI')}"/>
+                                &nbsp;NRI Declaration</td>
+                            <td><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'For NRI'))}"/>
+                                <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'For NRI')}"/>
+                                &nbsp;OCI Card</td>
+                            <td><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'For NRI'))}"/>
+                                <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'For NRI')}"/>
+                                &nbsp;PIO Card</td>
+                            <td><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'For NRI'))}"/>
+                                <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'For NRI')}"/>
+                                &nbsp;PAN Card</td>
+                                <td>&nbsp;</td>
+                           <!-- <td>&nbsp;</td> -->
+                        </tr>
+                        <tr>
+                            <th><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'HUF'))}"/>
+                                <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'HUF')}"/>
+                                &nbsp;HUF</th>
+                            <td><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'HUF'))}"/>
+                                <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'HUF')}"/>
+                                &nbsp;List HUF of Members</td>
+                            <td><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'HUF'))}"/>
+                                <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'HUF')}"/>
+                                &nbsp;Bank confirmation Letter</td>
+                            <td><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'HUF'))}"/>
+                                <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'HUF')}"/>
+                                &nbsp;HUF PAN</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <!-- <td>&nbsp;</td> -->
+                        </tr>
+                        <tr>
+                            <th><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'For Company'))}"/>
+                                <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'For Company')}"/>
+                                &nbsp;Company</th>
+                            <td><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'For Company'))}"/>
+                                <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'For Company')}"/>
+                                &nbsp;Board Resolution</td>
+                            <td><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'For Company'))}"/>
+                                <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'For Company')}"/>
+                                &nbsp;List of Directors</td>
+                            <td><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'For Company'))}"/>
+                                <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'For Company')}"/>
+                                &nbsp;M.O.A &amp; A.O.A</td>
+                            <td><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'For Company'))}"/>
+                                <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'For Company')}"/>
+                                &nbsp;Company PAN</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <!-- <td>&nbsp;</td> -->
+                        </tr>
+                        <tr> 
+                            <th><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'Partnership Firm'))}"/>
+                                <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'Partnership Firm')}"/>
+                                &nbsp;Partnership</th>
+                            <td><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'Partnership Firm'))}"/>
+                                <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'Partnership Firm')}"/>
+                                &nbsp;Passport / Election ID</td>
+                            <td><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'Partnership Firm'))}"/>
+                                <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'Partnership Firm')}"/>
+                                &nbsp;Registered Partnership Deed</td>
+                            <td><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'Partnership Firm'))}"/>
+                                <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'Partnership Firm')}"/>
+                                &nbsp;List of Partners</td>
+                            <td><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'Partnership Firm'))}"/>
+                                <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'Partnership Firm')}"/>
+                                &nbsp;Resolution</td>
+                            <td><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'Partnership Firm'))}"/>
+                                <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'Partnership Firm')}"/>
+                                &nbsp;PAN Card</td>
+                                <td>&nbsp;</td>
+                            <!-- <td>&nbsp;</td> -->
+                        </tr>
+                        <tr> 
+                            <th><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'Proprietorship'))}"/>
+                                <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'Proprietorship')}"/>
+                                &nbsp;Proprietorship</th>
+                            <td><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'Proprietorship'))}"/>
+                                <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'Proprietorship')}"/>
+                                &nbsp;Bank confirmation Letter</td>
+                            <td><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'Proprietorship'))}"/>
+                                <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'Proprietorship')}"/>
+                                &nbsp;Proprietorship PAN</td>
+                            <td><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'Proprietorship'))}"/>
+                                <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'Proprietorship')}"/>
+                                &nbsp;Latest ITR (Optional)</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <!-- <td>&nbsp;</td> -->
+                        </tr>
+                        <tr> 
+                            <th><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'Trust'))}"/>
+                                <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'Trust')}"/>
+                                &nbsp;Trust</th>
+                            <td><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'Trust'))}"/>
+                                <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'Trust')}"/>
+                                &nbsp;Registered Trust Deed</td>
+                            <td><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'Trust'))}"/>
+                                <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'Trust')}"/>
+                                &nbsp;List of Trustees</td>
+                            <td><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'Trust'))}"/>
+                                <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'Trust')}"/>
+                                &nbsp;Resolution</td>
+                            <td><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'Trust'))}"/>
+                                <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'Trust')}"/>
+                                &nbsp;Bank confirmation Letter</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <!-- <td>&nbsp;</td> -->
+                        </tr>
+                        <tr> 
+                            <th><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'LLP'))}"/>
+                                <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'LLP')}"/>
+                                &nbsp;LLP</th>
+                            <td><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'LLP'))}"/>
+                                <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'LLP')}"/>
+                                &nbsp;LLP Agreement</td>
+                            <td><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'LLP'))}"/>
+                                <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'LLP')}"/>
+                                &nbsp;Cert of Incorporation</td>
+                            <td><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'LLP'))}"/>
+                                <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'LLP')}"/>
+                                &nbsp;List of Designated Patners</td>
+                            <td><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'LLP'))}"/>
+                                <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'LLP')}"/>
+                                &nbsp;LLP PAN</td>
+                            <td><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'LLP'))}"/>
+                                <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'LLP')}"/>
+                                &nbsp;Resolution</td>
+                            <td><apex:image url="{!$Resource.CheckBox_UnCheck}" width="15px" height="15px" rendered="{!NOT(Contains(residentstatus, 'LLP'))}"/>
+                                <apex:image url="{!$Resource.CheckBox_Check}" width="15px" height="15px" rendered="{!Contains(residentstatus, 'LLP')}"/>
+                                &nbsp;Bank confirmation Letter</td>
+                            <!-- <td>&nbsp;</td> -->
+                        </tr>
+                    </table>
+                    <br/><br/><br/>
+                    <table  class="table1">
+                        <tr>
+                            <td rowspan="5">Signature of Applicant/s:</td>
+                            <td>(1)____________________________________________________________</td>
+                        </tr>
+                        <tr>
+                            <td>(2)____________________________________________________________</td>
+                        </tr>
+                        <tr>
+                            <td>(3)____________________________________________________________</td>
+                        </tr>
+                        <tr>
+                            <td>(4)____________________________________________________________</td>
+                        </tr>
+                        <tr>
+                            <td>(5)____________________________________________________________</td>
+                        </tr>
+                    </table>
+                    <br/><br/>
+                </div>
+                <!---------------------------- Page6 ---------------------------->
+                <div style="margin-top:60px;page-break-after:always;display:{!IF(payment.size >0,'block','none')}">                     
+                    <br/><br/><br/>
+                    <table class="table1">
+                        <tr>
+                            <td style="text-align:right;">Date</td>
+                            <td  style="border:1px solid #000;width:8%">
+                                <apex:outputText value="{0,date,dd-MM-yyyy}"> 
+                                    <apex:param value="{!bookingObj.Booking_Date__c}" /> 
+                                </apex:outputText>
+                            </td>
+                        </tr>
+                    </table>
+                    <br/><br/><br/>
+                    <table class="table1">
+                        <tr>
+                             <td>
+                            <apex:outputText rendered="{!if(BookingObj.Property__r.Material_No__c != Null,True,False)}">Flat No : {!BookingObj.Property__r.House_Unit_No__c}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputText>
+                            <apex:outputText rendered="{!if(BookingObj.Property__r.Material_No__c == Null,True,False)}">Flat No : __________________</apex:outputText>
+                            </td>
+                            <td>
+                            <apex:outputText rendered="{!if(floorNo != Null,True,False)}">Floor : {!floorNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputText>
+                            <apex:outputText rendered="{!if(floorNo == Null,True,False)}">Floor : ________________</apex:outputText> 
+                            </td>
+                            <td>
+                            <apex:outputText rendered="{!if(BookingObj.Tower_Name__c != Null,True,False)}">Tower : {!BookingObj.Tower_Name__c}</apex:outputText>
+                            <apex:outputText rendered="{!if(BookingObj.Tower_Name__c == Null,True,False)}">Tower : __________</apex:outputText>
+                            </td>
+                        </tr>
+                    </table>
+                    <br/><br/>
+                    <div style="padding:2px 6px;font-weight:bold;font-size:18px;margin-top:8px;text-align:center;">                    
+                       ACKNOWLEDGEMENT                   
+                    </div>
+                    <br/><br/>
+                    <table class="table1" >
+                      <!-- <tr>
+                           <td>
+                            <div style="text-align:justify">
+                            <apex:outputText rendered="{!if(app1Name != Null,True,False)}">Received from Mr. / Mrs. {!app1Name}</apex:outputText>
+                            <apex:outputText rendered="{!if(app1Name == Null,True,False)}">Received from Mr. / Mrs. __________________________________________________________________________</apex:outputText>
+                            </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            <div style="text-align:justify">
+                            <apex:outputText rendered="{!if(chequeno  != Null,True,False)}">Booking Form along with a Cheque / NEFT / RTGS / Demand Draft / Pay Order No. {!chequeno }</apex:outputText> 
+                            <apex:outputText rendered="{!if(chequeno  == Null,True,False)}">Booking Form along with a Cheque / NEFT / RTGS / Demand Draft / Pay Order No.____________________________</apex:outputText>
+                            </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            <div style="text-align:justify">
+                            <apex:outputText rendered="{!if(paymentdate  != Null,True,False)}">dated {!paymentdate}&nbsp;&nbsp;</apex:outputText>
+                            <apex:outputText rendered="{!if(paymentdate  == Null,True,False)}">dated _____________</apex:outputText>
+                            <apex:outputText rendered="{!if(bankname  != Null,True,False)}">drawn on {!bankname}&nbsp;&nbsp;</apex:outputText>
+                            <apex:outputText rendered="{!if(bankname  == Null,True,False)}">drawn on___________________________________</apex:outputText> 
+                            <apex:outputText rendered="{!if(branch != Null,True,False)}">branch {!branch}&nbsp;&nbsp;</apex:outputText>
+                            <apex:outputText rendered="{!if(branch == Null,True,False)}">branch ___________________________</apex:outputText> 
+                            
+                            </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            <div style="text-align:justify">
+                            <apex:outputText rendered="{!if(cheamount  != Null,True,False)}">for an amount of Rs.{!cheamount}&nbsp;&nbsp;</apex:outputText>
+                            <apex:outputText rendered="{!if(cheamount  == Null,True,False)}">for an amount of Rs._________________</apex:outputText>
+                            <apex:outputText rendered="{!if(cheamountword  != Null,True,False)}">( {!cheamountword} )</apex:outputText>
+                            <apex:outputText rendered="{!if(cheamountword  == Null,True,False)}">(Rupees _______________________________________________________)</apex:outputText>
+                            </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="text-align:justify">
+                                towards part payment of the above mentioned flat. Booking of the said flat is subject to realization of
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="text-align:justify">
+                                Cheque/DD/Payorder and receipt of all other payments as set out is the booking form &amp; the Acceptance Form.
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td> 
+                        </tr>-->
+                        <!--<tr>
+                            <td>
+                                <div style="text-align:justify">
+                                    <apex:outputText rendered="{!if(app1Name != Null,True,False)}">Received from Mr. / Mrs. {!app1Name}</apex:outputText>
+                                    <apex:outputText rendered="{!if(app1Name == Null,True,False)}">Received from Mr. / Mrs. __________________________________________________________________________<br/></apex:outputText>
+                                </div>
+                            </td>
+                        </tr> -->
+                        <tr>
+                            <td> 
+                                    <apex:outputText rendered="{!if(app1Name != Null,True,False)}">Received from {!app1Name}<br/></apex:outputText>
+                                    <apex:outputText rendered="{!if(app1Name == Null,True,False)}">Received from Mr. / Mrs. __________________________________________________________________________<br/></apex:outputText>
+                                    <div style="text-align:justify">
+                                    <apex:outputText rendered="{!if(chequeno  != Null,True,False)}">Booking Form along with a Cheque / NEFT / RTGS / Demand Draft / Pay Order No. {!chequeno }</apex:outputText> 
+                                    <apex:outputText rendered="{!if(chequeno  == Null,True,False)}">Booking Form along with a Cheque / NEFT / RTGS / Demand Draft / Pay Order No.____________________________</apex:outputText>
+                                    <apex:outputText rendered="{!if(paymentdate  != Null,True,False)}"> dated {!paymentdate}&nbsp;&nbsp;</apex:outputText>
+                                    <apex:outputText rendered="{!if(paymentdate  == Null,True,False)}"> dated _____________</apex:outputText>
+                                    <apex:outputText rendered="{!if(bankname  != Null,True,False)}">drawn on {!bankname}&nbsp;&nbsp;</apex:outputText>
+                                    <apex:outputText rendered="{!if(bankname  == Null,True,False)}">drawn on___________________________________</apex:outputText> 
+                                    <apex:outputText rendered="{!if(branch != Null,True,False)}">branch {!branch}&nbsp;&nbsp;</apex:outputText>
+                                    <apex:outputText rendered="{!if(branch == Null,True,False)}">branch ___________________________</apex:outputText> 
+                                    <apex:outputText rendered="{!if(cheamount  != Null,True,False)}">for an amount of Rs.{!cheamount}&nbsp;&nbsp;</apex:outputText>
+                                    <apex:outputText rendered="{!if(cheamount  == Null,True,False)}">for an amount of Rs._________________</apex:outputText>
+                                    <apex:outputText rendered="{!if(cheamountword  != Null,True,False)}">( {!cheamountword} )</apex:outputText>
+                                    <apex:outputText rendered="{!if(cheamountword  == Null,True,False)}">(Rupees _______________________________________________________)</apex:outputText>
+                                    towards part payment of the above mentioned flat. Booking of the said flat is subject to realization of
+                                    Cheque/DD/Payorder and receipt of all other payments as set out is the booking form &amp; the Acceptance Form.
+                                
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td> 
+                        </tr>
+                        <tr>
+                            
+                            <th>
+                            <div style="text-align:justify">
+                            {!BookingObj.Project__r.Subsidiary_Company_Name__c}
+                            </div>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>Signature:</td>
+                        </tr>
+                        <tr>
+                            <td>_________________________</td>
+                        </tr>
+                    </table>
+                    <br/><br/>
+                    <table class="table1"  >
+                        <tr>
+                            <td>Name</td>
+                        </tr>
+                    </table>
+                    <div style="border:1px solid #000;">
+                        <table class="table1"  >
+                            <tr>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>List of Pending Documents (If any) :</td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td>Comments (If any) :</td>
+                            </tr>
+                        </table>
+                        <br/><br/>
+                    </div>
+                    
+                  </div>  
+                <!---------------------------- Page7 ---------------------------->
+                <div style="margin-top:60px;page-break-after:always;display:{!IF(payment.size >1,'block','none')}">                     
+                    <br/><br/><br/>
+                    <table class="table1">
+                        <tr>
+                            <td style="text-align:right;">Date</td>
+                            <td  style="border:1px solid #000;width:8%">
+                                <apex:outputText value="{0,date,dd-MM-yyyy}"> 
+                                    <apex:param value="{!bookingObj.Booking_Date__c}" /> 
+                                </apex:outputText>
+                            </td>
+                        </tr>
+                    </table>
+                    <br/><br/><br/>
+                    <table class="table1">
+                        <tr>
+                             <td>
+                            <apex:outputText rendered="{!if(BookingObj.Property__r.Material_No__c != Null,True,False)}">Flat No : {!BookingObj.Property__r.House_Unit_No__c}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputText>
+                            <apex:outputText rendered="{!if(BookingObj.Property__r.Material_No__c == Null,True,False)}">Flat No : __________________</apex:outputText>
+                            </td>
+                            <td>
+                            <apex:outputText rendered="{!if(floorNo != Null,True,False)}">Floor : {!floorNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputText>
+                            <apex:outputText rendered="{!if(floorNo == Null,True,False)}">Floor : ________________</apex:outputText> 
+                            </td>
+                            <td>
+                            <apex:outputText rendered="{!if(BookingObj.Tower_Name__c != Null,True,False)}">Tower : {!BookingObj.Tower_Name__c}</apex:outputText>
+                            <apex:outputText rendered="{!if(BookingObj.Tower_Name__c == Null,True,False)}">Tower : __________</apex:outputText>
+                            </td>
+                        </tr>
+                    </table>
+                    <br/><br/>
+                    <div style="padding:2px 6px;font-weight:bold;font-size:18px;margin-top:8px;text-align:center;">                    
+                       ACKNOWLEDGEMENT                   
+                    </div>
+                    <br/><br/>
+                    
+                    <table class="table1" >
+                        <!-- <tr>
+                            <td>
+                            <div style="text-align:justify">
+                            <apex:outputText rendered="{!if(app1Name != Null,True,False)}">Received from Mr. / Mrs. {!app1Name}</apex:outputText>
+                            <apex:outputText rendered="{!if(app1Name == Null,True,False)}">Received from Mr. / Mrs. __________________________________________________________________________</apex:outputText>
+                            </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            <div style="text-align:justify">
+                            <apex:outputText rendered="{!if(chequeno2  != Null,True,False)}">Booking Form along with a Cheque / NEFT / RTGS / Demand Draft / Pay Order No. {!chequeno2 }</apex:outputText> 
+                            <apex:outputText rendered="{!if(chequeno2  == Null,True,False)}">Booking Form along with a Cheque / NEFT / RTGS / Demand Draft / Pay Order No.____________________________</apex:outputText>
+                            </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            <div style="text-align:justify">
+                            <apex:outputText rendered="{!if(paymentdate2  != Null,True,False)}">dated {!paymentdate2}&nbsp;&nbsp;</apex:outputText>
+                            <apex:outputText rendered="{!if(paymentdate2  == Null,True,False)}">dated _____________</apex:outputText>
+                            <apex:outputText rendered="{!if(bankname2  != Null,True,False)}">drawn on {!bankname2}&nbsp;&nbsp;</apex:outputText>
+                            <apex:outputText rendered="{!if(bankname2  == Null,True,False)}">drawn on ___________________________________</apex:outputText> 
+                            <apex:outputText rendered="{!if(branch2 != Null,True,False)}">branch {!branch2}&nbsp;&nbsp;</apex:outputText>
+                            <apex:outputText rendered="{!if(branch2 == Null,True,False)}">branch ___________________________</apex:outputText> 
+                            
+                            </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            <div style="text-align:justify">
+                            <apex:outputText rendered="{!if(cheamount2  != Null,True,False)}">for an amount of Rs.{!cheamount2}&nbsp;&nbsp;</apex:outputText>
+                            <apex:outputText rendered="{!if(cheamount2  == Null,True,False)}">for an amount of Rs._________________</apex:outputText>
+                            <apex:outputText rendered="{!if(cheamountword2  != Null,True,False)}">( {!cheamountword2} )</apex:outputText>
+                            <apex:outputText rendered="{!if(cheamountword2  == Null,True,False)}">(Rupees _______________________________________________________)</apex:outputText>
+                            </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="text-align:justify">
+                                towards part payment of the above mentioned flat. Booking of the said flat is subject to realization of
+                                </div>
+                                </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="text-align:justify">
+                                Cheque/DD/Payorder and receipt of all other payments as set out is the booking form &amp; the Acceptance Form.
+                                </div>
+                            </td>
+                        </tr> -->
+                        <tr>
+                            <td>
+                            
+                            <apex:outputText rendered="{!if(app1Name != Null,True,False)}">Received from {!app1Name}<br/></apex:outputText>
+                            <apex:outputText rendered="{!if(app1Name == Null,True,False)}">Received from Mr. / Mrs. __________________________________________________________________________</apex:outputText>
+                            <div style="text-align:justify">
+                                <apex:outputText rendered="{!if(chequeno2  != Null,True,False)}">Booking Form along with a Cheque / NEFT / RTGS / Demand Draft / Pay Order No. {!chequeno2 }</apex:outputText> 
+                                <apex:outputText rendered="{!if(chequeno2  == Null,True,False)}">Booking Form along with a Cheque / NEFT / RTGS / Demand Draft / Pay Order No.____________________________</apex:outputText>
+                                <apex:outputText rendered="{!if(paymentdate2  != Null,True,False)}"> dated {!paymentdate2}&nbsp;&nbsp;</apex:outputText>
+                                <apex:outputText rendered="{!if(paymentdate2  == Null,True,False)}"> dated _____________</apex:outputText>
+                                <apex:outputText rendered="{!if(bankname2  != Null,True,False)}">drawn on {!bankname2}&nbsp;&nbsp;</apex:outputText>
+                                <apex:outputText rendered="{!if(bankname2  == Null,True,False)}">drawn on ___________________________________</apex:outputText> 
+                                <apex:outputText rendered="{!if(branch2 != Null,True,False)}">branch {!branch2}&nbsp;&nbsp;</apex:outputText>
+                                <apex:outputText rendered="{!if(branch2 == Null,True,False)}">branch ___________________________</apex:outputText> 
+                                <apex:outputText rendered="{!if(cheamount2  != Null,True,False)}">for an amount of Rs.{!cheamount2}&nbsp;&nbsp;</apex:outputText>
+                                <apex:outputText rendered="{!if(cheamount2  == Null,True,False)}">for an amount of Rs._________________</apex:outputText>
+                                <apex:outputText rendered="{!if(cheamountword2  != Null,True,False)}">( {!cheamountword2} )</apex:outputText>
+                                <apex:outputText rendered="{!if(cheamountword2  == Null,True,False)}">(Rupees _______________________________________________________)</apex:outputText>
+                                towards part payment of the above mentioned flat. Booking of the said flat is subject to realization of
+                                Cheque/DD/Payorder and receipt of all other payments as set out is the booking form &amp; the Acceptance Form.
+                                
+                            </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <th>
+                            <div style="text-align:justify">
+                            {!BookingObj.Project__r.Subsidiary_Company_Name__c}
+                            </div>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>Signature:</td>
+                        </tr>
+                        <tr>
+                            <td>_________________________</td>
+                        </tr>
+                    </table>
+                    <br/><br/>
+                    <table class="table1"  >
+                        <tr>
+                            <td>Name</td>
+                        </tr>
+                    </table>
+                    <div style="border:1px solid #000;">
+                        <table class="table1"  >
+                            <tr>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>List of Pending Documents (If any) :</td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td>Comments (If any) :</td>
+                            </tr>
+                        </table>
+                        <br/><br/>
+                    </div>
+                </div>
+                
+                <!---------------------------- Page8 ---------------------------->
+                
+                <apex:outputText rendered="{!if(BookingObj.TDS_Paid_By__c == 'Authorization to Company' && BookingObj.TDS_Paid_By__c!=Null,True,False)}">
+                <div style="margin-top:60px;">  <!-- page-break-after:always;-->
+                    <table class="table1">
+                        <tr>
+                             <td>
+                            <apex:outputText rendered="{!if(BookingObj.Property__r.Material_No__c != Null,True,False)}">Flat No : {!BookingObj.Property__r.House_Unit_No__c}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputText>
+                            <apex:outputText rendered="{!if(BookingObj.Property__r.Material_No__c == Null,True,False)}">Flat No : __________________</apex:outputText>
+                            </td>
+                            <td>
+                            <apex:outputText rendered="{!if(floorNo != Null,True,False)}">Floor : {!floorNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputText>
+                            <apex:outputText rendered="{!if(floorNo == Null,True,False)}">Floor : ________________</apex:outputText> 
+                            </td>
+                            <td>
+                            <apex:outputText rendered="{!if(BookingObj.Tower_Name__c != Null,True,False)}">Tower : {!BookingObj.Tower_Name__c}</apex:outputText>
+                            <apex:outputText rendered="{!if(BookingObj.Tower_Name__c == Null,True,False)}">Tower : __________</apex:outputText>
+                            </td>
+                        </tr>
+                    </table>
+                    <br/>                 
+                    <div style="padding:2px 4px;font-size:14px;margin-top:8px;text-align:center;"> 
+                    TDS -Authorization to Company               
+                    </div>
+                     <br/>
+                    <table class="table1">
+                        <tr>
+                            <td style="text-align:right;">Date</td>
+                            <td  style="border:1px solid #000;width:8%">
+                                <apex:outputText value="{0,date,dd-MM-yyyy}"> 
+                                    <apex:param value="{!bookingObj.Booking_Date__c}" /> 
+                                </apex:outputText>
+                            </td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <table class="table1">
+                        <tr >
+                            <td colspan="1">To,
+                            </td>
+                            <td colspan="2">
+                            </td>
+                            <td colspan="3">
+                            </td>
+                          
+                        </tr>
+                        <tr > 
+                        <td colspan="1" style="Width:22%">
+                           <b> <apex:outputText rendered="{!if(bookingObj.Property__r.Project_Name__r.Subsidiary_Company_Name__c != Null,True,False)}">{!bookingObj.Property__r.Project_Name__r.Subsidiary_Company_Name__c}</apex:outputText>
+                            </b><br/>
+                            <apex:outputText rendered="{!if(tdscompanyadd != Null,True,False)}">{!tdscompanyadd}</apex:outputText>
+                          </td>  
+                          <td colspan="2">
+                          </td>
+                          <td colspan="3">
+                          </td>
+                          
+                        </tr>
+                        <br/>
+                        <tr>
+                            <td>Dear Sir/ Madam,</td>
+                        </tr>
+                        <br/>
+                        <tr>
+                            <td>
+                                <div style="text-align:justify">We are authorizing you or any of your employees or representative/s or person/s appointed by you to do the
+                                following acts, deeds, matters and things required to be done/undertaken to comply with the provisions of Section
+                                194-IA of the Income Tax Act, 1961, (the “Act”) including but not limited to:
+                                </div>
+                             </td>
+                         </tr>
+                         <br/>
+                         <tr>
+                             <td>
+                                 <div style="text-align:justify">(a) file requisite forms, challan/s, pay taxes as applicable pursuant to Section 194-IA of the Act;
+                                 </div>
+                             </td>
+                         </tr>
+                         <tr>
+                             <td>
+                                 <div style="text-align:justify">(b) discharge the liability of payment of tax under Section 194-IA of the Act on our behalf and deposit the same with
+                                 the Government, subject to and to the extent of the payment made by us on account of TDS under Section 194-IA of
+                                 the Act, to you before the due date thereof; I/We are aware that the aforesaid process of deduction/payment of
+                                 TDS is a manual and a complex process and is subject to human errors and/or technical problems that may be
+                                 encountered. I/We unconditionally and unequivocally agree and undertake that I/We will not hold you/your
+                                 employees or representative/s responsible or liable in any manner howsoever for the unintentional errors in filling
+                                 up the forms online and/ or errors or stoppage of web site due to technical reasons and waive my/our right (if any)
+                                 to claim any costs, compensation or damages in respect thereof. In the event of occurrence of such errors, I/we will
+                                 fully assist you to correct and rectify the same, through Income Tax Department. I/We shall sign, execute the
+                                 necessary applications, forms etc., and make myself/ourselves available to attend the office of the Income Tax
+                                 Department, as may be required to correct and rectify any errors in the forms.
+                                 </div>
+                             </td>
+                          </tr>
+                          <br/>
+                          <tr>
+                              <td>
+                                  <div style="text-align:justify">I/We shall provide you the duly signed copy of Form 16B within 15 days from the due date for furnishing the challan-
+                                  cum-statement in Form No.26QB.
+                                  </div>
+                              </td>
+                          </tr>
+                          <br/>
+                          <tr>
+                              <td>
+                              <div style="text-align:justify">
+                              <apex:outputText rendered="{!if(pancardno != Null,True,False)}">Permanent Account Number (PAN No.) of the first owner is {!pancardno}&nbsp;&nbsp;&nbsp;</apex:outputText>
+                              <apex:outputText rendered="{!if(pancardno == Null,True,False)}">Permanent Account Number (PAN No.) of the first owner is _______________________ </apex:outputText>and we request you to
+                                  kindly make the payment of TDS on behalf of the first owner only. We are enclosing herewith copy of the PAN card
+                                  for your ready reference.
+                              </div>
+                              </td>
+                          </tr>
+                          <br/>
+                          <tr>
+                              <td>Thanking you,</td>
+                          </tr>
+                          <tr>
+                              <td>Yours sincerely</td>
+                          </tr>
+                          <br/><br/>
+                          <tr>
+                              <td><b>
+                              <apex:outputText rendered="{!if(app1Name != Null,True,False)}">Name of the 1 st Applicant :{!app1Name}</apex:outputText>
+                              <apex:outputText rendered="{!if(app1Name == Null,True,False)}">Name of the 1 st Applicant :_________________________________________</apex:outputText>
+                              </b></td>
+                          </tr>
+                          </table>
+                        
+                     </div> 
+                     </apex:outputText>
+                    <!---------------------------- Page9 ---------------------------->
+                    <apex:outputText rendered="{!if(BookingObj.TDS_Paid_By__c == 'Self' && BookingObj.TDS_Paid_By__c!=Null,True,False)}">
+                    <div style="margin-top:60px;">    <!-- page-break-after:always; -->                 
+                    <table class="table1">
+                        <tr>
+                             <td>
+                            <apex:outputText rendered="{!if(BookingObj.Property__r.Material_No__c != Null,True,False)}">Flat No : {!BookingObj.Property__r.House_Unit_No__c}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputText>
+                            <apex:outputText rendered="{!if(BookingObj.Property__r.Material_No__c == Null,True,False)}">Flat No : __________________</apex:outputText>
+                            </td>
+                            <td>
+                            <apex:outputText rendered="{!if(floorNo != Null,True,False)}">Floor : {!floorNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputText>
+                            <apex:outputText rendered="{!if(floorNo == Null,True,False)}">Floor : ________________</apex:outputText> 
+                            </td>
+                            <td>
+                            <apex:outputText rendered="{!if(BookingObj.Tower_Name__c != Null,True,False)}">Tower : {!BookingObj.Tower_Name__c}</apex:outputText>
+                            <apex:outputText rendered="{!if(BookingObj.Tower_Name__c == Null,True,False)}">Tower : __________</apex:outputText>
+                            </td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <div style="padding:2px 4px;font-size:14px;margin-top:8px;text-align:center;">                    
+                       TDS- Self Compliance Confirmation                  
+                    </div>
+                    <br/>
+                    <table class="table1">
+                        <tr>
+                            <td style="text-align:right;">Date</td>
+                           <td  style="border:1px solid #000;width:8%">
+                                <apex:outputText value="{0,date,dd-MM-yyyy}"> 
+                                    <apex:param value="{!bookingObj.Booking_Date__c}" /> 
+                                </apex:outputText>
+                            </td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <table class="table1">
+                        <tr>
+                            <td colspan="1">To,
+                            </td>
+                            <td colspan="2">
+                            </td>
+                            <td colspan="3">
+                            </td>
+                        </tr>
+                        <tr > 
+                        <td colspan="1" style="Width:22%">
+                            <b><apex:outputText rendered="{!if(bookingObj.Property__r.Project_Name__r.Subsidiary_Company_Name__c != Null,True,False)}">{!bookingObj.Property__r.Project_Name__r.Subsidiary_Company_Name__c}</apex:outputText>
+                            </b><br/>
+                            <apex:outputText rendered="{!if(tdscompanyadd != Null,True,False)}">{!tdscompanyadd}</apex:outputText>
+                          </td>  
+                          <td colspan="2">
+                          </td>
+                          <td colspan="3">
+                          </td>
+                          
+                          
+                        </tr>
+                        <br/>
+                        <tr>
+                            <td>Dear Sir/ Madam,</td>
+                        </tr>
+                        <br/>
+                        <tr>
+                            <td><div style="text-align:justify">I/We are aware that the Government of India has amended the Income Tax Act, 1961 and introduced Section 194-IA
+                                vide Finance Bill, 2013 as well as the Central Board of Direct Taxes (CBDT) – Ministry of Finance has issued
+                                Notification dated May 31, 2013, whereby on or after 1st June, 2013 the purchasers of the units (whose
+                                consideration value is Rs.50 Lakhs and above) are required to deduct a sum of 1.00% (or as per rates prevailing from
+                                time to time) as tax at source (TDS) out of the consideration value or part thereof paid by such purchasers.
+                                </div>
+                            </td>
+                        </tr>
+                        <br/>
+                        <tr>
+                            <td>
+                                <div style="text-align:justify">In connection with our booking for a flat with you, I/We hereby would like to confirm you that we ourselves will take
+                                care of all the compliance to be done and will be responsible for all acts, deeds, matters and things required to be
+                                done/undertaken to comply with the provisions of Section 194-IA of the Income Tax Act, 1961, (the “Act”) including
+                                but not limited to:
+                                </div>
+                            </td>
+                        </tr>
+                        <br/>
+                        <tr>
+                            <td>
+                                <div style="text-align:justify">
+                                    (a) file requisite forms, challan/s, pay taxes as applicable pursuant to Section 194-IA of the Act;
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="text-align:justify">
+                                    (b) discharge the liability of payment of tax under Section 194-IA of the Act and deposit the same with the
+                                    Government, subject to and to the extent of the payment made by us on account of TDS under Section 194-IA of the
+                                    Act, before the due date thereof.
+                                </div>
+                            </td>
+                        </tr>
+                        <br/>
+                        <tr>
+                            <td>
+                                <div style="text-align:justify">
+                                    I/We shall provide you the duly signed copy of Form 16B within 15 days from the due date for furnishing the challan-
+                                    cum-statement in Form No.26QB.
+                                </div>
+                            </td>
+                         </tr>
+                         <br/>
+                         <tr>
+                             <td>
+                                 <div style="text-align:justify">
+                                 <apex:outputText rendered="{!if(pancardno != Null,True,False)}">Permanent Account Number (PAN No.) of the first owner is {!pancardno}&nbsp;&nbsp;&nbsp;</apex:outputText>
+                                 <apex:outputText rendered="{!if(pancardno == Null,True,False)}">Permanent Account Number (PAN No.) of the first owner is _______________________ </apex:outputText>and we will make the
+                                 payment of TDS on our own. We are enclosing herewith copy of the PAN card of first owner for your ready
+                                 reference.
+                                 </div>
+                             </td>
+                         </tr>
+                         <br/>
+                         <tr>
+                             <td>Thanking you,</td>
+                         </tr>
+                        <tr>
+                             <td>Yours sincerely</td>
+                          </tr>
+                          <br/>
+                          <tr>
+                              <td><b>
+                              <apex:outputText rendered="{!if(app1Name != Null,True,False)}">Name of the 1 st Applicant :{!app1Name}</apex:outputText>
+                              <apex:outputText rendered="{!if(app1Name == Null,True,False)}">Name of the 1 st Applicant :_________________________________________</apex:outputText>
+                              </b></td>
+                          </tr>
+                         <!-- <br/>
+                          <tr>
+                            <td>
+                            <apex:outputText rendered="{!if(BookingObj.Property__r.Material_No__c != Null,True,False)}">Flat No : {!BookingObj.Property__r.House_Unit_No__c}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputText>
+                            <apex:outputText rendered="{!if(BookingObj.Property__r.Material_No__c == Null,True,False)}">Flat No : __________________</apex:outputText>
+                            </td>
+                            <td>
+                            <apex:outputText rendered="{!if(BookingObj.Property__r.Floor_Number__c != Null,True,False)}">Floor : {!BookingObj.Property__r.Floor_Number__c}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputText>
+                            <apex:outputText rendered="{!if(BookingObj.Property__r.Floor_Number__c == Null,True,False)}">Floor : ________________</apex:outputText> 
+                            </td>
+                            <td>
+                            <apex:outputText rendered="{!if(BookingObj.Tower_Name__c != Null,True,False)}">Tower : {!BookingObj.Tower_Name__c}</apex:outputText>
+                            <apex:outputText rendered="{!if(BookingObj.Tower_Name__c == Null,True,False)}">Tower : __________</apex:outputText>
+                            </td>
+                          </tr> -->
+                          </table>
+                       </div>
+                       </apex:outputText>
+                       
+                       <!---------------------------- Page10 ---------------------------->
+                        <apex:outputText rendered="{!if(residentstatus == 'For NRI' || residentstatus2 == 'For NRI' || residentstatus3 == 'For NRI' || residentstatus4 == 'For NRI' || residentstatus5 == 'For NRI' ,True,False)}">
+                        <div style="margin-top:60px;">    <!-- page-break-after:always; -->   
+                        <br/><br/>              
+                        <table class="table1">
+                            <tr>
+                                <td style="text-align:left;">Date : 
+                                <apex:outputText value="{0,date,dd-MM-yyyy}"> 
+                                    <apex:param value="{!bookingObj.Booking_Date__c}" /> 
+                                </apex:outputText>
+                                </td>
+                           </tr>
+                           <tr>
+                               <td style="text-align:center;"><b><u>TO WHOMSOEVER IT MAY CONCERN</u></b></td>
+                           </tr>
+                           <br/><br/>
+                           <tr>
+                               <td>
+                                   <div style="text-align:justify; text-align-last: Last;">
+                                   
+                                   I / We {!app1Name} aged {!age} years permanently residing at {!billingadd} and presently residing at __________________ _________________ _________________ _______________ ________________ _______________ do hereby state as under.
+                                   <!--</div>
+                                   <div style="text-align:justify; text-align-last: Last;">-->
+                                   
+                                   
+                                   
+                                   </div>
+                               </td>
+                           </tr>
+                          
+                           <ol class="letterList" type="A">
+                              
+                              <li>
+                                  <div style="text-align:justify">
+                                  I/We say that I/We am/are citizen/s of India having Indian Passport bearing the following No/s. My/our Pan No/s are as follows.
+                                  </div>
+                                  <br/>
+                                  <table  class="table2" style="border-width:0.5px;">
+                                    <tr>
+                                        <th>Name of Customer</th>
+                                        <th>Passport No and Expiry Date.</th>
+                                        <th>Pan Card No. </th>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                    </tr>
+                                  </table>
+                                  <br/><br/>
+                                  <b>OR</b>
+                                  <br/><br/>
+                                  I/We am/are Persons of Indian origin having PIO Card the details whereof are as follows;
+                                  <br/><br/>
+                                  <table  class="table2">
+                                    <tr>
+                                        <th>Name of Customer</th>
+                                        <th>PIO Card No</th>
+                                        <th>Date of issue of PIO Card</th>
+                                        <th>Date till when the card is valid</th>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                    </tr>
+                                  </table>
+                                  <br/><br/>
+                                  <b>OR</b>
+                                  <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                                  I/We am/are the Overseas Citizen of India having Overseas Citizen of India  Certificate, the details whereof are as follows;
+                                  <br/><br/>
+                                  <table  class="table2">
+                                    <tr>
+                                        <th>Name of Customer</th>
+                                        <th>Overseas Citizen of India Certificate No.</th>
+                                        <th>Date of issue of the Overseas Citizen of India Certificate</th>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                        <td>&nbsp;<br/>&nbsp;</td>
+                                    </tr>
+                                  </table>
+                                  <br/><br/>
+                               </li>
+                                                  
+                                  <li>
+                                      <div style="text-align:justify">
+                                      I/We am/are not citizen/citizens of Pakistan, Bangladesh, Sri Lanka, Afghanistan, China, Iran, Nepal or Bhutan.
+                                      </div>
+                                  </li>
+                                  <li>
+                                      <div style="text-align:justify">
+                                      All inward remittances made by me / us will be for the purchase of Flat no. {!BookingObj.Property__r.House_Unit_No__c} admeasuring {!carpetarea} sq.ft. (carpet area) in Tower {!BookingObj.Tower_Name__c} on the {!floorNo} Floor (“the Said Premises”) in the residential project and building known as {!BookingObj.Project__r.Name} and not for purchase of agricultural land/ plantation / farm house.
+                                      </div>
+                                  </li>
+                                  <li>Further all the inward remittance/s made by me / us will be for purchase of the Said Premises and not for lease.</li>
+                              
+                            </ol>  
+                  
+                           <tr>
+                               <td>Thanking You,</td><br/>
+                           </tr>
+                           <tr>
+                               <td>Signature of the Applicant /s</td><br/><br/>
+                           </tr>
+                           <tr>
+                               <td>1.______________________________</td><br/>
+                           </tr>
+                           <tr>
+                               <td>2.______________________________</td><br/>
+                           </tr>
+                           <tr>
+                               <td>3.______________________________</td><br/>
+                           </tr>
+                           <tr>
+                               <td>4.______________________________</td><br/>
+                           </tr>
+                           <tr>
+                               <td>5.______________________________</td><br/>
+                           </tr>
+                           
+                      </table>
+                  </div> 
+               </apex:outputText>
+            </body>
+        </apex:form>
+    </html>
+</apex:page>

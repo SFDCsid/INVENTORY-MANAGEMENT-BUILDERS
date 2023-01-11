@@ -1,0 +1,69 @@
+<!--- apex:page showHeader="false" sidebar="false">
+<html>
+<head><title>Quotation</title></head>
+    <apex:includeLightning />    
+    <div id="LightningComponentid" />    
+    <script>
+    var oppId;
+    var unitId;
+    window.onload=function()
+        {
+         QuoteId = "{!$CurrentPage.parameters.QuoteId}";
+        };
+    
+    $Lightning.use("updateQuoteLineItemsApp", function() {
+        $Lightning.createComponent("updateQuoteLineItems",
+          {"QuoteId":QuoteId,},
+          "LightningComponentid",
+          function(cmp) {
+             console.log('LWC Componenet added in VF page');
+          });
+    });
+    </script>
+</html>
+</apex:page --->
+<apex:page docType="html-5.0"   showHeader="false" Controller="UpdateQuoteLineItems" sidebar="false" lightningStylesheets="false">
+    <html>
+    <table>
+    <thead>
+        <tr style="height:12px;">
+            <th
+                style="font-size:12px;text-align:center;border-top:1px solid #92a8d1;border-bottom:1px solid #92a8d1;border-left:1px solid #92a8d1;background-color:#EBEDEF;">
+                Order
+            </th>
+            <th
+                style="font-size:12px;text-align:center;border-top:1px solid #92a8d1;border-bottom:1px solid #92a8d1;background-color:#EBEDEF;">
+                Milestone Name
+            </th>
+            <th
+                style="font-size:12px;text-align:center;border-top:1px solid #92a8d1;border-bottom:1px solid #92a8d1;background-color:#EBEDEF;">
+                Type
+            </th>
+            <th
+                style="font-size:12px;text-align:center;border-top:1px solid #92a8d1;border-bottom:1px solid #92a8d1;background-color:#EBEDEF;">
+                Due Days
+            </th>
+            <th
+                style="font-size:12px;text-align:center;border-top:1px solid #92a8d1;border-bottom:1px solid #92a8d1;background-color:#EBEDEF;">
+                Due Date
+            </th>
+            <th
+                style="font-size:12px;text-align:center;border-top:1px solid #92a8d1;border-bottom:1px solid #92a8d1;background-color:#EBEDEF;">
+                Percentage
+            </th>
+            <th
+                style="font-size:12px;text-align:center;border-top:1px solid #92a8d1;border-bottom:1px solid #92a8d1;background-color:#EBEDEF;">
+                Amount
+            </th>
+            <th
+                style="font-size:12px;text-align:center;border-top:1px solid #92a8d1;border-bottom:1px solid #92a8d1;background-color:#EBEDEF;">
+                GST
+            </th>
+            <th
+                style="font-size:12px;text-align:center;border-top:1px solid #92a8d1;border-bottom:1px solid #92a8d1;border-right:1px solid #92a8d1;background-color:#EBEDEF;">
+            </th>
+        </tr>
+    </thead>
+    </table>
+    </html>
+</apex:page>

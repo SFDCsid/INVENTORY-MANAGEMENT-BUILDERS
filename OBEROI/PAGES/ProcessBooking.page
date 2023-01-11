@@ -1,0 +1,9 @@
+<apex:page controller="ProcessBooking" action="{!Process}" lightningStylesheets="True">
+    <apex:form id="fm1">
+        <apex:pageMessages >
+        </apex:pageMessages>
+          <apex:actionPoller action="{!incrementCounter}" interval="120" rendered="{!IF(status == true, true, false)}"/>
+        <br/>
+        <apex:commandButton action="{!BackToBooking}" value="Go to Booking"/>
+    </apex:form>
+</apex:page>

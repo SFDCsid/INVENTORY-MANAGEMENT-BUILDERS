@@ -1,0 +1,23 @@
+<apex:page showHeader="false" sidebar="false">
+    <html>
+<head><title>Process Booking</title></head>
+    <apex:includeLightning />    
+    <div id="LightningComponentid" />    
+    <script>
+    var Id;
+        window.onload=function()
+        {
+         Id = "{!$CurrentPage.parameters.Id}";
+        };
+    
+    $Lightning.use("c:ProcessBookingApp", function() {
+        $Lightning.createComponent("c:ProcessBookingCom",
+          {"Id":Id},
+          "LightningComponentid",
+          function(cmp) {
+              console.log(Id);
+          });
+    });
+</script>
+</html>
+</apex:page>

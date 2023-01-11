@@ -1,0 +1,37 @@
+<apex:page >
+<apex:form id="form1">
+        <html lang="en">
+            <head>
+                <meta charset="utf-8"/> 
+                <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                <meta http-equiv="X-UA-Compatible" content="ie=edge"   />  
+                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+                <title>ORL</title>
+                <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" />
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+                <style type="text/css">
+                    body {
+                    width: 64%;
+                    margin: 2% auto;
+                    text-align: center;
+                    padding: 10px;
+                    box-shadow: 0px 0px 27px -7px rgba(130,112,130,.5);
+                    }
+                    h3{
+                    font-size: 1.5rem;
+                    color:#13A655 !important;
+                    }
+                    .ctr{
+                    padding:20px;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="ctr">
+                    <apex:image width="160px;" url="{!$Resource.logoOberoi}"/><hr/>
+                    <br/><!--img width="120px;" src='https://oberoirealty--oberoidev--c.documentforce.com/sfc/dist/version/renditionDownload?rendition=ORIGINAL_Gif&versionId=068p0000001tOb1&operationContext=DELIVERY&contentId=05Tp0000008PPgs&page=0&d=/a/p00000008jem/V2nDfnc4sZB9sFoq11BM0wzDTn6fTvr9N3lRqPs5C_U&oid=00Dp0000000Dm6N&dpt=null&viewId=' alt='confirm img'/><br/><br/-->
+                    <h3>Thank you for your booking</h3><br/><br/>
+                </div>
+            </body>
+        </html>
+    </apex:form></apex:page>

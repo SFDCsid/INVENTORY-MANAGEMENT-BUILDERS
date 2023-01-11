@@ -1,0 +1,22 @@
+<apex:page standardController="Payment_Plan__c" contentType="application/pdf" renderAs="PDF" standardStylesheets="false" docType="html-5.0" showheader="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" extensions="CustomBillingPlan">
+    <html>
+    <head>
+    </head>
+    <body>
+    <div>
+    <apex:outputText rendered="{!isCustom}">
+    <c:BasicBillingPlanTemplate billingPlanIdAttr="{!recordId}"/>
+    </apex:outputText>
+    <apex:outputText rendered="{!isCustomJodi}">
+    <c:BasicBillingPlanTemplateJodi billingPlanIdAttr="{!recordId}"/>
+    </apex:outputText>
+    <apex:outputText rendered="{!isScheme}">
+    <c:SchemeBillingPlanTemplate billingPlanIdAttr="{!recordId}"/>
+    </apex:outputText>
+    <apex:outputText rendered="{!isSchemeJodi}">
+    <c:SchemeBillingPlanTemplateJodi billingPlanIdAttr="{!recordId}"/>
+    </apex:outputText>
+    </div>
+     </body>
+   </html>
+</apex:page>

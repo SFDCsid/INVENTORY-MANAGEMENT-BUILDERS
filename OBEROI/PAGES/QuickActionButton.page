@@ -1,0 +1,30 @@
+<apex:page standardController="Campaign" lightningStylesheets="true" >
+    <apex:stylesheet value="/resource/SLDS0102/assets/styles/salesforce-lightning-design-system-ltng.css"/>
+    <apex:includeLightning />
+    <apex:includeScript value="/lightning/lightning.out.js" />
+    <apex:pageMessages ></apex:pageMessages>
+    
+    <div id="lightning"></div>
+    
+    
+    <script type="text/javascript">
+    var campId= "{!Id}";
+    $Lightning.use("c:CampaignQuickActionAppn", function() {
+        $Lightning.createComponent("c:CampaignQuickAction",
+                                   {recordId : campId },
+                                   
+                                   "lightning",
+                                   function(cmp) {
+                                       console.log('In Page, Done');
+                                   });
+    });
+    </script>    
+    <apex:form >
+        <br/><br/>
+        <div align="right">
+            
+            
+            <apex:commandButton value="Cancel" action="{!Cancel}" styleClass="buttonStyle" style="background:#8B0000; color:white; display: block;
+                                                                                                  width: 78px;border-color:#0066CC;border: 1px solid; height: 31px;"/>	      
+        </div>  </apex:form>   
+</apex:page>

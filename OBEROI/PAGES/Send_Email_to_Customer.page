@@ -1,0 +1,7 @@
+<apex:page controller="ViewBooking" action="{!SaveQuote1}" lightningStylesheets="True" >
+    <apex:form >
+        <apex:pageMessages />
+        <br/>
+        <apex:commandButton action="{!BackToBooking}" value="Go to Booking"/>
+    </apex:form>
+</apex:page>

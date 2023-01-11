@@ -1,0 +1,276 @@
+<apex:page controller="ROFRQuotation" sidebar="false" lightningStylesheets="true" showHeader="false" Doctype="html-5.0">
+
+    <head>
+        <title>ROFR Quotation </title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+
+
+
+        <style>
+            body .bPageBlock .pbSubheader,
+            .slds-vf-scope .bPageBlock .pbSubheader {
+                background-color: lightskyblue;
+            }
+
+            body {
+                /* width: 1400px;*/
+                width: 100%;
+                app height: 200px;
+                margin: 0px auto 0 auto;
+                font-family: Arial, Helvetica;
+                font-size: small;
+                background-color: white;
+                /*background-image:"house1.jpg";*/
+            }
+
+            #resizable {
+                margin: 10px 20px 20px 170px;
+                width: 1000px;
+                height: 500px;
+                padding: 0.5em;
+            }
+
+            #resizable h3 {
+                text-align: center;
+                margin: 0;
+            }
+
+            /* ------------------------------------------------- */
+
+            #tabs {
+                overflow: hidden;
+                width: 100%;
+                margin: 0;
+                padding: 0;
+                list-style: none;
+            }
+
+            #tabs li {
+                float: left;
+                margin: 0 -15px 0 0;
+            }
+
+            #tabs a {
+                float: left;
+                position: relative;
+                padding: 0 60px;
+                height: 0;
+                line-height: 30px;
+                text-transform: uppercase;
+                text-decoration: none;
+                color: #fff;
+                border-right: 30px solid transparent;
+                border-bottom: 30px solid #3D3D3D;
+                border-bottom-color: #777\9;
+                opacity: .3;
+                filter: alpha(opacity=30);
+            }
+
+            #tabs a:hover,
+            #tabs a:focus {
+                border-bottom-color: #2ac7e1;
+                opacity: 1;
+                filter: alpha(opacity=100);
+            }
+
+            #tabs a:focus {
+                outline: 0;
+            }
+
+            #tabs #current {
+                z-index: 3;
+                border-bottom-color: #3d3d3d;
+                opacity: 2;
+                filter: alpha(opacity=100);
+            }
+
+            /* ----------- */
+
+            #content {
+                background: #D6DDDD;
+                border-top: 0px solid #3d3d3d; //padding: 2em;
+                //height: 500px;
+                /*background-image:"house1.jpg";*/
+            }
+
+            #content h2,
+            #content h3,
+            #content p {
+                //margin: 0 0 15px 0;
+            }
+
+            /* Demo page only */
+
+            #about {
+                color: #0ad;
+                text-align: center;
+                font: 0.9em Arial, Helvetica;
+            }
+
+            #about a {
+                color: #777;
+            }
+
+            redtext {
+                color: black;
+            }
+
+            table.tableApp1A {
+                width: 90%;
+            }
+
+            table.tableApp1B {
+                display: none;
+                border: 3px Solid Black;
+                width: 100%;
+
+            }
+
+            table.tableApp1B td {
+
+                border: 1px Solid Black;
+                padding: 10px;
+            }
+
+            table.tableApp1B th {
+                text-align: center;
+            }
+
+            table.tableApp1B tr {
+                fixed-width: 100%;
+            }
+
+            }
+        </style>        
+    </head>
+
+    <body>
+        <apex:actionStatus id="status">
+            <apex:facet name="start">
+                <div class="fadeMe">
+                    &nbsp;
+                </div>
+                <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 15% 50%">
+                    <div style="display: inline-block; padding: 2px; background-color: #fff; width: 125px;">
+                        <img src="/img/loading.gif" style="float: left; margin: 8px;" />
+                        <span style="display: inline-block; padding: 10px 0px;">Please Wait...</span>
+                    </div>
+                </div>
+            </apex:facet>
+        </apex:actionStatus>
+        <apex:outputPanel id="messages">
+            <apex:pageMessages escape="false"/>
+        </apex:outputPanel>
+         <div style="width:90%; margin:0 auto;">
+        <apex:form id="ApplicantForm">
+        <br/>
+            <apex:outputPanel id="out"></apex:outputPanel>
+            <center>
+                <apex:commandButton value="SAVE" action="{!Save}" Rerender="messages" status="status" />
+                <apex:commandButton value="CANCEL" action="{!Cancel}" immediate="true"/>
+            </center>
+            <br/>
+            <apex:actionStatus startText="Loading.." id="statusId" />
+    <apex:actionFunction name="checkValidation" action="{!CheckValidation}" status="statusId" rerender="messages"/>  
+            <!--------------------------------------------Buttons--------------------------------------------->
+            
+            <apex:pageBlock id="pgBlck1">
+            <!-----------------------------------Booking Details--------------------------------------------->
+                <apex:pageBlockSection title="Quotation Details">
+
+                    <apex:outputText >Mandatory fields are marked with an asterisk (*) </apex:outputText>
+                    <apex:outputText >&nbsp;</apex:outputText>
+
+                    <apex:OutputField id="opName" value="{!optyList[0].Name}"/> 
+                    <apex:OutputField id="Oldbook" value="{!optyList[0].Old_Booking__c}" />
+                    <apex:OutputField value="{!optyList[0].Refrence_Quotation__c}"/>
+                    <apex:OutputField value="{!optyList[0].Previous_Customer_Name__c}"/>
+                    <apex:OutputField value="{!optyList[0].Previous_Customer_Code__c}"/>
+                    <apex:OutputField value="{!optyList[0].Previous_SalesOrder_Number__c}"/>
+                 </apex:pageBlockSection>
+                <apex:pageBlockSection title="Property Details">
+                    <apex:OutputField id="Token" value="{!optyList[0].Old_Booking__r.Unitcode__c}" />
+                    <apex:OutputField id="projetName" value="{!optyList[0].Old_Booking__r.Tower_Name__c}" />
+                    <apex:OutputField id="projetUnit" value="{!optyList[0].Old_Booking__r.Project__r.Name}" />
+                    <apex:OutputField id="towerName" value="{!optyList[0].Old_Booking__r.Quotation__r.Unit_Floor_No__c}" />
+                    <apex:OutputField id="Property_Type_Name" value="{!optyList[0].Old_Booking__r.Quotation__r.Carpet_Area__c }" />
+                    <apex:OutputField id="Site" value="{!optyList[0].Old_Booking__r.Quotation__r.Unit_Configuration__c}" />
+                </apex:pageBlockSection> 
+                <apex:pageBlockSection title="Other details">
+                    <apex:OutputField value="{!optyList[0].Old_Booking__r.Quotation__r.Total_Agreement_Value_Original__c}" />
+                    <apex:OutputField value="{!optyList[0].Old_Booking__r.Quotation__r.Total_Agreement_Value_Modified__c}" />
+                    <apex:OutputField value="{!optyList[0].Old_Booking__r.Quotation__r.Total_Additional_Charges_Original__c}" />
+                    <apex:OutputField value="{!optyList[0].Old_Booking__r.Quotation__r.Total_Additional_Charges_Modified__c}" />
+                    <apex:OutputField value="{!optyList[0].Old_Booking__r.Quotation__r.Total_CSGT_Original__c}" />
+                    <apex:OutputField value="{!optyList[0].Old_Booking__r.Quotation__r.Total_CSGT_Modified__c}" />
+                    <apex:OutputField value="{!optyList[0].Old_Booking__r.Quotation__r.Total_SGST_Original__c}" />
+                    <apex:OutputField value="{!optyList[0].Old_Booking__r.Quotation__r.Total_SGST_Modified__c}" />
+                    <apex:OutputField value="{!optyList[0].Old_Booking__r.Quotation__r.Discount_Applied__c}" />
+                    <apex:OutputField value="{!optyList[0].Old_Booking__r.Quotation__r.Customized_Billing_Plan__c}" />
+                    <apex:OutputField value="{!optyList[0].Old_Booking__r.Quotation__r.Additional_Car_Park_Applied__c}" />
+                    <apex:OutputField value="{!optyList[0].Old_Booking__r.Quotation__r.Type_of_Booking__c}" />
+                </apex:pageBlockSection> 
+                <apex:pageBlockSection title="Payment Plan" columns="1">
+                
+                    <!--<table style="width:100%; margin:0 auto; border: 1px solid black;">
+                    <thead>
+                        <tr>
+                            <th>Order</th>
+                            <th>Milestone Name</th>
+                            <th>Due Days</th>
+                            <th>Due Date</th>
+                            <th>Percentage</th>
+                            <th>Amount</th>
+                            <th>GST</th>
+                            <th>Billed</th>
+                        </tr>
+                        <apex:repeat value="{!QuoteLineItemslist}" var="QL">
+                        <tr>
+                        <td>{!QL.Sequence_Number__c }</td>
+                        <td>{!QL.Line_Item_Name__c }</td> 
+                        <td>{!QL.Due_After_Days__c }</td>
+                        <td>
+                        <apex:outputText value="{0, date, dd/MM/yyyy}" styleClass="dataCell">
+                            <apex:param value="{!QL.Due_Date__c }" /> 
+                        </apex:outputText>.
+                        </td>
+                        <td>{!QL.Percentage_Of_Value_To_Be_Invoiced__c }</td>
+                        <td>{!QL.Milestone_Amount__c }</td>
+                        <td>{!QL.Total_GST__c }</td>
+                        <td>{!QL.Is_Milestone_Billed__c}</td> 
+
+                        </tr>
+                        </apex:repeat>
+
+                    </thead>
+                    </table>-->
+                    <apex:datatable value="{!QuoteLineItemslist}" var="QLI" styleclass="alldatatables" bgcolor="EEEEEE" border="below" align="center">  
+                          <apex:column headerValue="Order" value="{!QLI.Sequence_Number__c}"></apex:column>
+                          <apex:column headerValue="Milestone Name" value="{!QLI.Line_Item_Name__c}"></apex:column>
+                          <apex:column headerValue="Due Days" value="{!QLI.Due_After_Days__c}"></apex:column>                          
+                          <apex:column headerValue="Due Date">            
+                               <apex:outputText value="{0,date,dd/MM/yy}"> <apex:param value="{!QLI.Due_Date__c}"/>        
+                               </apex:outputText>
+                          </apex:column>
+                          <apex:column headerValue="Percentage" value="{!QLI.Percentage_Of_Value_To_Be_Invoiced__c}%"></apex:column>
+                          <apex:column headerValue="Amount" value="{!QLI.Milestone_Amount__c}/-"></apex:column>
+                          <apex:column headerValue="GST" value="{!QLI.Total_GST__c}/-"></apex:column>
+                          <apex:column headerValue="Billed" value="{!QLI.Is_Milestone_Billed__c}"></apex:column>
+                    </apex:datatable>
+                </apex:pageBlockSection> 
+            </apex:pageblock>
+            
+           
+        </apex:form>
+        </div>
+</body>
+<script>    
+    window.onload=function(){       
+            checkValidation();
+     } 
+    </script>
+        
+</apex:page>

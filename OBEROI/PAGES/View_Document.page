@@ -1,0 +1,232 @@
+<apex:page applyBodyTag="false" controller="ViewDocument"  showHeader="false" sidebar="false" renderAs="pdf" standardStylesheets="false" applyHtmlTag="true"  docType="HTML-5.0"> <!--contentType="application/msword#filename.doc"  --->
+ 
+    <head>
+        <style type="text/css" media="print">
+           @page {
+                size: A4;
+                margin:100px;
+               //border:1px solid #000;
+                
+                padding:10px 12px;
+                @bottom-center {          
+
+                }
+                }
+                @page {
+                size: 8.87in 10.0in;
+                }
+                body{
+                margin:0;
+                padding:0;            
+                font-family: Times !important;//font-family:"Google Sans", Roboto, arial, sans-serif !important;
+                //font-family: 'cambria';
+                font-size:14px;
+                }
+                .table1{
+                width:100%;
+                border-collapse:collapse;
+                } 
+                .table1 tr td{
+                padding:5px 6px;
+                }
+                .table3{
+                width:100%;
+                border-collapse:collapse;
+                } 
+                .table3 tr td{
+                padding:6px 10px;
+                }
+                .table2{
+                width:100%;
+                border-collapse:collapse;
+                }
+                .table2 tr th{
+                border:1px solid #000;
+                font-size:11px;
+                padding:3px 5px;
+                background:#ddd;
+                }
+                .table2 tr td{
+                font-size:11px;
+                border:0.5px solid #000;
+                padding:3px 5px;
+                }
+               
+                @page {
+                margin-bottom:100px;
+                margin-top:80px;
+                
+                @top-center {
+                content: element(header,first-except);
+                }
+                @bottom-center {
+                content: element(footer,first-except); 
+                }
+                }            
+                .header{
+                position: running(header);
+                display:block;
+                margin-top:30px;
+                }
+                .footer {
+                display: inline-flex;
+                position: running(footer);
+                z-index:-999;
+                text-align:center;
+                }
+                .pagenumber:before {
+                content: counter(page);
+                }
+                .pagecount:before {
+                content: counter(pages);
+                }
+                
+            
+        </style> 
+        
+        <style>
+              
+ol.decimalOl {
+  counter-reset: item !important; 
+}                      
+li.decimalli{
+ display: block;
+ position: relative;
+ text-align: justify !important;
+ letter-spacing: .5px !important;
+ text-align-last: left !important;
+ padding-left:15px !important;
+ align-text-last: left !important;
+ margin:2em 0 !important;
+}  
+li.decimalli:before{
+    content: counters(item,".")"";
+    counter-increment: item;  
+    position: absolute; 
+    margin-right: 100%;
+    right:10px;
+}
+.tabletag{
+  border: 1px solid black;
+  border-collapse: collapse;
+  width: 100%;
+}
+.tdtag{
+  border: 1px solid black;
+  text-align: left;
+  padding: 8px;
+}
+.thtag{
+  border: 1px solid black;
+  text-align: center;
+  padding: 8px;
+  background-color: #dddddd;
+}
+.thclass{border: 1px solid black;
+}            
+ .tdclass{
+ border: 1px solid black;
+            }             
+</style> 
+   
+    </head>
+    <body>
+        <apex:pageMessages ></apex:pageMessages>
+        
+        <apex:outputPanel id="thePanel1" rendered="{!IF(docType == 'Acceptance Form' && renderStatus && renderPageNo, TRUE, FALSE)}"> 
+            <div class="footer">
+                 <apex:outputPanel style="float:left;" rendered="{!IF(rdList.size>0==true,true,false)}"><apex:outputText escape="false" value="{!rdList[0].QR_Code__c}" rendered="{!IF(rdList[0].Submitted_for_Approval__c==true,true,false)}"></apex:outputText></apex:outputPanel>
+               <br/><br/>  <div  style="float:center;">{!bookingRecord[0].Acceptance_Form_Template__c}<br/>
+                     Page <span class="pagenumber"/> of <span class="pagecount"/></div>
+            </div> 
+        </apex:outputPanel> 
+       <apex:outputPanel id="thePanel2" rendered="{!IF(docType != 'Acceptance Form' && renderStatus && renderPageNo, TRUE, FALSE)}"> 
+           <div class="footer">
+               <apex:outputPanel style="float:left;" rendered="{!IF(rdList.size>0,true,false)}"><apex:outputText escape="false" value="{!rdList[0].QR_Code__c}" rendered="{!IF(rdList[0].Submitted_for_Approval__c==true,true,false)}"></apex:outputText></apex:outputPanel>
+               <br/><br/><div style="float:center;"><span class="pagenumber"/></div>
+           </div>
+        </apex:outputPanel>
+        <div class="content">
+            <apex:outputPanel id="thePanel" rendered="{!renderStatus}"> 
+                <apex:form >
+                    <apex:pageBlock >
+                       
+                        <apex:outputPanel rendered="{!docRecord.size > 0}">
+
+                           <!-- <div  style="text-align: justify;text-justify: inter-word;"> -->
+                            <apex:outputText escape="false" value="{!docRecord[0].Clause_0__c}"></apex:outputText>
+                            
+                            <apex:outputPanel rendered="{!docRecord[0].Clause_1__c != ''}">
+                                <apex:outputText escape="false" value="{!docRecord[0].Clause_1__c}"></apex:outputText>
+                            </apex:outputPanel>
+                            
+                            <apex:outputPanel rendered="{!docRecord[0].Clause_2__c != ''}">
+                                <apex:outputText escape="false" value="{!docRecord[0].Clause_2__c}"></apex:outputText>
+                            </apex:outputPanel>
+                            
+                            <!--<div  style="text-align: justify;text-justify: inter-word;">
+                                <apex:outputPanel rendered="{!docRecord[0].Clause_1__c != ''}">
+                                   <!-- <div style="page-break-after:always;" ></div>
+                                </apex:outputPanel>
+                                <apex:outputField value="{!docRecord[0].Clause_1__c}" />    
+                            </div> 
+                            
+                            <div  style="text-align: justify;text-justify: inter-word;">
+                            <apex:outputPanel rendered="{!docRecord[0].Clause_2__c != ''}">
+                                <!--<div style="page-break-after:always;" ></div>
+                            </apex:outputPanel>
+                            <apex:outputField value="{!docRecord[0].Clause_2__c}" />
+                            </div> -->
+                            
+                            <apex:outputPanel rendered="{!docRecord[0].Clause_3__c != ''}"><br/>
+                               <div style="page-break-after:always;" ></div>
+                            </apex:outputPanel> 
+                            <apex:outputField value="{!docRecord[0].Clause_3__c}" />
+                            <br/>
+                            <apex:outputPanel rendered="{!docRecord[0].Clause_4__c != ''}">
+                                <div style="page-break-after:always;" ></div>
+                            </apex:outputPanel>
+                            <apex:outputField value="{!docRecord[0].Clause_4__c}" />
+                            
+                            <apex:outputPanel rendered="{!docRecord[0].Clause_5__c != ''}">
+                                <div style="page-break-after:always;" ></div>
+                            </apex:outputPanel>
+                            <apex:outputField value="{!docRecord[0].Clause_5__c}" />
+                            
+                            <apex:outputPanel rendered="{!docRecord[0].Clause_6__c != ''}">
+                             <!--   <div style="page-break-after:always;" ></div>-->
+                            </apex:outputPanel>
+                            <apex:outputField value="{!docRecord[0].Clause_6__c}" />
+                            
+                            <apex:outputPanel rendered="{!docRecord[0].Clause_7__c != ''}">
+                            <!--    <div style="page-break-after:always;" ></div>-->
+                            </apex:outputPanel>
+                            <apex:outputField value="{!docRecord[0].Clause_7__c}" />
+                            
+                            <apex:outputPanel rendered="{!docRecord[0].Clause_8__c != ''}">
+                           <!--     <div style="page-break-after:always;" ></div>-->
+                            </apex:outputPanel>
+                            <apex:outputField value="{!docRecord[0].Clause_8__c}" />
+                            
+                            <apex:outputPanel rendered="{!docRecord[0].Clause_9__c != ''}">
+                                <div style="page-break-after:always;" ></div>
+                            </apex:outputPanel>
+                            <apex:outputField value="{!docRecord[0].Clause_9__c}" />
+                            
+                            <apex:outputPanel rendered="{!docRecord[0].Clause_10__c != ''}">
+                                <div style="page-break-after:always;" ></div>
+                            </apex:outputPanel>
+                            <apex:outputField value="{!docRecord[0].Clause_10__c}"/> 
+                          <!--  </div> -->
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!docRecord.size==0}">
+                            No Content available,Please make sure Application Form is tagged in Project level.
+                        </apex:outputPanel>
+                    </apex:pageBlock> 
+                </apex:form>
+            </apex:outputPanel>
+        </div>
+    
+    </body>
+    
+</apex:page>

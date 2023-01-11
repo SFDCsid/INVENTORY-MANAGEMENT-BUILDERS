@@ -1,0 +1,99 @@
+<apex:page standardcontroller="Lead" sidebar="false" showHeader="false" standardStylesheets="true"
+           
+           docType="Html-5.0">
+    
+    <html>
+        
+        <body>
+            <apex:form >
+                
+                <div class="container-fluid">
+                    
+                    <div class="row-fluid" style="width:80%;margin-left:10%;margin-top: 5px" >
+                        <div class="span12" >
+                            <div class="hero-unit well" style="height:30px;">
+                                <table width="351px" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td align="left" valign="bottom" style="font-family:Verdana, Geneva, sans-serif; font-size:23px; font-weight:bold;"> Enquiry Form</td>
+                                        <td align="right" valign="top"></td>
+                                        
+                                    </tr>
+                                </table>
+                            </div>
+                            
+                            <style type="text/css">.BoldFont {Font-weight:Bold;color:white;}
+                            </style>
+                            <form>
+                                
+                                <apex:panelGrid columns="1" style="margin-top:40px;">
+                                    
+                                    <apex:pageblock mode="mainDetail"  >
+                                        <apex:pageblockButtons location="bottom">
+                                            <apex:commandButton value="Submit" action="{!save}" style="width: 100px; height: 25px; margin:0 0 0 1px;background:pink;" styleClass="BoldFont"/>
+                                          
+                                            <apex:commandButton value="Cancel" action="{!Cancel}" style="width: 100px; height: 25px; margin:0 0 0 1px;background:pink;" styleClass="BoldFont"/>
+                                        </apex:pageblockButtons>
+                                        <apex:Messages style="color:red"></apex:Messages>
+                                        <apex:pageblockSection columns="1">
+                                            
+                                            <apex:inputField value="{!lead.Salutation}" label="Title" style="width: 170px; height: 22px; margin:0 0 0 1px;" required="true" />
+                                            <apex:inputField value="{!lead.firstName}" required="true" style="width: 230px; height: 22px; margin:0 0 0 1px;"/>
+                                            <apex:inputField value="{!lead.Lastname}" required="true" style="width: 230px; height: 22px; margin:0 0 0 1px;"/>
+                                            <apex:inputField value="{!lead.MobilePhone}" style="width: 230px; height: 22px; margin:0 0 0 1px;" required="true"/>
+                                            <apex:inputField value="{!lead.Email}" style="width: 230px; height: 22px; margin:0 0 0 1px;" required="true"/>
+                                            <apex:pageBlockSectionItem ><apex:outputLabel >Country</apex:outputLabel>
+                                                <apex:inputField value="{!lead.Country}" style="width: 230px; height: 22px; margin:0 0 0 1px;" required="true" />
+                                            </apex:pageBlockSectionItem>
+                                            <apex:pageBlockSectionItem ><apex:outputLabel >State</apex:outputLabel>
+                                                <apex:inputField value="{!lead.State}" style="width: 320px; height: 25px; margin:0 0 0 1px;" required="true"/>
+                                            </apex:pageBlockSectionItem>                                
+                                            <apex:inputField value="{!lead.city}" style="width: 230px; height: 22px; margin:0 0 0 1px;" required="true" /> 
+                                            <apex:pageBlockSectionItem ><apex:outputLabel >Project</apex:outputLabel>
+                                                <apex:inputField value="{!lead.Project_List__c}" style="width: 320px; height: 25px; margin:0 0 0 1px;" required="true"/>
+                                            </apex:pageBlockSectionItem>   
+                                            <!--    <apex:inputCheckbox label="Request for Brochure"  value="{!selectattachment}"  rendered="{!!show}"/> -->
+                                            
+                                            
+                                            
+                                            <!--    <apex:selectList value="{!propertytype}" id="Request" label="Property Type" size="1" style="width: 230px; height: 22px; margin:0 0 0 1px;" required="true" rendered="{!show}">
+<apex:selectOptions value="{!TypeProperty}" ></apex:selectOptions>
+<apex:actionSupport event="onchange" action="{!selectedProject}" status="counterStatus"/>
+</apex:selectList> 
+
+-->
+                                            <!--<apex:inputField value="{!srObj.PropStrength__Information_Required__c}" style="width: 230px; height: 22px; margin:0 0 0 1px;" />-->
+                                            <!--<apex:pageBlockSectionItem labelTitle="Comments" >
+
+<apex:outputLabel >Comments</apex:outputLabel>
+<apex:inputField value="{!srObj.Query__c}" style="width: 230px; height: 40px; margin:0 0 0 1px;" /> 
+
+</apex:pageBlockSectionItem>-->
+                                            <!--   <apex:inputCheckbox label="Please tick if you want to receive the mails in future for campaigns etc." value="{!con.Interested_in_Future_Campaigns__c}" selected="true"/>
+<!--<apex:inputfield label="Please tick if you want to receive the mails in future for campaigns etc." value="{!con.Interested_in_Future_Campaigns__c}"/>-->
+                                            <!-- <apex:inputField value="{!srObj.NRI__c}"/> --->
+                                            
+                                            
+                                            <!--
+<apex:selectRadio value="{!options}" label="Type">
+<apex:selectOptions value="{!items1}"/>
+</apex:selectRadio><p/>
+-->                           
+                                        </apex:pageblockSection>
+                                    </apex:pageblock>
+                                </apex:panelGrid>
+                                
+                                <!--   <apex:pageblock mode="mainDetail" rendered="{!submitFlag}">
+<br/><h3 style="font-size: 20px;color: green; align : center;">Thank you for showing interest in Oberoi Realty Limited.
+<br/>We have registered your enquiry and would get back to you shortly.</h3>
+</apex:pageblock>
+-->         
+                                <apex:actionStatus id="counterStatus" 
+                                                   startText=" (Processing...)"/>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </apex:form>
+        </body>
+    </html>
+</apex:page>

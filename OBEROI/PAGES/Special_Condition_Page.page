@@ -1,0 +1,139 @@
+<apex:page controller="specialCondition" sidebar="false" showHeader="false" docType="html-5.0" applyHtmlTag="true" standardStylesheets="true">
+    <apex:form >
+        <html lang="en">
+            <head>
+                <meta charset="utf-8"/> 
+                <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"/>
+                <title>ORL</title>
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+                <style>
+                    body{
+                    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+                    font-size: 16px;
+                    }                    
+                    .navbar-brand img {
+                    width: calc(100% - 90px);
+                    }
+                    
+                    .btn{
+                    background: none !important;
+                    background-image:none !important;
+                    display: inline-block;
+                    color: #fff;
+                    background-color: #EF831F !important;
+                    padding: 6px 12px;
+                    margin-bottom: 0;
+                    font-size: 14px;
+                    font-weight: 400;
+                    line-height: 1.42857143;
+                    text-align: center;
+                    white-space: nowrap;
+                    vertical-align: middle;
+                    cursor: pointer;
+                    -webkit-user-select: none;
+                    -moz-user-select: none;
+                    -ms-user-select: none;
+                    user-select: none;
+                    background-image: none;
+                    border: 1px solid #EF831F;
+                    border-radius: 4px;
+                    width:100px;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="container mt-5">                    
+                    <div class="panel">
+                        <div class="form-group row mt-4">
+                            <div class="col-md-3">
+                                <div class="form-group row mb-0">                                    
+                                    <div class="col-md-12 mb-2">
+                                        <label for="Name" class="mb-1" >Select HTML Tag </label>                                        
+                                        <apex:selectList value="{!Gettag}" size="1" multiselect="false" styleClass="form-control">
+                                            <apex:selectOptions value="{!gettags}"/>
+                                            <apex:actionSupport reRender="no,back" event="onchange"/>                
+                                        </apex:selectList> 
+                                    </div>
+                                    <div class="col-md-12 mb-2">
+                                        <label for="Name" class="mb-1" >Select Object</label>  
+                                        <apex:outputPanel id="dependentObj">
+                                            <apex:selectList styleClass="form-control" size="1" value="{!selectedObject}" onchange="changeFieldList()" >
+                                                <apex:selectOptions value="{!objectLst }" />
+                                            </apex:selectList>
+                                        </apex:outputPanel>
+                                    </div>
+                                    <div class="col-md-12 mb-2">
+                                        <label for="Name" class="mb-1" >Select Field</label>  
+                                        <apex:outputPanel id="fieldRegion">
+                                            <apex:selectList styleClass="form-control" size="1" value="{!selectedField}" onchange="preparemergefieldname()" >
+                                                <apex:selectOptions value="{!fieldLst}"/>
+                                            </apex:selectList>
+                                        </apex:outputPanel>
+                                    </div>
+                                    <div class="col-md-12 mb-2">
+                                        <label for="Name" class="mb-1" >Merge Field</label>  
+                                        <apex:outputPanel id="mergefieldRegion">
+                                            <apex:inputText styleClass="form-control" value="{!mergeField}" />
+                                        </apex:outputPanel>
+                                    </div>
+                                    
+                                </div>
+                                <apex:outputPanel id="no">                                    
+                                    <apex:outputPanel rendered="{!if(Gettag == 'Other Special Condition' || Gettag == 'ITC BENEFIT' || Gettag == 'UPFRONT PAYMENT' || Gettag == 'Bank Subvention Scheme',true,false)}">
+                                        <div class="form-group row mt-0">
+                                            <div class="col-md-12 mb-2">
+                                                <label for="address" class="mb-1">Enter no of list </label>  
+                                                <apex:inputText value="{!searchText}"  styleClass="form-control"> 
+                                                    <apex:actionSupport reRender="textbox" action="{!createHTMLText}" event="onchange"/>  
+                                                </apex:inputText>                  
+                                            </div>
+                                        </div>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel id="back">
+                                        <apex:outputPanel rendered="{!if(Gettag == 'Other Special Condition' || Gettag == 'ITC BENEFIT' || Gettag == 'UPFRONT PAYMENT' || Gettag == 'Bank Subvention Scheme',true,false)}" >
+                                            <apex:commandButton value="Back" action="{!back}" title="Back"  immediate="true" styleClass="btn" />
+                                        </apex:outputPanel>
+                                    </apex:outputPanel>    
+                                    
+                                </apex:outputPanel>
+                                  
+                            </div>
+                            <div class="col-md-9">
+                                <apex:outputPanel id="textbox">
+                                    <apex:outputPanel rendered="{!if(Gettag == 'Other Special Condition' || Gettag == 'ITC BENEFIT' || Gettag == 'UPFRONT PAYMENT' || Gettag == 'Bank Subvention Scheme',true,false)}">
+                                         <div class="row form-group">                                             
+                                             <div class="col-md-12">
+                                                 <label for="codearea" class="col-form-label">Enter Text Here : </label>  
+                                                 <apex:inputTextarea id="codearea"  value="{!htmltext}" accesskey="" styleClass="textArea form-control"  rows="13"
+                                                                     cols="94" >
+                                                     <apex:actionSupport reRender="submit" event="onchange"/> 
+                                                 </apex:inputTextarea> 
+                                                 <apex:outputPanel id="submit" styleClass="mt-1">
+                                                     <apex:outputPanel rendered="{!if(htmltext != Null,true,false)}">
+                                                         <apex:commandButton value="Submit" action="{!save}" title="Submit" disabled="{!IF(OR((htmltext == null),(status == true)),true,false)}" status="status" styleClass="btn" />
+                                                     </apex:outputPanel>
+                                                 </apex:outputPanel>
+                                             </div>
+                                        </div>
+                                    </apex:outputPanel>
+                                </apex:outputPanel>
+                                
+                                
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                
+                     
+                <apex:actionFunction name="changeObjectList" action="{!prepareObjectList}" reRender="projectSection,dependentObj" status="status"/>
+                <apex:actionFunction name="changeFieldList" action="{!prepareFieldList}" reRender="fieldRegion,mergefieldRegion" status="status"/>
+                <apex:actionFunction name="preparemergefieldname" action="{!preparemergefield}" reRender="mergefieldRegion" status="status"/>
+            </body>
+        </html>
+    </apex:form>
+</apex:page>

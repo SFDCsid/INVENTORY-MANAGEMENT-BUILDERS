@@ -1,0 +1,23 @@
+<apex:page >
+    <apex:form >
+        <html>
+            <head>
+                <script src="https://sim.oberoirealty.net/js/jquery-2.1.1.min.js"></script>
+                <script src="https://sim.oberoirealty.net/js/intlTelInput.js"></script>
+                <link media="all" type="text/css" rel="stylesheet" href="https://sim.oberoirealty.net/css/intlTelInput.css"/>                
+            </head>
+            <body> 
+                <div class="col-md-6 ">
+                    Residence<br/><input type="text" id="resi_tel_no" maxlength="15"/>
+                </div>
+                <div class="col-md-6 ">
+                    Office <br/><input type="text" id="office_tel_no" maxlength="15"/>
+                </div>
+                <script src="https://sim.oberoirealty.net/dist/js/bootstrap.min.js"></script>
+                <script src="https://sim.oberoirealty.net/js/select2.min.js"></script>
+                <script src="https://sim.oberoirealty.net/js/custom.js?abc=1390283750"></script>
+                <script src="https://sim.oberoirealty.net/js/utils.js?abc=1891058852"></script>
+            </body>
+        </html>
+    </apex:form>
+</apex:page>

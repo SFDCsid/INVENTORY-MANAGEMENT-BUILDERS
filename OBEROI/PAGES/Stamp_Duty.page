@@ -1,0 +1,148 @@
+<apex:page renderAs="PDF" showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false">
+   <head>
+          <style type="text/css" media="print">
+                @page {
+                
+                
+                
+                size:4in 4in;
+                margin:20mm 20mm 60mm 20mm;
+                
+                }
+                body{
+                margin:0;
+                padding:0;
+                font-family: SansSerif;
+                font-size:18px;
+                line-height:1.5;
+                }
+                @page {
+                size: 8.26in 11.69in;
+                margin:12mm;
+                
+                }
+                
+                table {
+        		page-break-inside: auto;
+      			}
+                
+                tr{
+                page-break-inside: avoid;
+        		page-break-after: auto;
+                }
+                
+                .maintable {
+                border:1px solid black;       
+                border-collapse: collapse;
+                margin:0;
+                
+                }
+                .maintable tr td {
+                
+                border:1px solid black;
+                border-collapse: collapse;
+                }
+             
+               
+            </style>  
+        </head>
+    <body>
+        
+    
+    
+    	<table style='width:100%;border-collapse: collapse;' cellpadding='5'>
+            <tr>
+                <td style='border:1px solid #000000;font-size:14pt;font-family:SansSerif;text-align: center;background-color:#add8e6;color:black;'><b>Annexure A</b></td>
+            </tr>
+        </table>
+        <table style='width:100%;border-collapse: collapse;' cellpadding='5'>
+            <tr>
+                <td style='border:1px solid #000000;font-family:SansSerif;font-size:12pt;text-align: center;background-color:#a9a9a9;color:black;'><b>Amount Details and Bank Transfer Details for Agreement Registration</b></td>
+            </tr>
+        </table>
+        <table style='width:100%;border-collapse: collapse;' cellpadding='5'>
+            <tr>
+                <td style='border:1px solid #000000;font-family:SansSerif;font-size:10pt;text-align: center;background-color:#a9a9a9;color:black;'><b>(To transfer Stamp Duty and Registration Charges vide RTGS/NEFT )</b></td>
+            </tr>
+        </table><br/>
+        
+        
+        <table width = "100%" class="maintable" border="background-color:black;border-collapse: collapse;" cellpadding='3'> 
+                    
+                    <tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;margin-bottom:4px;color:black;font-weight: bold;width:30%;text-align: left !important; padding:5px;" >Date:</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 13px;color:black;text-align: left !important; padding:5px;"><br/></td>
+                    </tr>
+            <tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;margin-bottom:4px;color:black;font-weight: bold;width:30%;text-align: left !important; padding:5px;">Project : </td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 13px;color:black;text-align: left !important; padding:5px;"></td>
+                    </tr>
+            <tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;margin-bottom:4px;color:black;font-weight: bold;width:30%;text-align: left !important; padding:5px;">Name of the Applicants :</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 13px;color:black;text-align: left !important; padding:5px;"></td>
+                    </tr>
+            <tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;margin-bottom:4px;color:black;font-weight: bold;width:30%;text-align: left !important; padding:5px;">Flat No. :</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 13px;color:black;text-align: left !important; padding:5px;"></td>
+                    </tr>
+            <tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;margin-bottom:4px;color:black;font-weight: bold;width:30%;text-align: left !important; padding:5px;">Tower :</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 13px;color:black;text-align: left !important; padding:5px;"></td>
+                    </tr>
+            <tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;margin-bottom:4px;color:black;font-weight: bold;width:30%;text-align: left !important; padding:5px;">Agreement Value : </td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 13px;color:black;text-align: left !important; padding:5px;"></td>
+                    </tr>
+        </table><br/>
+        
+        <table width = "100%" class="maintable" border="background-color:black;border-collapse: collapse;" cellpadding='3'> 
+                    
+                    <tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;margin-bottom:4px;color:black;font-weight: bold;width:10%;text-align: center !important; padding:5px;background-color:#808080;" >Sr. No.</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;font-weight: bold;background-color:#808080;">Payment Details </td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;font-weight: bold;background-color:#808080;">Amount</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 11pt;color:black;text-align: center !important; padding:5px;font-weight: bold;background-color:#808080;">NEFT/RTGS Transfer Details</td>
+                    </tr>
+            <tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;margin-bottom:4px;color:black;;width:10%;text-align: center !important; padding:5px;">1.</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 13px;color:black;text-align: left !important; padding:5px;"></td>
+                    	<td style = "font-family:SansSerif;border-collapse: collapse;font-size: 13px;color:black;text-align: center !important; padding:5px;">Amount</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 13px;color:black;text-align: center !important; padding:5px;">NEFT/RTGS Transfer Details</td>
+            </tr>
+            <tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;margin-bottom:4px;color:black;width:10%;text-align: center !important; padding:5px;">2.</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 13px;color:black;text-align: left !important; padding:5px;"></td>
+                    	<td style = "font-family:SansSerif;border-collapse: collapse;font-size: 13px;color:black;text-align: center !important; padding:5px;">Amount</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 13px;color:black;text-align: center !important; padding:5px;">NEFT/RTGS Transfer Details</td>
+            </tr>
+            <tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;margin-bottom:4px;color:black;width:10%;text-align: center !important; padding:5px;">3.</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 13px;color:black;text-align: left !important; padding:5px;"></td>
+                    	<td style = "font-family:SansSerif;border-collapse: collapse;font-size: 13px;color:black;text-align: center !important; padding:5px;">Amount</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 13px;color:black;text-align: center !important; padding:5px;">Approx. Cash ( to be carried at the time of registration )</td>
+            </tr>
+            
+        </table><br/>
+        
+        <p style='font-size:12pt;margin-top: 0px;margin-bottom: 0px;font-family:SansSerif;color:black;'>Note:</p>
+        
+        <table width = "100%" class="maintable" border="background-color:black;border-collapse: collapse;" cellpadding='3'>
+            <tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;margin-bottom:4px;color:black;width:10%;text-align: center !important; padding:5px;">1.</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 13px;color:black;text-align: justify !important; padding:5px;">Alternatively you can opt to pay Stamp Duty and Registration Fees  through login to the website https://gras.mahakosh.gov.in.  You will have to generate “Challan” and pay the said amount  directly online or pay cash/cheques across the listed banks only. For more details your refer to the Annexure B </td>
+            </tr>
+            <tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;margin-bottom:4px;color:black;width:10%;text-align: center !important; padding:5px;">2.</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 13px;color:black;text-align: justify !important; padding:5px;">Government levies like Stamp duty have been calculated as per the prevailing norms and they are subject to change.</td>
+            </tr>
+            <tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;margin-bottom:4px;color:black;width:10%;text-align: center !important; padding:5px;">3.</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 13px;color:black;text-align: justify !important; padding:5px;">On the receipt of Stamp Duty Receipt, we can initiate registration of the agreement.</td>
+            </tr>
+            <tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;margin-bottom:4px;color:black;width:10%;text-align: center !important; padding:5px;">4.</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 13px;color:black;text-align: justify !important; padding:5px;"></td>
+            </tr>
+        </table>
+    </body>
+</apex:page>

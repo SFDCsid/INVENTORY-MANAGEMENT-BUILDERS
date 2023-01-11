@@ -1,0 +1,315 @@
+<apex:page controller="ViewFilesComponentController" docType="html-5.0" lightningStylesheets="false" standardStylesheets="false" sidebar="false" showHeader="false">
+    
+    <html 
+          xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink">
+        
+    <head>
+        
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+            <apex:stylesheet value="{!URLFOR($Resource.SLDS090, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+            <link href="https://fonts.googleapis.com/css?family=Lato:400,700&subset=latin,latin-ext" rel="stylesheet" type="text/css" />
+            <link href="https://fonts.googleapis.com/css?family=Buda:300" rel="stylesheet" type="text/css"/>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+     </head> 
+        <style>
+        html{
+         margin: 0;
+         Height: 100%;
+         overflow-Y: hidden;   
+         
+       }
+            body {
+             margin: 0;
+             Height: 100%;
+             overflow-Y: scroll;
+             border: 1px solid black;           
+             border-radius: 5px;
+             /* Full height */
+            /* Center and scale the image nicely */
+            background-position: fixed;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;;
+            -webkit-background-size: 100% 100%;; /* For WebKit*/
+            -moz-background-size: 100% 100%;    /* Mozilla*/
+            -o-background-size: 100% 100%;      /* Opera*/
+          }
+            .text-block {
+              position: relative !important;
+              top: 0% !important;
+              margin-bottom: 5% !important;
+              Width: 100%;
+              Max-Height: 90%;
+              padding-top: 0.2rem;
+              padding-bottom: 0.2rem;
+             <!-- padding-left: 1rem; -->
+              border-radius: 5px;
+              background-color: white;
+              opacity: 0.98;
+              font-family: 'Salesforce Sans',Arial,sans-serif;
+              font-size: 14px;
+              line-height: 1.5;
+              text-align: center;
+              color: rgb(62, 62, 60);
+              
+           }
+               
+.container{
+ Width: 100%;
+ text-align: center;
+ padding:0px;
+ margin:0px;           
+}            
+            
+ .rating {
+    border: none;
+    float: center;
+    font-size: 1.5em;
+    margin-bottom:-1.5rem;        
+}
+
+.rating > input {
+    display: none;
+}
+
+.rating > label:before {
+    margin: 5px;
+    font-size: 1em;
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f005";
+}
+
+.rating > .half:before {
+    content: "\f089";
+    position: absolute;
+}
+
+.rating > label {
+    color: #ddd;
+    float: center;
+}
+
+ .rating:not(:checked) > label:hover,
+.rating:not(:checked) > label:hover ~ label {
+    color: #006dd5;
+    cursor: pointer;
+} 
+ .textarea {
+   width:80%;
+   height: 100px;
+  -moz-border-bottom-colors: none;
+  -moz-border-left-colors: none;
+  -moz-border-right-colors: none;
+  -moz-border-top-colors: none;
+  background: none repeat scroll 0 0 rgba(0, 0, 0, 0.07);
+  border-color: -moz-use-text-color #FFFFFF #FFFFFF -moz-use-text-color;
+  border-image: none;
+  border-radius: 6px 6px 6px 6px;
+  border-style: none solid solid none;
+  border-width: medium 1px 1px medium;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12) inset;
+  font-family: 'Salesforce Sans',Arial,sans-serif;
+  font-size: 1em;
+  line-height: 1.4em;
+  padding: 5px 8px;
+  transition: background-color 0.2s ease 0s;
+}
+.textarea:focus {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border:1px solid #1124d1;
+    outline-width: 0;
+}            
+           
+             hr{
+             width:85%;
+             margin-top: 0rem;
+          
+            
+            }
+            
+           .loader {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url('{!URLFOR($Resource.loadingIcon)}')  no-repeat rgb(249,249,249);
+    opacity: .8;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 5rem;
+    -webkit-background-size: 5rem; /* For WebKit*/
+    -moz-background-size: 5rem;    /* Mozilla*/
+    -o-background-size: 5rem;      /* Opera*/
+}     
+        .fieldBlock{
+           border-bottom:1px solid black;
+           padding:5px;
+        }
+      .primary-button {
+          height: 27px;
+          color: white;
+          border-radius: 5px;
+          width: 105px;
+          border: none;
+          outline: none;
+          font-size: 18px;
+          cursor: pointer;
+          align: right; 
+          border: 1px solid black;
+          background-color:#204360;
+      }
+        </style>      
+   <body>       
+    <apex:form id="Theform" styleClass="text-block">
+   
+        <div id="con" class="container">
+                 <apex:outputPanel rendered="{!IF(rdList[0].Document_Approved__c!=true&&rdList[0].Submitted_for_Approval__c!=true,true,false)}">
+                  <div class="fieldBlock">
+                          <apex:actionRegion id="FilePanel">
+                              <b style="color:blue;"><u>Add Files</u></b> <br/><br/>
+                        <div class="col-md-12 col-sm-12" style="background: bisque;"> 
+                             <input type="file" Id="fileinput" name="files[]"  onchange="uploadFiles(); return false;" />
+    <apex:actionFunction name="saveFileAF" 
+         action="{!saveFile}" rerender="FilePanel,Theform"  status="status">
+        <apex:param name="base64File" value="" assignTo="{!base64}"/>
+        <apex:param name="fileName" value="" assignTo="{!fileName}"/>
+                            </apex:actionFunction><br/>
+                            <b>  <!--<apex:outputText value="{!fileName}" rendered="{!If(fileName!=null,true,false)}" styleClass="color:green;"></apex:outputText>--></b>
+                          </div>
+                           </apex:actionRegion>
+                     </div><br/> 
+            </apex:outputPanel>
+                <apex:actionStatus id="status">
+                    <apex:facet name="start">
+                     <apex:outputPanel >
+                       <!-- <img src="{!URLFOR($Resource.Loading)}" width="25" height="25" /><br/>-->
+                       <div class="loader"></div><br/>
+                    </apex:outputPanel>
+                   </apex:facet><br/>
+                 </apex:actionStatus>
+            <apex:outputPanel rendered="{!IF(contentVersionList.size>0,true,false)}">
+                <b><u>Uploaded Files</u></b><br/>
+                <apex:repeat value="{!contentVersionList}" var="cv">
+                    <apex:outputPanel rendered="{!IF(p.Name=='System Administrator',true,false)}">
+                    <p> <b>File Name:</b>&nbsp;<a href="/{!docIdMap[cv.id]}" target="_blank"> {!cv.Title} </a><br/>
+                        <b>FileType:&nbsp;</b>{!cv.FileType}<br/>
+                        <b>Approval Status:&nbsp;</b><apex:outputText rendered="{!IF(cv.isApproved__c==true,true,false)}" style="color:green;" value="Approved"></apex:outputText><apex:outputText rendered="{!IF(cv.isApproved__c==false,true,false)}"  style="color:red;" value="UnApproved"></apex:outputText><br/>
+                      <!--  <b>Created Date:</b>&nbsp;<b style="color:#9b9b2c;">{!cv.createdDate}</b>--></p>
+                        <apex:actionRegion renderRegionOnly="true">
+                        <apex:commandButton styleClass="primary-button" style="color:white;border-color:blue;" value="Download" onClick="DownloadMethod('{!docIdMap[cv.id]}');return false;" rendered="{!IF(isApproved||isAdmin||isNotForApproval,true,false)}"/> &nbsp; &nbsp;
+                        </apex:actionRegion><hr/>
+                    </apex:outputPanel>
+                   <apex:outputPanel rendered="{!IF(p.Name!='System Administrator',true,false)}">
+                    <p> <b>File Name:</b>&nbsp;<a href="/{!docIdMap[cv.id]}" target="_blank"> {!cv.Title} </a><br/>
+                        <b>FileType:&nbsp;</b>{!cv.FileType}<br/>
+                        <b>Approval Status:&nbsp;</b><apex:outputText rendered="{!IF(cv.isApproved__c==true,true,false)}" style="color:green;" value="Approved"></apex:outputText><apex:outputText rendered="{!IF(cv.isApproved__c==false,true,false)}"  style="color:red;" value="UnApproved"></apex:outputText><br/>
+                      <!--   <b>Created Date:</b>&nbsp;<b style="color:#9b9b2c;">{!cv.createdDate}</b>--></p>
+                        <apex:actionRegion renderRegionOnly="true">
+                        <input type="submit" class="primary-button" style="color:white;border-color:blue;" value="Download" onClick="DownloadMethod('{!docIdMap[cv.id]}');return false;" rendered="{!IF(isApproved||isAdmin||isNotForApproval,true,false)}"/> &nbsp; &nbsp;
+                        </apex:actionRegion><hr/>
+                    </apex:outputPanel>
+                </apex:repeat>
+                
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!IF(contentVersionList.size==0,true,false)}" >
+                  <b>No Files</b>
+            </apex:outputPanel>
+        </div>
+       <apex:actionFunction name="callRemoveMethod" action="{!RemoveFile}"  rerender="Theform,messages,messages2,messages1" status="status"/>   
+
+    </apex:form> 
+        
+   </body>
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" ></script>
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+           
+            <script>
+          var maxStringSize = 6000000;
+var attachmentList;
+var j;
+function uploadFiles()
+{
+    let text = "Press 'OK' To Upload File.";
+   if (confirm(text) == true) { 
+    input = document.getElementById('fileinput');
+    attachmentList = input.files;
+    if(j == undefined) 
+    j = 0;   
+    var file;
+    if(j < attachmentList.length)
+    {
+        file = attachmentList[j];
+     var name = file.name;
+        var reader = new FileReader();  
+        reader.onload = function(e) {  
+         var attachmentbodybase64 = reader.result.replace(/^data:.+;base64,/, '');
+            console.log(attachmentbodybase64.length);
+            if(attachmentbodybase64.length > maxStringSize )
+            alert("File size is too large to handle");
+            else
+            {
+                
+                saveFileAF(attachmentbodybase64, name);
+            }
+        }
+         reader.readAsDataURL(file);
+    }
+    else
+    {
+        console.log('this is end');
+        var url = window.location.origin + '/'+"{!$CurrentPage.parameters.Id}";
+        console.log(url);
+        //   window.location.href = url;
+    }
+      
+   
+   } else {
+        text = "You canceled!";
+   }
+    
+ }
+         function DownloadMethod(fileId) {
+             var iserror = false;
+             var FileDownloadurl = "/sfc/servlet.shepherd/document/download/"+fileId+"?operationContext=S1";
+              openInNewTab(FileDownloadurl);
+             //callDownloadMethod();       
+             /* if(!iserror){
+                let text = "Press 'OK' To Download File.";
+                  if (confirm(text) == true) { 
+                     
+                      callDownloadMethod();
+                   } else {
+                      text = "You canceled!";
+                       
+                 }
+              } */
+           }  
+        function openInNewTab(url) {
+ window.open(url, '_blank').focus();
+}
+          function RemoveMethod(fileId,fileName) {
+                var iserror = false;
+                
+                if(!iserror){
+                let text = "Press 'OK' To Delete This File:\n\n "+fileName;
+                  if (confirm(text) == true) { 
+                     
+                      callRemoveMethod();
+                   } else {
+                      text = "You canceled!";
+                       
+                 }
+              } 
+           }  
+</script>
+</html>   
+    
+</apex:page>

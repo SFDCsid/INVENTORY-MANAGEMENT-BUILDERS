@@ -1,0 +1,25 @@
+<apex:page showHeader="false" sidebar="false">
+<html>
+<head><title>Inventory Matrix</title></head>
+    <apex:includeLightning />    
+    <div id="LightningComponentid" />    
+    <script>
+    var oppId;
+    var projectId;
+    window.onload=function()
+        {
+         oppId = "{!$CurrentPage.parameters.oppId}";
+         projectId = "{!$CurrentPage.parameters.projectId}";
+        };
+    
+    $Lightning.use("c:Inventory_Matrix_App", function() {
+        $Lightning.createComponent("c:inventory_Matrix",
+          {"oppId":oppId,"projectId":projectId},
+          "LightningComponentid",
+          function(cmp) {
+             console.log('LWC Componenet added in VF page');
+          });
+    });
+    </script>
+</html>
+</apex:page>

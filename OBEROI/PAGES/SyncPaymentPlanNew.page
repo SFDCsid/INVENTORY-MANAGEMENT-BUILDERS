@@ -1,0 +1,10 @@
+<apex:page controller="SyncPaymentPlanNew" action="{!flow}" lightningStylesheets="True">
+    <apex:form id="fm1">
+        <apex:pageMessages >
+        </apex:pageMessages> 
+            <apex:actionPoller action="{!incrementCounter}" interval="5" rendered="{!IF(status == true, true, false)}"/>
+        <br/>
+        
+        <apex:commandButton action="{!BackToBooking}" value="Go to Quotation"/>
+    </apex:form>
+</apex:page>

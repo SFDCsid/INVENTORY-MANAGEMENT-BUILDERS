@@ -1,0 +1,7 @@
+<apex:page controller="Update_customer" action="{!Change}" lightningStylesheets="True" >
+    <apex:form >
+        <apex:pageMessages />
+        <br/>
+        <apex:commandButton action="{!BackToBooking}" value="Go to Booking"/>
+    </apex:form>
+</apex:page>

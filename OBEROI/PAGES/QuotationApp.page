@@ -1,0 +1,3 @@
+<apex:page >
+  <c:QuotationApprovalComments relatedToId="a15p0000003tniV"></c:QuotationApprovalComments>
+</apex:page>

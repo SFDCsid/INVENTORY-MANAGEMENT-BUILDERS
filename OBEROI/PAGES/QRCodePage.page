@@ -1,0 +1,194 @@
+<apex:page controller="QRCodePageController" docType="html-5.0" lightningStylesheets="false" standardStylesheets="false" sidebar="false" showHeader="false">
+    
+    <html 
+          xmlns="http://www.w3.org/2000/svg"
+		xmlns:xlink="http://www.w3.org/1999/xlink">
+        
+    <head>
+        
+			<meta charset="UTF-8" />
+			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+			<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+           <!-- <apex:stylesheet value="{!URLFOR($Resource.SLDS090, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />-->
+            <link href="https://fonts.googleapis.com/css?family=Lato:400,700&subset=latin,latin-ext" rel="stylesheet" type="text/css" />
+			<link href="https://fonts.googleapis.com/css?family=Buda:300" rel="stylesheet" type="text/css"/>
+			<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+			<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+     </head> 
+        <style>
+        html{
+         margin: 0;
+         Height: 100%;
+         overflow-Y: hidden;   
+         
+       }
+            body {
+             margin: 0;
+             Height: 100%;
+             overflow-Y: scroll;
+             
+             /* Full height */
+            /* Center and scale the image nicely */
+            background-position: fixed;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;;
+            -webkit-background-size: 100% 100%;; /* For WebKit*/
+            -moz-background-size: 100% 100%;    /* Mozilla*/
+            -o-background-size: 100% 100%;      /* Opera*/
+          }
+            .text-block {
+              position: relative !important;
+              top: 0% !important;
+              margin-bottom: 12% !important;
+              left: 15% !important;
+              Max-Width: 75%;
+              Min-Height: 70%;
+              padding-top: 2.2rem;
+              padding-bottom: 3.5rem;
+             <!-- padding-left: 1rem;-->
+              padding-right:5rem;  
+              border-radius: 5px;
+              background-color: white;
+              opacity: 0.98;
+              font-family: 'Salesforce Sans',Arial,sans-serif;
+              font-size: 1.5em;
+              line-height: 1.5;
+              text-align: center;
+              color: rgb(62, 62, 60); 
+           }
+               
+.container{
+ Max-Width: 100%;
+ padding-top: 0.2rem;
+ text-align: center;
+ border:1px solid black;
+ border-radius:10px;           
+ }            
+            
+ .rating {
+    border: none;
+    float: center;
+    font-size: 1.5em;
+    margin-bottom:-1.5rem;        
+          
+          
+            
+           
+}
+
+.rating > input {
+    display: none;
+}
+
+.rating > label:before {
+    margin: 5px;
+    font-size: 1em;
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f005";
+}
+
+.rating > .half:before {
+    content: "\f089";
+    position: absolute;
+}
+
+.rating > label {
+    color: #ddd;
+    float: center;
+}
+
+ .rating:not(:checked) > label:hover,
+.rating:not(:checked) > label:hover ~ label {
+    color: #006dd5;
+    cursor: pointer;
+} 
+ .textarea {
+   width:80%;
+   height: 100px;
+  -moz-border-bottom-colors: none;
+  -moz-border-left-colors: none;
+  -moz-border-right-colors: none;
+  -moz-border-top-colors: none;
+  background: none repeat scroll 0 0 rgba(0, 0, 0, 0.07);
+  border-color: -moz-use-text-color #FFFFFF #FFFFFF -moz-use-text-color;
+  border-image: none;
+  border-radius: 6px 6px 6px 6px;
+  border-style: none solid solid none;
+  border-width: medium 1px 1px medium;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12) inset;
+  font-family: 'Salesforce Sans',Arial,sans-serif;
+  font-size: 1em;
+  line-height: 1.4em;
+  padding: 5px 8px;
+  transition: background-color 0.2s ease 0s;
+}
+.textarea:focus {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border:1px solid #1124d1;
+    outline-width: 0;
+}            
+           
+             hr{
+             width:85%;
+             margin-top: 0rem;
+          
+            
+            }
+ @media screen and (min-width: 450px) {
+          .text-block {
+              position: relative !important;
+              top: 0% !important;
+              margin-bottom: 12% !important;
+              left: 15% !important;
+              Max-Width: 75%;
+              Min-Height: 70%;
+              padding-top: 2.2rem;
+              padding-bottom: 3.5rem;
+             <!-- padding-left: 1rem; 
+              padding-right:auto; -->
+              border-radius: 5px;
+              background-color: white;
+              opacity: 0.98;
+              font-family: 'Salesforce Sans',Arial,sans-serif;
+              font-size: 1em;
+              line-height: 1.5;
+              text-align: center;
+              color: rgb(62, 62, 60); 
+           }
+}
+        </style>      
+   <body>       
+  <apex:form id="Theform" styleClass="text-block">
+   
+    <div id="con" class="container">
+        <apex:outputPanel rendered="{!IF(rdList.size>0&&!rdList[0].Document_Approved__c,true,false)}">
+        <apex:outputText ><b style="color:#a2a23d;">This Document is Not Verified </b></apex:outputText><br/><br/>
+        <div style="text-align:left;">  
+         <b>Booking Name: </b> <apex:outputText value="{!rdList[0].Booking__r.Name}"></apex:outputText><br/>
+         <b>Document Type: </b> <apex:outputText value="{!rdList[0].Document_Name__c}"></apex:outputText><br/>
+         <b>Unit Code: </b> <apex:outputText value="{!rdList[0].Booking__r.Unitcode__c}"></apex:outputText><br/>
+       </div>
+    </apex:outputPanel> 
+    
+    <apex:outputPanel rendered="{!IF(rdList.size==0,true,false)}">
+        <apex:outputText ><b style="color:#ff0000b0;">Document Not Found</b></apex:outputText>
+    </apex:outputPanel>
+    
+    <apex:outputPanel rendered="{!IF(rdList.size>0&&rdList[0].Document_Approved__c,true,false)}">
+        <apex:outputText ><b style="color:#006818cc;">This Document is Verified </b></apex:outputText><br/><br/>
+        <div style="text-align:left;">  
+         <b>Booking Name: </b> <apex:outputText value="{!rdList[0].Booking__r.Name}"></apex:outputText><br/>
+         <b>Document Type: </b> <apex:outputText value="{!rdList[0].Document_Name__c}"></apex:outputText><br/>
+         <b>Unit Code: </b> <apex:outputText value="{!rdList[0].Booking__r.Unitcode__c}"></apex:outputText><br/>
+       </div>
+    </apex:outputPanel>
+        
+      </div>
+  </apex:form> 
+        </body>
+        </html>   
+
+    
+</apex:page>

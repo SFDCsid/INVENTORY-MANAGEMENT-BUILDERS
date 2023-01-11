@@ -1,0 +1,25 @@
+<apex:page showHeader="false" sidebar="false">
+<html>
+<head><title>Quotation</title></head>
+    <apex:includeLightning />    
+    <div id="LightningComponentid" />    
+    <script>
+    var oppId;
+    var unitId;
+    window.onload=function()
+        {
+         oppId = "{!$CurrentPage.parameters.oppId}";
+         unitId = "{!$CurrentPage.parameters.unitId}";
+        };
+    
+    $Lightning.use("c:QuotationApp", function() {
+        $Lightning.createComponent("c:Quotation",
+          {"oppId":oppId,"unitId":unitId},
+          "LightningComponentid",
+          function(cmp) {
+             console.log('LWC Componenet added in VF page');
+          });
+    });
+    </script>
+</html>
+</apex:page>

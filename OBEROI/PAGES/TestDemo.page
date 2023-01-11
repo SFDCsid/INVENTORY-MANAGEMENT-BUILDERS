@@ -1,0 +1,330 @@
+<apex:page showHeader="false" sidebar="false" cache="false" standardStylesheets="false" docType="html-5.0">
+    <html lang="en">
+        <apex:form > 
+            <head>
+                <meta charset="UTF-8"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+                <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+                <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" />
+                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+                <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"/>
+                <title>Test Demo</title>
+                <style>
+                    * {
+                    padding: 0;
+                    margin: 0;
+                    box-sizing: border-box;
+                    }
+                    html, body {
+                    padding: 0px;
+                    margin: 0px;
+                    font-family: 'Roboto', sans-serif;
+                    background-color: #000;
+                    color:#fff;
+                    }
+                    header {
+                    position: sticky;
+                    top: 0px;
+                    display: flex;
+                    padding: 10px 40px;
+                    background-color: #000;
+                    align-items: center;
+                    border-color: #00000;
+                    z-index: 1;
+                    }
+                    .mainContainer {
+                    height:auto;
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    
+                    }
+                    .form-control:focus,:active{
+                    background:#000;
+                    color:#fff;
+                    }
+                    .container {                    
+                    width:80%;
+                    margin:0 auto;
+                    padding: 20px;
+                    border-radius: 8px;
+                    background-color: #000;
+                    color:#fff;
+                    }
+                    .step {
+                    display: none;
+                    }
+                    .step.active {
+                    display: block;
+                    }
+                    .form-group {
+                    width: 100%;
+                    margin-top: 10px;
+                    position:relative;
+                    
+                    }
+                    label.placeText{
+                    position:absolute;
+                    top:-8px;
+                    left:23px;
+                    background:#000;
+                    padding:0 6px;
+                    }
+                    .placeTextS{
+                    font-size:12px;
+                    position:absolute;
+                    top:-5px;
+                    left:23px;
+                    background:#000;
+                    padding:0 4px;
+                    }
+                    .form-group input {
+                    width: 100%;
+                    border: 1.5px solid rgba(128, 128, 128, 0.418);
+                    padding: 5px;
+                    font-size: 18px;
+                    margin-top: 5px;
+                    border-radius: 4px;
+                    background-color: #000;
+                    color:#fff;
+                    }
+                    label {
+                    margin-bottom: 0rem;
+                    }
+                    
+                    button.next-btn,
+                    button.previous-btn,
+                    button.submit-btn {
+                    float: right;
+                    margin-top: 20px;
+                    padding: 8px 25px;
+                    outline: none;
+                    border-radius:30px;
+                    background-color:#EF831F;
+                    color: #FFF;
+                    border:1px solid #EF831F;
+                    font-size: 18px;
+                    cursor: pointer;
+                    transition:.4s all;
+                    width:120px;
+                    }
+                     button.next-btn:hover,
+                    button.previous-btn:hover,
+                    button.submit-btn:hover {
+                    background-color:#FFF;
+                    color: #EF831F;
+                    border:1px solid #EF831F;
+                    }
+                    button.previous-btn {
+                    float: left;
+                    }
+                    button.submit-btn {
+                    background-color: aquamarine;
+                    }
+                    <!---radio--->
+                    .form-check-inline{
+                    position:relative;
+                    }
+                   .RadioImg{
+                   
+                    width:100px;
+                    
+                    }
+                </style>
+            </head>
+            <body>
+                <!----------------------------------------- Navigation Bar ----------------------------------------->
+                <header >
+                    <img class="logo" src="{!$Resource.OberoiRealtyLogoWhite}" width="100px" />
+                </header>
+                <!------------------------------------- Personal Details ---------------------------------------->            
+                <div class="mainContainer mt-4">
+                    <div class="container">
+                        <div class="step step-1 active">
+                            <h4>
+                                Tell us about yourself
+                            </h4>                            
+                            <div class="row mt-2">
+                                <div class="form-group col-md-2">
+                                    <label for="Salutation" class="placeTextS">Salutation</label>
+                                    <input type="text" class="form-control" id="Salutation"/>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="Fname" class="placeText">First Name</label>
+                                    <input type="text" class="form-control" id="Fname"/>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="Lname" class="placeText">Last Name</label>
+                                    <input type="text" class="form-control" id="Lname" />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-2">
+                                    <label for="Salutation" class="placeTextS">Country Code</label>
+                                    <input type="text" class="form-control" id="Salutation"/>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="Fname" class="placeText">Mobile Number</label>
+                                    <input type="text" class="form-control" id="Fname"/>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="Lname" class="placeText">Email Id</label>
+                                    <input type="email" class="form-control" id="Lname" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputEmail4">Are you a new customer?</label><br/>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"/>
+                                        <label class="form-check-label" for="inlineRadio1"><img class="RadioImg" src="https://img.freepik.com/premium-photo/modern-beautiful-new-buildings-colored-wall-blue-sky_158388-1047.jpg?w=740"/></label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"/>
+                                        <label class="form-check-label" for="inlineRadio2"><img class="RadioImg" src="https://img.freepik.com/free-photo/shot-high-rise-tall-building_181624-2214.jpg?w=826&t=st=1659954773~exp=1659955373~hmac=80eaf42a258288f4830d98277a8c9b4f6dc5baa8f4f70f9e0b26faafca1e27a2"/></label>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            
+                            
+                            <button type="button" class="next-btn">Next</button>
+                        </div>
+                        
+                        <div class="step step-2">
+                            <div class="form-group">
+                                <label for="email">Which Project are you interested in?</label><br/>
+                                
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"/>
+                                    <label class="form-check-label" for="inlineRadio1">Tower1 </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"/>
+                                    <label class="form-check-label" for="inlineRadio2">Tower2</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"/>
+                                    <label class="form-check-label" for="inlineRadio3">Tower3</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">What is your budget?</label><br/>
+                                <input type="range" class="form-control-range" id="formControlRange" />
+                            </div>
+                            <div class="form-group">
+                                <label for="email">What is your requirement?</label><br/>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio11" value="option1"/>
+                                    <label class="form-check-label" for="inlineRadio11">1BHK</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio22" value="option2"/>
+                                    <label class="form-check-label" for="inlineRadio22">2BHK</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio33" value="option3"/>
+                                    <label class="form-check-label" for="inlineRadio33">3BHK</label>
+                                </div>                                
+                                
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Desired carpet area?</label><br/>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio12" value="option1"/>
+                                    <label class="form-check-label" for="inlineRadio12">Bellow 800</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio23" value="option2"/>
+                                    <label class="form-check-label" for="inlineRadio23">800 - 1200</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio34" value="option3"/>
+                                    <label class="form-check-label" for="inlineRadio34">1200 - 1600</label>
+                                </div> 
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio254" value="option3"/>
+                                    <label class="form-check-label" for="inlineRadio254">1800 - 2000</label>
+                                </div> 
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio224" value="option3"/>
+                                    <label class="form-check-label" for="inlineRadio224">2000 - 2400</label>
+                                </div> 
+                                
+                            </div>
+                            
+                            <button type="button" class="previous-btn">Prev</button>
+                            <button type="button" class="next-btn">Next</button>
+                        </div>
+                        
+                        <div class="step step-3">
+                            <div class="form-group">
+                                <label for="email">How did you hear about this?</label><br/>
+                                
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"/>
+                                    <label class="form-check-label" for="inlineRadio1">Broker </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"/>
+                                    <label class="form-check-label" for="inlineRadio2">Digital</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"/>
+                                    <label class="form-check-label" for="inlineRadio3">SMS/Email</label>
+                                </div>
+                            </div>
+                            <button type="button" class="previous-btn">Prev</button>
+                            <button type="submit" class="submit-btn">Submit</button>
+                        </div>
+                    </div>
+                </div>
+                
+            </body>
+        </apex:form>
+        <script>
+        const steps = Array.from(document.querySelectorAll("form .step"));
+        const nextBtn = document.querySelectorAll("form .next-btn");
+        const prevBtn = document.querySelectorAll("form .previous-btn");
+        const form = document.querySelector("form");
+        
+        nextBtn.forEach((button) => {
+            button.addEventListener("click", () => {
+            changeStep("next");
+        });
+        });
+            prevBtn.forEach((button) => {
+            button.addEventListener("click", () => {
+            changeStep("prev");
+        });
+        });
+            
+            form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const inputs = [];
+            form.querySelectorAll("input").forEach((input) => {
+            const { name, value } = input;
+            inputs.push({ name, value });
+        });
+            console.log(inputs);
+            form.reset();
+        });
+            
+            function changeStep(btn) {
+            let index = 0;
+            const active = document.querySelector(".active");
+            index = steps.indexOf(active);
+            steps[index].classList.remove("active");
+            if (btn === "next") {
+            index++;
+        } else if (btn === "prev") {
+            index--;
+        }
+            steps[index].classList.add("active");
+        }
+            
+            </script>
+    </html>
+</apex:page>
