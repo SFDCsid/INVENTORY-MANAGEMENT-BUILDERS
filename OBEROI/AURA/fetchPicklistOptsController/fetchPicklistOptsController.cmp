@@ -1,0 +1,11 @@
+<aura:component controller="fetchPicklistOptsController">
+<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+<aura:attribute name="objInfo" type="account" default="{sobjectType : 'Account'}" />
+
+<div class="slds-form-element">
+<label class="slds-form-element__label" for="select-01">Select Label</label>
+<div class="slds-select_container">
+<ui:inputSelect  aura:id="accIndustry" class="slds-select"  change="{!c.onPicklistChange}"/>
+</div>
+</div>
+</aura:component>

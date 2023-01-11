@@ -1,0 +1,51 @@
+.THIS .floor-display{
+        display: inline-block;
+        width: 3em;
+        height: 2em;
+        vertical-align: middle;
+        line-height: 2em;
+        margin: 2px;
+    }
+    .THIS .label-default{
+        color: white;
+        background-color: #9E9E9E;
+        border-color: #9E9E9E;
+    }
+    .THIS .label-default{
+        color: white;
+        background-color: #9E9E9E;
+        border-color: #9E9E9E;
+    }
+    .THIS .label-refuge{
+        color: white;
+        background-color:#E040FB;
+        border-color: #E040FB;
+    }
+    .THIS .label-available{
+        color: black;
+        background-color: #98FB98;
+        border-color: #98FB98;
+    }
+    .THIS .label-booked{
+        color: white;
+        background-color:#388E3C;
+        border-color:#388E3C;
+    }
+    .THIS .property-display{
+        display:block;
+        padding-top: 3px;
+        text-align: left;
+    }
+    .THIS .prop-container>*{
+        padding-bottom: 2px;
+        padding-right: 4px;
+         padding-left: 4px;
+    }
+    .THIS .img.display{
+        height: 300px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .THIS .floor-status{
+        
+    }

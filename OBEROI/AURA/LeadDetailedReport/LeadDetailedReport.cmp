@@ -1,0 +1,28 @@
+<aura:component controller="LeadDetailedReport" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    
+    <aura:attribute name="StartDate" type="Date"/>
+    <aura:attribute name="EndDate" type="Date"/>
+    <aura:attribute name="siteList" type="sObject[]"/>   
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <div class ="slds-size_1-of-8">
+        
+    </div>
+    <div class="row " align = "left" >  
+        <div class ="slds-size_1-of-8">
+            <br/>Lead Report<br/>
+            <lightning:select aura:id="PicklistId" label="Site"  required="true" >                
+                <aura:iteration items="{!v.siteList}" var="per">
+                    <option value="{!per.Id}" text="{!per.Name}" />  
+                </aura:iteration>
+            </lightning:select>
+            <lightning:input  type="date" name="input5" label="Report Period From" required="true" value="{!v.StartDate}" />
+            <lightning:input type="date" name="input5" label="Report Period To" required="true" value="{!v.EndDate}" />
+            <!-- <lightning:input type="date" name="input7" label="Disabled date field" disabled="true" value="2017-09-07" /> -->
+        </div>
+        <br/>
+        <div class ="slds-size_1-of-8">
+            <lightning:button class="slds-button slds-button--brand" onclick="{!c.GenerateReport}">Generate Report</lightning:button>
+        </div>
+    </div> 
+    
+</aura:component>

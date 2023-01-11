@@ -1,0 +1,6 @@
+<aura:component implements="lightning:actionOverride,force:hasRecordId,force:hasSObjectName,flexipage:availableForRecordHome,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" controller="BookingController" access="global" >
+    <aura:attribute name="billingPlanObj" type="String[]" default="" />
+    <aura:iteration items="{!v.billingPlanObj}" var="option" indexVar="idx"> 
+        <lightning:input aura:id="assignmentOptions" name="radioButtonGroup" label="{!option.Name}" type="radio" options="{!option.Name}" value="{!option.ID}" onchange="{! c.handleRadioGroupChange}"/>
+    </aura:iteration> 
+</aura:component>

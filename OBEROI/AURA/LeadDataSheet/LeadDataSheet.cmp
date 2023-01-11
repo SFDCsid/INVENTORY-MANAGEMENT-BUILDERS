@@ -1,0 +1,10 @@
+<aura:component controller ="DataSheetPDFController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    
+    <!--Init handler which is call doInit js function on component Load-->  
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <!--Aura Attribute for store Object List as Array-->    
+    <aura:attribute name="leadList" type="object"/>
+    <aura:attribute name="recordId" type="string" />
+    
+</aura:component>
