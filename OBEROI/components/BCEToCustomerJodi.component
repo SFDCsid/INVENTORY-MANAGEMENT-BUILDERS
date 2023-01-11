@@ -1,0 +1,196 @@
+<apex:component controller="BCEController" access="global">
+    <apex:attribute name="boId" type="Id" description="Id of the Booking" assignTo="{!bookingId}"/>
+    <head>
+        <style type= "text/css">
+            .chkBox {border: 1px black solid; padding-left: 15px;  }
+                .tablepad {padding-top: 40px;padding-bottom: 40px}
+                .tableborderInside {border: 1px solid black;}
+                .tableborder {border: 1px solid black;border-collapse: collapse;padding-left:10px}
+                .border {border: 1px solid black; padding: 2px;}
+                .pgborder {border: 1px solid black; padding: 10px;}
+                .fontEx {font-size:14px; font-family: Calibri;}
+        </style>
+    </head>
+    <div style="font-size: 14px; font-family: Geneva;">
+    Dear {!booking.Contact_Name__c}, <br/><br/>
+    
+    Greetings from Oberoi Realty. <br/><br/>
+    
+    This is with respect to your booking dated <u><apex:outputText value="{0, date, dd MMMM yyyy}">
+                            <apex:param value="{!booking.Booking_Date__c}" /> 
+                        </apex:outputText></u> for Premises No. <u>{!booking.property__r.House_Unit_No__c}</u>, Tower ‘<u>{!booking.Tower_Name__c}</u>’ in {!booking.project__r.name}. <br/>
+    <br/>
+    We hereby confirm that we have received Rs <u>{!payment.Amount__c}</u>/- ({!Amountinwords}), towards part payment of the Sale Price of the above-mentioned premise, along with proportionate amount of the applicable taxes as below:<!-- vide Cheque No – <u>{!payment.RTGS_Cheque_Draft_No__c}</u>   drawn on <u>{!payment.Bank_Name__c}</u> , dated <u><apex:outputText value="{0, date, dd MMMM yyyy}">
+                            <apex:param value="{!payment.Payment_Date__c}" /> 
+                        </apex:outputText></u> <br/> -->
+    <br/>
+    <table width="100%" style="border-collapse: collapse;border: 1px solid black;font-size: 12px">
+                        <tr>
+                            <td align="center" height = '25px' style="font-size: 12px;border: 1px solid black" width="5%">S.No.</td>
+                            <td align="center" height = '25px' style="font-size: 12px;border: 1px solid black" width="14%">Payment Mode</td>
+                            <td align="center" height = '25px' style="font-size: 12px;border: 1px solid black" width="14%">Amount</td>
+                            <td align="center" height = '25px' style="font-size: 12px;border: 1px solid black" width="14%">Cheque/Draft No./RTGS Code</td>
+                            <td align="center" height = '25px' style="font-size: 12px;border: 1px solid black" width="25%">Bank Name</td>
+                            <td align="center" height = '25px' style="font-size: 12px;border: 1px solid black" width="14%">Instrument Date</td>
+                        </tr>
+
+                        <apex:variable var="srono" value="{!1}"/>
+                        <apex:repeat var="pre" value="{!payList}">
+                            <tr>
+                                <td align="center" height = '25px' style="font-size: 12px;border: 1px solid black" width="5%">{!srono}</td>
+                                <td align="center" height = '25px' style="font-size: 12px;border: 1px solid black" width="14%">{!pre.Payment_Mode__c}</td>
+                                <td align="center" height = '25px' style="font-size: 12px;border: 1px solid black" width="14%">Rs. {!ROUND(pre.Amount__c,0)}</td>
+                                <td align="center" height = '25px' style="font-size: 12px;border: 1px solid black" width="14%">{!pre.RTGS_Cheque_Draft_No__c}</td>
+                                <td align="center" height = '25px' style="font-size: 12px;border: 1px solid black" width="25%">{!pre.Bank_Name__c}</td>
+                                <td align="center" height = '25px' style="font-size: 12px;border: 1px solid black" width="14%"><apex:outputText value="{0, date, dd'.'MM'.'yy}"> <apex:param value="{!pre.Instrument_Date__c}" /> </apex:outputText></td>
+                            </tr> 
+                        <apex:variable var="srono" value="{!srono + 1}"/>
+                        </apex:repeat>  
+                            </table>
+        <br/>                   
+    As intimated to you at the time of booking the above mentioned premises, we have set out below the payment schedule in respect of Sale Price of Rs. <u><apex:outputText value="{0, number, ###,##0}">
+                                          <!--  <apex:param value="{!ROUND(bookingObj.Billing_Plan__r.Total_Sales_Amount__c,2)}"/> -->
+                                        <apex:param value="{!ROUND(booking.Billing_Plan__r.Total_Sales_Amount_At_Time_of_Booking__c,2)}"/>
+                                        </apex:outputText>/- </u> <br/><br/>
+    
+    
+    <div style="font-size: 12px; font-family: Times New Roman;" align="center">
+                                <p><strong><u>Payment Schedule for Agreements To be Executed on Receipt of 10% of Sale Price</u></strong></p>
+                                <br/>
+                            </div>
+                            <table width="100%" style="border: 1px solid black; border-collapse: collapse;" cellspacing="0">
+                                <tr style="background-color:#ECEAEB; border: 1px solid black; border-collapse: collapse; font-size: 12px; font-family: Times New Roman;">
+                                    <td width="60%" align="left" style="border: 1px solid black; border-collapse: collapse;">
+                                        <b>&nbsp;&nbsp;&nbsp;&nbsp;PARTICULARS</b>
+                                    </td>
+                                    <td width="10%" style="border: 1px solid black; border-collapse: collapse;">
+                                        &nbsp;
+                                    </td>
+                                    <td width="15%" align="center" style="border: 1px solid black; border-collapse: collapse;">
+                                        <b>AMOUNT &nbsp;- {!booking.Tower_Name__c}/{!booking.property__r.House_Unit_No__c}</b>
+                                    </td>
+                                    <td width="15%" align="center" style="border: 1px solid black; border-collapse: collapse;">
+                                        <b>AMOUNT &nbsp;- {!Jodibooking.Tower_Name__c}/{!Jodibooking.property__r.House_Unit_No__c}</b>
+                                    </td>
+                                </tr>
+                                <tr style="border: 1px solid black; border-collapse: collapse; font-size: 12px; font-family: Times New Roman;">
+                                    <td width="60%" align="left" style="border: 1px solid black; border-collapse: collapse;">
+                                        <b>&nbsp;&nbsp;&nbsp;&nbsp;SALE PRICE</b>
+                                    </td>
+                                    <td width="10%" style="border: 1px solid black; border-collapse: collapse;width: 20%;"><!--v1.1 Added width-->
+                                        <b>(Excluding Taxes and Additional Expenses)</b>
+                                    </td>
+                                    <td width="15%" align="right" style="border: 1px solid black; border-collapse: collapse;">
+                                        <apex:outputText value="{0, number, ###,##0}">
+                                          <!--  <apex:param value="{!ROUND(bookingObj.Billing_Plan__r.Total_Sales_Amount__c,2)}"/> -->
+                                        <apex:param value="{!ROUND(booking.Billing_Plan__r.Total_Sales_Amount_At_Time_of_Booking__c,2)}"/>
+                                        </apex:outputText> /-
+                                    </td>
+                                    <td width="15%" align="right" style="border: 1px solid black; border-collapse: collapse;">
+                                        <apex:outputText value="{0, number, ###,##0}">
+                                          <!--  <apex:param value="{!ROUND(bookingObj.Billing_Plan__r.Total_Sales_Amount__c,2)}"/> -->
+                                        <apex:param value="{!ROUND(Jodibooking.Billing_Plan__r.Total_Sales_Amount_At_Time_of_Booking__c,2)}"/>
+                                        </apex:outputText> /-
+                                    </td>
+                                </tr>
+                            </table>
+                            <table width="100%" style=" border: 1px solid black; border-collapse: collapse;font-size: 12px; font-family: Times New Roman;" cellspacing="0">
+                                 <tr style="background-color:#ECEAEB; border: 1px solid black; font-size: 12px; font-family: Times New Roman;">
+                                    <td width="5%" style="border: 1px solid black; border-collapse: collapse;" align="center">
+                                        Sr. No.
+                                    </td>
+                                    <td width="55%" style="border: 1px solid black; border-collapse: collapse;" align="center">
+                                        Milestone
+                                    </td>
+                                    <td width="10%" style="border: 1px solid black; border-collapse: collapse;" align="center">
+                                        Percentage
+                                    </td>
+                                    <td width="15%" style="border: 1px solid black; border-collapse: collapse;" align="center">
+                                        Amount
+                                    </td>
+                                    <td width="15%" style="border: 1px solid black; border-collapse: collapse;" align="center">
+                                        Amount
+                                    </td>
+                                </tr>
+                                <apex:variable value="{!1}" var="count" />
+                                <apex:repeat value="{!billingLineItems}" var="item">
+                                    <tr style="display: {!IF(AND(item.Payment_Group__c=='IN',item.Line_Item_Type__c == 'Construction Linked'), 'table-row', 'none')};">
+                                        <td style="width:5%" class = "tableborder" align="center"> 
+                                    {!count}</td>
+                                        <td style="width:40%" class = "tableborder" align="left">
+                                        <apex:outputText value="{!item.Description__c}"/>                 
+                                    <table class="tableborder ">
+                                        <tr style="background-color:#ECEAEB; border: 1px solid black; font-size: 12px; font-family: Times New Roman;">
+                                            <td style="width:50%;border: 1px solid black; border-collapse: collapse;" align="center" class="tableborder "><b>Particulars</b></td>
+                                            <td style="width:5%;border: 1px solid black; border-collapse: collapse;" align="center" class="tableborder "><b>Amount</b></td>
+                                        </tr>
+                                             <apex:variable value="{!0}" var="index" />
+                                      <apex:repeat value="{!billinglineItemTimeLinked}" var="bplitl">
+                                        <tr style="font-family: Times New Roman;">
+                                           <td align="left" style="width:50%;font-family: Times New Roman;" class="tableborder ">
+                                            <apex:outputText value="{!bplitl.Description__c}" /></td>
+                                            <td align="right" style="width:30%" class="tableborder "><apex:outputText value="{0, number, ###,##0}">
+                                            <apex:param value="{!bplitl.Discount_Amount__c}" /></apex:outputText> /- </td>
+                                        </tr>                      
+                                      </apex:repeat>
+                                    </table>
+                                        </td>
+                                        <td style="width:15%" class = "tableborder" align="center">
+                                        <apex:outputText value="{!if(item.Payment_Group__c=='IN',inPercent,item.Percentage_Of_Value_To_Be_Invoiced__c)}"/>%</td>
+                                        <td align="right" style="width:20%" class = "tableborder"><apex:outputText value="{0, number, ###,##0}">
+                                            <apex:param value="{!if(item.Payment_Group__c=='IN',inAmount,item.Discount_Amount__c)}" /></apex:outputText> /-
+                                        </td>
+                                          <apex:variable var="count"  value="{!IF(AND(item.Payment_Group__c=='IN',item.Line_Item_Type__c == 'Construction Linked'), count+1, count)}" /> 
+                                    </tr>
+                                    <tr style="display: {!IF(item.Payment_Group__c!='IN', 'table-row', 'none')};">
+                                        <td style="width:5%" class = "tableborder" align="center">
+                                    {!count}</td>
+                                        <td style="width:55%;font-family: Times New Roman;" align="left" class = "tableborder"><apex:outputText value="{!item.Description__c}"/></td>
+                                        <td style="width:20%" align="center" class = "tableborder"><apex:outputText value="{!item.Percentage_Of_Value_To_Be_Invoiced__c}"/> %</td>
+                                        <td style="width:20%" align="right" class = "tableborder"><apex:outputText value="{0, number, ###,##0}">
+                                            <apex:param value="{!item.Discount_Amount__c}" /></apex:outputText> /-
+                                        </td>
+                                        
+                                    </tr>
+                                 <apex:variable var="count"  value="{!IF(item.Payment_Group__c!='IN', count+1, count)}" /> 
+                                </apex:repeat>
+                            </table>
+                            <br/>
+    <br/>
+    
+    <b>*Post payment of 10% of the sale price i.e 100 % of the Booking Amount and 50% of the Earnest Money, the Purchaser shall immediately execute and register the Agreement for Sale</b><br/> 
+    
+    We would now like to introduce <b><u>{!booking.RM_Name__c}</u></b> as your Relationship Manager, who will be contacting you and will assist you at every stage of your interaction with us hereon.<br/>
+    
+    It has been a pleasure interacting with you and we sincerely thank you for the trust you have placed in choosing {!booking.project__r.name}.<br/> 
+    
+    Notes: <br/> 
+    <ul>
+        <li>Applicable Taxes/ GST has been levied as per existing rates and may be varied by the Government of India from time to time. <br/></li>
+        </ul> 
+    
+    <ul>
+        <li>Confirmation of booking is subject to clearance of the above mentioned cheque as part payment of Sale Price of the said premises. <br/></li>
+        </ul> 
+    <ul>
+        <li>We request you to kindly initiate the execution and registration of your Agreement for Sale to ensure compliance with the RERA immediately after remitting the 10% Booking Amount. <br/></li>
+        </ul> 
+    
+    
+    
+    Should you need any further assistance, you may kindly contact me on <u>{!$User.Phone}</u> or write to me at <u>{!$User.Email}</u> <br/>
+    
+        Please do let us know for further insight or any assistance required.<br/><br/>
+    
+    
+    
+    Thanks and Regards,<br/>
+    
+    
+    
+    
+    
+    
+    </div> 
+    
+</apex:component>

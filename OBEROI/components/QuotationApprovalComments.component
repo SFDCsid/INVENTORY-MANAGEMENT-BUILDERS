@@ -1,0 +1,19 @@
+<apex:component Controller="QuotationApprovalComments" access="global">
+    <apex:attribute name="relatedToId" assignTo="{!QuotationId}" type="String" description="ID of the record whose last approval comments to retrieve" />
+    <html style="font-family: geneva;font-size: 10.0pt;">
+        Dear {!QuotationObj[0].CreatedBy.Name},<br/><br/>
+        This is to notify that Quotation no {!QuotationObj[0].Name} prepared for {!QuotationObj[0].Opportunity__r.Name} has been approved. Please find below the details:<br/><br/>
+        
+        Project Name : {!QuotationObj[0].Project__r.Name}<br/><br/>
+
+        Property Details : {!QuotationObj[0].Property__r.House_Unit_No__c}<br/><br/>
+
+        Approved by : {!QuotationObj[0].Approved_by__c}<br/><br/>
+
+        Comments : {!comments}<br/><br/>
+        
+        Link of Record : {!Link}<br/><br/>
+        Regards<br/>
+        ORL Admin.
+    </html>
+</apex:component>

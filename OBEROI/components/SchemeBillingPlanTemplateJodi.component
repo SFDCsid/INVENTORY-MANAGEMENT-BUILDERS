@@ -1,0 +1,279 @@
+<apex:component access="global" controller="SchemePayment_Plan_ExtnCTRL">
+    <apex:attribute name="billingPlanIdAttr" access="global" type="string" description="id" assignTo="{!billingPlanId}"/>
+    <!--<style type="text/css">
+        TH {font-size: 8px; font-face: arial;}
+        TD {font-size: 8px; font-face: verdana}
+        .datafont {font-size: 15px; font-family: Times New Roman;}
+    </style>
+    <style type="text/css">
+        .datafont {font-size: 15px; font-family: Times New Roman;}
+    </style>-->
+    <body>
+        <table>
+            <tr>
+                <td>
+                    <table border="1" cellspacing="0"> 
+                        <tr style="font-size: 15px; font-family: Times New Roman;">
+                            <td>DATE </td>
+                            <!-- <td>{!billingPlan.Valid_Until__c}</td> -->
+                            <td >
+                            <apex:outputText value="{0, date, MMMM d','  yyyy}">
+                                <apex:param value="{!NOW()}" />
+                                </apex:outputText>
+                            </td>
+                        </tr>
+                         <tr style="font-size: 15px; font-family: Times New Roman;">
+                            <td>SUBJECT</td>
+                            <!-- <td>Payment Plan Extension for : {!billingPlan.Property__r.House_Unit_No__c} {!if(isJodiPlan == true,'/' + jodiBillingPlan.Property__r.House_Unit_No__c,'')}</td> -->
+                            <td>Billing Plan Extension for : {!billingPlan.Property__r.Material_No__c} {!if(isJodiPlan == true,'/' + jodiBillingPlan.Property__r.Material_No__c,'')}</td>
+                        </tr>
+                         <tr style="font-size: 15px; font-family: Times New Roman;">
+                            <td>REASON</td>
+                            <td>Payment Extension </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <br/>
+            <tr style="font-size: 15px; font-family: Times New Roman;">
+                <td>
+                    <p>
+                        {!billingPlan.Opportunity__r.Account.Name} intends to purchase Flat No.: {!billingPlan.Property__r.House_Unit_No__c}{!if(isJodiPlan == true,'/' + jodiBillingPlan.Property__r.House_Unit_No__c,'')}, Tower {!billingPlan.Tower__r.Tower_Name__c} in {!billingPlan.Tower__r.Project_Name__r.Name} at the Total Sale Price of ₹. {!totalAmount} 
+                        {!if(isJodiPlan == true,'/' + totalAmountJodi,'')}
+                        along with rights to 
+                        {!if(isSingle == true,'single car park','')}
+                        {!if(isSingle == true,billingPlan.Property__r.Single_Parking__c,'')}
+                        {!if(isTandem == true,',tandem car park','')}
+                        {!if(isTandem == true,billingPlan.Property__r.Tandem_Parking__c,'')}
+                        {!if(isTriple == true,',triple car park','')}
+                        {!if(isTriple == true,billingPlan.Property__r.Triple_Parking__c,'')}                        
+                        respectively.
+                        <br/>
+                        <table border="1" cellspacing="0" cellpadding="4" style="display: {!IF(isDiscount == true, 'table', 'none')};">
+                        <tr style="font-size: 15px; font-family: Times New Roman;">
+                            <td>Original Sales Price</td>
+                            <td>{!netAmount} {!if(isJodiPlan == true,'/ ' + netAmountJodi,'')}</td>
+                        </tr>
+                        <tr style="font-size: 15px; font-family: Times New Roman;">
+                            <td>Discount Applicable</td>
+                            <td>YES</td>
+                        </tr>
+                        <tr style="font-size: 15px; font-family: Times New Roman;">
+                            <td>Discount Type</td>
+                            <td>{!if(isPercent == true,'Percentage','Amount')}</td>
+                        </tr>
+                        <tr style="font-size: 15px; font-family: Times New Roman; display: {!IF(isPercent == true, 'table-row', 'none')};">
+                            <td>Discount %</td>
+                            <td>{!billingPlan.Discount_On_Basic_Cost__c} {!if(isJodiPlan == true,'/ ' + isPercentJodi,'')}</td>
+                        </tr>
+                        <tr style="font-size: 15px; font-family: Times New Roman; display: {!IF(isPercent == false, 'table-row', 'none')};">
+                            <td>Discount Amount</td>
+                            <td>{!isAmountDiscount} {!if(isJodiPlan == true,'/ ' + isDiscountJodi,'')}</td>
+                        </tr>
+                        <tr style="font-size: 15px; font-family: Times New Roman;">
+                            <td>Sales Price (Special Consideration)</td>
+                            <td>{!totalAmount} {!if(isJodiPlan == true,'/ ' + totalAmountJodi,'')}</td>
+                        </tr>
+                        </table>
+                        <br/>
+                        <table>
+                        <tr>
+                        <td>
+                            <table border="1" cellspacing="0">
+                                <tr style="font-size: 15px; font-family: Times New Roman;">
+                                    <td>Additional Information</td>
+                                    <td>{!billingPlan.Additional_Information__c}</td>                                
+                                </tr>
+                            </table>
+                        </td>
+                        <br/>
+                        </tr>
+                        </table>
+                        <br/>
+                        Further, the customer has requested for below payment extension: -
+                        <br/>
+                    </p>
+                </td>
+            </tr>
+            <tr style="font-size: 15px; font-family: Times New Roman;">
+                <td>
+                    <table border="1" cellspacing="0" cellpadding="4">
+                        <tr style="font-size: 15px; font-family: Times New Roman;">
+                            <td>REQUESTED SCHEDULE {!billingPlan.Property__r.House_Unit_No__c} {!if(isJodiPlan == true,'/' + jodiBillingPlan.Property__r.House_Unit_No__c,'')}</td>
+                            <td>PERCENTAGE</td>
+                            <td>DUE DAYS</td>
+                            <td>SALES PRICE {!if(isJodiPlan == true,'-' + billingPlan.Property__r.House_Unit_No__c,'')}</td>
+                            <td>SALES PRICE - {!jodiBillingPlan.Property__r.House_Unit_No__c}</td>
+                            
+                        </tr>
+                        <tr style="font-size: 15px; font-family: Times New Roman;">
+                            <td colspan="2">Source of booking</td>
+                            <td colspan="2">{!billingPlan.Opportunity__r.Enquiry_Type__c}</td>                           
+                        </tr>
+                        <apex:repeat value="{!billingPlanLineItems }" var="lineItem">
+                            <tr style="font-size: 15px; font-family: Times New Roman;">
+                                <td>
+                                    <apex:repeat value="{!lineItem.customLineItem }" var="customeLI">
+                                        {!customeLI.Payment_Plan_Line_Item_Name__c}
+                                        <!-- {!customeLI.Description__c} -->
+                                        <apex:outputPanel rendered="{!lineItem.customLineItem.size > 1 && lineItem.customLineItem[lineItem.customLineItem.size-1].Id != customeLI.Id}">
+                                            <br/><br/><hr/>
+                                        </apex:outputPanel>
+                                    </apex:repeat>
+                                </td>
+                                <td>
+                                    <apex:repeat value="{!lineItem.customLineItem }" var="customeLI">
+                                        {!customeLI.Percentage_Of_Value_To_Be_Invoiced__c}
+                                        <apex:outputPanel rendered="{!lineItem.customLineItem.size > 1 && lineItem.customLineItem[lineItem.customLineItem.size-1].Id != customeLI.Id}">
+                                            <br/><br/><hr/>
+                                        </apex:outputPanel>
+                                    </apex:repeat>
+                                </td>
+                                <td>
+                                    <apex:repeat value="{!lineItem.customLineItem }" var="customeLI">
+                                        {!customeLI.Due_After_Days__c}
+                                        <apex:outputPanel rendered="{!lineItem.customLineItem.size > 1 && lineItem.customLineItem[lineItem.customLineItem.size-1].Id != customeLI.Id}">
+                                            <br/><br/><hr/>
+                                        </apex:outputPanel>
+                                    </apex:repeat>
+                                </td>
+                                <td>
+                                    <apex:repeat value="{!lineItem.customLineItem }" var="customeLI">
+                                        {!customeLI.Line_Item_Amount_Scheme__c}
+                                        <apex:outputPanel rendered="{!lineItem.customLineItem.size > 1 && lineItem.customLineItem[lineItem.customLineItem.size-1].Id != customeLI.Id}">
+                                            <br/><br/><hr/>
+                                        </apex:outputPanel>
+                                    </apex:repeat>
+                                </td>
+                                <td>
+                                    <apex:repeat value="{!lineItem.customJodiLineItem }" var="customeJodiLI">
+                                        {!customeJodiLI.Line_Item_Amount_Scheme__c}
+                                        <apex:outputPanel rendered="{!lineItem.customJodiLineItem.size > 1 && lineItem.customJodiLineItem[lineItem.customJodiLineItem.size-1].Id != customeJodiLI.Id}">
+                                            <br/><br/><hr/>
+                                        </apex:outputPanel>
+                                    </apex:repeat>
+                                </td>
+                            </tr>
+                        </apex:repeat>
+                    </table>
+                    <br/>
+                </td>
+            </tr>
+            <!-- <tr>
+                <td>
+                    <table border="1" cellspacing="0">
+                        <tr style="font-size: 15px; font-family: Times New Roman;">
+                            <td>Additional Information</td>
+                            <td>{!billingPlan.Additional_Information__c}</td>                                
+                        </tr>
+                    </table>
+                </td>
+                <br/>
+            </tr> -->
+            <tr>
+                <td>
+                    <table border="1" cellspacing="0">
+                        <tr style="font-size: 15px; font-family: Times New Roman;">
+                            <td colspan="2">PRIMARY APPLICANT</td>
+                        </tr>
+                        <tr style="font-size: 15px; font-family: Times New Roman;">
+                            <td>Name</td>
+                            <td>{!billingPlan.Opportunity__r.Account.Salutation} {!billingPlan.Opportunity__r.Account.Name}</td>                                
+                        </tr>
+                        <tr style="font-size: 15px; font-family: Times New Roman;">
+                            <td>Address</td>
+                            <td>{!billingPlan.Opportunity__r.Account.House_No__c},
+                            {!billingPlan.Opportunity__r.Account.Street__c},
+                            {!billingPlan.Opportunity__r.Account.Street_2__c},
+                            {!billingPlan.Opportunity__r.Account.Street_3__c},
+                            {!billingPlan.Opportunity__r.Account.Locality__c},
+                            {!billingPlan.Opportunity__r.Account.City__c},
+                            {!billingPlan.Opportunity__r.Account.Country_Picklist__c}</td>                                
+                        </tr>
+                        <tr style="font-size: 15px; font-family: Times New Roman;">
+                            <td>Nationality</td>
+                            <td>{!billingPlan.Opportunity__r.Account.Nationality__c}</td>                                
+                        </tr>
+                        <tr style="font-size: 15px; font-family: Times New Roman;">
+                            <td>Category</td>
+                            <td>{!billingPlan.Opportunity__r.Account.Contact_category__pc}</td>                                
+                        </tr>
+                        <tr style="font-size: 15px; font-family: Times New Roman;">
+                            <td>Occupation</td>
+                            <td>{!billingPlan.Opportunity__r.Account.Occupation__c}</td>                                
+                        </tr>
+                        <tr style="font-size: 15px; font-family: Times New Roman;">
+                            <td>Designation</td>
+                            <td>{!billingPlan.Opportunity__r.Account.Designation__pc}</td>                                
+                        </tr>
+                        <tr style="font-size: 15px; font-family: Times New Roman;">
+                            <td>Company Name</td>
+                            <td>{!billingPlan.Opportunity__r.Account.Company__c}</td>                                
+                        </tr>
+                        <!-- <tr style="font-size: 15px; font-family: Times New Roman;">
+                            <td>Source</td>
+                            <td>{!billingPlan.Opportunity__r.Enquiry_Type__c}</td>                                
+                        </tr> -->
+                    </table>
+                </td>
+                <br/>
+            </tr>
+            <tr>        
+                <td>
+                    <apex:outputPanel rendered="{!isCoOwner}">
+
+                        <table border="1" cellspacing="0">
+                            <tr>
+                                <td colspan="2">SECONDARY APPLICANT</td>
+                            </tr>
+                            <tr>
+                                <td>Name</td>
+                                <td>{!actData.Salutation} {!actData.Name}</td>                                
+                            </tr>
+                            <tr>
+                                <td>Address</td>
+                                <td>{!actData.House_No__c},
+                                {!actData.Street__c},
+                                {!actData.Street_2__c},
+                                {!actData.Street_3__c},
+                                 {!actData.Locality__c},
+                                {!actData.City__c},
+                                    {!actData.Country_Picklist__c}</td>                                
+                            </tr>
+                            <tr>
+                            <td>Nationality</td>
+                            <td>{!actData.Nationality__c}</td>                                
+                            </tr>
+                            <tr>
+                                <td>Category</td>
+                                <td>{!actData.Contact_category__pc}</td>                                
+                            </tr>
+                            <tr>
+                                <td>Occupation</td>
+                                <td>{!actData.Occupation__c}</td>                                
+                            </tr>
+                            <tr>
+                                <td>Designation</td>
+                                <td>{!actData.Designation__pc}</td>                                
+                            </tr>
+                            <tr>
+                                <td>Company Name</td>
+                                <td>{!actData.Company__c}</td>                                
+                            </tr>
+                            <!-- <tr>
+                                <td>Source</td>
+                                <td>{!billingPlan.Opportunity__r.Enquiry_Type__c}</td>                                
+                            </tr> -->
+                        </table>
+                    </apex:outputPanel>
+                </td>
+            </tr>
+            <table border="1" cellspacing="0">
+            <tr style="font-size: 15px; font-family: Times New Roman;">
+                            <td>Source</td>
+                            <td>{!billingPlan.Opportunity__r.Enquiry_Type__c}</td>                                
+            </tr>
+            </table>
+        </table>
+    </body>
+</apex:component>

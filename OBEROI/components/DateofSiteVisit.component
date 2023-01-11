@@ -1,0 +1,16 @@
+<apex:component controller="EnquiryDateComponent" allowDML="true" access="Global">
+    <apex:attribute type="datetime" name="reqdate" description="DateTime of Site Visit" />
+    <apex:attribute type="boolean" name="displaywithAT" description="DateTime print format as date at time"/>
+
+<apex:outputPanel rendered="{!NOT(displaywithAT)}">
+    <apex:outputText value="{0, date, dd/MM/yy hh:mm a}">
+        <apex:param value="{!reqdate + offset}" /> 
+    </apex:outputText>
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!displaywithAT}">
+    <apex:outputText value="{0, date, dd/MM/yy 'at' hh:mm a}">
+        <apex:param value="{!reqdate + offset}" /> 
+    </apex:outputText>
+</apex:outputPanel>
+</apex:component>

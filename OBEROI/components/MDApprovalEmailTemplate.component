@@ -1,0 +1,21 @@
+<apex:component controller="MDApprovalTemplate" allowDML="true"
+    access="Global">
+    <apex:attribute assignTo="{!mdApproverId}" type="string" name="idoff"
+        description="MD Approval Id" />
+    <html style="font-family: geneva;font-size: 10.0pt;">
+        <apex:outputfield value="{!mdApp.Comments__c}" style="font-family: geneva;font-size: 10.0pt;"/><br/><br/>
+        Request you to kindly review the following and
+            accordingly to approve or reject this item, click this
+            <a href="{!mdApproverlLink}">Link</a>
+            <!-- {!MD_Approval__c.Link} --> or reply to this email with one of these words
+            in the first line of the email message: APPROVE, APPROVED, YES, REJECT,
+            REJECTED, NO If replying via email, you can also add comments on the
+            second line. Comments will be stored with the approval request in
+            Salesforce CRM.
+            <br/><br/>
+                <br/><br/>
+            Thanks &amp; Regards<br/>
+            ORL Admin
+            <!-- {!mdApp.Department__c} -->
+    </html>
+</apex:component>

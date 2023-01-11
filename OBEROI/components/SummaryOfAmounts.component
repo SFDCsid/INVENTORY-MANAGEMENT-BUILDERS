@@ -1,0 +1,28 @@
+<apex:component Controller="SummaryOfAmounts" access="global" allowDML="true">
+    <apex:attribute name="bookId" type="Id" description="Booking Id" access="global" assignTo="{!bId}"/>
+    <body>
+        <table width = "100%" style='border:1px solid black;border-collapse: collapse; margin:0;' border="background-color:black;border-collapse: collapse;">
+            <tr >
+                <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;margin-bottom:4px;color:black;font-weight: bold;text-align: center !important; padding:5px;">Demand Letter Number</td>
+                <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;margin-bottom:4px;color:black;font-weight: bold;text-align: center !important; padding:5px;">Demand Letter Date</td>
+                <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;margin-bottom:4px;color:black;font-weight: bold;text-align: center !important; padding:5px;">Billing stage</td>
+                <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;margin-bottom:4px;color:black;font-weight: bold;text-align: center !important; padding:5px;">Due date</td>
+                <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;margin-bottom:4px;color:black;font-weight: bold;text-align: center !important; padding:5px;">Amount in Rs.</td>
+            </tr>
+            <apex:repeat value="{!SDList}" var="sd" rendered="{!ISNULL(SDList) == false && SDList.size > 0}">
+                <tr >
+                    <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;margin-bottom:4px;color:black;text-align: center !important; padding:5px;">{!sd.Invoice_Number__c}</td>
+                    <td style="text-align: center !important;"><apex:outputText value="{0, date, dd-MM-yyyy}"><apex:param value="{!sd.Invoice_Date__c}" /> </apex:outputText></td>
+                    <!----<td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;margin-bottom:4px;color:black;text-align: center !important; padding:5px;">{!sd.Invoice_Date__c}</td>---->
+                    <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;margin-bottom:4px;color:black;text-align: center !important; padding:5px;">{!sd.Billing_Stage__c}</td>
+                    <td style="text-align: center !important;"><apex:outputText value="{0, date, dd-MM-yyyy}"><apex:param value="{!sd.Due_Date__c}" /> </apex:outputText></td>
+                    <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;margin-bottom:4px;color:black;text-align: center !important; padding:5px;">₹<apex:outputField value="{!sd.Total_Amount__c}"/></td>
+                </tr>
+            </apex:repeat>
+            <tr>
+                <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;font-weight: bold;margin-bottom:4px;color:black;text-align: center !important; padding:5px;" colspan= '4'>Total amount outstanding</td>
+                <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;margin-bottom:4px;color:black;text-align: center !important; padding:5px;" colspan= '4'>₹{!TA}</td>
+            </tr>
+        </table>
+    </body>
+</apex:component>

@@ -1,0 +1,20 @@
+<apex:component controller="ApplicantName" access="global" allowDML="true">
+    <apex:attribute name="bookId" type="Id" description="Booking Id" access="global" assignTo="{!bId}"/>
+    
+    <body>{!applicant}
+        <p>
+            Date: {!SDate}
+        </p>
+        <apex:repeat value="{!aplist}" var="aplst" rendered="{!ISNULL(aplist) == false && aplist.size > 0}">
+            <p>
+                {!aplst.Name}
+            </p><br/>
+        </apex:repeat>
+        
+        <p>
+            {!aplist[0].House_No__c} {!aplist[0].Street_1__c} {!aplist[0].Street_2__c} {!aplist[0].Street_3__c} {!aplist[0].Locality__c},{!aplist[0].City__c},{!aplist[0].State__c},{!aplist[0].Country__c}  {!aplist[0].Pincode__c}
+        </p>
+        
+    </body>
+    
+</apex:component>

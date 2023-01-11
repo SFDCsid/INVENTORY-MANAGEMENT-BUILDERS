@@ -1,0 +1,107 @@
+<apex:component controller="Demand_Reminder_Cont" allowDML="true" access="Global">
+    <apex:attribute assignTo="{!BookingId}" type="string" name="idoff" description="Booking Id" /> 
+    <html>
+        <body>
+            <table width="650" border="0" cellspacing="0" cellpadding="0" align="center" style="border:1px solid #000; padding: 10px">
+                <tbody>
+                    <tr>
+                        <td>
+                            <!--apex:outputField value="{!bookingObj.Project__r.Letterhead_Image__c}"/-->
+                            <apex:image url="{!bookingObj.Project__r.LetterHead_Image_Url__c}" />  
+                        </td>
+                    </tr>                        
+                    <tr>
+                        <td style="padding: 6px 0;"><b>Date &nbsp;<apex:outputText value="{0,date,dd/MM/yyyy}"><apex:param value="{!soao}"/></apex:outputText></b></td>                                                        
+                    </tr>
+                    <tr>
+                        <td style="padding: 6px 0;"><b>{!applicant1},</b></td>
+                    </tr>
+                    <tr>
+                        <apex:actionSupport rendered="{!applicant2 != ''}">
+                            <td style="padding: 6px 0;"><b>{!applicant2},</b></td>
+                        </apex:actionSupport>
+                    </tr>
+                    <tr>
+                        <apex:actionSupport rendered="{!applicant3 != ''}">
+                            <td style="padding: 6px 0;"><b>{!applicant3},</b></td>
+                        </apex:actionSupport>
+                    </tr>
+                    <tr>
+                        <apex:actionSupport rendered="{!applicant4 != ''}">
+                            <td style="padding: 6px 0;"><b>{!applicant4},</b></td>
+                        </apex:actionSupport>
+                    </tr>
+                    <tr>
+                        <apex:actionSupport rendered="{!applicant5 != ''}">
+                            <td style="padding: 6px 0;"><b>{!applicant5},</b></td>
+                        </apex:actionSupport>
+                    </tr>   
+                    <tr>
+                        <td style="padding: 6px 0;">Address:&nbsp;</td>
+                    </tr>
+                    <apex:outputPanel rendered="{!add1}"><tr><td style="padding: 6px 0;">{!bookingObj.C_o_Name_Billing_Address__c} {!bookingObj.Billing_Street__c}</td></tr></apex:outputPanel>
+                    <apex:outputPanel rendered="{!add2}"><tr><td style="padding: 6px 0;">{!bookingObj.Billing_Str_Suppl2__c} {!bookingObj.Billing_Str_Suppl3__c}</td></tr></apex:outputPanel>
+                    <apex:outputPanel rendered="{!add3}"><tr><td style="padding: 6px 0;">{!bookingObj.Billing_Location__c} {!bookingObj.Billing_City__c}</td></tr></apex:outputPanel>
+                    <apex:outputPanel rendered="{!add4}"><tr><td style="padding: 6px 0;">{!bookingObj.Billing_Post_Code__c} {!bookingObj.Billing_Region__c}</td></tr></apex:outputPanel>
+                    <apex:outputPanel rendered="{!add5}"><tr><td style="padding: 6px 0;">{!bookingObj.Billing_Country__c}</td></tr></apex:outputPanel>                                                          
+                    <tr>
+                        <apex:actionSupport rendered="{!bookingObj.Project__r.Is_Multi_Tower_Project__c == true}">
+                            <b>Ref: Reminder towards payments overdue for Residential Premises No. {!bookingObj.Premises_no__c}, on the {!fn} floor (“said Premises”) in Tower {!bookingObj.Tower_Name__c} of the Real Estate Project “{!bookingObj.Project__r.Name}” situated at {!bookingObj.Site__r.Name}</b>
+                        </apex:actionSupport>
+                        <apex:actionSupport rendered="{!bookingObj.Project__r.Is_Multi_Tower_Project__c == false}">
+                            <b>Ref: Reminder towards payments overdue for Residential Premises No. {!bookingObj.Premises_no__c}, on the {!fn} floor (“said Premises”) of the Real Estate Project “{!bookingObj.Project__r.Name}” situated at {!bookingObj.Site__r.Name}</b>
+                        </apex:actionSupport>
+                    </tr>
+                    <hr/>                                        
+                    <tr>
+                        <td style="padding: 6px 0;">Dear {!applicant1},</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 6px 0;">We refer to the&nbsp;<apex:actionSupport rendered="{!bookingObj.Allotment_Date__c != null}">Allotment Letter dated&nbsp;<apex:outputField value="{!bookingObj.Allotment_Date__c}"/>&nbsp;<b>(“the said Allotment Letter”)</b> whereunder the said Premises was allotted to you.</apex:actionSupport><apex:actionSupport rendered="{!bookingObj.Allotment_Date__c == null}">Booking and Acceptance Form dated&nbsp;<apex:outputField value="{!bookingObj.Acceptance_Form_Generated_date__c}"/><b>(“the said Booking Form”)</b> whereunder the said Premises was booked by you</apex:actionSupport>. 
+                            <apex:outputText rendered="{!bookingObj.Is_GST_applicable__c == true}" value="We further refer to our communication dated 12th August 2017, whereunder we have informed you the revised Sale Price with respect to the said Premises."/></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 6px 0;">As per the terms of the&nbsp;<apex:actionSupport rendered="{!bookingObj.Allotment_Date__c != null}">said Allotment Letter</apex:actionSupport><apex:actionSupport rendered="{!bookingObj.Allotment_Date__c == null}">said Booking Form</apex:actionSupport> you were required to make payments with respect to the said Premises in instalments as and when demand notices are sent to you by us. However, you have failed to make the payments due towards the said Premises as shown in the <b>Summary Of Amounts Outstanding </b>as below.</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 6px 0;"><b>Summary Of Amounts Outstanding as on &nbsp;<apex:outputText value="{0,date,dd/MM/yyyy}"><apex:param value="{!soao}"/></apex:outputText></b></td>                        
+                    </tr>
+                    <br/>
+                    <c:SummaryOfAmounts bookId="{!BookingId}"/>
+                    <br/>
+                    
+                    <tr>
+                        <td  style="padding: 6px 0;">You may make the above payments by Cheque/DD/ RTGS/NEFT or online transfer of funds, in which case, we would request you to provide us the transaction details/reference number after you have initiated the transfer, to enable us to trace the funds. The bank account details have been mentioned below for your kind reference.</td>
+                    </tr>
+                    <br/>
+                    <c:BankDetails bookId="{!BookingId}"/>
+                    <br/>
+                    
+                    <tr>
+                        <td style="padding: 6px 0;">Without prejudice to any other rights and remedies available to us, all of which are reserved, in the event of non-receipt of payment on the respective due date/s from you, applicable penal interest calculated in accordance with the provisions of Real Estate (Regulation and Development) Act, 2016 <b>(“RERA”)</b> / the Maharashtra Ownership Flat Act, 1963 <b>(“MOFA”)</b> (as applicable) is being levied on any payment that is received by us after the respective due date till the date of actual payment thereof.</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 6px 0;">Without prejudice to our rights and remedies under the said AFS, all of which are reserved, we call upon you to make payment towards the outstanding amounts as per the Summary Of Amounts Outstanding as above immediately along with the interest thereon. Also please find attached the interest statement reflecting the interest calculated as on date on the delayed payments in accordance with RERA/MOFA.</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 6px 0;">We also request you to initiate the execution and registration of the AFS as required in accordance with RERA. </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 6px 0;">Please ignore this communication in case you have already remitted all the due amounts and complied with the requirement of AFS registration.</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 6px 0;">Should you need any further assistance, kindly contact me on {!bookingObj.RM_User__r.MobilePhone}  or write to me at  {!bookingObj.RM_User__r.Email}.</td>
+                    </tr>
+                    
+                    <tr>
+                        <td style="padding: 6px 0;">
+                            <p>Thanks and Regards,</p>
+                            <p>{!bookingObj.Property__r.RM_Name__c}<br/>{!bookingObj.Project__r.Subsidiary_Company_Address__c}<br/>CIN NO.&nbsp;{!bookingObj.Project__r.CIN_No__c}</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br/>
+        </body>
+    </html>
+</apex:component>

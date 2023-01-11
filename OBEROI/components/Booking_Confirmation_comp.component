@@ -1,0 +1,130 @@
+<apex:component controller="BookingConfirmationCont" allowDML="true" access="Global">
+    <apex:attribute assignTo="{!BookingId}" type="string" name="idoff" description="Booking Id" /> 
+    <html style="font-family: geneva;font-size: 10.0pt;">
+        <body>{!createBookingList}
+            <table>
+                Dear {!app1Name},<br/><br/>
+                Greetings from Oberoi Realty!<br/><br/>
+                This is with respect to booking dated {!bookingdate} for Premises No.{!bookingObj.Property__r.House_Unit_No__c}, Tower '{!bookingObj.Tower_Name__c}' in "{!projectName}
+                " booked in the name of <apex:outputText rendered="{!if(app1Name != Null,True,False)}"><b> 1.</b> {!app1Name},</apex:outputText><apex:outputText rendered="{!if(app2Name != Null,True,False)}"><b> 2.</b> {!app2Name},</apex:outputText><apex:outputText rendered="{!if(app3Name != Null,True,False)}"><b> 3.</b> {!app3Name},</apex:outputText><apex:outputText rendered="{!if(app4Name != Null,True,False)}"><b> 4.</b> {!app4Name},</apex:outputText><apex:outputText rendered="{!if(app5Name != Null,True,False)}"><b> 5.</b> {!app5Name},</apex:outputText> with the 
+                source of Booking as {!bookingObj.Booking_Through__c} <apex:outputText rendered="{!if((bookingObj.Booking_Through__c == 'Partner') && (partnersName != Null)  ,True,False)}">&nbsp;- {!partnersName}</apex:outputText>.<br/><br/>
+                We hereby confirm that we have received Rs.{!cheamount}({!cheamountword}) towards part payment of the Sale Price of the above
+                -mentioned premises, along with proportionate amount of the applicable taxes vide 
+                Instrument No- {!chequeno} drawn on {!bankname}, dated {!paymentdate}. <br/><br/>
+                As intimated to you at the time of booking, the Sale Price of the above mentioned premises 
+                is Rs.{!salesprice} which is required to be paid by you as per the below mentioned payment 
+                schedule<br/><br/>
+                <table border="1" style="font-family: Lato,verdana, arial, sans-serif;font-size: 12px; border-width: 3px;border-collapse: collapse;empty-cells:show;">
+                    <tr>
+                        <th style="text-align:left;"> Sr. No. </th>
+                        <th style="text-align:center;"> Milestone </th>
+                        <th style="text-align:center;"> Percentage </th>
+                        <th style="text-align:center;"> Amount </th>
+                    </tr>
+                    <apex:variable var="i" value="{!1}"/>
+                    <!--<apex:repeat value="{!pwListFinal}" var="b">
+<tr>
+<td width="7%" style="text-align:left;"> {!i} </td>
+<td width="45%" style="text-align:left;display:{!IF(b.paymentGroup != 'IN','table-data','none')}"> {!b.milestoneName}</td>
+<td width="45%" style="text-align:left;display:{!IF(AND(b.paymentGroup == 'IN',NOT(allMilestoneCompleted)),'table-data','none')}"> 
+Proportionate {!totalINMilestones} instalments upon casting of relevant slabs.
+Out of which {!completedMilestoneSize} relevant slabs have been casted and 
+the relevant amount of Rs. {!completedMilestoneAmountSTR} towards the Sale Price.
+</td>
+<td width="45%" style="text-align:left;display:{!IF(AND(b.paymentGroup == 'IN',allMilestoneCompleted),'table-data','none')}"> 
+Proportionate {!totalINMilestones} instalments upon casting of relevant slabs.
+All relevant slabs have been casted.
+</td>
+<td width="7%" style="text-align:left;display:{!IF(b.paymentGroup != 'PS','table-data','none')}" > {!b.milestonePercentage}</td>
+<td width="7%" style="text-align:left;display:{!IF(b.paymentGroup == 'PS','table-data','none')}" > Balance Amount</td>
+<td width="10%" style="text-align:left;"> {!b.totalMilestoneSTR} </td>
+</tr>    
+
+</apex:repeat>-->
+                    <apex:repeat value="{!pwListFinal}" var="b">
+                        <tr>
+                            <td width="7%" style="text-align:left;"> {!i} </td>
+                            <td width="45%" style="display:{!IF((b.paymentGroup != 'IN') || (b.paymentGroup == 'IN' && NOT(b.is_IN001Milestone)),'table-data','none')}"> {!b.milestoneName}</td>
+                            <td width="45%" style="display:{!IF(b.paymentGroup == 'IN' && b.is_IN001Milestone && allMilestoneCompleted,'table-data','none')}"> 
+                                <!-- Proportionate {!totalINMilestones} instalments upon casting of relevant slabs.
+All relevant slabs have been casted. -->
+                                {!b.milestoneName}
+                            </td> 
+                            
+                            
+                            <td width="45%" style="display:{!IF(AND(b.paymentGroup == 'IN', b.is_IN001Milestone, NOT(allMilestoneCompleted)),'table-data','none')}">
+                                <table class="topTable">
+                                    <tr>
+                                        <td colspan="2" width="100%"> 
+                                            Proportionate {!totalINMilestones} instalments upon casting of relevant slabs.
+                                            Out of which {!completedMilestoneSize} relevant slabs have been casted and 
+                                            the relevant amount of Rs. {!completedMilestoneAmountSTR} towards the Sale Price.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="80%" style="background-color:#737373">
+                                            Particulars
+                                        </td>
+                                        <td width="20%" style="background-color:#737373">
+                                            Amount in Rs.
+                                        </td>
+                                    </tr>
+                                    <apex:repeat value="{!IN_MilestonesList}" var="IN">
+                                        <tr>
+                                            <td> {!IN.name} </td>
+                                            <td> {!IN.amountSTR} </td>
+                                        </tr>
+                                    </apex:repeat>
+                                    <!--  <tr>
+<td>
+To be paid on or before {!lastDateOfCompletedMilestones} along with any further milestones raised till then
+</td>
+<td> 
+{!completedMilestoneAmountSTR}
+</td>
+</tr> -->
+                                </table>
+                            </td>
+                            
+                            <td colspan="1" width="15%" style="text-align:center;display:{!IF(b.paymentGroup != 'PS' && b.Terms_of_Payment_Key != 'INPS','table-data','none')}" > {!b.milestonePercentage}</td>
+                            <td colspan="1" width="15%" style="text-align:center;display:{!IF(b.paymentGroup == 'PS' || b.Terms_of_Payment_Key == 'INPS','table-data','none')}" > Balance Amount</td>
+                            <td colspan="1" width="15%" style="text-align:right;"> {!b.amountSTR}                                    
+                            </td>
+                        </tr>
+                        <apex:variable var="i" value="{!i+1}"/>  
+                    </apex:repeat> 
+                    
+                    
+                </table>
+                <b>*Post payment of 10% of the sale price i.e. 100 % of the Booking Amount and 50% of the 
+                    Earnest Money, the Purchaser shall immediately execute and register the Agreement for Sale</b><br/><br/>
+                We would like to introduce {!bookingObj.Property__r.RM_Name__c} as your Relationship Manager, who will be 
+                contacting you and will assist you at every stage of your interaction with us hereon.<br/><br/>
+                It has been a pleasure interacting with you and we sincerely thank you for the trust you have 
+                placed in choosing {!projectName}.<br/><br/>
+                Notes:
+                <ul>
+                    <li>Applicable Taxes/ GST shall be levied as per existing rates and may be varied by the 
+                        Government of India from time to time.</li>
+                    &nbsp;<li>Confirmation of booking is subject to clearance of the above mentioned cheque as  
+                    part payment of Sale Price of the said premises.</li>
+                    &nbsp;<li>We request you to kindly initiate the execution and registration of your Agreement 
+                    for Sale to ensure compliance with the RERA immediately after remitting the 10% 
+                    Booking Amount.</li> 
+                    <!--&nbsp;<li>The maintenance charges would be applicable from the date of Booking/ date of OC 
+                    (Occupation Certificate) whichever is later</li>
+                    &nbsp;<li>The maintenance charges would be applicable from the date of Allotment Letter  
+                    (Applicable only for Exquisite)</li>-->
+                    <apex:outputText rendered="{!if(mainCharges != Null,True,False)}">&nbsp;<li>{!mainCharges}</li></apex:outputText>
+                    &nbsp;<li>Terms and Conditions as set out in the Acceptance form are applicable.</li>
+                </ul>
+                
+                Should you need any further assistance, you may kindly contact me on {!bookingObj.CreatedBy.MobilePhone} or 
+                write to me at {!bookingObj.CreatedBy.Email}<br/><br/>
+                Please do let us know for further insight or any assistance required.<br/><br/>
+                Thanks and Regards,<br/><br/><br/>
+                {!bookingObj.CreatedBy.Name}
+            </table>
+        </body>
+    </html>
+</apex:component>

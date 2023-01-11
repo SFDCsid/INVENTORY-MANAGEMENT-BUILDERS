@@ -1,0 +1,36 @@
+<apex:component controller="BrokerMDApprovalCont" allowDML="true" access="Global">
+    <apex:attribute assignTo="{!BMDId}" type="string" name="idoff" description="Brokerage Document Id" /> 
+    <html style="font-family: geneva;font-size: 10.0pt;">
+        <body><!--{!CreateDocList}-->
+        
+            Dear Sir/Ma'am,<br/><br/>
+
+            MD Approval Number: {!MDList[0].Name}<br/>
+            IOM Type: {!MDList[0].Approval_Process_Name__c}<br/>
+
+            Request you to kindly review the following and accordingly to approve or reject this item, click this link: <a href="{!BrokerageDocLink}">{!MDList[0].Name}</a> or reply to this email with one of these words in the first line of the email message: APPROVE, APPROVED, YES, REJECT, REJECTED, NO If replying via email, you can also add comments on the second line. Comments will be stored with the approval request in Salesforce CRM.<br/><br/>
+            
+            <apex:outputText rendered="{!if(ISNULL(cd.size),False,True)}">
+            <table border="1" style="font-family: Lato,verdana, arial, sans-serif;font-size: 12px; border-width: 3px;border-collapse: collapse;empty-cells:show;">
+                    <tr>
+                        <th style="text-align:left;"> Sr. No. </th>
+                        <th style="text-align:center;"> Document Link </th>
+                    </tr>
+                    <apex:variable var="i" value="{!1}"/>
+                    <apex:repeat value="{!cd}" var="c">
+                    <tr>
+                        <td style="text-align:center;"> {!i} </td>
+                        <td style="text-align:left;"> <a href="{!c.DistributionPublicUrl}">{!c.ContentVersion.title}</a></td>
+                        <apex:variable var="i" value="{!i+1}"/>
+                    </tr>
+                    
+                    </apex:repeat>
+                    
+             </table>
+             </apex:outputText>
+             <br/><br/>
+             Thanks and Regards,<br/>
+             ORL Admin.
+        </body>
+    </html>
+</apex:component>

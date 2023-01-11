@@ -1,0 +1,90 @@
+<apex:component controller="DocumentApprovalCont" allowDML="true" access="Global">
+    <apex:attribute assignTo="{!RDHId}" type="string" name="idoff" description="Related Document Id" /> 
+    <html style="font-family: geneva;font-size: 10.0pt;">
+        <body><!--{!CreateDocList}-->
+        
+            Dear Sir/Ma'am,<br/><br/>
+
+            Document Number: {!rdhList[0].Related_Document_Number__c}<br/>
+            Document Name: {!rdhList[0].Document_Name__c}<br/>
+
+            Request you to kindly review the following and accordingly to approve or reject this item, click this link: <a href="{!ReletedDocLink}">{!rdhList[0].Related_Document_Number__c}</a> or reply to this email with one of these words in the first line of the email message: APPROVE, APPROVED, YES, REJECT, REJECTED, NO If replying via email, you can also add comments on the second line. Comments will be stored with the approval request in Salesforce CRM.<br/><br/>
+            
+            <apex:outputText rendered="{!if(ISNULL(cd.size),False,True)}">
+            <table border="1" style="font-family: Lato,verdana, arial, sans-serif;font-size: 12px; border-width: 3px;border-collapse: collapse;empty-cells:show;">
+                    <tr>
+                        <th style="text-align:left;"> Sr. No. </th>
+                        <th style="text-align:center;"> Document Link </th>
+                    </tr>
+                    <apex:variable var="i" value="{!1}"/>
+                    <apex:repeat value="{!cd}" var="c">
+                    <tr>
+                        <td style="text-align:center;"> {!i} </td>
+                        <td style="text-align:left;"> <a href="{!c.DistributionPublicUrl}">{!c.ContentVersion.title}</a></td>
+                        <apex:variable var="i" value="{!i+1}"/>
+                    </tr>
+                    
+                    </apex:repeat>
+                    
+             </table>
+             <br/><br/>
+             </apex:outputText>
+             <apex:outputText rendered="{!if(ISNULL(cdProj.size),false,true)}">
+             <table border="1" style="font-family: Lato,verdana, arial, sans-serif;font-size: 12px; border-width: 3px;border-collapse: collapse;empty-cells:show;">
+                    <tr>
+                        <th style="text-align:left;"> Sr. No. </th>
+                        <th style="text-align:center;"> Annexures Document Link </th>
+                    </tr>
+                    <apex:variable var="i" value="{!1}"/>
+                    <apex:repeat value="{!cdProj}" var="cproj">
+                    <tr>
+                        <td style="text-align:center;"> {!i} </td>
+                        <td style="text-align:left;"> <a href="{!cproj.DistributionPublicUrl}">{!cproj.ContentVersion.title}</a></td>
+                        <apex:variable var="i" value="{!i+1}"/>
+                    </tr>
+                    </apex:repeat>
+                    
+             </table>
+             <br/><br/>
+             </apex:outputText>
+             <apex:outputText rendered="{!if(ISNULL(cdTower.size),False,True)}">
+             <table border="1" style="font-family: Lato,verdana, arial, sans-serif;font-size: 12px; border-width: 3px;border-collapse: collapse;empty-cells:show;">
+                    <tr>
+                        <th style="text-align:left;"> Sr. No. </th>
+                        <th style="text-align:center;"> Annexures Tower Document Link </th>
+                    </tr>
+                    <apex:variable var="i" value="{!1}"/>
+                    <apex:repeat value="{!cdTower}" var="ctower">
+                    <tr>
+                        <td style="text-align:center;"> {!i} </td>
+                        <td style="text-align:left;"> <a href="{!ctower.DistributionPublicUrl}">{!ctower.ContentVersion.title}</a></td>
+                        <apex:variable var="i" value="{!i+1}"/>
+                    </tr>
+                    </apex:repeat>
+                    
+             </table>
+             <br/><br/>
+             </apex:outputText>
+             <apex:outputText rendered="{!if(ISNULL(cdProp.size),False,True)}">
+             <table border="1" style="font-family: Lato,verdana, arial, sans-serif;font-size: 12px; border-width: 3px;border-collapse: collapse;empty-cells:show;">
+                    <tr>
+                        <th style="text-align:left;"> Sr. No. </th>
+                        <th style="text-align:center;"> Annexures Prop Document Link </th>
+                    </tr>
+                    <apex:variable var="i" value="{!1}"/>
+                    <apex:repeat value="{!cdProp}" var="cprop">
+                    <tr>
+                        <td style="text-align:center;"> {!i} </td>
+                        <td style="text-align:left;"> <a href="{!cprop.DistributionPublicUrl}">{!cprop.ContentVersion.title}</a></td>
+                        <apex:variable var="i" value="{!i+1}"/>
+                    </tr>
+                    </apex:repeat>
+                    
+             </table>
+             <br/><br/>
+             </apex:outputText>
+             Thanks and Regards,<br/>
+             ORL Admin.
+        </body>
+    </html>
+</apex:component>

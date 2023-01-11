@@ -1,0 +1,9 @@
+<apex:component Controller="PrimaryApplicantController" access="global" allowDML="true">
+    <apex:attribute name="bookId" type="Id" description="Booking Id" access="global" assignTo="{!bId}"/>
+    
+    <body>{!Primaryapplicant}
+        <p>
+           Dear <b>{!aplist[0].Name},</b>
+        </p>
+    </body>
+</apex:component>

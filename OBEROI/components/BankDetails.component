@@ -1,0 +1,38 @@
+<apex:component Controller="BankDetails" access="global" allowDML="true">
+    <apex:attribute name="bookId" type="Id" description="Booking Id" access="global" assignTo="{!bId}"/>
+    
+    <body>
+        <table width = "100%" style='border:1px solid black;border-collapse: collapse; margin:0;' border="background-color:black;border-collapse: collapse;">
+        <tr >
+                 <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;font-weight: bold;margin-bottom:4px;color:black;text-align: center !important; padding:5px;width:35%;">Particulars</td>
+                 <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;font-weight: bold;margin-bottom:4px;color:black;text-align: center !important; padding:5px;">Details</td>
+            </tr>
+            <tr >
+                 <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;margin-bottom:4px;color:black;text-align: center !important; padding:5px;width:35%;">Cheque Favoring</td>
+                 <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;margin-bottom:4px;color:black;text-align: center !important; padding:5px;">{!plist.Cheque_Favoring__c}</td>
+            </tr>
+            <tr >
+                 <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;margin-bottom:4px;color:black;text-align: center !important; padding:5px;width:35%;">Bank Name</td>
+                 <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;margin-bottom:4px;color:black;text-align: center !important; padding:5px;">{!plist.Bank_Name__c}</td>
+            </tr>
+            <tr >
+                 <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;margin-bottom:4px;color:black;text-align: center !important; padding:5px;width:35%;">Branch</td>
+                 <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;margin-bottom:4px;color:black;text-align: center !important; padding:5px;">{!plist.Branch__c}</td>
+            </tr>
+            <tr >
+                 <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;margin-bottom:4px;color:black;text-align: center !important; padding:5px;width:35%;">Name of Account</td>
+                 <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;margin-bottom:4px;color:black;text-align: center !important; padding:5px;width:35%;">{!plist.Name_of_Account__c}</td>
+            </tr>
+            <tr >
+                 <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;margin-bottom:4px;color:black;text-align: center !important; padding:5px;width:35%;">Account No.</td>
+                 <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;margin-bottom:4px;color:black;text-align: center !important; padding:5px;">{!plist.Account_No__c}</td>
+            </tr>
+            <tr >
+                 <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;margin-bottom:4px;color:black;text-align: center !important; padding:5px;width:35%;">IFS Code</td>
+                 <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;margin-bottom:4px;color:black;text-align: center !important; padding:5px;">{!plist.IFS_Code__c}</td>
+            </tr>
+        
+        </table>
+    </body>
+    
+</apex:component>

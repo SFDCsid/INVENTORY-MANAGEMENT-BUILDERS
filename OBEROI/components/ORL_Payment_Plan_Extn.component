@@ -1,0 +1,108 @@
+<apex:component access="global" controller="ORL_Payment_Plan_ExtnCTRL">
+ <apex:attribute name="recordid" access="global" type="string" description="id" assignTo="{!currenRecid}"/>
+<STYLE type="text/css">
+    TH {font-size: 8px; font-face: arial;}
+    TD {font-size: 8px; font-face: verdana}
+
+    </style>
+<body>
+    <font face="arial" size="2">
+<table>
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td>DATE</td>
+                    <td>{!currentBooking.Booking_Date__c}</td>
+                </tr>
+                 <tr>
+                    <td>SUBJECT</td>
+                    <td>Payment Plan Extension for :{!currentBooking.Unitcode__c}</td>
+                </tr>
+                 <tr>
+                    <td>REASON</td>
+                    <td></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>
+             
+Mr. {!currentBooking.Contact_Name__c} intends to purchase Flat No. {!currentBooking.Booking_Flat_No__c}, 3BHK Grande plus Studio Grande, {!currentBooking.Tower__r.name} in {currentBooking.Project_Name__c} at the Sale Price of Rs. {!currentBooking.Net_Amount__c}  Rs. 56,08,135 at the per square feet rate of INR 22,137/- along with rights to one tandem car park and one single car park respectively.
+ <br/>
+ <br/>
+Further, the customer has requested for below payment extension: -
+ <br/>
+  <br/>
+
+            </p>
+        </td>
+    
+    </tr>
+        <tr>
+            <td>
+                    <table>
+                        <tr>
+                            <td>PERCENTAGE</td>
+                            <td>STANDARD PAYMENT SCHEDULE</td>
+                            <td>PERCENTAGE</td>
+                            <td>REQUESTED SCHEDULE</td>
+                        </tr>
+                        <tr>
+                        <td>
+                                                           
+                             <table>
+
+                                <apex:repeat value="{!lstActualBilling}" var="currPlan">
+                                    <tr>
+                                        <td>{!currPlan.Percentage_Of_Value_To_Be_Invoiced__c}</td>
+                                        <td>{!currPlan.Payment_Plan_Line_Item_Name__c}</td>
+                                    </tr>
+                                </apex:repeat>
+
+                             </table>
+                            </td>
+                         <td>
+                             <table>
+
+                                <apex:repeat value="{!lstCustomBilling }" var="currPlan">
+                                       <tr>
+                                        <td>{!currPlan.Percentage_Of_Value_To_Be_Invoiced__c}</td>
+                                        <td>{!currPlan.Payment_Plan_Line_Item_Name__c}</td>
+                                     </tr>                                        
+                                 </apex:repeat>
+
+                             </table>
+                         </td>
+                         </tr>
+
+                    </table>
+            </td>
+        </tr>
+        <tr>
+                <td>
+                    <table>
+                        <tr>
+                            <td colspan="2">CUSTOMERS PROFILE</td>
+                        </tr>
+                        
+                        <tr>
+                            <td>Name</td>
+                            <td>{!currentBooking.Contact_Name__c}</td>
+                            
+                        </tr>
+                        <tr>
+                            <td>Address</td>
+                            <!--<td>{!currentBooking.Contact_Address__c}</td>-->
+                            
+                        </tr>
+                         
+                    </table>
+                </td>
+        </tr>
+</table>
+</font>
+</body>
+</apex:component>

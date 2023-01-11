@@ -1,0 +1,56 @@
+<apex:component controller="Demand_Reminder_Cont" allowDML="true" access="Global">
+    <apex:attribute assignTo="{!BookingId}" type="string" name="idoff" description="Booking Id" /> 
+    <html>
+        <body>
+            <table width="650" border="0" cellspacing="0" cellpadding="0" align="center" style="border:1px solid #000; padding: 10px">
+                <tbody>
+                    <tr>
+                        <!--apex:image url="{!bookingObj.Project__r.LetterHead_Image_Url__c}" /-->
+                    </tr>    
+                    <tr>
+                        <td style="padding: 6px 0;">Dear <b>{!applicant1},</b></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 6px 0;">We refer to the Premises Ownership Agreement/Agreement for Sale dated&nbsp;<apex:outputField value="{!bookingObj.Agreement_Date__c}"/> <b>(“the said AFS”) </b> executed between us with respect to&nbsp;<apex:outputText rendered="{!bookingObj.Project__r.Is_Multi_Tower_Project__c == true}" value="{!bookingObj.Tower_Name__c}-" />{!bookingObj.Premises_no__c} in {!bookingObj.Project__r.Name} <b> the said Premises</b>.
+                            <apex:outputText rendered="{!bookingObj.Is_GST_applicable__c == true}" value="We further refer to our communication dated 12th August 2017, whereunder we have informed you the revised Sale Price with respect to the said Premises."/></td>  
+                    </tr>
+                    <apex:outputText rendered="{!if(sdList.size>0,True,False)}">
+                    <tr>
+                        <td style="padding: 6px 0;">We refer to the Demand Letter dated <b><apex:outputField value="{!sdList[0].Invoice_Date__c}"/>,</b> towards <b>{!sdList[0].Billing_Stage__c},</b> the due date for this payment was <b><apex:outputField value="{!sdList[0].Due_Date__c}"/>.</b></td>
+                    </tr> 
+                     </apex:outputText>
+                    <tr>
+                        <td style="padding: 6px 0;">We do not seem to have received the payment and would request your kind confirmation on the same. </td>
+                    </tr>                    
+                    <tr>
+                        <td style="padding: 6px 0;"><b>Summary Of Amounts Outstanding as on&nbsp;<apex:outputText value="{0,date,dd/MM/yyyy}"><apex:param value="{!soao}"/></apex:outputText></b></td>
+                    </tr>                    
+                    <br/>
+                    <!--c:SummaryOfAmounts bookId="{!BookingId}"/-->
+                    <br/>                    
+                    <tr>
+                        <td style= "padding: 6px 0;">You may make the above payments by Cheque/DD/ RTGS/NEFT or online transfer of funds, in which case, we would request you to provide us the transaction details/reference number after you have initiated the transfer, to enable us to trace the funds. The bank account details have been mentioned below for your kind reference. </td>                        
+                    </tr>                    
+                    <br/>
+                    <!--c:BankDetails bookId="{!BookingId}"/-->
+                    <br/>
+                    <tr>
+                        <td style="padding: 6px 0;">Please ignore this communication in case you have already remitted all the due amounts.</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 6px 0;">Should you need any further assistance, kindly contact me on {!bookingObj.RM_User__r.MobilePhone} or write to me at {!bookingObj.RM_User__r.Email}.</td>
+                    </tr>                                        
+                    <tr>
+                        <td style="padding: 6px 0;">
+                            <p>Thanks and Regards,</p>
+                            <p>{!bookingObj.Property__r.RM_Name__c}<br/>{!bookingObj.Project__r.Subsidiary_Company_Address__c}<br/>CIN NO.&nbsp;{!bookingObj.Project__r.CIN_No__c}</p>                            
+                            <!--<p>{!relatedTo.RM_User__r.Name}<br/>{!relatedTo.Project__r.Subsidiary_Company_Address__c}</p> -->
+                        </td>
+                    </tr>                  
+                    
+                </tbody>
+            </table>
+            <br/>
+        </body>
+    </html>
+</apex:component>
