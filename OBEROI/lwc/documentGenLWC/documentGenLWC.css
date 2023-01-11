@@ -1,0 +1,96 @@
+.tableFixHead table {
+background-color: aliceblue;
+}
+lightning-textarea::-webkit-input-placeholder {
+    color:red;
+    font-size:20px;
+}
+lightning-textarea:-ms-input-placeholder {
+    color:red;
+    font-size:20px;
+}
+table{
+    border-collapse: collapse;
+    empty-cells:show;
+    
+}
+table th {
+    padding: 3px;
+    vertical-align: top;
+    
+}
+table td {
+    padding: 1px;
+    vertical-align: top;
+    
+}
+.mClass{
+    background-color:white;
+    color:red;
+}
+.container {
+    display: inline-table;
+    position: relative;
+    padding-left: 3px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    font-size: 13px;
+  }
+  
+  /* Hide the default checkbox */
+  .container input {
+    visibility: hidden;
+    cursor: pointer;
+  }
+  
+  /* Create a custom checkbox */
+  .mark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    border:1px solid black;
+    background-color: pink;
+  }
+  
+  .container:hover input ~ .mark {
+    background-color: pink;
+  }
+  
+  .container input:checked ~ .mark {
+    background-color: blue;
+  }
+  
+  /* Create the mark/indicator (hidden when not checked) */
+  .mark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  /* Show the mark when checked */
+  .container input:checked ~ .mark:after {
+    display: block;
+  }
+  
+  /* Style the mark/indicator */
+  .container .mark:after {
+    left: 5px;
+    top: 3px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+  }
+  .backgroundInverse {
+    position: relative;
+    background-color: #16325c;
+    height: 80px;
+}
+.THIS.spinner{
+  position: relative;
+ vertical-align: middle;
+ height: 1000px;
+}

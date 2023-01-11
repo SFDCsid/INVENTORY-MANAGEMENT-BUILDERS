@@ -1,0 +1,180 @@
+.tableFixHead table {
+background-color: aliceblue;
+}
+lightning-textarea::-webkit-input-placeholder {
+    color:red;
+    font-size:20px;
+}
+lightning-textarea:-ms-input-placeholder {
+    color:red;
+    font-size:20px;
+}
+table{
+    border-collapse: collapse;
+    empty-cells:show;
+    
+}
+table th {
+    padding: 3px;
+    vertical-align: top;
+    
+}
+table td {
+    padding: 1px;
+    vertical-align: top;
+    
+}
+.mClass{
+    background-color:white;
+    color:red;
+}
+.container {
+    display: inline-table;
+    position: relative;
+    padding-left: 3px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    font-size: 13px;
+  }
+  
+  /* Hide the default checkbox */
+  .container input {
+    visibility: hidden;
+    cursor: pointer;
+  }
+  
+  /* Create a custom checkbox */
+  .mark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    border:1px solid black;
+    background-color: pink;
+  }
+  
+  .container:hover input ~ .mark {
+    background-color: pink;
+  }
+  
+  .container input:checked ~ .mark {
+    background-color: blue;
+  }
+  
+  /* Create the mark/indicator (hidden when not checked) */
+  .mark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  /* Show the mark when checked */
+  .container input:checked ~ .mark:after {
+    display: block;
+  }
+  
+  /* Style the mark/indicator */
+  .container .mark:after {
+    left: 5px;
+    top: 3px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+  }
+  .backgroundInverse {
+    position: relative;
+    background-color: #16325c;
+    height: 80px;
+}
+.THIS.spinner{
+  position: relative;
+ vertical-align: middle;
+ height: 1000px;
+}
+
+p {
+    font-weight:bolder;
+    font-size:30px;
+     display: flex;
+  justify-content: center;
+  align-items: center;
+ 
+}
+.property-display {
+    display: block;
+    padding-top: 3px;
+    padding-bottom: 1.5px;
+    padding-Right: 2px;
+    padding-Left: 2px;
+    text-align: left;
+    width: 160px;
+    height: 100px;
+}
+.label {
+    display: inline;
+    padding: .2em .6em .3em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    color: rgba(255, 255, 255, 0);
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25em;
+}
+.Available{
+    background-color: #98FB98 !important;
+    padding: var(--lwc-spacingMedium,1rem);
+    border-radius: var(--lwc-borderRadiusMedium,0.25rem);
+    border: var(--lwc-borderWidthThin,1px) solid var(--lwc-colorBorder,rgb(217, 219, 221));
+}
+
+.Sold{
+    background-color: #1dbb96 !important;
+    padding: var(--lwc-spacingMedium,1rem);
+    border-radius: var(--lwc-borderRadiusMedium,0.25rem);
+    border: var(--lwc-borderWidthThin,1px) solid var(--lwc-colorBorder,rgb(217, 219, 221));
+}
+
+.Blocked{
+    background-color:#5bc0de !important;
+    padding: var(--lwc-spacingMedium,1rem);
+    border-radius: var(--lwc-borderRadiusMedium,0.25rem);
+    border: var(--lwc-borderWidthThin,1px) solid var(--lwc-colorBorder,rgb(217, 219, 221));
+}
+
+.THIS.myBtn  {
+    width: 5px;
+    height: 3px;
+}
+.button{
+    color: #333;
+    margin: 1px;
+    padding: 2px 3px;
+    border: 1px solid #b5b5b5;
+    border-bottom-color: #7f7f7f;
+    background: #e8e8e9 url(/img/alohaSkin/btn_sprite.png) repeat-x right top;
+    font-weight: bold;
+    font-size: .9em;
+    -moz-border-radius: 30px;
+    -webkit-border-radius: 30px;
+    border-radius: 30px;
+}
+
+.badge {
+    display: inline-block;
+    min-width: 10px;
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    background-color: #777;
+    border-radius: 10px;
+}

@@ -1,0 +1,550 @@
+<template>
+    <lightning-spinner alternative-text="Loading..." variant="brand" if:true={isLoading}></lightning-spinner>
+  <div>
+    <h1 style="font-size:30px"> Quotation </h1> <br/>
+    <!-- <template if:true={isLoading}>
+      <div class="backgroundInverse">
+          <lightning-spinner alternative-text="Loading" variant="inverse"></lightning-spinner>
+      </div>
+    </template> -->
+      <table>
+        <tr>
+          <th width="35%">
+            <lightning-record-edit-form object-api-name={QuotationAPI} >
+                <!-- <label for="oId">Opportunity</label> -->
+                <lightning-input-field id="oId" required={required} field-name={OpportunityField} variant="label-hidden"
+                    value={oppId} onchange={OptyChange} disabled={disabled}>
+                </lightning-input-field>
+            </lightning-record-edit-form>  
+          </th> 
+          <th width="35%">
+            <lightning-combobox if:false={generateQuote} disable ={generateQuote}
+              name="BillingPlan"
+              label=""
+              value={selectedPlanId}
+              placeholder="Choose Billing Plan"
+              onchange={selectPlan}
+              options={statusOptions}>
+            </lightning-combobox> 
+            
+          </th>
+          <th width="35%" style="text-align:center;">
+            <lightning-button variant="brand" label="Generate Quotation" if:false={generateQuote} title="Generate Quotation" onclick={generateQuoteMethod} class="slds-m-left_x-small" style="font-size:11px;"></lightning-button> &nbsp;&nbsp;
+            <template if:true={showplanDetails}>
+              <lightning-button variant="brand" label="Save Quotation" if:true={generateQuote} title="Save Quotation" onclick={saveQuote} class="slds-m-left_x-small" style="font-size:11px;" disabled={hidebutton}></lightning-button> &nbsp;&nbsp;
+            </template>
+            <lightning-button variant="brand" label="Reset" title="Reset" onclick={resetMethod} class="slds-m-left_x-small" style="font-size:11px;" disabled={hidebutton}></lightning-button>
+          </th>
+        </tr>
+        <tr>
+          <td colspan="3" style="text-align:center;">
+            <label if:true={isSubventionPlan} style="font-size:12px;font-weight:bold;vertical-align: middle;color:red;">
+              You have selected Subvention billing plan, base rates will be reset and the page will render with subvention rates
+            </label>
+          </td>
+        </tr>
+
+
+ <!-------------------------------------- Customer and Unit details -------------------- -->     
+        <tr if:true={generateQuote}>
+          <td>
+            <table style="border-collapse: collapse;font-size:11px;font-weight:normal;" class="slds-table slds-table_bordered slds-border_left slds-border_right" border="1" cellpadding="0" cellspacing="0">
+                <thead>
+                  <tr class="slds-line-height_reset">
+                    <th class="headingTh" scope="col" colspan="2" style="background-color: #FEF5E7;text-align:center;padding: 3px;font-size:13px;">
+                      <div class="slds-truncate" title="PropertyDetails">Property Details</div>
+                    </th>
+                  </tr>
+                  <tr class="slds-line-height_reset">
+                    <th class="" scope="col" style="background-color: #EBEDEF;text-align:center;padding: 3px;">
+                      <div class="slds-truncate" title="Property">Property</div>
+                    </th>
+                    <th scope="col" class="topth">
+                      <div class="slds-truncate"> {unitNo}</div>
+                    </th>
+                  </tr>
+                  <tr class="slds-line-height_reset">
+                    <th class="" scope="col" style="background-color: #EBEDEF;text-align:center;padding: 3px;">
+                      <div class="slds-truncate" title="Project">Project</div>
+                    </th>
+                    <th scope="col" class="topth">
+                      <div class="slds-truncate"> {Project}</div>
+                    </th>
+                  </tr>
+                  <tr class="slds-line-height_reset">
+                    <th class="" scope="col" style="background-color: #EBEDEF;text-align:center;padding: 3px;">
+                      <div class="slds-truncate" title="Tower">Tower</div>
+                    </th>
+                    <th scope="col" class="topth">
+                      <div class="slds-truncate"> {tower}</div>
+                    </th>
+                  </tr>
+                  <tr class="slds-line-height_reset">
+                    <th class="" scope="col" style="background-color: #EBEDEF;text-align:center;padding: 3px;">
+                      <div class="slds-truncate" title="CarpetArea">RERA Carpet Area</div>
+                    </th>
+                    <th scope="col" class="topth">
+                      <div class="slds-truncate"> {carpetArea}</div>
+                    </th>
+                  </tr>
+                  <tr class="slds-line-height_reset">
+                    <th class="" scope="col" style="background-color: #EBEDEF;text-align:center;padding: 3px;">
+                      <div class="slds-truncate" title="Configuration">Configuration</div>
+                    </th>
+                    <th scope="col" class="topth">
+                      <div class="slds-truncate"> {configuration}</div>
+                    </th>
+                  </tr>
+                  <tr class="slds-line-height_reset">
+                    <th class="" scope="col" style="background-color: #EBEDEF;text-align:center;padding: 3px;">
+                      <div class="slds-truncate" title="FloorNo">Floor No.</div>
+                    </th>
+                    <th scope="col" class="topth">
+                      <div class="slds-truncate"> {floorNo}</div>
+                    </th>
+                  </tr>
+                  <tr class="slds-line-height_reset">
+                    <th class="" scope="col" style="background-color: #EBEDEF;text-align:center;padding: 3px;">
+                      <div class="slds-truncate" title="QuotationValidity">Quotation Validity(In Days)</div>
+                    </th>
+                    <th scope="col" class="topth">
+                      <div class="slds-truncate"> {quotationValidity}</div>
+                    </th>
+                  </tr>
+                  <tr class="slds-line-height_reset">
+                    <th class="" scope="col" style="background-color: #EBEDEF;text-align:center;padding: 3px;">
+                      <div class="slds-truncate" title="Earmarked">Earmarked Car Parking</div>
+                    </th>
+                    <th scope="col" class="topth">
+                      <div class="slds-truncate"> {earmarkedParking}</div>
+                    </th>
+                  </tr>
+                  <tr class="slds-line-height_reset">
+                    <th class="" scope="col" style="background-color: #EBEDEF;text-align:center;padding: 3px;">
+                      <div class="slds-truncate" title="marketValue">Market Value</div>
+                    </th>
+                    <th scope="col" class="topth">
+                      <div class="slds-truncate"> {marketValue}</div>
+                    </th>
+                  </tr>
+                </thead>
+            </table>
+          </td>
+  <!-------------------------------------- Car parking section -------------------- -->       
+          <td if:true={generateQuote}>
+            <table style="border-collapse: collapse;font-size:11px;font-weight:normal;" class="slds-table slds-table_bordered slds-border_left slds-border_right" border="1" cellpadding="0" cellspacing="0">
+              <thead>
+                <tr class="slds-line-height_reset">
+                  <th class="" scope="col" colspan="3" style="background-color: #FEF5E7;text-align:center;padding: 3px;font-size:13px;">
+                    <div class="slds-truncate" title="CarType"> Additional Car Parking</div>
+                  </th>
+                </tr>  
+                <tr class="slds-line-height_reset">
+                  <th class="" scope="col" style="background-color: #EBEDEF;text-align:center;padding: 3px;">
+                    <div class="slds-truncate" title="CarType">Car Type</div>
+                  </th>
+                  <th class="" scope="col" style="background-color: #EBEDEF;text-align:center;padding: 3px;">
+                    <div class="slds-truncate" title="Count">Count</div>
+                  </th>
+                   <th class="" scope="col" style="background-color: #EBEDEF;text-align:center;padding: 3px;">
+                      <div class="slds-truncate" title="Amount">Enter Car Park Count</div>
+                  </th> 
+                </tr>
+              </thead>
+              <tbody>
+                <template for:each={parkingList} for:item="cp">
+                  <tr key={cp.Id}>
+                      <th scope="col" class="topth" style="width:80px;">
+                        <div class="slds-truncate"> {cp.carParkName}</div>
+                      </th>
+                      <th scope="col" style="width:50px;padding: 3px;">
+                        <div class="slds-truncate">{cp.originalCount}</div>
+                      </th>
+                     <!-- <th scope="col" style="width:200px;padding: 3px;">
+                        <div class="slds-truncate"><lightning-input type="text" data-id={cp.carParkName} name="parkingAmount" value={cp.parkingAmount}></lightning-input></div>
+                      </th> -->
+                      <th scope="col" style="width:100px;padding: 3px;"> 
+                        <div class="slds-truncate"> <lightning-input type="number" data-id={cp.carParkName} name="countInput" value={cp.selectedCount}></lightning-input></div>
+                      </th>
+                    </tr>
+                </template>  
+              </tbody>
+              <tr>
+                  <th colspan="3" style="text-align:center;">
+                    <lightning-button variant="brand" label="Apply" title="Apply car park" onclick={handleClick} class="slds-m-left_x-small" style="font-size:11px;" disabled={hideCarParkbutton}></lightning-button>
+                  </th>
+              </tr> 
+            </table>
+          </td> 
+     <!-- ------------------------------------------- Discount section ---------------- -->     
+          <td>
+              <table style="border-collapse: collapse;font-size:11px;font-weight:normal;" class="slds-table slds-table_bordered slds-border_left slds-border_right" border="1" cellpadding="0" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th scope="col" colspan="4" style="background-color: #FEF5E7;padding: 3px;text-align:center;font-size:13px;">
+                        <div title="DiscountName">Discount</div>
+                      </th>
+                    </tr>  
+                    <tr>
+                      <th scope="col" style="background-color:#EBEDEF;padding: 3px;height:1px;">
+                        <div title="DiscountName">Name</div>
+                      </th>
+                      <th scope="col" style="background-color: #EBEDEF;padding: 3px;height:1px;">
+                        <div title="type">Type</div>
+                      </th>
+                      <th scope="col" style="background-color: #EBEDEF;text-align:center;padding: 3px;height:1px;">
+                          <div title="Amount">Lumpsum/PSF/Percentage</div>
+                      </th>
+                      <th scope="col" style="background-color: #EBEDEF;text-align:center;padding: 3px;height:1px;">
+                          <div title="DiscountName">Apply</div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <template for:each={discountList} for:item="discount">
+                      <tr key={discount.Id}>
+                          <th scope="col" style="width:100px;padding: 3px;">
+                            <div style="height:10px;">{discount.Reason__c}</div>
+                          </th>
+                          <th scope="col" style="width:200px;padding: 3px;">
+                            <div>{discount.Type__c}</div>
+                          </th>
+                          <th scope="col" style="width:200px;padding: 3px;">
+                            <div> <lightning-input type="number" data-id={discount.Id} name='lumpsum' if:true={discount.Editable__c} value={discount.Lumpsum_Amount__c} step="0.01"></lightning-input> 
+                              <lightning-input type="number" data-id={discount.Id} name='lumpsum' if:false={discount.Editable__c} value={discount.Lumpsum_Amount__c} step="0.01" disable="true"></lightning-input> 
+                            </div>
+                          </th>
+                          <th scope="col" style="width:200px;text-align:center;padding: 3px;">
+                            <div><lightning-input type="checkbox" data-id={discount.Id} name={discount} value={discount.Applied__c} onchange={handleDiscountCheck}></lightning-input></div>
+                          </th>
+                        </tr>
+                    </template>
+                  </tbody>
+                </table> 
+          </td>
+        </tr>
+      <!-- ------------------------Agreement value section------------------ -->
+        <tr if:true={generateQuote}>
+          <td>
+            <table style="border-collapse: collapse;font-size:11px;font-weight:normal;" class="slds-table slds-table_bordered slds-border_left slds-border_right">
+              <thead>
+                <tr class="slds-line-height_reset"> <th class="thCls" scope="col" style="background-color: #FEF5E7;text-align:center;font-size:13px;" colspan="3"> Agreement value</th> </tr>
+                <tr class="slds-line-height_reset">
+                  <th class="thCls" scope="col" style="font-size:12px;background-color:#EBEDEF;">
+                    <div class="slds-truncate" title="ChargeName">Charge Name</div>
+                  </th>
+                  <th class="thCls" scope="col" style="font-size:12px;background-color:#EBEDEF;text-align:right;">
+                    <div class="slds-truncate" title="Originalvalue">Original value</div>
+                  </th>
+                  <th class="thCls" scope="col" style="font-size:12px;background-color:#EBEDEF;text-align:right;">
+                    <div class="slds-truncate" title="Modifiedvalue">Modified value</div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <template for:each={SAPPricingList} for:item="av"> 
+                  <tr key={av.id} style="height:12px;" if:true={av.isVisible}>
+                      <th scope="col" style="width:100px;height:9px;">
+                        <div class="slds-truncate">{av.chargeName}</div>
+                      </th>
+                      <th scope="col" style="width:200px;height:9px;text-align:right;">
+                        <div class="slds-truncate">{av.valueSTR}</div> 
+                      </th>
+                      <th scope="col" class={av.modifiedClass} style="width:200px;height:9px;text-align:right;">
+                        <div class="slds-truncate">{av.modifiedValueSTR}</div> 
+                      </th>
+                    </tr>
+                </template>
+              </tbody>
+            </table>  
+          </td>
+  <!-- ------------------------Other charges section------------------ -->      
+          <td>
+            <table style="border-collapse: collapse;font-size:11px;font-weight:normal;" class="slds-table slds-table_bordered slds-border_left slds-border_right">
+              <thead>
+                <tr class="slds-line-height_reset" style="height:12px;"> <th class="thCls" scope="col" style="background-color: #FEF5E7;text-align:center;font-size:13px;" colspan="3"> Additional Charges</th> </tr>
+                <tr class="slds-line-height_reset" style="height:12px;">
+                  <th class="thCls" scope="col" style="font-size:12px;background-color:#EBEDEF;">
+                    <div class="slds-truncate" title="ChargeName">Charge Name</div>
+                  </th>
+                  <th class="thCls" scope="col" style="font-size:12px;background-color:#EBEDEF;text-align:right;">
+                    <div class="slds-truncate" title="Originalvalue">Original value</div>
+                  </th>
+                  <th class="thCls" scope="col" style="font-size:12px;background-color:#EBEDEF;text-align:right;">
+                    <div class="slds-truncate" title="Modifiedvalue">Modified value</div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <template for:each={additionChargsList} for:item="ac">
+                  <tr key={ac.Id} style="height:12px;">
+                      <th scope="col" style="width:100px;height:12px;">
+                        <div class="slds-truncate">{ac.chargeName}</div>
+                      </th>
+                      <th scope="col" style="width:200px;height:12px;text-align:right;">
+                        <div class="slds-truncate">{ac.chargeAmountSTR}</div>
+                      </th>
+                      <th scope="col" style="width:200px;height:12px;text-align:right;">
+                        <div class="slds-truncate">{ac.modifiedChargeAmountSTR}</div>
+                      </th>
+                    </tr>
+                </template>
+              </tbody>
+            </table>  
+          </td>
+  <!-- ------------------------Applied discount section------------------ -->      
+          <td>
+            <table style="border-collapse: collapse;font-size:11px;font-weight:normal;" class="slds-table slds-table_bordered slds-border_left slds-border_right">
+              <thead>
+                <tr class="slds-line-height_reset" style="height:12px;"> 
+                  <th class="thCls" scope="col" style="background-color: #FEF5E7;text-align:center;font-size:13px;" colspan="2"> Applied Discount</th> </tr>
+                <tr class="slds-line-height_reset" style="height:12px;">
+                  <th class="thCls" scope="col" style="font-size:12px;background-color:#EBEDEF;">
+                    <div class="slds-truncate" title="DiscountName">Discount Name</div>
+                  </th>
+                  <th class="thCls" scope="col" style="font-size:12px;text-align:center;background-color:#EBEDEF;">
+                    <div class="slds-truncate" title="DiscountValue">Discount value</div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <template for:each={appliedDiscounts} for:item="d">
+                  <tr key={d.Id} style="height:12px;">
+                      <th scope="col" style="width:100px;height:12px;">
+                        <div class="slds-truncate">{d.Reason__c}</div>
+                      </th>
+                      <th scope="col" style="width:200px;height:12px;text-align:center;">
+                        <div class="slds-truncate">{d.Total__c}</div>
+                      </th>
+                  </tr>
+                </template>
+              </tbody> 
+            </table>
+          </td>
+        </tr>
+<!------------------------ Biiling Plan section -------------->
+        <tr if:true={generateQuote}>
+          <td colspan="3">
+            <br/>
+            <table style="border-collapse: collapse;font-size:11px;font-weight:normal;" class="slds-table slds-table_bordered slds-border_left slds-border_right" border="1"><tr>
+              <td width="35%"> 
+                
+              </td>
+              <td width="35%" style="background-color: #FEF5E7;text-align:center;font-size:13px;">
+              <!-- <lightning-card title="List of Billing Plans" icon-name="custom:custom63" style="background-color: aliceblue;"> -->
+                <!--  <lightning-combobox
+                      name="BillingPlan"
+                      label=""
+                      value={selectedPlanId}
+                      placeholder="Choose Billing Plan"
+                      onchange={handleChange}
+                      options={statusOptions}>
+                  </lightning-combobox> --> 
+                  <label style="font-size:14px;font-weight:bold;vertical-align: middle;">
+                    Selected Billing Plan: {selectedPlanName}
+                </label>
+                
+                </td> 
+              <!-- </lightning-card> -->
+              <td width="35%">
+                <lightning-button if:false={showplanDetails}  variant="brand" label="Show Schedule" title="show" onclick={showSchedule} class="slds-m-left_x-small" style="font-size:11px;"></lightning-button>
+                <template if:true={showplanDetails}>
+                  <template if:false={editSchedule}>
+                   <lightning-button if:true={isPlanEditable}  variant="brand" label="Edit Schedule" title="Edit" onclick={editplanDetails} class="slds-m-left_x-small" style="font-size:11px;"></lightning-button>
+                  </template>
+                
+                   <lightning-button if:true={editSchedule} variant="brand" label="Cancel Changes" title="cancel" onclick={cancelplanDetails} class="slds-m-left_x-small" style="font-size:11px;"></lightning-button>
+                   <lightning-button if:true={editSchedule} variant="brand" label="Update Changes" title="UpdateChanges" onclick={updateplanDetails} class="slds-m-left_x-small" style="font-size:11px;"></lightning-button>
+                </template>
+              </td>
+            </tr></table>
+          </td>    
+        </tr>
+       <!-- <tr>
+          <td colspan="3">
+            <table style="border-collapse: collapse;font-size:11px;font-weight:normal;" class="slds-table slds-table_bordered slds-border_left slds-border_right" border="1">
+              <thead>
+                  <tr style="height:12px;">
+                    <th style="font-size:12px;"> 
+                      Original NPV: {originalNPV}
+                    </th>
+                    <th style="font-size:12px;">
+                      Modified NPV: {modifiedNPV}
+                    </th>
+                    <th style="font-size:12px;"> 
+                      Original NPV PSF: {originalNPVpsf}
+                    </th>
+                    <th style="font-size:12px;">
+                      Modified NPV PSF: {modifiedNPVpsf}
+                    </th>
+                  </tr>
+                </thead>
+              </table>
+            </td>
+          </tr> -->
+          <tr if:true={generateQuote}>
+          <td colspan="3"> 
+            <table style="border-collapse: collapse;font-size:11px;font-weight:normal;">
+              <thead>
+                  <tr style="height:12px;">
+                    <th style="font-size:12px;text-align:center;border-top:1px solid #92a8d1;border-bottom:1px solid #92a8d1;border-left:1px solid #92a8d1;background-color:#EBEDEF;"> Order
+                    </th>
+                    <th style="font-size:12px;text-align:center;border-top:1px solid #92a8d1;border-bottom:1px solid #92a8d1;background-color:#EBEDEF;">Milestone Name
+                    </th>
+                    <th style="font-size:12px;text-align:center;border-top:1px solid #92a8d1;border-bottom:1px solid #92a8d1;background-color:#EBEDEF;">Type
+                    </th>
+                    <th style="font-size:12px;text-align:center;border-top:1px solid #92a8d1;border-bottom:1px solid #92a8d1;background-color:#EBEDEF;">Due Days
+                    </th>
+                    <th style="font-size:12px;text-align:center;border-top:1px solid #92a8d1;border-bottom:1px solid #92a8d1;background-color:#EBEDEF;">Due Date
+                    </th>
+                    <th style="font-size:12px;text-align:center;border-top:1px solid #92a8d1;border-bottom:1px solid #92a8d1;background-color:#EBEDEF;">Percentage
+                    </th>
+                    <th style="font-size:12px;text-align:center;border-top:1px solid #92a8d1;border-bottom:1px solid #92a8d1;background-color:#EBEDEF;">Amount
+                    </th>
+                    <th style="font-size:12px;text-align:center;border-top:1px solid #92a8d1;border-bottom:1px solid #92a8d1;background-color:#EBEDEF;">GST
+                    </th>
+                    <th style="font-size:12px;text-align:center;border-top:1px solid #92a8d1;border-bottom:1px solid #92a8d1;border-right:1px solid #92a8d1;background-color:#EBEDEF;"></th>
+                  </tr>  
+                </thead>
+                <tbody>
+                  <template for:each={planDetailList} for:item="pd">
+                    <tr key={pd.milestone_no} style="height:12px;">
+                      <td style="width:1px;height:12px;text-align:center;border-bottom:1px solid #92a8d1;border-left:1px solid #92a8d1;">{pd.milestone_no}
+                        </td>
+                        <td style="width:300px;height:12px;text-align:left;border-bottom:1px solid #92a8d1;">
+                          <label if:false={editSchedule}> {pd.milestone_Name} </label>  
+                          <template if:true={editSchedule}>
+                            <lightning-textarea name="mName" class="ABCD" data-id={pd.milestone_no} label="" value={pd.milestone_Name} if:true={pd.isRowAdjustable}></lightning-textarea>
+                            <lightning-textarea name="mName" class="ABCD" data-id={pd.milestone_no} label="" disabled="true" value={pd.milestone_Name} if:false={pd.isRowAdjustable}></lightning-textarea>
+                            <!-- <label if:false={pd.iseditable}> {pd.milestone_Name} </label> -->
+                          </template>  
+                        </td>
+                        <td style="width:40px;height:12px;text-align:center;border-bottom:1px solid #92a8d1;">
+                          {pd.milestone_type}
+                        </td>
+                        <td style="width:10px;height:12px;text-align:center;border-bottom:1px solid #92a8d1;">
+                          <label if:false={editSchedule}> {pd.days_after_due} </label>  
+                          <template if:true={editSchedule}>
+                            <lightning-input type="number" class="ABCD" data-id={pd.milestone_no} if:true={pd.isRowAdjustable} name="dueDays" value={pd.days_after_due}></lightning-input>
+                            <lightning-input type="number" class="ABCD" data-id={pd.milestone_no} if:false={pd.isRowAdjustable} name="dueDays" disabled="true" value={pd.days_after_due}></lightning-input>
+                           <!-- <label if:false={pd.iseditable}> {pd.days_after_due} </label> -->
+                          </template>  
+                        </td>
+                        <td style="width:20px;height:12px;text-align:center;border-bottom:1px solid #92a8d1;">{pd.due_Date}
+                        </td>
+                        <td style="width:10px;height:12px;text-align:center;border-bottom:1px solid #92a8d1;"> 
+                            
+                            <label if:false={editSchedule}> {pd.milestone_Percentage} </label>
+                            <template if:true={editSchedule}>
+                              <lightning-input type="number" class="ABCD" if:true={pd.isRowAdjustable} data-id={pd.milestone_no} name="mPercentage" value={pd.milestone_Percentage} step="0.01"></lightning-input>
+                              <lightning-input type="number" class="ABCD" if:false={pd.isRowAdjustable} data-id={pd.milestone_no} name="mPercentage" disabled="true" value={pd.milestone_Percentage} step="0.01"></lightning-input>
+                              <!-- <label class="ABCD" if:false={pd.iseditable}> {pd.milestone_Percentage} </label> -->
+                            </template>  
+                          </td>
+                        <td style="width:40px;height:12px;text-align:center;border-bottom:1px solid #92a8d1;"> {pd.amountSTR}
+                        </td>
+                        <td style="width:40px;height:12px;text-align:center;border-bottom:1px solid #92a8d1;">{pd.total_GST_STR}
+                        </td>
+                        <td style="font-size:13px;width:18px;height:12px;text-align:center;border-bottom:1px solid #92a8d1;border-right:1px solid #92a8d1;">
+                          <template if:true={editSchedule}>
+                            <template if:true={pd.isRowAdjustable}>
+                              <a href="#" onclick={removeRow} name={pd.milestone_no}>-</a> &nbsp;&nbsp;
+                              <a href="#" onclick={addRow} name={pd.milestone_no}>+</a>
+                            </template>  
+                        </template>
+                        </td>
+                      </tr>
+                  </template>
+                </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr> <td colspan="3">&nbsp;</td>
+        </tr>
+        <tr if:true={generateQuote}>
+          
+          <td style="border: 1px solid #92a8d1;">
+            <table style="border-collapse: collapse;font-size:11px;font-weight:normal;">
+              <tr>
+                <th colspan="2" style="font-size:12px;text-align:center;">  
+                  <!-- <lightning-input class="slds-p-left_xx-large chcbox" type="checkbox" data-id="changeSource" label="Change in Source" onchange={changeInSourceCheck}></lightning-input> -->
+
+                   <label class="container">
+                    <input type="checkbox" onchange={changeInSourceCheck}> &nbsp;&nbsp;Change In Source
+                    <span class="mark"> </span>
+                  </label>
+                </th>
+              </tr>
+              <template if:true={changeInSource}>
+                <tr>
+                  <th>
+                    Booking Source : {bookingSource}
+                  </th>
+                  <th>
+                    <lightning-record-edit-form object-api-name={QuotationAPI} >
+                      <label for="sourceId">Revised Booking Source : </label>
+                      <lightning-input-field id="sourceId" field-name={sourceField} variant="label-hidden"
+                          value={revBookingSorce} onchange={sourceChange}>
+                      </lightning-input-field>
+                  </lightning-record-edit-form> 
+                  </th>
+                </tr>
+                <tr>
+                  <th>
+                     Channel Partner: {channelPartner} 
+                  </th>
+                  <th>
+                    <label if:true={isSourcePartner}> Revised Channel Partner: </label>
+                    <!-- <lightning-input if:true={isSourcePartner} type="text" name="revisedCP" class="revisedCP" data-id="revisedCP" value={revisedCPName}></lightning-input> -->
+                    <lightning-record-edit-form object-api-name={QuotationAPI} >
+                      <!-- <label for="oId">Opportunity</label> -->
+                      <lightning-input-field if:true={isSourcePartner} id="cpId" field-name={CPField} variant="label-hidden"
+                          value={revisedCPName} onchange={CPSelect} >
+                      </lightning-input-field>
+                    </lightning-record-edit-form>
+
+                    <div if:true={isSourceExistingCustomer}>
+                      <label> Referred By </label>
+                      <lightning-input type="text" class="referredBy" value={referredBy}></lightning-input>
+                      <label> Project </label>
+                      <lightning-input type="text" class="referProject" value={referProject}></lightning-input>
+                      <label> Tower </label>
+                      <lightning-input type="text" class="referTower" value={referTower}></lightning-input>
+                      <label> Flat </label>
+                      <lightning-input type="text" class="referFlat" value={referFlat}></lightning-input>
+                      <label> Emp Code</label>
+                      <lightning-input type="text" class="referEmpCode" value={referEmpCode}></lightning-input>
+                    </div>
+                  </th>
+                </tr>
+                <tr>
+                  <th>
+                    Brokerage Percentage : {brokeragePercentage}
+                  </th>
+                  <th>
+                   <!-- Revised Brokerage Percentage : 
+                    <lightning-input if:true={isSourcePartner} type="number" class="revisedBrokrgPercentage" value={revisedBrokeragePercentage} step="0.01"></lightning-input>
+                   -->
+                  </th>
+                </tr>
+              </template>
+            </table>  
+          </td>  
+          <td style="border: 1px solid #92a8d1;">
+            <lightning-textarea placeholder="Additional Comments...." label="" onchange={additionalCommentsChange} value={additionalComments}></lightning-textarea>
+          </td> 
+          <td style="border: 1px solid #92a8d1;">
+            <!-- <lightning-input class="slds-p-left_xx-large" type="checkbox" data-id="checkbox" label="Milestone updated - New Quotation" onchange={newcheckChange}></lightning-input> -->
+            
+              <!-- <input type="checkbox" id="test2" onchange={newcheckChange}/>
+              <label for="test2">Milestone updated - New Quotation</label> -->
+              <!-- <label class="container">
+                <input type="checkbox" onchange={newcheckChange}> &nbsp;&nbsp;Milestone updated - New Quotation
+                <span class="mark"> </span>
+              </label> -->
+          </td>
+        </tr>
+      </table>
+    <br/><br/></br>
+  </div>
+</template>

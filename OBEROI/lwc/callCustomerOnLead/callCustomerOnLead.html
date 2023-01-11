@@ -1,0 +1,56 @@
+<template>
+    <lightning-card title="Call Customer" icon-name="standard:call">
+
+        <!--div>
+                <lightning-button variant="brand" label="Brand" title="Primary action" onclick={callmobile1} class="slds-m-left_x-small"></lightning-button>
+                <lightning-formatted-text value={mobile1}></lightning-formatted-text>
+            </div-->
+
+        <template if:true={leadData.data}>
+
+            <div class="slds-m-around_medium">
+                <template if:true={mobile1}>
+                    <p>
+                        <lightning-button-icon icon-name="standard:voice_call" alternative-text="Call Mobile 1"
+                            title="Call Mobile 1" size="small" variant="brand" onclick={callmobile1}>
+                        </lightning-button-icon> &nbsp; &nbsp;
+                        <lightning-formatted-text value={mobile1}></lightning-formatted-text>
+                    </p>
+                </template><br />
+                <template if:true={mobile2}>
+                    <p>
+                        <lightning-button-icon icon-name="standard:voice_call" alternative-text="Call Mobile 2"
+                            title="Call Mobile 2" size="small" variant="brand" onclick={callmobile2}>
+                        </lightning-button-icon> &nbsp; &nbsp;
+                        <lightning-formatted-text value={mobile2}></lightning-formatted-text>
+                    </p>
+                </template>
+            </div>
+        </template>
+        <template if:true={leadData.error}>
+            <p>{leadData.error}></p>
+        </template>
+        <lightning-card title="Update Mobile No." >
+            <div if:true={isLoaded} class="slds-is-relative">
+                <lightning-spinner alternative-text="Loading..." variant="brand">
+                </lightning-spinner>
+            </div>
+            <div style="margin:10px">
+                <lightning-button if:false={showupdate} variant="brand" class="nextbtn" onclick={handleshowupdate}
+                    label="Click Here">
+                </lightning-button>
+            </div>
+            <template if:true={showupdate}>
+                <div style="margin:10px">
+                <lightning-input type="text"  placeholder="Mobile No." value={mob}
+                    autocomplete="true" onchange={handlemobChange}>
+                </lightning-input></div><br/>
+                <div style="margin:10px">
+                <lightning-button variant="brand" class="nextbtn" onclick={handleUpdate} label="Update">
+                </lightning-button>
+            </div>
+            </template>
+        </lightning-card>
+    </lightning-card>
+
+</template>

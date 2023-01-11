@@ -1,0 +1,63 @@
+<template>
+    <lightning-spinner alternative-text="Loading..." variant="brand" if:true={isLoading}></lightning-spinner>
+  <div>
+    </br>
+    <h1 style="font-size:35px;text-align:center;color:#34495E"><b>Add Car Park</b> </h1><br/>
+    </div>
+    <table>
+    <tr>
+        <th width="35%">
+          <lightning-record-edit-form object-api-name={CarParkAPI} >
+              <!-- <label for="oId">Opportunity</label> -->
+              <!--<lightning-input-field id="oId" required={required} field-name={OpportunityField} variant="label-hidden"
+                  value={oppId} onchange={OptyChange} disabled={disabled}>
+              </lightning-input-field>-->
+          </lightning-record-edit-form>  
+        </th> 
+        
+    </tr>
+    <td>
+        <table style="border-collapse: collapse;font-size:11px;font-weight:normal;" class="slds-table slds-table_bordered slds-border_left slds-border_right" border="1" cellpadding="0" cellspacing="0">
+          <thead>
+            <tr class="slds-line-height_reset">
+              <th class="" scope="col" colspan="3" style="background-color: #FEF5E7;text-align:center;padding: 3px;font-size:14px;">
+                <div class="slds-truncate" title="CarType"> Additional Car Parking</div>
+              </th>
+            </tr>  
+            <tr class="slds-line-height_reset">
+              <th class="" scope="col" style="background-color: #EBEDEF;text-align:center;padding: 3px;font-size:14px;">
+                <div class="slds-truncate" title="CarType">Car Type</div>
+              </th>
+              <th class="" scope="col" style="background-color: #EBEDEF;text-align:center;padding: 3px;font-size:14px;">
+                <div class="slds-truncate" title="Count">Count</div>
+              </th>
+               <th class="" scope="col" style="background-color: #EBEDEF;text-align:center;padding: 3px;font-size:14px;">
+                  <div class="slds-truncate" title="Amount">Enter Car Park Count</div>
+              </th> 
+            </tr>
+          </thead>
+            <template for:each={parkingList} for:item="cp">
+              <tr key={cp.Id}>
+                  <th scope="col" class="topth" style="width:80px;">
+                    <div class="slds-truncate"> {cp.carParkName}</div>
+                  </th>
+                  <th scope="col" style="width:50px;padding: 3px;">
+                    <div class="slds-truncate">{cp.originalCount}</div>
+                  </th>
+                 <!-- <th scope="col" style="width:200px;padding: 3px;">
+                    <div class="slds-truncate"><lightning-input type="text" data-id={cp.carParkName} name="parkingAmount" value={cp.parkingAmount}></lightning-input></div>
+                  </th> -->
+                  <th scope="col" style="width:100px;padding: 3px;"> 
+                    <div class="slds-truncate"> <lightning-input type="number" data-id={cp.carParkName} name="countInput" value={cp.selectedCount}></lightning-input></div>
+                  </th>
+                </tr>
+            </template>  
+          <tr>
+              <th colspan="3" style="text-align:center;">
+                <lightning-button variant="brand" label="Add Car Park" title="Add Car Park" onclick={handleClick} class="slds-m-left_x-small" style="font-size:11px;" disabled={hideCarParkbutton}></lightning-button>
+              </th>
+          </tr> 
+        </table>
+      </td> 
+    </table>
+</template>

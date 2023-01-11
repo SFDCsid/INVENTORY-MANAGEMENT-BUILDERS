@@ -1,0 +1,67 @@
+<template>
+    <lightning-spinner alternative-text="LOADING IN PROCESS" varient="brand" if:true={isLoading}></lightning-spinner>
+    <h1 style="font-size:30px"> Inventory Matrix </h1> <br/>
+    <br/>
+    <Div class="slds-box" style="margin:20px; margin-left: 400px; margin-right: 300px;">
+    <table>
+        <tr>
+            <td>
+                <b>Project : </b>
+                <lightning-record-edit-form object-api-name={OpportunityOBJ}>
+                    <lightning-input-field lable="" id="pId" required={required} field-name={ProjectField} variant="label-hidden"
+                        value={projectId} onchange={ProjChange} disabled={disabled}>
+                    </lightning-input-field>
+                </lightning-record-edit-form>
+                <b>Tower : </b>
+                <lightning-combobox name="Tower" label="" placeholder="Choose Tower" value={value} onchange={handleChange}
+                    options={roleOptions}>
+                </lightning-combobox>
+                <br/>
+                <img src={spring20Logo}>
+                <p></p>
+                Selected Value:
+                <lightning-formatted-text title="Chosen Key" value={selectedValue}></lightning-formatted-text>
+            </td>
+        </tr>
+    </table>
+    </Div>
+    <div style="height:20px; margin:20px; margin-bottom:150px;">
+        <template if:true={floorUnitsWrap} for:each={floorUnitsWrap} for:item="floor">
+            <div key={floor.floorNo} class="slds-box slds-box_x-small" style="background:rgb(197, 220, 255);">
+                <div class="slds-col slds-size_1-of-3" >
+                        <span style="font-size: medium;"><i><b>Floor No - {floor.floorNo}</b></i></span>
+                </div>
+            </div>
+            <div key={floor} class="slds-box">
+            <lightning-layout multiple-rows="false">
+                <template for:each={floor.unitList} for:item="Unit">
+                    <div key={Unit} class={Unit.Status__c}>
+                        <span class="font-size: small">
+                            <b> Unit No : <lightning-formatted-url value={Unit.Unit_URL__c} tooltip="Go to Unit" target="_blank" label={Unit.House_Unit_No__c}>
+                                </lightning-formatted-url>
+                            </b>
+                        </span><br/>
+                        <span class="font-size: small">
+                            {Unit.Carpet_Area__c} Sq.Ft
+                        </span><br/>
+                        <span class="font-size: small">
+                            {Unit.Property_Type_Name__c}
+                        </span>
+                        <div class="slds-p-top_small">
+                            <button type="button" class="myBtn" onclick={GenerateQuote} name={Unit.Id}>Quotation</button>&nbsp;&nbsp;
+                            <button type="button" class="myBtn" onclick={BlockUnit} name={Unit.Id}>Block</button>
+                        </div>
+                    </div>
+                    &nbsp;
+                </template>
+            </lightning-layout>
+        </div>
+        </template>
+    </div>
+</template>
+<!--
+    <span class="font-size: small">
+        <lightning-formatted-url value={Unit.Unit_URL__c} tooltip="Go to Unit" label={value.House_Unit_No__c}
+            target="_blank">
+        </lightning-formatted-url>
+    </span><br />-->

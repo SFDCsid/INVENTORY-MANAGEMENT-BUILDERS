@@ -1,0 +1,23 @@
+<template>
+    <lightning-spinner alternative-text="LOADING IN PROCESS" varient="brand" if:true={isLoading}></lightning-spinner>
+    <Div class="slds-box">
+        <table>
+            <tr>
+                <td>
+                    <b>Select Object </b>
+                    <lightning-combobox name="Objects" label="" placeholder="Select Object" 
+                    value={valueObj} options={Objectlist} onchange={GetFields}>
+                    </lightning-combobox>
+                
+                    <br />
+                    <b>Select Field </b>
+                    <lightning-combobox name="Fields" label="" placeholder="Select Field" value={valueFields}
+                        options={Fldlist}> <!-- onchange={handleChange}-->
+                    </lightning-combobox>
+                    <b>Merge Field</b>
+                
+                </td>
+            </tr>
+        </table>
+    </Div>    
+</template>
