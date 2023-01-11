@@ -1,0 +1,62 @@
+<aura:component controller="ProjectQuotaCntrl" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    
+    <aura:attribute name="options" type="List" access="PRIVATE"/>
+    <aura:attribute name="startDuration" type="Date" access="PRIVATE"/>
+    <aura:attribute name="endDuration" type="Date" access="PRIVATE"/>
+    <aura:attribute name="monthsWiseProject" type="List" access="PRIVATE"/>
+    <aura:attribute name="selectedQuota" type="String" access="PRIVATE"/>
+    <aura:attribute name="projectsWiseMonth" type="List" access="PRIVATE"/>
+    
+    
+    <lightning:select name="selQuota" aura:id="selQuota" label="Project/Month Quota" value="{!v.selectedQuota}" required="true" onchange="{!c.onQuotaTypeChange}">
+        <option value="">choose one...</option>
+        <option value="project">Project</option>
+        <option value="month">Month</option>
+    </lightning:select>
+    
+    <!-- Months with Project -->
+    <aura:if isTrue="{!v.selectedQuota == 'project'}">
+        <lightning:select name="selProject" label="Project" required="true" >
+            <aura:iteration items="{!v.options}" var="option">
+                <option text="{!option.label}" value="{!option.id}" />
+            </aura:iteration>
+        </lightning:select>
+        <lightning:input type="date" aura:id="dtStart" name="dtStart" label="Start Duration" value="{!v.startDuration}" onchange="{!c.handleStartChange}"/>
+        <lightning:input type="date" aura:id="dtEnd" name="dtEnd" label="End Duration" value="{!v.endDuration}" onchange="{!c.handleEndChange}" />
+        <aura:iteration items="{!v.monthsWiseProject}" var="monthProject">
+            <lightning:input type="number" formatter="currency" step="0.01" aura:Id="monthProject" label="{!monthProject.label}" value="{!monthProject.targetValue}" />
+        </aura:iteration>
+    </aura:if>
+    
+    <!-- Month with Projects -->
+    <aura:if isTrue="{!v.selectedQuota == 'month'}">
+        <lightning:select name="selMonth" aura:id="selMonth" label="Month" required="true">
+            <option value="January">January</option>
+            <option value="February">February</option>
+            <option value="March">March</option>
+            <option value="April">April</option>
+            <option value="May">May</option>
+            <option value="June">June</option>
+            <option value="July">July</option>
+            <option value="August">August</option>
+            <option value="September">September</option>
+            <option value="October">October</option>
+            <option value="November">November</option>
+            <option value="December">December</option>
+        </lightning:select>
+        <table>
+        	<tr>
+                <th>Project</th>
+                <th>Target Budget</th>
+            </tr>
+            <aura:iteration items="{!v.projectsWiseMonth}" var="project">
+                <tr>
+                    <td>{!project.label}</td>
+                    <td><lightning:input type="number" formatter="currency" step="0.01" aura:Id="monthProject" value="{!project.targetValue}" /></td>
+                    <td style="display: none;"><lightning:input name="hiddenProjectId" disabled="true" value="{!project.id}" label="" /></td>
+                </tr>
+            </aura:iteration>
+        </table>
+    </aura:if>
+    <lightning:button variant="brand" label="Submit" title="Submit" onclick="{! c.save }" />
+</aura:component>

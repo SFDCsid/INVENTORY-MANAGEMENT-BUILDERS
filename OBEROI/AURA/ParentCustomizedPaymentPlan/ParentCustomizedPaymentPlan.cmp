@@ -1,0 +1,231 @@
+<aura:component controller="BookingController" Implements="flexipage:availableForRecordHome,force:hasRecordId, force:lightningQuickAction" access="global">
+    <!--Init handler which is call doInit js function on component Load-->  
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="change" value="{!v.value}" action="{!c.calculateMax}"/>
+    <aura:handler name="change" value="{!v.value}" action="{!c.calculatePerc}"/>
+    <aura:attribute name="billingPlanId" type="string" access="global"/>
+    <aura:attribute name="oppId" type="string"/>
+    <aura:attribute name="metadata" type="List"/>
+    <!--Aura Attribute for store Object List as Array-->    
+    <aura:attribute name="ppList" type="object"/>
+    <aura:attribute name="finalMList" type="object"/>
+    <aura:attribute name="recordId" type="string" />
+   	<aura:attribute name="billingplan" type="List" default=""/> 
+    <aura:attribute name="amount" type="string" />
+    
+    <br/> 
+    <!--Header Part-->        
+    <div class="slds-page-header">
+        <h1 class="slds-page-header__title">Custom Billing Plan Details</h1>
+        <p class="slds-text-body_small slds-line-height_reset"></p>
+    </div>
+    <lightning:recordEditForm recordId="{!v.billingPlanId}" aura:id="editForm" objectApiName="Payment_Plan__c">
+        <!-- the messages component is for error messages -->
+        <lightning:messages />
+        <div class="slds slds-p-around_small" style="background-color:white;color:black;">
+            <div class="slds-section slds-is-open ">
+                <h3 class="slds-section__title slds-theme_shade">
+                    <span class="slds-p-around_xxx-small" title="Billing Plan Information">Billing Plan Information</span>
+                </h3>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning:outputField fieldName="Billing_Plan_Name__c" />
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning:outputField fieldName="Opportunity__c" aura:id="input_field_Opp"/>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning:outputField fieldName="Project__c" />
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning:outputField fieldName="Tower__c"/>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning:outputField fieldName="Status__c" />
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning:outputField fieldName="Property__c" />
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning:outputField fieldName="Basic_Cost_Formula__c" value="{!v.billingObj.Basic_Cost_Formula__c}" aura:id="basicCost"/>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning:outputField fieldName="Basic_Cost_After_Discount_Formula__c" />
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning:outputField fieldName="Floor_Rise_Cost_Formula__c" aura:id="FloorCost"/>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning:outputField fieldName="Floor_Rise_Cost_After_Discount_Formula__c" />
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning:outputField fieldName="PLC_Cost_Formula__c" />
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning:outputField fieldName="PLC_Cost_After_Discount_Formula__c" />
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-3">
+                        <lightning:outputField fieldName="Discount_On_Basic_Cost__c" />
+                    </div>
+                    <div class="slds-col slds-size_1-of-3">
+                        <lightning:outputField fieldName="Discount_On_Floor_Rise_Cost__c" />
+                    </div>
+                    <div class="slds-col slds-size_1-of-3">
+                        <lightning:outputField fieldName="Discount_On_PLC_Cost__c" />
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-3">
+                        <lightning:outputField fieldName="Discount_Amount_On_Basic_Cost__c" />
+                    </div>
+                    <div class="slds-col slds-size_1-of-3">
+                        <lightning:outputField fieldName="Discount_Amount_On_Floor_Rise_Cost__c" />
+                    </div>
+                    <div class="slds-col slds-size_1-of-3">
+                        <lightning:outputField fieldName="Discount_Amount_On_PLC_Cost__c" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </lightning:recordEditForm>
+    <div class="slds-page-header">
+        <h1 class="slds-page-header__title">Billing Plan Line Item</h1>
+        <p class="slds-text-body_small slds-line-height_reset"></p>
+    </div>
+    <!--Table Part-->           
+    <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_bordered slds-table_col-bordered"> 
+        <thead>
+            <tr class="slds-text-title_caps ">
+                <th scope="col" class="slds-col slds-size_1-of-10">
+                    <div class="slds-truncate" title="sNo">Order</div>
+                </th>
+                <th scope="col" class="slds-col slds-size_3-of-10">
+                    <div class="slds-truncate" title="Order">Line Item Name</div>
+                </th>
+                <th scope="col" class="slds-col slds-size_1-of-10">
+                    <div class="slds-truncate" title="Order">Type</div>
+                </th>
+                <th scope="col" class="slds-col slds-size_1-of-10">
+                    <div class="slds-truncate" title="Id">Due After Days</div>
+                </th> 
+                <th scope="col" class="slds-col slds-size_1-of-10">
+                    <div class="slds-truncate" title="Id">% BSP</div>
+                </th>
+                <th scope="col" class="slds-col slds-size_1-of-10">
+                    <div class="slds-truncate" title="Id">BSP Amount</div>
+                </th>
+                <th scope="col" class="slds-col slds-size_1-of-10">
+                    <div class="slds-truncate" title="Id">% FSL</div>
+                </th>
+                <th scope="col" class="slds-col slds-size_1-of-10">
+                    <div class="slds-truncate" title="Id">FSL Amount</div>
+                </th>
+            </tr>
+        </thead>   	
+        <tbody>        
+            <aura:iteration items="{!v.finalMList}" var="item" indexVar="index">
+                <aura:if isTrue="{!item.Line_Item_Type__c == 'Construction Linked' ? true : false}">
+                    <tr id ="{!index}">             
+                        <!--  <th scope="row"> 
+                        {!index +1}
+                    </th> -->
+                        <th scope="row" class="slds-col slds-size_1-of-10">
+                            <ui:outputText class="slds-output" value="{!item.Order__c}"/>
+                        </th>
+                        <th scope="row" class="slds-col slds-size_3-of-10">
+                            <ui:outputTextArea aura:id="ppli" class="slds-output" value="{!item.Payment_Plan_Line_Item_Name__c}"/>
+                        </th>
+                        <th scope="row" class="slds-col slds-size_1-of-10">
+                            <ui:outputText class="slds-output" value="{!item.Line_Item_Type__c}"/>
+                        </th>
+                        <th scope="row" class="slds-col slds-size_1-of-10">
+                            <ui:outputText  class="slds-output"  value="{!item.Due_After_Days__c}"/>           
+                        </th>
+                        <th scope="row" class="slds-col slds-size_1-of-10">
+                            <ui:outputText  class="slds-output"  value="{!item.Amount_Percent_BSP__c}"/>           
+                        </th>
+                        <th scope="row" class="slds-col slds-size_1-of-10">
+                            <ui:outputText  class="slds-output"  value="{!item.Amount__c}"/>           
+                        </th>
+                        <th scope="row" class="slds-col slds-size_1-of-10">
+                            <ui:outputText  class="slds-output"  value="{!item.Percentage_Of_Value_To_Be_Invoiced__c}"/>           
+                        </th>
+                        <th scope="row" class="slds-col slds-size_1-of-10">
+                            <ui:outputText  class="slds-output"  value="{!item.Amount_Incl_S_Tax__c}"/>           
+                        </th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    <aura:set attribute="else">
+                        <tr id ="{!index}"> 
+                            <!--  <th scope="row"> 
+                        {!index +1}
+                    </th> -->
+                            <th scope="row" class="slds-col slds-size_1-of-10">
+                                <ui:outputText class="slds-output" value="{!item.Order__c}"/>
+                            </th>
+                            <th scope="row" class="slds-col slds-size_3-of-10">
+                                <ui:inputTextArea aura:id="ppli" class="slds-input" value="{!item.Payment_Plan_Line_Item_Name__c}" change="{!c.calculateMax}"/>
+                            </th>
+                            <!--    <th scope="row" class="slds-col slds-size_1-of-10">
+                        <ui:inputText  class="slds-input"  value="{!item.Description__c}"/>           
+                    </th> -->
+                            <th scope="row" class="slds-col slds-size_1-of-10">
+                                <ui:inputText class="slds-input" value="{!item.Line_Item_Type__c}"/>
+                            </th>
+                            <th scope="row" class="slds-col slds-size_1-of-10">
+                                <ui:inputText  class="slds-input"  value="{!item.Due_After_Days__c}"/>           
+                            </th>
+                            <th scope="row" class="slds-col slds-size_1-of-10">
+                                <ui:inputText  class="slds-input"  value="{!item.Amount_Percent_BSP__c}" aura:id="perBSP" change="{!c.calculateBSP}"/>           
+                            </th>
+                            <th scope="row" class="slds-col slds-size_1-of-10">
+                               <lightning:input  class="slds-output"  value="{!v.amount}" aura:id="amounntBSP"/>           
+                            </th>
+                            <th scope="row" class="slds-col slds-size_1-of-10">
+                                <ui:inputText  class="slds-input"  value="{!item.Percentage_Of_Value_To_Be_Invoiced__c}" aura:id="perFSL" change="{!c.calculateFSL}"/>           
+                            </th>
+                            <th scope="row" class="slds-col slds-size_1-of-10">
+                                <ui:outputText  class="slds-output"  value="{!item.Amount_Incl_S_Tax__c}" aura:id="amounntFSL"/>           
+                            </th>
+                            <th class="slds-col slds-size_1-of-10">
+                                <!--      <aura:if isTrue="{!v.rowIndex == 0}">-->
+                                <a onclick="{!c.AddNewRow }" >
+                                    <lightning:icon  iconName="utility:add" class="slds-icon slds-icon_small" size="small" alternativeText="add"/>
+                                    <span class="slds-assistive-text">Add Icon</span>
+                                </a> </th>  
+                            <!-- <aura:if isTrue="{!v.index == 0}">
+                     <aura:set attribute="else"> -->
+                            <th class="slds-col slds-size_1-of-10">
+                                <a onclick="{!c.removeDeletedRow}">
+                                    <lightning:icon variant="error" iconName="utility:delete" class="slds-icon slds-icon_small" size="small" alternativeText="icon"/>
+                                    <span class="slds-assistive-text">Delete Icon</span>
+                                </a> 
+                            </th>
+                            <!--    </aura:set>
+                    </aura:if>-->
+                        </tr>
+                    </aura:set>
+                </aura:if>
+            </aura:iteration>          
+        </tbody>
+    </table>
+    <!--Save Button which is call Save js function on click --> 
+    <div class="slds-page-header">
+        <button class="slds-button slds-button_brand " onclick="{!c.Save}">Save</button>
+        <button class="slds-button slds-button_brand " onclick="{!c.Cancel}">Cancel</button>
+        <p class="slds-text-body_small slds-line-height_reset"></p>
+    </div>
+</aura:component>

@@ -1,0 +1,45 @@
+<aura:component controller = "PMTUserController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="pmtUsers" type="User[]"/> 
+    <aura:attribute name="lastAssignedId" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <div class="slds-page-header">
+        <div class="slds-text-heading--large">      
+            PMT User Details 
+        </div>
+    </div>
+    
+    <div class="slds-p-top_x-small"> 
+        <table class="slds-table slds-table--bordered slds-table--striped">
+            <thead>
+                <tr>
+                    <th scope="col"><span class="slds-truncate">Name</span></th>
+                    <th scope="col"><span class="slds-truncate">On Leave</span></th>
+                    <!--<th scope="col"><span class="slds-truncate">Receiving Web Leads</span></th>-->
+                    <th scope="col"><span class="slds-truncate">Last Assigned</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <aura:iteration items="{!v.pmtUsers}" var="item">
+                    <tr>
+                        <td><ui:outputText value="{!item.Name}"/></td>
+                        <td><ui:inputCheckbox aura:id="checkbox" value="{!item.On_Leave__c}"/></td>
+                        <!--<td><ui:outputCheckbox aura:id="checkboxWebToLead" value=""/></td>-->
+                        <aura:if isTrue="{!v.lastAssignedId==item.Id}">
+                            <td><ui:outputCheckbox aura:id="checkboxLastAssigned" value="true"/></td>
+                            <aura:set attribute="else">
+                                <td><ui:outputCheckbox aura:id="checkboxLastAssigned" value="false"/></td>
+                            </aura:set>
+                        </aura:if>
+                        
+                    </tr>
+                </aura:iteration>
+            </tbody>
+            
+            <div class="slds-docked-form-footer">
+                <lightning:button label="Cancel" title="Neutral " onclick="{!c.cancel}"/>
+                <lightning:button variant="brand" label="Save" onclick="{!c.saveRecords }" />
+            </div>
+        </table>
+    </div>
+    
+</aura:component>

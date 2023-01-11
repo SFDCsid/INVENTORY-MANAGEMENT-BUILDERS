@@ -1,0 +1,18 @@
+<aura:component controller="ProcessBookingCom" implements="force:lightningQuickAction,flexipage:availableForAllPageTypes,force:hasRecordId">
+	<aura:attribute name="Id" type="string"/>
+    <aura:attribute name="book" type="Booking__c" default="{ 'sobjectType': 'Booking__c' }" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="msg" type="string" default="Info"/>
+    <aura:attribute name="isSuccess" type="Integer" default="false"/>
+    
+    <div class="slds-form--stacked slds-p-around--medium slds-m-bottom--x-small">
+        <!--<aura:if isTrue="{v.isSuccess}">-->
+        <div style="background-color:LightBlue">
+            <ui:message title="Info" severity="info" closable="false">
+            <br/>
+               {!v.msg}
+            </ui:message>
+        </div>
+        <!--</aura:if> -->
+    </div>
+</aura:component>

@@ -1,0 +1,12 @@
+<aura:component access="global" >
+    
+    <aura:handler name="init" value="{!this}" action="{!c.myAction}"/>
+    <aura:attribute name="recordId" type="string" />
+    
+    NRI Declaration form cannot be generated for this record.
+    <br/>
+    <br/>
+    <br/>
+    <lightning:button class="slds-button slds-button_destructive" variant="brand" label="Back" onclick="{!c.cancelAction}" />
+    
+</aura:component>

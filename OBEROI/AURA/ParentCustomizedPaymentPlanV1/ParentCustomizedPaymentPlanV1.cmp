@@ -1,0 +1,129 @@
+<aura:component controller="BookingController" Implements="flexipage:availableForRecordHome,force:hasRecordId, force:lightningQuickAction" access="global">
+    <!--Init handler which is call doInit js function on component Load-->  
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="billingPlanId" type="string" access="global"/>
+    <aura:attribute name="oppId" type="string"/>
+    <aura:attribute name="metadata" type="object[]"/>
+    <!--Aura Attribute for store Object List as Array-->    
+    <aura:attribute name="ppList" type="object"/>
+    <aura:attribute name="finalMList" type="object"/>
+    <aura:attribute name="recordId" type="string" />
+    
+    <br/> 
+    <!--Header Part-->        
+    <div class="slds-page-header">
+        <h1 class="slds-page-header__title">Custom Billing Plan</h1>
+        <p class="slds-text-body_small slds-line-height_reset"></p>
+    </div>
+    <lightning:recordEditForm recordId="{!v.billingPlanId}" aura:id="editForm" objectApiName="Payment_Plan__c" onsuccess="{!c.handleSuccess}">
+        <!-- the messages component is for error messages -->
+        <lightning:messages />
+        <div class="slds slds-p-around_small" style="background-color:white;color:black;">
+            <div class="slds-section slds-is-open ">
+                <h3 class="slds-section__title slds-theme_shade">
+                    <span class="slds-p-around_xxx-small" title="Billing Plan Information">Billing Plan Information</span>
+                </h3>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning:inputField fieldName="Billing_Plan_Name__c" />
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning:inputField fieldName="Opportunity__c" aura:id="input_field_Opp"/>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning:inputField fieldName="Project__c" />
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning:outputField fieldName="Tower__c"/>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning:inputField fieldName="Status__c" />
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning:inputField fieldName="Pricing__c"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </lightning:recordEditForm>
+    <div class="slds-page-header">
+        <h1 class="slds-page-header__title">Billing Plan Line Item</h1>
+        <p class="slds-text-body_small slds-line-height_reset"></p>
+    </div>
+    <!--Table Part-->           
+    <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_bordered slds-table_col-bordered"> 
+        <thead>
+            <tr class="slds-text-title_caps ">
+                <th scope="col">
+                    <div class="slds-truncate" title="sNo">Sr. No</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Order">Line Item Name</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Id">Percentage</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Order">Payment Group</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Id">Amount</div>
+                </th>                
+            </tr>
+        </thead>   	
+        <tbody>
+            <!--Iterate the child Component for display Table rows 
+               with pass the List Item Index for track the Every child Component 
+               and pass each List Contact Instance -->         
+            <aura:iteration items="{!v.finalMList}" var="item" indexVar="index">
+                <tr id ="{!index}"> 
+                    <th scope="row"> 
+                        {!index +1}
+                    </th>
+                    <th scope="row">
+                        <ui:inputText class="slds-input" value="{!item.Payment_Plan_Line_Item_Name__c}"/>
+                    </th>
+                    <th scope="row">
+                        <ui:inputText  class="slds-input"  value="{!item.Percentage_Of_Value_To_Be_Invoiced__c}"/>           
+                    </th>
+                    <th scope="row">
+                        <ui:inputText class="slds-input" value="{!item.Payment_Group__c}"/>
+                    </th>
+                    <th scope="row">
+                        <ui:inputText  class="slds-input"  value="{!item.Amount__c}"/>           
+                    </th>
+                    <th>
+                        <!--      <aura:if isTrue="{!v.rowIndex == 0}">-->
+                        <a onclick="{!c.AddNewRow }" >
+                            <lightning:icon  iconName="utility:add" class="slds-icon slds-icon_small" size="small" alternativeText="add"/>
+                            <span class="slds-assistive-text">Add Icon</span>
+                        </a> </th>  
+                    <!-- <aura:if isTrue="{!v.index == 0}">
+                     <aura:set attribute="else"> -->
+                    <th>
+                        <aura:if isTrue="{!item.Milestone_Number__c == '0' ? true : false}">
+                            <aura:set attribute="else">
+                                <a onclick="{!c.removeDeletedRow}">
+                                    <lightning:icon variant="error" iconName="utility:delete" class="slds-icon slds-icon_small" size="small" alternativeText="icon"/>
+                                    <span class="slds-assistive-text">Delete Icon</span>
+                                </a> 
+                            </aura:set>
+                        </aura:if>
+                    </th>
+                    <!--    </aura:set>
+                    </aura:if>-->
+                </tr> 
+            </aura:iteration>          
+        </tbody>
+    </table>
+    <!--Save Button which is call Save js function on click --> 
+    <div class="slds-page-header">
+        <button class="slds-button slds-button_brand" onclick="{!c.Save}">Save</button>
+        <button class="slds-button slds-button_brand" onclick="{!c.Cancel}">Cancel</button>
+        <p class="slds-text-body_small slds-line-height_reset"></p>
+    </div>
+</aura:component>

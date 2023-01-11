@@ -1,0 +1,262 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+     <ltng:require scripts="{!$Resource.angular_js}"/>
+    <ltng:require scripts="{!$Resource.jquerryFile}"/>
+    <ltng:require scripts="{!$Resource.Underscore_js}"/>
+    <ltng:require scripts="{!$Resource.Bootstrap_js}"/>    
+    <ltng:require styles= "{!$Resource.BootStrapTheme}"/>
+    <ltng:require styles= "{!$Resource.BootstrapCSS}"/>
+    <ltng:require scripts="{!$Resource.jquery}"/>
+    <!--afterScriptsLoaded="{!c.scriptsLoaded}"/-->
+    
+    <!--aura:handler name="init" value="{!this}" action="{!c.init}" /--> 
+    <aura:attribute name="item" type="Project__c"/>
+        <div ng-app="app" class="container">
+        <div id="selected" ng-controller="selected" ng-show="$root.proj != null" style="display:none;">
+            <nav class="navbar navbar-default" role="navigation">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#">Selected</a>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="row">
+                <a class="col-md-4" ng-click="$root.proj = null; $root.tower = null;" href="#projects">
+                    <h3>Project</h3>
+                    <img class="img-responsive" src="http://media2.wptv.com//photo/2012/08/24/empire_state_building_20120824093747_320_240.JPG"/>
+                    <div style="padding: 5px 0px;">
+                        <h4>{!v.item.Name}</h4>
+                        <div style="color: gray">
+                            <span>{!v.item.Type_Of_Project__c}</span>
+                            <span class="pull-right">{!v.item.Status__c}</span>
+                        </div>
+                        <div class=""><span class="glyphicon glyphicon-map-marker"></span><b>{{$root.proj.Location__c}}</b></div>
+                        <p>{!v.item.Description__c}</p>
+                    </div>    
+                </a>
+
+                <a class="col-md-4" ng-hide="$root.tower == null" ng-click="$root.tower = null" href="#towers">
+                    <h3>Tower</h3>
+                    <img class="img-responsive" src="{{$root.tower.$image}}" />
+                    <h4>{{$root.tower.Name}}</h4>
+                    <div style="padding: 5px 0px;">
+                        <label style="display:block">Floors: <b>{{$root.tower.Total_Floors__c}}</b></label>
+                        <label style="display:block">Units: <b>{{$root.tower.Number_of_Units__c}}</b></label>
+                        <label style="display:block">Total Parking: <b>{{$root.tower.PropStrength__Total_Parking__c}}</b></label>
+                        <p>{{$root.tower.Description__c}}</p>
+                    </div>
+                </a>
+            </div>  
+        </div>
+
+        <div id="projects" ng-controller="project">
+            <div ng-show="$root.proj == null">
+
+                <nav class="navbar navbar-default" role="navigation">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#project-menu">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand" href="#">Projects</a>
+                        </div>
+                        <div class="collapse navbar-collapse" id="project-menu">
+                            <ul class="nav navbar-nav navbar-right">
+                                
+                                <li>
+                                    <a class="form-group" style="padding: 0px; margin: 0px; top: 8px;"><input type="text" class="form-control" placeholder="Search..." ng-model="q.name"/></a>
+                                </li>
+                                <li style="display:none;"><a><label class="glyphicon glyphicon-camera"><input type="file" accept="image/*" style="position:absolute; left: -1000px;" /></label></a></li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon glyphicon-flag"></span>{{q.country}}</a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li ng-click="q.country = '';"><a role="menuitem" tabindex="-1" >All</a></li>
+                                        <li class="divider"></li>
+                                        <li ng-click="q.country = item.label;" ng-repeat="item in countries"><a role="menuitem" tabindex="-1">{{item.label}}</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-map-marker"></span>{{q.location}}</a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li ng-click="q.location = '';"><a role="menuitem" tabindex="-1" >All</a></li>
+                                        <li class="divider"></li>
+                                        <li ng-click="q.location = item.label;" ng-repeat="item in locations"><a role="menuitem" tabindex="-1">{{item.label}}</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon glyphicon-tag"></span>{{q.type}}</a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li ng-click="q.type = '';"><a role="menuitem" tabindex="-1" >All</a></li>
+                                        <li class="divider"></li>
+                                        <li ng-click="q.type = item.label;" ng-repeat="item in types"><a role="menuitem" tabindex="-1">{{item.label}}</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon glyphicon-ok-sign"></span>{{q.status}}</a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li ng-click="q.status = '';"><a role="menuitem" tabindex="-1" >All</a></li>
+                                        <li class="divider"></li>
+                                        <li ng-click="q.status = item.label;" ng-repeat="item in statuses"><a role="menuitem" tabindex="-1">{{item.label}}</a></li>
+                                    </ul>
+                                </li>
+
+                                <li><a ng-click="q.desc = !q.desc;"><span ng-hide="q.desc" class="glyphicon glyphicon-sort-by-alphabet"></span><span ng-show="q.desc" class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+
+                <div class="row">
+                    <a class="col-sm-4" href="#towers" ng-repeat="proj in model | filter: {Name:q.name, Location__c:q.location, Type_Of_Project__c:q.type, Status__c:q.status, Country__c: q.country } | orderBy:'Name':q.desc" ng-click="open(proj)">
+                        <img class="img-responsive display" src="{{proj.$image}}" />
+                        <div style="padding: 5px 0px;">
+                            <h4>{{proj.Name}}</h4>
+                            <div style="color: gray; text-decoration: none;">
+                                <span>{{proj.Type_Of_Project__c}}</span>
+                                <span class="pull-right">{{proj.Status__c}}</span>
+                            </div>
+                            <div class=""><span class="glyphicon glyphicon-map-marker"></span><b>{{proj.Location__c}}</b></div>
+                        </div>    
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="towers" ng-controller="tower" ng-show="$root.proj != null AND $root.tower == null">
+            
+            <nav class="navbar navbar-default" role="navigation">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#tower-menu">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#"><span class="navbar-toggle glyphicon glyphicon-chevron-left" style="float:left;margin-top: -10px;display:block;" ng-click="$root.proj = null;"></span>&nbsp;Towers</a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="tower-menu">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a ng-click="q.desc = !q.desc;"><span ng-hide="q.desc" class="glyphicon glyphicon-sort-by-alphabet"></span><span ng-show="q.desc" class="glyphicon glyphicon-sort-by-alphabet-alt"></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+          <!--  <div style="text-align: center;">
+                       <img class="img-responsive img-rounded" ng-src="{{$root.proj.PropStrength__Pie_Chart_URL__c}}" style="margin-left: auto; margin-right: auto;margin-bottom: 10px;" />
+                        <div style="padding: 0px 0px 25px 10px;color:#69B3E2;">
+                        <h4>Project Status</h4></div>
+                    </div>-->
+            <div class="row" style="padding: 5px 0px;">
+                <a class="col-md-3" href="#floors" ng-repeat="tower in model | orderBy:'Name':q.desc" ng-click="open(tower)">
+                    <img class="img-responsive display" src="{{tower.$image}}" />
+                    <div style="padding: 5px 0px;">
+                        <h4>{{tower.Name}}</h4>
+                        <div style="color: gray; text-decoration: none;">
+                            <span>{{tower.Total_Floors__c || '-'}} floors</span>
+                            <span class="pull-right">{{tower.Number_of_Units__c || '-'}} units</span>
+                        </div>
+                        <p>{{tower.Description__c}}</p>
+                    </div>    
+                </a>
+            </div>
+        </div>
+
+        <div id="floors" ng-controller="floor" ng-show="$root.proj != null AND $root.tower != null AND $root.floor == null">
+
+            <nav class="navbar navbar-default" role="navigation">
+                <div class="container-fluid">
+                    <div class="navbar-header" >
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#floor-menu">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+
+                        <div class="dropdown navbar-toggle collapsed" style="padding: 0px;display:none;">
+                            <div class="dropdown-toggle" type="button" id="floor-status" data-toggle="dropdown" style="padding: 9px 10px;"><span class="glyphicon glyphicon-flag"></span></div>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="floor-status">
+                                <li role="presentation" ng-click="q.status = '';"><span>All</span></li>
+                                <li class="divider"></li>
+                                <li role="presentation" class="" ng-repeat="item in $status" ng-click="q.status = item.key;" style="padding-bottom: 3px;" >
+                                    <span class="label label-{{item.theme}}" href="#" style="font-size: 0.9em;">{{item.label}}</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="dropdown navbar-toggle collapsed" style="padding: 0px;">
+                            <div style="padding: 9px 10px;" ng-click="q.status = '';">
+                                <span class="glyphicon glyphicon-repeat"></span>
+                            </div>
+                        </div>
+                        
+                        <a class="navbar-brand" href="#"><span class="navbar-toggle glyphicon glyphicon-chevron-left" style="float:left;margin-top: -10px;display:block;" ng-click="$root.tower = null;"></span>&nbsp;Floors</a>
+                        <a class="navbar-brand visible-xsss" style="float: none;">
+                            <span class="label label-default pull-right hidden-xsss" style="margin-right: 3px;margin-left: 8px;display:none;" ng-click="q.status = '';"><span class="glyphicon glyphicon-repeat"></span></span>
+                            <span class="label label-{{item.theme}} pull-right floor-status" style="margin-right: 3px;font-size: 0.7em;margin-top:15px;" ng-repeat="item in $status" ng-click="q.status = item.key;">{{item.label}}</span>
+                        </a>
+                    </div>
+
+                    
+
+                    <div class="collapse navbar-collapse" id="floor-menu">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li ng-click="q.status = '';"><a><span class="glyphicon glyphicon-repeat"></span></a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon glyphicon-tag"></span>{{q.type}}</a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li ng-click="q.type = '';"><a role="menuitem" tabindex="-1" >All</a></li>
+                                    <li class="divider"></li>
+                                    <li ng-click="q.type = item.label;" ng-repeat="item in types"><a role="menuitem" tabindex="-1">{{item.label}}</a></li>
+                                </ul>
+                            </li>
+                            <li><a ng-click="q.desc = !q.desc;"><span ng-hide="q.desc" class="glyphicon glyphicon-sort-by-order"></span><span ng-show="q.desc" class="glyphicon glyphicon-sort-by-order-alt"></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="list-group">
+            
+              <!--  <div style="text-align: center;">
+                   <img class="img-responsive img-rounded" ng-src="{{tower.PropStrength__Pie_Chart_Tower_URL__c}}" style="margin-left: auto; margin-right: auto;margin-bottom: 10px;" />
+               </div> -->
+            
+                <span  ng-repeat="floor in floors | filter: {type: q.type, status: q.status} | orderBy: 'text':q.desc">
+                    <span class="list-group-item disabled">
+                        <span>{{floor.no}} Floor</span>
+                    </span>
+                    <span class="list-group-item">
+                        <div class="row prop-container">
+                            <div class="col-md-{{prop.$size}} col-sm-{{prop.$size + 1}} col-xs-12" ng-repeat="prop in floor.prop | filter: {Unit_Type__c: q.type, $status: q.status}" ng-class="prop.$cls || 'pull-left'">
+                                <a class="label label-{{prop.$theme}} property-display" ng-click="redirect(prop)" title="{{prop.$msg}}" target="_blank" >
+                                    <div>
+                                        <div style="margin-bottom:1px;"> <span class="badge">{{prop.House_Unit_No__c || '-'}}</span></div>
+                                        
+                                        <div style="margin-top:1px;">{{prop.Super_Area__c}}<sup>{{prop.Area_Unit__c}}</sup></div>
+                                    </div>
+
+                                   <!-- <div>Type: <span>{{prop.Unit_Type__c}}</span></div>-->
+                                  <!-- <span class="pull-right">{{prop.Total_Sales_Price__c}}</span>-->
+                                  
+                                    
+                                   <div>Rs.<span>{{prop.TSC__c}}</span></div>
+                                   <div>Tower: <span>{{prop.Tower__r.Name}} </span></div>
+                                  
+                                </a>
+                            </div>
+                        </div>
+                    </span>
+                </span>
+            </div>
+
+        </div>
+    </div>
+</aura:component>
