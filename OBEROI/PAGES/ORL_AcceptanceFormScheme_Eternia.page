@@ -1,0 +1,1549 @@
+<apex:page standardController="Booking__c" action="{!savePDF}" extensions="BookingFormHandler" showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" renderAs="pdf">
+    <head>
+        <style type= "text/css">
+            @page {
+            size: A4;
+            margin: 5 px;
+            font-face:Times;
+            font-size:8px;
+            @bottom-center {
+               content: "Page " counter(page) ;
+               font-size:10px;
+            }
+            }
+            .chkBox {border: 1px black solid; padding-left: 15px;  }
+                .tablepad {padding-top: 40px;padding-bottom: 40px}
+                .tableborderInside {border: 1px solid black;}
+                .tableborder {border: 1px solid black;border-collapse: collapse;padding-left:10px}
+                .border {border: 1px solid black; padding: 2px;}
+                .pgborder {border: 1px solid black; padding: 10px;}
+                .fontEx {font-size:14px; font-family: Calibri;}
+            #customers {
+            
+            border-collapse: collapse;
+            width: 100%;
+            }
+            
+            #customers td, #customers th {
+            border: 1px solid #ddd;
+            padding: 8px;
+            }
+            #customers th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #A9A9A9;
+            color: white;
+            }
+            
+            
+        </style>
+        <style type= "text/css">
+            @page{
+                         size:portrait;
+                         margin-left: 1.5cm; 
+                         margin-right: 1.5cm;
+                         margin-top: 2cm; 
+                         margin-bottom: 2cm;
+                         
+                             @bottom-center{
+                                 content: counter(page);
+                                 font-weight: sans-serif;
+                                 font-size:11pt;
+                               }
+                }
+                tr, td{
+                    page-break-inside: avoid;
+                }
+                ol#myList {
+                    list-style-type:decimal;
+                }
+                li{
+                    margin: 0 0 10px 0;
+                }
+
+                .borderCSS td{
+                    border: 0.5px solid black;
+                    margin-bottom: 1%;
+                }
+                .SNo{
+                    vertical-align: top;
+                    width: 3%;
+                }
+                .innerTable td{
+                    margin-bottom: 3px;
+                }
+        </style>
+    </head>
+    <body>
+        <input type="hidden" name="{!type}" value="Acceptance"/> 
+    </body>
+    <div style="font-size:14px;">
+        
+            <p>
+                <b>Date</b>: {!todaydate}<br/><br/>
+                <b>From: <br/>
+                {!booking.Primary_Applicants__r.Salutation} {!booking.Primary_Applicants__r.name}<br/></b>
+                <b>
+                <apex:variable var="ind" value="{!2}"/>
+                <apex:repeat value="{!Coowners}" var="Coowner" >
+                {!Coowner.Salutation__c} {!Coowner.Contact_name__c}
+                    <apex:variable var="ind" value="{!ind+1}"/>
+                    <br/>
+                </apex:repeat>
+                </b>
+                {!booking.C_o_Name_Billing_Address__c}, {!booking.Billing_Street__c}<br/>
+                {!booking.Billing_Str_Suppl2__c},<br/>
+                {!booking.Billing_Str_Suppl3__c},<br/>
+                {!booking.Billing_Location__c},<br/>
+                {!booking.Billing_City__c}, {!booking.Billing_Post_Code__c},<br/>
+                {!booking.Billing_Country__c}<br/>
+                <br/><br/>  
+                <div>
+                        <strong>To,</strong><br/>
+                        <strong>Oberoi Constructions Limited</strong><br/>
+                        Commerz, 3rd floor,International Business Park,<br/>
+                        Oberoi Garden City,<br/>
+                        Off Western Express Highway,<br/>
+                        Goregaon (East),Mumbai –400 063<br/>
+                    </div>
+                    <br/><br/>
+                 <!-- <b>To,<br/>
+                {!booking.property__r.project_name__r.Subsidiary_Company_Name__c}</b>
+                <div style = "width: 215px;, word-wrap: break-word;">               
+                {!booking.property__r.project_name__r.Subsidiary_Company_Address__c}       
+                </div>
+                <br/>
+                <br/> -->
+                Dear Sir/Madam,
+                <br/>
+                <br/>
+                <div align="Justify">
+                 
+
+                    <table width="100%">
+                    <tr>
+                        <td valign="top" align="left" width="10%">
+                            <strong>Sub:</strong>
+                        </td>
+                        <td width="90%" align="left">
+                        <strong>Acceptance of terms and conditions (“Acceptance Form”) for booking of premises 
+                            more particularly described in the First Schedule hereunder in Building No. 1 
+                            comprising of Towers A, B, C and D  presently being developed as a phase of the 
+                            Whole Project known as ‘Eternia’ and proposed as a “real estate project” by 
+                            Oberoi Constructions Limited (“the Promoter”) and being constructed on all 
+                            those pieces and parcels of land admeasuring approximately 37,745.80 square 
+                            meters as per the Property Register Card and 39,707.80 square meters as per 
+                            Indenture of Conveyance dated 26th September 2005, which is comprised in 
+                            a larger property situated at Nahur, Taluka Kurla, Mumbai Suburban District 
+                            (“Larger Property”) and to be more particularly described in the Agreement (as 
+                            defined below).</strong>
+                        </td>
+                    </tr>
+                    </table>
+                    
+                    
+            <hr size="10px" color="black"/>
+            1)&nbsp; &nbsp; You are undertaking the development of the Larger Property in a phase-wise manner (<b>“Whole Project”</b>).
+            <br/>
+            <p>
+                
+                2)&nbsp; &nbsp; The development of the Whole Project known as ‘<b>Eternia</b>’ consisting of Building No. 
+                1 comprising of Towers A, B, C and D is presently being developed as a phase of the 
+                Whole Project and proposed as a “real estate project” by the Promoter and is registered 
+                as a ‘real estate project’ (“<b>the Real Estate Project</b>”). As part of development of the 
+                Whole Project in a phase wise manner, you have proposed to construct the Real Estate 
+                Project on a portion of the Larger Property. I/We am/are aware that Building No. 1 
+                comprising of Tower A, B, C and D has been registered by you as a ‘Real Estate Project’, 
+                with the Maharashtra Real Estate Regulatory Authority (“<b>Authority</b>”), under the 
+                provisions of Section 5 of the Real Estate (Regulation and Development) Act, 2016 
+                (“<b>RERA</b>”) read with the provisions of the Maharashtra Real Estate (Regulation and 
+                Development) (Registration of real estate projects, Registration of real estate agents, rates 
+                of interest and disclosures on website) Rules, 2017 (“<b>RERA Rules</b>”) and the other Rules, 
+                Regulations, Circulars and Rulings issued thereunder from time to time. I/We are also 
+                aware that the Authority has duly issued the Certificate of Registration No. 
+                P51800006141 dated 14th August, 2017 for the Real Estate Project. You are also 
+                developing remaining portion of the Larger Property and constructing buildings thereon 
+                for residential, commercial and such other users as you may deem fit.
+                 
+                    
+            </p>
+            
+            <p>
+               
+                3)&nbsp; &nbsp; I/We agree to book premises (“<b>said Premises</b>”), along with certain common areas and facilities appurtenant to the 
+                said Premises (“<b>Limited Areas and Facilities</b>”) which are more particularly described in the <b>First Schedule</b> hereunder 
+                written, in the Tower more particularly described in the <b>First Schedule</b> hereunder written (“<b>the said Tower</b>"), for 
+                the price as defined in the <b>First Schedule</b> hereunder written (“<b>Sale Price</b>”) and subject 
+                to the terms, conditions and covenants contained in the proforma of the Agreement for 
+                Sale (“<b>Agreement</b>”) as uploaded by you as part of your registration with the Authority.
+                I/We agree that the carpet area of the said Premises as defined under the provisions of
+                RERA, is more particularly described in the <b>First Schedule</b> hereunder written.
+                    
+            </p>
+            <p>
+                4)&nbsp; &nbsp; The Sale Price is required to be paid by me/us to you in accordance with the payment 
+                schedule as set out in the <b>Second Schedule</b> hereunder written. I/We have expressly 
+                agreed that I/we will have to pay a sum equivalent to 20% of the Sale Price as earnest 
+                money (hereinafter referred to as “<b>Earnest Money</b>”) to you. The payment of the Sale 
+                Price by me/us to you shall be subject to deductions of tax at source (“<b>TDS</b>”) as provided under the Income Tax Act.
+                
+            </p>
+            
+            <p>
+                5)&nbsp; &nbsp; The Promoter shall, subject to the condition mentioned in Clause 10 (a) herein below, 
+                pass on to me/us the input tax credit benefit (“<b>ITC Benefit</b>”) of an amount mentioned in
+                the <b>First Schedule</b> hereunder written as and when the invoices are raised. Thus, the 
+                effective Sale Price (“<b>Effective Sale Price</b>”) for the purposes of levy of GST would be 
+                the amount as mentioned in the <b>First Schedule</b> hereunder written.  In case the Promoter 
+                is not eligible to claim or cannot claim input tax credit in accordance with the GST laws 
+                or due to any action by the GST authorities, the Promoter shall not pass on the ITC 
+                Benefit to me/us on the balance unbilled Sale Price and the Effective Sale Price shall 
+                stand revised accordingly.
+             </p>
+            
+            <p>
+                6)&nbsp; &nbsp; An intimation forwarded by you to me/us that a particular stage of construction is 
+                commenced or completed shall be sufficient proof that a particular stage of construction 
+                is commenced or completed. However, it is agreed by us that failure to receive notice 
+                from you, requiring such payment shall not be a plea, or an excuse for non-payment of 
+                any amount or amounts by me/us.
+                
+            </p>
+            <p>
+                7)&nbsp; &nbsp; I/We agree and undertake that as and when requested by you, I/we shall execute and 
+                register such other documents including the letter of allotment, the Agreement
+                (hereinafter referred to as the “<b>Documents</b>”) in respect of the said Premises. I/We agree, 
+                acknowledge and confirm that the said Documents shall record all terms and conditions 
+                of the allotment of the said Premises including the terms and conditions as are set out 
+                herein. I/we undertake that, within 30 (thirty) days from the date of booking, subject to 
+                payment of the initial 10% of the Sale Price by me/us to you, I/we will execute the 
+                Agreement as required under Section 13 of RERA and shall register the Agreement under 
+                the Registration Act, 1908, upon which, this Acceptance Form and any other writings 
+                subsequent to the execution of the Accepetance Form shall stand superseded by the 
+                Agreement.
+            </p>
+            <p>
+                8)&nbsp; &nbsp; I/We hereby irrevocably indemnify and shall at all times keep you and your officials 
+                indemnified, saved and harmless from and against all actions, including but not limited 
+                from the regulators/statutory authorities, claims, losses, damages, costs, liabilities, 
+                charges and expenses incurred, suffered or paid by you or required to be incurred,
+                suffered or paid by you and against all demands, actions, suits or proceedings made, filed 
+                or instituted against you in connection with or arising out of or relating to the non-
+                execution and/or non-registration of the Agreement by me/us.</p>
+            <p>
+                9)&nbsp; &nbsp; I/We are also aware that you shall provide to me/us, without charging or levying any 
+                price or compensation or consideration and/or fee of any nature, permission to park 
+                my/our vehicle/s and also for parking my/our guest/vistors’ vehicle and for no other 
+                purpose whatsoever, in the car parking space/s as a common area and more particularly 
+                mentioned in the <b>First Schedule</b> hereunder written. I/we are aware that the exact location 
+                and identification of such car parking space/s in the basements/podium/stilt will be 
+                finalized by you only upon completion of the Real Estate Project in all respects.
+            </p>
+            <p>
+                10)&nbsp; &nbsp; I/We agree that in addition to the Sale Price:
+            </p>
+            <p style="margin-left: 17px">
+                a) I/We shall also bear and pay the taxes consisting of tax paid or payable by way of 
+                GST, Service Tax, Value Added Tax and all levies, duties and cesses or any other 
+                indirect taxes which may be levied, in connection with the construction of and 
+                carrying out the Real Estate Project and/or with respect to the said Premises and/or 
+                the Agreement. It is clarified that all such taxes, levies, duties, cesses (whether 
+                applicable/payable now or which may become applicable/payable in future) 
+                including GST, Service Tax, Value Added Tax and all other indirect and direct 
+                taxes, duties and impositions applicable levied by the Central Government and/or 
+                the State Government and/or any local, public or statutory authorities/bodies on 
+                any amount payable under this Acceptance Form / letter of allotment and/or the 
+                Agreement and/or on the transaction contemplated herein and/or in relation to the 
+                said Premises, shall be borne and paid by me/us alone and the Promoter shall not 
+                be liable to bear or pay the same or any part thereofI. On a demand being made by 
+                you upon me/us, I/we shall pay the same to you without any delay, demur or 
+                default.
+                
+            </p>
+            <p style="margin-left: 17px">
+                b)&nbsp; &nbsp; I/We shall bear and pay all costs, charges and expenses including but not limited 
+                to stamp duty, registration charges and/or incidental charges in connection with 
+                this Acceptance Form / letter of allotment and/or the Agreement to be executed in 
+                respect of the said Premises.</p>
+            
+            
+            <p style="margin-left: 17px">
+                c)&nbsp; &nbsp; I/We shall also bear and pay to you, the amounts mentioned in the <b>Third Schedule</b> 
+                hereunder  written and the applicable taxes and/or GST thereon within 7 (seven) 
+                days from the date on which I/we am/are intimated to occupy the said Premises.
+            </p>
+            <p style="margin-left: 17px">
+                I/We am/are aware, and agree and confirm that the list of charges mentioned in the 
+                <b>Third Schedule</b> areonly indicative and not exhaustive and that I/we agree to pay 
+                all or any such other charges or additional charges and/or increase in the above list 
+                of charges or such other or additional charges as you may indicate from time to time.<br/><br/>
+                I/We agree, acknowledge and confirm that you are entitled to retain and 
+                appropriate the aforesaid amounts and/or any and all other charges or additional 
+                charges and/or increase in the above charges or such other or additional charges as 
+                you may indicate from time to time, to your account.  You shall not be liable and/or 
+                required to render any account in respect of the aforesaid amounts and/or any and 
+                all other charges or additional charges and/or increase in the above charges or such 
+                other or additional charges as you may indicate from time to time.
+                
+            </p>
+            
+            <p style="margin-left: 17px">
+                d)&nbsp; &nbsp; I/We shall also bear and pay to you, the amounts mentioned in the <b>Fourth 
+                Schedule</b> and the  applicable taxes and/or GST thereon, within 7 (seven) days from 
+                the date on which I/we am/are intimated to occupy the said Premises. I/we am/are 
+                aware that the unspent balance out of the following amounts shall be transferred 
+                to the organization of purchasers of premises without any interest on the amounts 
+                paid.
+            </p>
+            <p style="margin-left: 17px">
+                I/We am/are aware, and agree and confirm that the list of charges mentioned in the 
+                <b>Fourth Schedule</b> are only indicative and not exhaustive and that I/we agree to pay 
+                all or any such charges or additional charges and increase in the above list of 
+                charges or such other or additional charges as you may indicate from time to time.<br/><br/>
+                I/We agree that 15 (fifteen) days from the date of receipt of the Occupation 
+                Certificate from the MCGM, I/We shall be liable to bear and pay the proportionate 
+                share i.e. in proportion to the carpet area of the said Premises, of outgoings in
+                respect of the Real Estate Project, the Whole Project and the Larger Property
+                including inter-alia, club house membership fee, development charges, electricity,
+                gas connection, water meter charges, legal charges, society formation charges,
+                share application charges, corpus fund, local taxes including property taxes,
+                betterment charges, other indirect taxes of every nature, or such other levies by
+                the MCGM or other concerned local authority and/or Government, water charges,
+                insurance, common lights, repairs and salaries of clerks, bill collectors, 
+                chowkidars, sweepers and all other expenses necessary and incidental to the
+                management and maintenance of the Real Estate Project and/or the Whole Project
+                and/or the Larger Property. Until the society is formed and the society conveyance
+                is duly executed and registered, I/We shall pay you such proportionate share of 
+                outgoings as may be determined by you at your sole discretion. I/We further agree 
+                that till my/our share is so determined by you at your sole discretion, I/We shall 
+                pay to you provisional monthly contribution as mentioned in 10 (d) hereinabove. 
+                It is further clarified and agreed that I/We agree shall be liable to bear and pay
+                such monthly contribution/maintenance charges from the date(s) as may be 
+                specified in the Agreement irrespective of whether or not I/We have taken
+                possession of the said Premises.<br/><br/>
+                I/We shall make payments of such amounts as more particularly mentioned in 
+                the <b>Third Schedule</b> and <b>Fourth Schedule</b> hereunder to your bank account as 
+                detailed in the <b>First Schedule</b> hereunder written.
+                
+            </p>
+            
+            <p>
+                11)&nbsp; &nbsp; I/We agree that time for payment of all the amounts, including but not limited to the 
+                aforesaid installments of Sale Price, taxes and/or GST, Service Tax, Value Added Tax,
+                TDS and all levies, duties, cesses as may be applicable in respect of the said Premises 
+                and performance of all other obligations by me/us,is the essence of the contract.
+            </p>
+            
+            <p>
+                12)&nbsp; &nbsp; I/We agree and confirm that if, I/we fail or am/are otherwise unable to pay any amounts 
+                payable by me/ us under this Acceptance Form and/or the said Documents including the 
+                Sale Price and/or taxes and/or GST, Service Tax, Value Added Tax and/or TDS and/or 
+                any other taxes, levies, duties, cesses or amounts as applicable within the time stipulated
+                herein, you shall, without prejudice to any other rights and/or remedies that you may 
+                have against me/us, be entitled to receive and recover from me/us and I/we shall be liable
+                to pay to you, interest, on all the outstanding amount, at the prevailing rate of State Bank 
+                of India Highest Marginal Cost of Lending Rate plus 2% thereon (defined below), from 
+                the due date(s) of such outstanding amounts till the date of actual payment thereof.
+            </p>
+            
+            <p>
+                13)&nbsp; &nbsp; I/We agree and confirm that (A) if, I/we fail or am/are otherwise unable to pay any 
+                amounts payable by me/us under this Acceptance Form and/or the said Documents 
+                including the Sale Price and/or Taxes and/or GST, Service Tax, Value Added Tax and/or
+                TDS and/or any other taxes, levies, duties, cesses or amounts as applicable within the
+                time stipulated herein AND/OR (B) if we fail or refuse to execute the letter of allotment 
+                and/or to execute and register the Agreement, AND/OR (C) if, I/we commit breach of
+                any other terms, conditions, covenants representations and warrenties etc., you shall, 
+                without prejudice to any other rights and/or remedies that you may have against me/us,
+                be entitled to terminate the booking/allotment of the said Premises. Provided that before
+                terminating the booking/allotment of the said Premises, you will give me/us a written 
+                notice calling upon me/us to pay to you the outstanding amounts and/or execute the letter
+                of allotment/the Agreement and/or cure the breach within a period of 15 (fifteen) days
+                from the date of notice, and in the event of my/our failure to rectify the default and/or 
+                cure the breach within the aforesaid period of 15 (fifteen) days from the date of the notice,
+                you shall be entitled to, but not obliged to, terminate the booking / allotment of the said 
+                Premises.
+            </p>
+            
+            <p>
+                14)&nbsp; &nbsp; I/We agree and confirm that in the event I/we enter into any loan/financing arrangement 
+                with any bank/financial institution as envisaged in the Agreement, such bank/financial
+                institution shall be required to disburse/pay all such amounts due and payable to you as
+                per the payment schedule set out in the <b>Second Schedule</b> hereunder written. If such 
+                bank/financial institution defaults in disbursing/paying the sanctioned amounts or part 
+                thereof and/or reduces the eligibility of the loan as sanctioned or part thereof as due and 
+                payable to you on the respective due dates in the manner detailed herein, then I/we agree 
+                and undertake to pay such amounts to you as per the payment schedule set out in the 
+                <b>Second Schedule</b> hereunder written, otherwise the same shall be construed as a default
+                on my/our part and you shall be entitled to exercise the provisions of Clause 12 and 13
+                herein above
+                
+            </p>
+            
+            <p>
+                15)&nbsp; &nbsp; I/We agree and confirm that the Promoter shall give possession of the said Premises on 
+                receipt of the entire Sale Price payable by me/us including in accordance with the 
+                provisions of Clause 14 herein above and on receipt of such amounts by me/us as more
+                particularly mentioned in the <b>Third Schedule</b> and <b>Fourth Schedule</b>  hereunder written
+            </p>
+            <p>
+                16)&nbsp; &nbsp; I/We agree and confirm that upon termination/cancellation of the booking/allotment of the said
+                Premises:
+            </p>
+            <p style="margin-left: 17px">
+                a)&nbsp; &nbsp; I/We shall have no right, title, interest, claim, lien or demand or dispute of any 
+                nature whatsoever either against you or in respect of the said Premises, or any part 
+                thereof;
+            </p>
+            <p style="margin-left: 17px">
+                b)&nbsp; &nbsp; you shall be entitled to deal with and dispose of the said Premises to any other 
+                person/s as you deem fit in your sole and absolute discretion without any further 
+                act or consent from me/us and/or any notice or reference to me/us; and you will be 
+                entitled to forfeit the entire Earnest Money, which I/we agree, confirm and 
+                acknowledge, constitute a reasonable genuine and agreed pre-estimate of damages 
+                that will be caused to you, and that the same shall be in the nature of liquidated 
+                damages, and not penalty; and
+                
+            </p>
+            <p style="margin-left: 17px">
+                c)&nbsp; &nbsp; I/We shall be liable to pay to you, taxes and/or GST, Service Tax, Value Added 
+                Tax, TDS, any other tax, levies, duties, cesses and/or any other amount due and 
+                payable by me/us and /or paid by you, in respect of the said Premises. and
+            </p>
+            
+            <p>
+                17)&nbsp; &nbsp; I/We agree, confirm and acknowledge that I/we shall not have any right, title, interest, 
+                claim and/or demand of any nature whatsoever either against you or in respect of the said 
+                Premises, unless and until I/we have made all the payments including the Sale Price and 
+                performed all my/our obligations in accordance with this Acceptance Form/the said 
+                Documents and only thereupon the transaction as contemplated herein shall stand 
+                concluded.
+                
+            </p>
+            <p>
+                18)&nbsp; &nbsp; I/We agree, confirm and acknowledge that I/we shall not let, sub-let, transfer, assign, 
+                sell, lease, give on leave and license, or part with interest or benefit factor of this 
+                Agreement or part with the possession of the said Premises or dispose of or alienate 
+                otherwise in any manner whatsoever, the said Premises and/or any part thereof and/or 
+                any of our rights and/or benefits under this Acceptance Form and/or said Documents to 
+                any person until all the dues payable by me/us to you under this Acceptance Form and/or 
+                said Documents are fully paid and without your prior written permission.
+                
+            </p>
+            <p>
+                19)&nbsp; &nbsp; I/We agree and confirm that without prejudice to what is stated at Clause 18 herein above, 
+                in the event I/we intend to sell, transfer, lease, license, assign and/or deal with or dispose 
+                of the said Premises and/or my/our benefits under this Acceptance Form and/or the letter 
+                of allotment and/or the said Documents,then you shall be entitled to a right of first refusal 
+                to the said Premises as well as my/our right(s), title and interest under this Acceptance 
+                Form and/or the said Documents (“<b>ROFR</b>”), which shall be exercised in the following 
+                manner:
+                
+                
+            </p>
+            <p style="margin-left: 17px">
+                a)&nbsp; &nbsp; I/We shall address a letter (“<b>Offer Letter</b>”) to you stating therein (i) the name and 
+                address of the proposed transferee, (ii) the proposed sale price (such sale price shall 
+                be denominated in rupees) (“<b>Offer Price</b>”), including the proposed amount and 
+                consideration and terms and conditions offered by such proposed transferee, (iii) 
+                the date of consummation of the proposed sale, (iv) a representation that the 
+                proposed transferee has been informed of the terms of this Acceptance Form and/or 
+                said Documents and in particular, the terms embodied into this Clause. The Offer 
+                Letter shall include a calculation of the fair market value of the said Premises and 
+                an explanation of the basis for such calculation.
+                
+            </p>
+            <p style="margin-left: 17px">
+                b)&nbsp; &nbsp; You shall, at your sole option, be entitled to purchase the said Premises under the
+                said Offer Letter at the Offer Price. In the event you wish to exercise your right to 
+                purchase the said Premises, then such letter shall be issued by you to me/us within 
+                7 (seven) days from the date of receipt of the Offer Letter (“Notice Period”) 
+                informing me/us of your intention to purchase / acquire the said Premises 
+                (“Acceptance Letter”) and upon issuance of the Acceptance Letter, I/We shall be 
+                bound to sell and/or transfer the said Premises to you or your nominee(s).
+                
+            </p>
+            <p style="margin-left: 17px">
+                c)&nbsp; &nbsp; You may in your sole discretion, on a written request to that effect made by me/us 
+                prior to the exercise of the option by you as contemplated in Clause 19 b) above,
+                dispense with the ROFR upon me/us making payment of such sum not exceeding 
+                2% (two per cent) of (a) the Offer Price or (b) the price at which you are selling a 
+                flat of a similar nature at the relevant time, whichever is higher, together with GST,
+                Service Tax, VAT thereon as may be decided by you. In the event you dispense 
+                with the ROFR upon me/us making payment to you as mentioned in this sub-
+                clause, you shall issue a letter to me/us conveying your intention of not exercising 
+                your right of refusal. Thereafter I/we can transfer the said Premises to any third 
+                party at Offer Price/proposed sale price in terms provided in this Clause. I/We 
+                expressly agree that the ROFR is a covenant running with the said Premises and 
+                hence will continue with the new purchaser of the said Premises, and I/we 
+                undertake to expressly include the same vide a specific term in the new agreement
+                for sale between me/us and the proposed transferee.
+                
+            </p>
+            <p style="margin-left: 17px">
+                d)&nbsp; &nbsp; I/We agree that if completion of the sale of the said Premises to the proposed
+                transferee does not take place (i) within a period of 15 (fifteen) days from from the
+                date of me/us making payment of such sum not exceeding 2% (two per cent)
+                together with applicable taxes thereon as decided by you in terms of Clause 19 c)
+                above or (ii) within 15 (fifteen) days from the expiry of the Notice Period as 
+                contemplated in Clause 19 b) above,then my right to sell the said Premises to such
+                proposed transferee shall lapse, your ROFR in respect of the said Premises shall
+                stand automatically reinstated andand the provisions of this entire Clause 19 and
+                the process to be followed therein shall once again apply to me/us for any
+                subsequent proposed sale of the said Premises.
+            </p>
+            <p style="margin-left: 17px">
+                I/We understand that in the event of me/us proposing to give the said Premises on 
+                lease and/or leave and license basis only, then the provisions contained in Clauses 
+                19 a) to d) above shall not apply.
+                
+            </p>
+            
+            <p style="margin-left: 17px">
+                e)&nbsp; &nbsp; I/We shall execute and register the said Documents if not already executed and 
+                registered by then, prior to such sale / transfer of the said Premises / rights and/or
+                benefits under the said Documents.
+                
+            </p>
+            <p>
+                20)&nbsp; &nbsp; I/We represent and warrant to you that:
+            </p>
+            <p style="margin-left: 17px">
+                a)&nbsp; &nbsp; I/We am/are not prohibited from acquiring the said Premises under any law or otherwise;
+            </p>
+            <p style="margin-left: 17px">
+                b)&nbsp; &nbsp; I/We am/are not prohibited from entering into this Acceptance Form and/or to 
+                undertake the obligation contained in this Acceptance Form.
+            </p>
+            <p style="margin-left: 17px">
+                c)&nbsp; &nbsp; I/We have not been declared and/or adjudged to be an insolvent, bankrupt etc. and/or ordered to
+                be wound up or dissolved, as the case may be;
+            </p>
+            <p style="margin-left: 17px">
+                d)&nbsp; &nbsp; No receiver and/or liquidator and/or official assignee or any person is appointed in my/our case
+                or for all or any of my/our assets and/or properties;
+            </p>
+            <p style="margin-left: 17px">
+                e)&nbsp; &nbsp; None of my/our assets/properties are attached and/or no notice of attachment has been received
+                under any rule, law, regulation, statute etc.;
+            </p>
+            <p style="margin-left: 17px">
+                f)&nbsp; &nbsp;  I/We have not received any notice from the Government of India (either State, 
+                Central or Local) and/or from any other Government abroad for my/our 
+                involvement in any money laundering or any illegal activity and/or declaring 
+                me/us to be a proclaimed offender and/or no warrant is/has been issued against 
+                me/us;
+                
+            </p>
+            <p style="margin-left: 17px">
+                g)&nbsp; &nbsp; No execution or other similar process is issued and/or levied against me/us and/or against any of
+                my/our assets and properties;
+                
+            </p>
+            <p style="margin-left: 17px">
+                h)&nbsp; &nbsp; I/We has/have not compounded payment with my/our creditors;               
+            </p>
+            <p style="margin-left: 17px">
+                i)&nbsp; &nbsp; I/We am/are not convicted of any offence involving moral turpitude and/or sentenced to
+                imprisonment for any offence for a period of not less than six months;
+            </p>
+            <p style="margin-left: 17px">
+                j)&nbsp; &nbsp; I/We am/are not an undesirable element and/or will not cause nuisance and/or 
+                cause hindrance in the completion of the development of the Larger Property 
+                and/or anytime thereafter and will not default in compliance with the terms of this 
+                Acceptance Form including making any payment;
+                
+            </p>
+            <p style="margin-left: 17px">
+                k)&nbsp; &nbsp; I/We are aware that I/we have booked the said Premises as per the plans as presently approved
+                and shown to me/us and that booking of the said Premises is subject to plans, applicable
+                clearances and amendments thereto which have been/maybe approved by the concerned
+                authorities with such variations and modifications as may be required from time to time;
+            </p>
+            <p style="margin-left: 17px">
+                l)&nbsp; &nbsp; I/We shall execute the said Documents and all such documents in respect of the said Premises as and
+                when called upon by you without any delay, demur or default.
+            </p>
+            <p>
+                21)&nbsp; &nbsp; I/We agree that you will allot the said Premises in my/our favour on the basis of and in reliance of the
+                accuracy of the representations and warranties made by me/us hereinabove which I/We agree to be an
+                important and integral part of this transaction and any breach thereof shall tantamount to breach of the
+                terms herein.
+            </p>
+            <p>
+                22)&nbsp; &nbsp; I/We agree, confirm and acknowledge that I/we have been apprised and made aware and I/we have
+                agreed that:
+            </p>
+            <p style="margin-left: 17px">
+                a)&nbsp; &nbsp; you propose to develop the Whole Project in a phase-wise manner.
+            </p>
+            <p style="margin-left: 17px">
+                b)&nbsp; &nbsp; you are entitled to develop the Real Estate Project and construct the building(s) thereon in such manner as you may deem fit;
+                
+            </p>
+            <p style="margin-left: 17px">
+                c)&nbsp; &nbsp; apart from Real Estate Project, you have also earmarked a piece of land on the 
+                Larger Property for future development on which you propose to develop a 
+                building(s)/wing(s) for such residential/non-residential use as you may deem fit.
+                
+                
+            </p>
+            <p style="margin-left: 17px">
+                d)&nbsp; &nbsp; you contemplate to develop the properties adjoining to the Larger Property in 
+                phase wise or in such manner as you may deem fit;
+                
+            </p>
+            <p style="margin-left: 17px">
+                e)&nbsp; &nbsp; the development of the Real Estate Project and the Larger Property and/or the 
+                adjoining properties will take substantial time and you will be required to make 
+                necessary amendments or substitution of the sanctioned plans, layouts and designs 
+                from time to time as may be required by the Government, MCGM or any other 
+                local authority or as may be required by you to enable you to utilize all Floor Space 
+                Index (FSI), Fungible FSI, TDR and/or the development rights of the said 
+                Property, the Larger Property and the adjoining properties, in such manner as you 
+                deem fit;
+                
+            </p>
+            <p style="margin-left: 17px">
+                f)&nbsp; &nbsp; you shall have full right and absolute authority and shall be entitled at any time 
+                hereafter, to subdivide the Larger Property and/or the adjoining properties, and / 
+                or get amalgamated the the Larger Property with the adjoining properties or part 
+                thereof or with other property/ies.
+                
+                
+            </p>
+            <p style="margin-left: 17px">
+                g)&nbsp; &nbsp; you shall have all the rights and shall be entitled to amend, modify, vary, alter,
+                change, substitute, rescind, re-design and re-locate the existing layout plans,
+                building plans, floor plans (including increase/decrease of floor levels) (including
+                the IOD and CC), design, elevation for the purpose of exploiting and consuming
+                the full and maximal development potential of the Whole Project and the Larger 
+                Property (both inherent and further/future) at present and in future without
+                adversely affecting the said Premises and I/we agree and consent to the same.
+                
+                
+            </p>
+            <p style="margin-left: 17px">
+                h)&nbsp; &nbsp; the development of the Real Estate Project,the Larger Property and/or the 
+                adjoining properties,is dynamic and the scope thereof could be substantially 
+                increased from time to time by the amalgamation, mixture and composition of land 
+                plates, FSI and various development schemes under the applicable laws;
+                
+            </p>
+            <p style="margin-left: 17px">
+                i)&nbsp; &nbsp; the development of the Real Estate Project, the Larger Property and the adjoining
+                properties,are being developed subject to the rules, regulations, terms and 
+                conditions as may be laid by the Government and/or concerned authorities from
+                time to time under the Development Control Rules, 1991 and other applicable
+                provisions and/or statute;
+                
+            </p>
+            <p style="margin-left: 17px">
+           
+                j)&nbsp; &nbsp; that there shall be designated common areas, common open areas and driveways, 
+                passing through the said Tower and/or within the Real Estate Project/ Larger 
+                Property/ the adjoining properties which shall be used as common areas and 
+                common driveways for  access, ingress and egress  in common along with 
+                users/purchasers of premises from the neighboring buildings/Towers on the Real 
+                Estate Project / Larger Property / the adjoining properties. I/We understand and 
+                accept that the said designated common areas, common open areas and driveways 
+                passing through the said  Tower shall be an integral part of the layout of the overall 
+                project including the neighboring buildings/Towers on the Real Estate Project/ 
+                Larger Property /adjoining properties and  I/We agree and accept that neither
+                me/us nor any person or entity on my/our behalf shall, at any time claim any rights,
+                title and/or interest with respect to the said designated common areas, common 
+                open areas and driveways etc. or any part thereof. I/We hereby unequivocally
+                agree and accept that, at all times hereafter, you and your workmen, staff, 
+                employees, representatives and agents etc. shall have the full right and authority 
+                to enter into and upon the said designated common areas/open areas/driveways for
+                the access ingress and egress on the Real Estate Project, the Larger Property and/or  
+                the adjoining properties, without any restriction or interference whatsoever and 
+                neither I/We nor any other users shall be entitled to raise any objections in respect
+                of the same. I/We hereby acknowledge, accept and agree to the above, 
+                notwithstanding that there shall or may be any perceived or actual risk, nuisance, 
+                annoyance, inconvenience or that could arise by virtue of such common access and 
+                entry;
+          
+            
+            </p>
+            <p style="margin-left: 17px">     
+          
+                k)&nbsp; &nbsp; the electricity, communication and utility lines, cables and meters, etc. in respect 
+                of the said Tower may be laid down and installed in common with neighbouring 
+                buildings on the Real Estate Project and/or Larger Property and/or adjoining 
+                properties, and in case the same are laid down and installed in common with 
+                neighbouring buildings on the Real Estate Project and/or Larger Property and/or 
+                adjoining properties, you and your workmen, staff, employees, representatives and
+                agents, shall, at all times, have the right and authority to enter into and upon the
+                common areas/open areas/driveways on the Real Estate Project and/or Larger 
+                Property and/or adjoining properties for the purpose of maintenance repair and 
+                upkeep of the same. I/We hereby unequivocally agree and accept that, at all times 
+                hereafter, you and your workmen, staff, employees, representatives and agents and 
+                all other users/purchasers of premises and their respective workmen, staff, 
+                employees, representatives and agents, from the said Tower, neighbouring 
+                buildings on the Real Estate Project and/or Larger Property /adjoining properties 
+                shall have the full right and authority to enter into and upon the said designated 
+                common areas/open areas/driveways for the purpose of maintenance repair and 
+                upkeep of the electricity, communication and utility lines, cables and meters etc.
+                without any restriction or interference whatsoever and neither you nor any other 
+                users shall be entitled to raise any objections in respect of the same. I/We hereby
+                acknowledge, accept and agree to the above, notwithstanding that there shall or 
+                may be any perceived or actual risks, nuisance, annoyance or inconvenience that 
+                could arise by virtue of such maintenance and upkeep;
+            
+            
+            </p>
+            <p style="margin-left: 17px">
+                l)&nbsp; &nbsp; you are entitled to utilize all FSI (including fungible FSI, free FSI, premium FSI)
+                that may be available from the Real Estate Project/Larger Property/adjoining 
+                Property or elsewhere and / or on account of Transfer of Development Rights 
+                (TDR) and / or any other rights, benefits including on account of public parking or
+                any floating rights which is or may be available in respect of the Real Estate 
+                Project/Larger Property/adjoining Property or elsewhere and / or any potential that 
+                is or may be available on account of the existing provisions and/or by change of 
+                law and/or change of policy and/or any other rights and benefits including on 
+                account of undertaking incentive FSI schemes under the applicable laws, or 
+                elsewhere and/or any potential that is or may be available on account of the 
+                existing provisions or any amendments thereto under applicable laws including in
+                Development Control Regulations. I/We agree and confirm that this condition
+                relating to your entitlement to use the FSI is the essence of the contract;
+                
+            </p>
+            
+            <p style="margin-left: 17px">
+                m)&nbsp; &nbsp; you have commenced the process of obtaining the necessary approvals for 
+                construction and development of a multi-storey public parking lot as a scheme and
+                component of the Whole Project at any location on the Larger Property including
+                beneath the Real Estate Project which you are required to hand over to the
+                authorities and in lieu thereof you shall be entitled to additional FSI which you
+                may utilize on the Real Estate Project or the Larger Property or the adjoining
+                properties or any part thereof as you may deem fit. I/We shall have no objection
+                on you constructing such public parking.I/We am/are further aware that the public 
+                parking lot shall have entry and exit points and access in common with other 
+                allottee/s in the Whole Project and/or may have independent and exclusive entry 
+                and exit points and access that shall not be usable by me/us or any other allottee/s
+                in the Whole Project;
+                
+            </p>
+            
+            <p style="margin-left: 17px">
+                n)&nbsp; &nbsp; the FSI in respect of the Real Estate Project may be utilised for development on 
+                the Larger Property / adjoining properties and/or the FSI in respect of the Larger
+                Property / adjoining properties may be utilised for development of the Real Estate
+                Project at your discretion;
+                
+                
+            </p>
+            
+            <p style="margin-left: 17px">
+                o)&nbsp; &nbsp; you shall endeavour to complete the construction of the said Premises and obtain
+                the Occupation Certificate from MCGM for the said Premises by the date as more
+                particularly mentioned in the First Schedule hereunder written (“<b>Completion 
+                Date</b>”). You shall be entitled to extension of time for giving delivery of the said 
+                Premises on the Completion Date, if the completion of the Real Estate Project is 
+                delayed on account of occurrence of events of force majeure or any circumstances 
+                or events beyond your reasonable control.
+            </p>
+            
+            <p style="margin-left: 17px">
+           
+            p)&nbsp; &nbsp; within 3 (three) months from the date on which (a) you have sold all 
+                apartments/flats in the said Tower and you have received the entire sale price and 
+                other monies from all allottees in the said Tower and (b) the Full Occupation 
+                Certificate with respect to the said Tower is issued, the said Tower inclusive 
+                of the amenities in the said Tower shall be conveyed by you to the society vide 
+                a registered indenture of conveyance; 
+              
+            </p>
+            
+            <p style="margin-left: 17px">
+                q)&nbsp; &nbsp; you shall form a federation of societies (“<b>Apex Body</b>”) in the Whole Project in 
+                such manner as you deem fit, under the provisions of the Maharashtra Co-
+                operative Societies Act, 1960 and the Rules made thereunder, read with RERA 
+                and the RERA Rules. You shall give conveyance of such residual portion of the 
+                Larger Property as has been described in detail in the Agreement including the 
+                time frame thereof;
+            </p>
+            
+            
+            
+            <p style="margin-left: 17px">
+            
+            r)&nbsp; &nbsp; I/We agree and confirm that I/we are aware of and understand the 10:05:85 scheme 
+                (“<b>said Scheme</b>”) and that the booking with respect to the said Premises, 
+                the payment schedule as set out in the <b>Second Schedule</b> hereunder written and 
+                the Sale Price with respect to the said Premises will be entirely subject to my/our loan 
+                eligibility under the said Scheme. In the event, I/we are not eligible under the said 
+                Scheme within 30 (thirty) days from the date hereof, the Promoter shall be entitled 
+                (though not obligated) to cancel and terminate  the booking with respect to the said 
+                Premises and this Acceptance Form and in such event, I/we further acknowledge 
+                and confirm that I/we shall have no right, title and interest in the said Premises and 
+                the Promoter shall be entitled to deal with and/or dispose off the said Premises in 
+                any manner the Promoter may in its absolute discretion deem fit and proper.
+            
+                    </p>            
+            <p style="margin-left: 17px">
+                s)&nbsp; &nbsp; I/We agree and confirm that I/we are aware that in the event the booking/allotment 
+                with respect to the said Premises is under the said Scheme, subsequent to the 
+                payment of the initial booking amount of 10% towards the Sale Price by me/us,
+                the payment of the stamp duty and registration charges with respect to the said 
+                Agreement by me/us and the said Agreement is duly executed and registered, if 
+                I/we pay additional 5% of the Sale Price through our own contribution on or before
+                the expiry of 30 (thirty) days from the date hereof instead of such date as specified
+                at serial no. 3 of the <b>Second Schedule</b> hereunder under written, the Promoter shall 
+                reimburse to me/us 50% of the stamp-duty and registration charges paid by me/us 
+                towards registration of the said Agreement. I/We agree and confirm that the 
+                remibursement of 50% of the stamp-duty as aforesaid shall be adjusted against the 
+                payment as due and payable to the Promoter at the time of handing over of 
+                possession of the said Premises to me/us.
+                
+                
+            </p>
+            
+            <p style="margin-left: 17px">
+                t)&nbsp; &nbsp; I/We further agree and confirm that I/we are aware that in the event of
+                termination/cancellation of the booking/allotment of the said Premises for any
+                reason whatsoever, notwithstanding the provisions relating to 
+                cancellation/termination of the booking/allotment of the said Premises, you shall 
+                also be entitled to recover from me/us the stamp-duty and registration charges as
+                reimbursed to me/us by you in accordance with Clause 22 s) hereinabove along 
+                with other applicable cancellation charges in terms of this Acceptance Form
+                from the sums as deposited by me/us to you towards the Sale Price;
+                
+            </p>
+            
+            
+            
+            <p style="margin-left: 17px">
+                u)&nbsp; &nbsp; I/we have examined a copy of the RERA Certificate bearing Registration No. 
+                P51800006141 dated 14th August, 2017 in respect of the Project Eternia. I/We 
+                have also examined all documents and information uploaded by you on the website 
+                of the Real Estate Regulatory Authority as required by RERA read with the RERA 
+                Rules and have understood all the information and documents in all respects, 
+                including drafts of the letter of allotment and the Agreement  as uploaded by you 
+                on the website of the Authority at <a><u><i>https://maharera.mahaonline.gov</i></u></a> and have 
+                caused the RERA Certificate and all the documents including drafts of the letter 
+                of allotment and the Agreement to be examined in detail by my/our advocates and 
+                planning and architectural consultants and I/we after being satisfied with the same 
+                am/are making the present booking and I/we agree to abide by the terms and 
+                conditions of all the documents and information uploaded by you on 
+                <a><u><i>https://maharera.mahaonline.gov</i></u></a> 
+                including the drafts of the letter of allotment and the Agreement;
+            </p>
+            <p style="margin-left: 17px">
+                v)&nbsp; &nbsp; you shall confirm the final carpet area that has been allotted to me/us after the 
+                construction of the said Tower / Real Estate Project is completed and the 
+                Occupation Certificate is granted by the MCGM, by furnishing details of the changes, 
+                if any, in the carpet area, subject to a variation cap of 3% (three per cent). 
+                The total Sale Price payable on the basis of the carpet area of the said Premises, 
+                shall be recalculated upon confirmation by you. If there is any reduction in the 
+                carpet area within the defined limit of 3%, then, you shall refund the excess money 
+                paid by me/us within 45 (forty-five) days with annual interest at the rate specified 
+                in the RERA Rules, from the date when such an excess amount was paid by me/us. 
+                If there is any increase in the carpet area allotted to me/us, you shall demand 
+                additional amount from me/us towards the Sale Price, which shall be payable by 
+                me/us prior to taking possession of the said Premises. The payments to be made 
+                by you/me, as the case may be, shall be made at the same rate per square meter as 
+                agreed in the Agreement;
+                
+            </p>
+            <p style="margin-left: 17px">
+                w)&nbsp; &nbsp; in the event I/we am/are desirous of availing any of the optional 
+                fittings/furniture/fixtures/equipment in respect of the said Premises then in such 
+                event, the same shall be made available at my/our cost and expense as may be 
+                informed by you. I/We further agree(s) to promptly bear and pay the necessary 
+                costs, charges and expenses in this regard, together with all taxes including GST, 
+                Service Tax, VAT and all other indirect taxes thereon;
+                
+            </p>
+            
+            <p style="margin-left: 17px">
+                x)&nbsp; &nbsp; On a written demand being made by you upon me/us with respect to a payment 
+                amount (whether the Sale Price or any other amount payable in terms of the 
+                Agreement), I/we shall pay such amount to you, within 7 (seven) days of your 
+                written demand, without any delay, demur or default;
+            </p>
+            <p style="margin-left: 17px">
+                y)&nbsp; &nbsp; you have agreed to allot to me/us and I/we have agreed to acquire from you the
+                said Premises on the basis of the carpet area only and the Sale Price agreed to be 
+                paid by me/us to you is agreed on the basis of the carpet area of the said Premises;
+                
+            </p>
+            <p style="margin-left: 17px">
+                z)&nbsp; &nbsp; the Sale Price has been arrived at / calculated on the basis of  carpet area only and 
+                I/we having agreed to pay the Sale Price in the manner more particularly stated in 
+                Clause 4 hereinabove;
+                
+            </p>
+            <p style="margin-left: 17px">
+                aa)&nbsp; &nbsp; the Sale Price is only in respect of the said Premises and you have neither charged 
+                nor recovered from me/us any price or consideration for the car parking space, 
+                limited common areas, the common areas, amenities and facilities;
+                
+            </p>
+            <p style="margin-left: 17px">
+                bb)&nbsp; &nbsp; you intend to, either on your own and/or through professional agency, manage and 
+                maintain the Real Estate Project and the said Tower;
+                
+            </p>
+                    <p style="margin-left: 17px">
+               cc)&nbsp; &nbsp;  you and/or the professional agency appointed by us shall formulate the rules, 
+                        regulations and bye-laws for the maintenance and upkeep of the said Tower and 
+                        the Real Estate Project and that the costs and expenses together with applicable 
+                        taxes thereon for the same shall be borne and paid by the purchasers as may be 
+                        determined by you and / or the professional agency;
+                
+            </p>
+                    <p style="margin-left: 17px">
+                dd)&nbsp; &nbsp; as and when requested by you, I/we shall execute and register the said Documents;
+                
+            </p>
+                    <p style="margin-left: 17px">
+                ee)&nbsp; &nbsp; you shall have the right to cancel/terminate my/our booking in case my/our cheque 
+                        for the part Sale Price or any amount payable by me/us is dishonoured or 
+                        RTGS/NEFT is not credited to your account. In such an event, I/we further
+                        acknowledge and confirm that I/we shall have no right,title and interest in the said Premises.
+                
+            </p>
+            
+            <p>
+                23)&nbsp; &nbsp; All the terms, conditions, covenants etc. mentioned herein and in the said Documents shall be binding on me/us.
+            </p>
+            
+            <p>
+                24)&nbsp; &nbsp; As and when requested by you, I/we shall satisfy you either through my/our banker’s commitment or in
+                such other manner as may be determined by you with regard to my/our financial and other capabilities
+                to pay the entire consideration and all other amounts to you and complete the sale and transfer of the
+                said Premises.
+            </p>
+            
+            <p>
+            
+            25)&nbsp; &nbsp; I/We am/are aware that you are not constructing /will not construct the said Tower,  and 
+                have appointed / will appoint third parties, to carry out construction of the said Tower on 
+                the Real Estate Project. In case of any defect in construction, or workmanship, I/we agree 
+                and confirm thatyou and I/we shall jointly approach the said third parties contractor(s) 
+                for rectification of such defect.
+           
+            
+            </p>
+            
+            <p>
+            
+            26)&nbsp; &nbsp; I/we agree, understand and acknowledge that in spite of all the necessary steps and precautions taken while designing and construction of the said Tower, the concrete slabs/beams may deflect due to self-weight, imposed loading, creep and/or shrinkage phenomena (the inherent properties of concrete), for years after construction. Further I/we may come across various cracks in finishes i.e. flooring, ceiling, slab gypsum etc. as a result of such slab/beam deflection and also caused due to any renovation and /or alterations etc carried out by us and any other purchaser/s / occupants of the other flats in the said Tower. I/we agree and covenants not to hold you liable and/or responsible for any such defects arising out of inherent properties of concrete and/or caused due to any renovations and/or alterations etc carried out by us and any other purchaser/s /occupants of the said Tower.
+                       </p>
+            
+            <p>
+                27)&nbsp; &nbsp; I/We agree, understand and acknowledge that all materials including marble, granite, 
+                timber etc., contain veins and grains with tonality differences and though you shall pre-
+                select such natural materials for installation in the Real Estate Project, their non-
+                conformity, natural discolouration or tonal differences at the time of installation is 
+                unavoidable and you shall not be responsible and/or liable for the same and I/we shall 
+                not raise any claim(s) against you in this regard.
+                
+            </p>
+            
+            <p>
+                28)&nbsp; &nbsp; Subject to force majeure circumstances and/or other circumstances beyond your reasonable control, if
+                you fail to hand over the said Premises to me/us on the Completion Date and only if I/we
+                have paid all the amounts payable by me/us hereunder (including interest, if any) and performed all
+                my/our obligations then and in such case only, I/we shall be entitled to any one of the following two
+                options:
+            </p>
+            
+            <p style="margin-left: 17px">
+                a)&nbsp; &nbsp; call upon you, by giving a written notice, to pay interest at the prevailing rate of 
+                State Bank of India Highest Marginal Cost of Lending Rate plus 2% 
+                thereon (“<b>Interest Rate</b>”) for every month of delay from the completion date, on the Sale
+                Price paid by us. The interest shall be paid by you to us till the date of offering to
+                hand over of the possession of the said Premises;
+                
+            </p>
+            <center><b>OR</b></center>
+            <p style="margin-left: 17px">
+                b)&nbsp; &nbsp; I/we shall be entitled to terminate the Agreement by giving written notice to you.
+                On the receipt of said termination notice by you, the Agreement shall stand 
+                terminated and cancelled. Within a period of 30 (thirty) days from the date of
+                receipt of the termination notice by you, you shall refund to me/us the amounts
+                already received by you under the Agreement with the Interest Rate to be computed
+                from the date you received such amount/part thereof till the date such amounts with
+                interest at the Interest Rate thereon are repaid. On such repayment of the amounts
+                I/we shall have no claim of any nature whatsoever on you and/or the said Premises
+                and you shall be entitled to deal with and/or dispose off the said Premises in the
+                manner it deems fit and proper
+                
+            </p>
+            
+            <p>
+                29)&nbsp; &nbsp; I/We am/are aware and agree that this Acceptance Form contains the essential and material terms
+                and conditions for booking of the said Premises in my/our favour. I/We am/are aware that any commitments
+                agreed between us hereafter shall be binding on us only if such commitments are made in writing and
+                signed by your authorised personnel.
+            </p>
+                    <div style="page-break-before:always;">
+                    </div>
+            <p>
+                30)&nbsp; &nbsp; Any dispute or difference between the Parties in relation to this Acceptance Form and
+                / or the understanding mentioned herein, shall be settled amicably. In case of failure to
+                settle such dispute amicably, such dispute or difference shall be referred to the 
+                Authority as per the provisions of the RERA and the Rules and Regulations, 
+                thereunder.
+                
+            </p>
+            <p>
+            
+            31)&nbsp; &nbsp; I/We confirm that I/we have examined all documents and information uploaded by you 
+                on the website of the Authority at <a><u><i>https://maharera.mahaonline.gov.in</i></u></a> under the 
+                project name “ETERNIA” and has/have read and understood the Agreement, the 
+                documents and information in all respects and further I/we agree to the terms, 
+                conditions and covenants as contained in the Agreement uploaded by you as part of 
+                registration with the Authority.                
+            </p>
+            <p>
+                32)&nbsp; &nbsp; I/We agree to abide by all the terms mentioned hereinabove without any demur or protest.
+                <br/>
+            </p>
+            </div>
+            Yours faithfully <br/><br/>
+            
+            <b>Signature of the Applicant/s:</b> <br/>
+            <br/>
+        
+             <table width="80%">
+                                <tr><td  align="left" style="font-size: 12px" height = '25px' width="5%" >1.</td>
+                                    <td align="left" height = '25px' style="font-size: 12px;border-bottom: 1px solid black" width="45%">&nbsp;&nbsp;{!booking.Primary_Applicants__r.name}</td>
+                                    <td  align="left" style="font-size: 12px" height = '25px' width="5%">PAN</td>
+                                    <td align="left" height = '25px' style="font-size: 12px;border-bottom: 1px solid black" width="45%">
+                                        &nbsp;&nbsp;{!booking.Primary_Applicants__r.PAN__pc}</td>
+                                    
+                                </tr>
+            <apex:variable var="ind" value="{!2}"/>
+            <apex:repeat value="{!Coowners}" var="Coowner" >
+                <tr><td  align="left" style="font-size: 12px" height = '25px' width="5%" >{!ind}.</td>
+                                    <td align="left" height = '25px' style="font-size: 12px;border-bottom: 1px solid black" width="45%">&nbsp;&nbsp;{!Coowner.Contact_name__c}</td>
+                                    <td  align="left" style="font-size: 12px" height = '25px' width="5%">PAN</td>
+                                    <td align="left" height = '25px' style="font-size: 12px;border-bottom: 1px solid black" width="45%">
+                                        &nbsp;&nbsp;{!Coowner.PAN__c}</td>
+                                    
+                                </tr>
+              
+                <apex:variable var="ind" value="{!ind+1}"/>
+                
+            </apex:repeat>
+                            </table>
+        <!--
+            1.{!booking.Primary_Applicants__r.name} &nbsp; &nbsp; PAN: {!booking.Primary_Applicants__r.PAN__pc}
+            <br/>
+            <apex:variable var="ind" value="{!2}"/>
+            <apex:repeat value="{!Coowners}" var="Coowner" >
+            {!ind}. {!Coowner.Contact_name__c} &nbsp; &nbsp; PAN:  {!Coowner.PAN__c}
+                <apex:variable var="ind" value="{!ind+1}"/>
+                <br/>
+            </apex:repeat> -->
+
+       
+        <div style="page-break-before:always;">
+            
+         <!-- First schedule -->   
+             <p style="font-size: 16px; font-family: Times New Roman;" align="center">
+                <b>THE FIRST SCHEDULE ABOVE REFERRED TO</b>    
+            </p>
+            <p style="font-size: 16px; font-family: Times New Roman;font-style: italic;" align="center">
+                <l>(Meaning of certain terms and expressions)</l>    
+            </p>
+            
+            
+           
+            <table width="90%" style="border: 1px solid black; border-collapse: collapse;" cellspacing="0" align="center">
+                <tr style="background-color:#ECEAEB; border: 1px solid black; border-collapse: collapse; font-size: 13px; font-family: Times New Roman;">
+                    <td style="width:10" class = "tableborder" align="center">Sr. No.</td>
+                    <td style="width:40%" class = "tableborder" align="center" >Terms and Expressions</td>
+                    <td style="width:50%" class = "tableborder" align="center">Meaning</td>
+                </tr >
+                
+                    <tr style="border: 1px solid black; border-collapse: collapse; font-size: 13px; font-family: Times New Roman;">
+                        <td style="width:10%" class = "tableborder">1</td>
+                        <td style="width:40%" class = "tableborder">Said Premises</td>
+                        <td style="width:50%" class = "tableborder">Flat No.{!booking.Booking_Flat_No__c} on the {!booking.Property__r.Floor__r.Floor_Number__c}<sup>{!booking.Property__r.Floor__r.SuperScript__c}</sup> Floor of the said Tower</td>                       
+                    </tr>
+                 <tr style="border: 1px solid black; border-collapse: collapse; font-size: 13px; font-family: Times New Roman;">
+                        <td style="width:10%" class = "tableborder">2</td>
+                        <td style="width:40%" class = "tableborder">Said Tower</td>
+                        <td style="width:50%" class = "tableborder">{!booking.Tower__r.Tower_Name__c}</td>                       
+                    </tr>
+                
+                 <tr style="border: 1px solid black; border-collapse: collapse; font-size: 13px; font-family: Times New Roman;">
+                        <td style="width:10%" class = "tableborder">3</td>
+                        <td style="width:40%" class = "tableborder">Carpet area of the said Premises as per RERA</td>
+                        <td style="width:50%" class = "tableborder">Admeasuring approximately {!booking.Property__r.RERA_Carpet_Area_In_Sq_Mtr__c} Sq. mtrs. equivalent to approximately {!booking.Property__r.RERA_Carpet_Area_In_Sq_ft__c} Sq. Ft.</td>                       
+                    </tr>
+                 <tr style="border: 1px solid black; border-collapse: collapse; font-size: 13px; font-family: Times New Roman;">
+                        <td style="width:10%" class = "tableborder">4</td>
+                        <td style="width:40%" class = "tableborder">Sale Price</td>
+                        <td style="width:50%" class = "tableborder">Rs. <apex:outputText value="{0,Number,###,###,##0}">
+                                            <apex:param value="{!booking.Total_Sales_Cost__c}" /></apex:outputText> /- (Rupees {!totalsalescosstinwords} ).</td>                       
+                  </tr>
+                <tr style="border: 1px solid black; border-collapse: collapse; font-size: 13px; font-family: Times New Roman;">
+                        <td style="width:10%" class = "tableborder"></td>
+                        <td style="width:40%" class = "tableborder">(i) Sale Price towards the carpet area of the said Premises</td>
+                        <td style="width:50%" class = "tableborder">Rs. <apex:outputText value="{0,Number,###,###,##0}">
+                                            <apex:param value="{!SalePriceofRERACarpetArea}" /></apex:outputText> /- (Rupees {!SalePriceofRERACarpetAreaword} )</td>                       
+                  </tr>
+                 <tr style="border: 1px solid black; border-collapse: collapse; font-size: 13px; font-family: Times New Roman;">
+                        <td style="width:10%" class = "tableborder"></td>
+                        <td style="width:40%" class = "tableborder">(ii) Proportionate Sale Price towards the Limited Areas and Facilities</td>
+                        <td style="width:50%" class = "tableborder">
+                            <apex:outputText value="{0,Number,###,###,##0}" rendered="{!SalePriceofBalconyCarpetArea!=0}">
+                                           Rs. <apex:param value="{!SalePriceofBalconyCarpetArea}" />
+                            </apex:outputText> 
+                            <apex:outputText rendered="{!SalePriceofBalconyCarpetArea!=0}">
+                            /- (Rupees {!SalePriceofBalconyCarpetAreaword} )
+                            </apex:outputText>
+                            <apex:outputText rendered="{!SalePriceofBalconyCarpetArea==0}">
+                                        NIL
+                            </apex:outputText>
+                     </td>                       
+                  </tr>
+                 <tr style="border: 1px solid black; border-collapse: collapse; font-size: 13px; font-family: Times New Roman;">
+                        <td style="width:10%" class = "tableborder">5</td>
+                        <td style="width:40%" class = "tableborder">ITC Benefit</td>
+                     <td style="width:50%" class = "tableborder">Rs. <apex:outputText value="{0, number, ###,##0}"><apex:param value="{!booking.ITC_Benefit_New__c}" /></apex:outputText> </td>                       
+                  </tr>
+                 <tr style="border: 1px solid black; border-collapse: collapse; font-size: 13px; font-family: Times New Roman;">
+                        <td style="width:10%" class = "tableborder">6</td>
+                        <td style="width:40%" class = "tableborder">Effective Sale Price</td>
+                     <td style="width:50%" class = "tableborder">Rs. <apex:outputText value="{0, number, ###,##0}"><apex:param value="{!booking.Effective_Sale_Price_New__c}" /></apex:outputText> </td>                       
+                  </tr>
+                <tr style="border: 1px solid black; border-collapse: collapse; font-size: 13px; font-family: Times New Roman;">
+                        <td style="width:10%" class = "tableborder">7</td>
+                        <td style="width:40%" class = "tableborder">Bank Account of the Promoter</td>
+                        <td style="width:50%" class = "tableborder">{!booking.Tower__r.Bank_account_of_the_Promoter__c} </td>                       
+                  </tr>
+                <tr style="border: 1px solid black; border-collapse: collapse; font-size: 13px; font-family: Times New Roman;">
+                        <td style="width:10%" class = "tableborder">8</td>
+                        <td style="width:40%" class = "tableborder">Car parking space/s</td>
+                        <!-- <td style="width:50%" class = "tableborder">Permission to park in {!booking.Single_Car_Parking__c} [{!CarParkinginwords} ] car parking space/s (Configuration- Single) , {!booking.Tandem_Car_Parking__c} [{!TandomCarParkinginwords} ] car parking space/s (Configuration- Tandom) and {!booking.Triple_Car_Parking__c} [{!TripleCarParkinginwords} ] car parking space/s (Configuration- Triple).</td> -->                       
+                        <td style="width:40%" class = "tableborder">
+                                    <apex:outputPanel rendered="{!booking.Single_Car_Parking__c > 0 || booking.Tandem_Car_Parking__c>0}">
+                                        Permission to park in 
+                                        <apex:outputPanel rendered="{!booking.Single_Car_Parking__c >0}">
+                                        
+                                            {!singlecarpark} [{!CarParkinginwords}] car parking space/s (Configuration - Single)
+                                         </apex:outputpanel>
+                                         <apex:outputPanel rendered="{!booking.Single_Car_Parking__c>0 && booking.Tandem_Car_Parking__c>0}">
+                                             and
+                                          </apex:outputpanel>
+                                        <apex:outputpanel layout="none" rendered="{!booking.Tandem_Car_Parking__c>0 && (booking.Tandem_Car_Parking__c) > 0}">
+                                              {!tandemcarpark} [{!TandomCarParkinginwords}] car parking space/s (Configuration- Tandem)
+                                        </apex:outputpanel>
+                                        
+                                        <apex:outputpanel layout="none" rendered="{!booking.Triple_Car_Parking__c>0 && (booking.Triple_Car_Parking__c) > 0}">
+                                         <br/>
+                                        and {!triplecarpark} [{!TripleCarParkinginwords}] car parking space/s (Configuration- Triple)
+                                        </apex:outputpanel>.
+                                    </apex:outputPanel>
+                            </td>
+                </tr>
+                <tr style="border: 1px solid black; border-collapse: collapse; font-size: 13px; font-family: Times New Roman;">
+                        <td style="width:10%" class = "tableborder">9</td>
+                        <td style="width:40%" class = "tableborder">Completion Date</td>
+                        <td style="width:50%" class = "tableborder">
+                            <apex:outputText value="{0, date, dd MMMM yyyy}">
+                            <apex:param value="{!booking.Property__r.tower__r.Completion_Certificate_Date__c}" /> 
+                        </apex:outputText>
+                    </td>                       
+                  </tr>
+                <tr style="border: 1px solid black; border-collapse: collapse; font-size: 13px; font-family: Times New Roman;">
+                        <td style="width:10%" class = "tableborder">10</td>
+                        <td style="width:40%" class = "tableborder">Limited Areas and Facilities</td>
+                        <td style="width:50%" class = "tableborder">
+                            <apex:outputText rendered="{!booking.property__r.Sale_Price_of_Balcony_Carpet_Area__c!=0}">
+                            Balcony
+                            </apex:outputText>
+                            <apex:outputText rendered="{!booking.property__r.Sale_Price_of_Balcony_Carpet_Area__c==0}">
+                            NA
+                            </apex:outputText>
+                            </td>                       
+                  </tr>
+               
+                <tr style="border: 1px solid black; border-collapse: collapse; font-size: 13px; font-family: Times New Roman;">
+                        <td style="width:10%" class = "tableborder">11</td>
+                        <td style="width:40%" class = "tableborder">Contact Details</td>
+                        <td style="width:50%" class = "tableborder">Promoter’s email address: sales@oberoirealty.com <br/> Promoter’s phone number: +912266773333 <br/>Promoter’s fax number: +912266773334 <br/><br/>
+                        Customer’s email address: {!booking.Email__c}<br/> Customer’s phone number: {!booking.Mobile__c}<br/> 
+                        Customer’s fax number: 
+                        <apex:outputText rendered="{!NOT(ISBLANK(booking.Fax_Number__c))}">
+                            {!booking.Fax_Number__c}
+                        </apex:outputText>
+                        <apex:outputText rendered="{!ISBLANK(booking.Fax_Number__c)}">
+                            N/A
+                        </apex:outputText></td>                       
+                  </tr>
+                 <tr style="border: 1px solid black; border-collapse: collapse; font-size: 13px; font-family: Times New Roman;">
+                        <td style="width:10%" class = "tableborder">12</td>
+                        <td style="width:40%" class = "tableborder">PAN</td>
+                        <td style="width:50%" class = "tableborder">Promoter’s PAN: AADCI5238A <br/>
+                        Customer’s PAN: 
+                        <apex:outputText rendered="{!NOT(ISBLANK(booking.Primary_Applicants__r.PAN__pc))}">
+                            {!booking.Primary_Applicants__r.PAN__pc}
+                        </apex:outputText>
+                        <apex:outputText rendered="{!ISBLANK(booking.Primary_Applicants__r.PAN__pc)}">
+                            N/A
+                        </apex:outputText>
+                        <br/>
+                        <apex:variable var="ind" value="{!2}"/>
+                        <apex:repeat value="{!Coowners}" var="Coowner" >
+                        Customer’s PAN:  
+                        <apex:outputText rendered="{!NOT(ISBLANK(Coowner.PAN__c))}">
+                            {!Coowner.PAN__c}
+                        </apex:outputText>
+                        <apex:outputText rendered="{!ISBLANK(Coowner.PAN__c)}">
+                            N/A
+                        </apex:outputText>
+                            <apex:variable var="ind" value="{!ind+1}"/>
+                            <br/>
+                        </apex:repeat>
+                        </td>                       
+                  </tr>
+                
+                
+            </table>
+             
+             </div>    
+        
+        
+       
+        
+        
+       
+        <!-- second schedule-->
+        <div style="page-break-before:always;">
+        <table width="100%">
+                    <tr>
+                        <td>                                                     
+                            <p style="font-size: 16px; font-family: Times New Roman;" align="center">
+                <b>THE SECOND SCHEDULE ABOVE REFERRED TO</b>    
+            </p>
+            <p style="font-size: 16px; font-family: Times New Roman;font-style: italic;" align="center">
+                <l>(Schedule of Payment of the Sale Price as payable by me/us)</l>    
+            </p>
+            <!-- <div style="font-size: 16px; font-family: Times New Roman;" align="center">
+                                <p><strong><u>Payment Schedule for Agreements To be Executed on Receipt of 10% of Sale Price</u></strong></p>
+                                <br/>
+                            </div>
+                            <table width="100%" style="border: 1px solid black; border-collapse: collapse;" cellspacing="0">
+                                <tr style="background-color:#ECEAEB; border: 1px solid black; border-collapse: collapse; font-size: 12px; font-family: Times New Roman;">
+                                    <td width="65%" align="left" style="border: 1px solid black; border-collapse: collapse;">
+                                        <b>&nbsp;&nbsp;&nbsp;&nbsp;PARTICULARS</b>
+                                    </td>
+                                    <td width="15%" style="border: 1px solid black; border-collapse: collapse;">
+                                        &nbsp;
+                                    </td>
+                                    <td width="20%" align="center" style="border: 1px solid black; border-collapse: collapse;">
+                                        <b>AMOUNTS</b>
+                                    </td>
+                                </tr>
+                                <tr style="border: 1px solid black; border-collapse: collapse; font-size: 12px; font-family: Times New Roman;">
+                                    <td align="left" style="border: 1px solid black; border-collapse: collapse;">
+                                        <b>&nbsp;&nbsp;&nbsp;&nbsp;SALE PRICE</b>
+                                    </td>
+                                    <td style="border: 1px solid black; border-collapse: collapse;">
+                                        <b>(Excluding Taxes and Additional Expenses)</b>
+                                    </td>
+                                    <td align="right" style="border: 1px solid black; border-collapse: collapse;">
+                                        <apex:outputText value="{0, number, ###,##0}">
+                                          
+                                        <apex:param value="{!ROUND(booking.Billing_Plan__r.Total_Sales_Amount_At_Time_of_Booking__c,2)}"/>
+                                        </apex:outputText> /-
+                                    </td>
+                                </tr>
+                            </table>
+                            <table width="100%" style=" border: 1px solid black; border-collapse: collapse;" cellspacing="0">
+                                <tr style="background-color:#ECEAEB; border: 1px solid black; font-size: 12px; font-family: Times New Roman;">
+                                    <td width="5%" style="border: 1px solid black; border-collapse: collapse;" align="center">
+                                        Sr. No.
+                                    </td>
+                                    <td width="55%" style="border: 1px solid black; border-collapse: collapse;" align="center">
+                                        Milestone
+                                    </td>
+                                    <td width="20%" style="border: 1px solid black; border-collapse: collapse;" align="center">
+                                        Percentage
+                                    </td>
+                                    <td width="20%" style="border: 1px solid black; border-collapse: collapse;" align="center">
+                                        Amount
+                                    </td>
+                                </tr>
+                                <apex:variable value="{!1}" var="count" />
+                                <apex:repeat value="{!billingLineItems}" var="item">
+                                    <tr style="display: {!IF(AND(item.Payment_Group__c=='IN',item.Line_Item_Type__c == 'Construction Linked'), 'table-row', 'none')};">
+                                        <td style="width:10%" class = "tableborder" align="center"> 
+                                    {!count}</td>
+                                        <td style="width:55%" class = "tableborder" align="left">
+                                        <apex:outputText value="{!item.Description__c}"/> 
+                                            
+                                    <table class="tableborder ">
+                                        <tr style="background-color:#ECEAEB; border: 1px solid black; font-size: 12px; font-family: Times New Roman;">
+                                            <td style="width:50%;border: 1px solid black; border-collapse: collapse;" align="center" class="tableborder "><b>Particulars</b></td>
+                                            <td style="width:5%;border: 1px solid black; border-collapse: collapse;" align="center" class="tableborder "><b>Amount</b></td>
+                                        </tr>
+                                             <apex:variable value="{!0}" var="index" />
+                                      <apex:repeat value="{!billinglineItemTimeLinked}" var="bplitl">
+                                        <tr style="font-family: Times New Roman;">
+                                           <td align="left" style="width:50%;font-family: Times New Roman;" class="tableborder ">
+                                            <apex:outputText value="{!bplitl.Description__c}" /></td>
+                                            <td align="right" style="width:30%" class="tableborder "><apex:outputText value="{0, number, ###,##0}">
+                                            <apex:param value="{!ROUND(bplitl.Discount_Amount__c,0)}" /></apex:outputText> /- </td>
+                                        </tr>                      
+                                      </apex:repeat>
+                                    </table>
+                                        </td>
+                                        <td style="width:15%" class = "tableborder" align="center">
+                                        <apex:outputText value="{!if(item.Payment_Group__c=='IN',ROUND(inPercent,0),ROUND(VALUE(item.Percentage_Of_Value_To_Be_Invoiced__c),0))}"/>%</td>
+                                        <td align="right" style="width:20%" class = "tableborder"><apex:outputText value="{0, number, ###,##0}">
+                                            <apex:param value="{!if(item.Payment_Group__c=='IN',ROUND(inAmount,0),ROUND(item.Discount_Amount__c,0))}" /></apex:outputText> /-
+                                        </td>
+                                          <apex:variable var="count"  value="{!IF(AND(item.Payment_Group__c=='IN',item.Line_Item_Type__c == 'Construction Linked'), count+1, count)}" /> 
+                                    </tr>
+                                    <tr style="display: {!IF(item.Payment_Group__c!='IN', 'table-row', 'none')};">
+                                        <td style="width:5%" class = "tableborder" align="center">
+                                    {!count}</td>
+                                        <td style="width:55%;font-family: Times New Roman;" align="left" class = "tableborder"><apex:outputText value="{!item.Description__c}"/></td>
+                                        <td style="width:20%" align="center" class = "tableborder"><apex:outputText value="{!ROUND(item.Percentage_Of_Value_To_Be_Invoiced__c,0)}"/> %</td>
+                                        <td style="width:20%" align="right" class = "tableborder"><apex:outputText value="{0, number, ###,##0}">
+                                           
+                                            <apex:param value="{!if((lstSize == count),ROUND(discAmt,0) , ROUND(item.Discount_Amount__c,0) )}" />
+                                           </apex:outputText> /-
+                                        </td>
+                                        
+                                    </tr>
+                                 <apex:variable var="count"  value="{!IF(item.Payment_Group__c!='IN', count+1, count)}" /> 
+                                </apex:repeat>
+                            </table>
+                            <br/>
+                            -->
+                            <!--
+                        <div style="font-size: 12px; font-family: Times New Roman;" align="center">
+                                <p><strong><u>Payment Schedule for Agreements To be Executed on Receipt of 10% of Sale Price</u></strong></p>
+                                <br/>
+                            </div> -->
+                            <!--
+                            <table width="100%" style="border: 1px solid black; border-collapse: collapse;" cellspacing="0">
+                                <tr style="background-color:#ECEAEB; border: 1px solid black; border-collapse: collapse; font-size: 12px; font-family: Times New Roman;">
+                                    <td width="65%" align="left" style="border: 1px solid black; border-collapse: collapse;">
+                                        <b>&nbsp;&nbsp;&nbsp;&nbsp;PARTICULARS</b>
+                                    </td>
+                                    <td width="15%" style="border: 1px solid black; border-collapse: collapse;">
+                                        &nbsp;
+                                    </td>
+                                    <td width="20%" align="center" style="border: 1px solid black; border-collapse: collapse;">
+                                        <b>Amounts</b>
+                                    </td>
+                                </tr>
+                                <tr style="border: 1px solid black; border-collapse: collapse; font-size: 12px; font-family: Times New Roman;">
+                                    <td align="left" style="border: 1px solid black; border-collapse: collapse;">
+                                        <b>&nbsp;&nbsp;&nbsp;&nbsp;Sale Price</b>
+                                    </td>
+                                    <td style="border: 1px solid black; border-collapse: collapse;width: 20%;">
+                                        <b>(Excluding Taxes and Additional Expenses)</b>
+                                    </td>
+                                    <td align="right" style="border: 1px solid black; border-collapse: collapse;">
+                                        <apex:outputText value="{0, number, ###,##0}">
+                                        
+                                        <apex:param value="{!ROUND(booking.Billing_Plan__r.Total_Sales_Amount_At_Time_of_Booking__c,2)}"/>
+                                        </apex:outputText> /-
+                                    </td>
+                                </tr>
+                            </table> -->
+                            <table width="100%" style=" border: 1px solid black; border-collapse: collapse;font-size: 12px; font-family: Times New Roman;" cellspacing="0"><!--v1.1 Added font-size: 12px; font-family: Times New Roman, Applying it for table-->
+                                <tr style="background-color:#ECEAEB; border: 1px solid black; font-size: 12px; font-family: Times New Roman;">
+                                    <td width="5%" style="border: 1px solid black; border-collapse: collapse;" align="center">
+                                        Sr. No.
+                                    </td>
+                                    <td width="55%" style="border: 1px solid black; border-collapse: collapse;" align="center">
+                                        Milestone
+                                    </td>
+                                    <td width="20%" style="border: 1px solid black; border-collapse: collapse;" align="center">
+                                        Percentage
+                                    </td>
+                                    <td width="20%" style="border: 1px solid black; border-collapse: collapse;" align="center">
+                                        Amount (Rs.)
+                                    </td>
+                                </tr>
+                                <apex:variable value="{!1}" var="count" />
+                                <apex:repeat value="{!billingLineItems}" var="item">
+                                    <tr style="display: {!IF(AND(item.Payment_Group__c=='IN',item.Line_Item_Type__c == 'Construction Linked'), 'table-row', 'none')};">
+                                        <td style="width:10%" class = "tableborder" align="center"> 
+                                    {!count}</td>
+                                        <td style="width:55%" class = "tableborder" align="left">
+                                        <apex:outputText value="{!item.Description__c}"/>                 
+                                    <table class="tableborder ">
+                                        <tr style="background-color:#ECEAEB; border: 1px solid black; font-size: 12px; font-family: Times New Roman;">
+                                            <td style="width:50%;border: 1px solid black; border-collapse: collapse;" align="center" class="tableborder "><b>Particulars</b></td>
+                                            <td style="width:5%;border: 1px solid black; border-collapse: collapse;" align="center" class="tableborder "><b>Amount (Rs.)</b></td>
+                                        </tr>
+                                             <apex:variable value="{!0}" var="index" />
+                                      <apex:repeat value="{!billinglineItemTimeLinked}" var="bplitl">
+                                        <tr style="font-family: Times New Roman;">
+                                           <td align="left" style="width:50%;font-family: Times New Roman;" class="tableborder ">
+                                            <apex:outputText value="{!bplitl.Description__c}" /></td>
+                                            <td align="right" style="width:30%" class="tableborder "><apex:outputText value="{0, number, ###,##0}">
+                                            <apex:param value="{!ROUND(bplitl.Discount_Amount__c,0)}" /></apex:outputText> /- </td>
+                                        </tr>                      
+                                      </apex:repeat>
+                                    </table>
+                                        </td>
+                                        <td style="width:15%" class = "tableborder" align="center">
+                                        <apex:outputText value="{!if(item.Payment_Group__c=='IN',ROUND(inPercent,0),ROUND(VALUE(item.Percentage_Of_Value_To_Be_Invoiced__c),0))}"/>%</td>
+                                        <td align="right" style="width:20%" class = "tableborder"><apex:outputText value="{0, number, ###,##0}">
+                                            <apex:param value="{!if(item.Payment_Group__c=='IN',ROUND(inAmount,0),ROUND(item.Discount_Amount__c,0))}" /></apex:outputText> /-
+                                        </td>
+                                          <apex:variable var="count"  value="{!IF(AND(item.Payment_Group__c=='IN',item.Line_Item_Type__c == 'Construction Linked'), count+1, count)}" /> 
+                                    </tr>
+                                    <tr style="display: {!IF(item.Payment_Group__c!='IN', 'table-row', 'none')};">
+                                        <td style="width:5%" class = "tableborder" align="center">
+                                    {!count}</td>
+                                        <td style="width:55%;font-family: Times New Roman;" align="left" class = "tableborder"><apex:outputText value="{!item.Description__c}"/></td>
+                                        <td style="width:20%" align="center" class = "tableborder"><apex:outputText value="{!ROUND(VALUE(item.Percentage_Of_Value_To_Be_Invoiced__c),0)}"/> %</td><!--Changes added by Vaidehi  -->
+                                        <td style="width:20%" align="right" class = "tableborder"><apex:outputText value="{0, number, ###,##0}">
+                                            <!--<apex:param value="{!item.Discount_Amount__c}" />-->
+                                             <apex:param value="{!if((lstSize == count),ROUND(discAmt,0) , ROUND(item.Discount_Amount__c,0) )}" /></apex:outputText> /-
+                                        </td>
+                                        
+                                    </tr>
+                                 <apex:variable var="count"  value="{!IF(item.Payment_Group__c!='IN', count+1, count)}" /> 
+                                </apex:repeat>
+                            </table>
+                        </td>
+                    </tr>
+                   
+                   
+                </table> 
+            
+        </div>
+        
+        <div style="page-break-before:always;" >
+            
+         <!-- Third schedule -->   
+             <p style="font-size: 16px; font-family: Times New Roman;" align="center">
+                <b>THE THIRD SCHEDULE ABOVE REFERRED TO</b>    
+            </p>
+            <p style="font-size: 16px; font-family: Times New Roman;font-style: italic;" align="center">
+                <l>(being the amounts to be paid by me/us in accordance with this Acceptance Form)</l>    
+            </p>
+            
+            
+            <table align="center" width="80%" style="border: 1px solid black; border-collapse: collapse;" cellspacing="0">
+                <tr align="center" style="background-color:#ECEAEB; border: 1px solid black; border-collapse: collapse; font-size: 13px; font-family: Times New Roman;">
+                    <td style="width:10%" class = "tableborder">Sr. No.</td>
+                    <td style="width:50%" class = "tableborder">Particulars</td>
+                    <td style="width:20%" class = "tableborder">Amount (Rs.)</td>
+                </tr >
+                <tr>
+                    <td align="center" style="width:10%" class = "tableborder">1</td>
+                    <td align="left" style="width:50%" class = "tableborder">Charges  towards  formation  and  registration  of  the  Society  and  Apex Body, along with applicable taxes</td>
+                    <td align="center" style="width:20%" class = "tableborder">
+                     <apex:outputText value="{0, number, ###,##0}">
+                            <apex:param value="{!societychag}"/>
+                        </apex:outputText> /-
+                    </td>
+                </tr >
+                <tr>
+                    <td align="center" style="width:10%" class = "tableborder">2</td>
+                    <td align="left" style="width:50%" class = "tableborder">Deposit towards water, electricity, and other utility and services connection charges</td>
+                    <td align="left" style="width:20%" class = "tableborder">To be paid to the utility supplier at actuals</td>
+                </tr >
+                <tr>
+                    <td align="center" style="width:10%" class = "tableborder">3</td>
+                    <td align="left" style="width:50%" class = "tableborder">One-time  non-refundable  membership  fee  with  respect  to  the club house forming part of the Whole Project (taxes to be paid separately by me / us at applicable rates)</td>
+                    <td align="center" style="width:20%" class = "tableborder">
+                     <apex:outputText value="{0, number, ###,##0}">
+                            <apex:param value="{!clbchag}"/>
+                        </apex:outputText> /-
+                    </td>
+                </tr >
+                <tr>
+                    <td align="center" style="width:10%" class = "tableborder">4</td>
+                    <td align="left" style="width:50%" class = "tableborder">All  legal  costs,  charges  and  expenses  (taxes  to  be  paid separately by me / us at applicable rates)</td>
+                    <td align="center" style="width:20%" class = "tableborder">
+                     <apex:outputText value="{0, number, ###,##0}">
+                            <apex:param value="{!legalchag}"/>
+                        </apex:outputText> /-
+                    </td>
+                </tr >
+                <tr>
+                    <td align="center" style="width:10%" class = "tableborder">5</td>
+                    <td align="left" style="width:50%" class = "tableborder">Development charges (taxes to be paid separately by me / us atapplicable rates)</td>
+                    <td align="center" style="width:20%" class = "tableborder">
+                     <apex:outputText value="{0, number, ###,##0}">
+                            <apex:param value="{!devchag}"/>
+                        </apex:outputText> /-
+                    </td>
+                </tr >
+                
+            </table>
+            
+             </div>
+        
+        
+    <!-- fourth schedule -->
+            
+            
+            <p style="font-size: 16px; font-family: Times New Roman;" align="center">
+                <b>THE FOURTH SCHEDULE ABOVE REFERRED TO</b>    
+            </p>
+            <p style="font-size: 16px; font-family: Times New Roman;font-style: italic;" align="center">
+                <l>(being the amounts to be paid by me/us in accordance with this Acceptance Form)</l>    
+            </p>
+            
+            
+            <table align="center" width="80%" style="border: 1px solid black; border-collapse: collapse;" cellspacing="0">
+                <tr align="center" style="background-color:#ECEAEB; border: 1px solid black; border-collapse: collapse; font-size: 13px; font-family: Times New Roman;">
+                    <td style="width:10%" class = "tableborder">Sr. No.</td>
+                    <td style="width:50%" class = "tableborder">Particulars</td>
+                    <td style="width:20%" class = "tableborder">Amount (Rs.)</td>
+                </tr >
+                <tr>
+                    <td align="center" style="width:10%" class = "tableborder">1</td>
+                    <td align="left" style="width:50%" class = "tableborder">Share application money of the Society</td>
+                    <td align="center" style="width:20%" class = "tableborder">
+                    <apex:outputText value="{0, number, ###,##0}">
+                            <apex:param value="{!sharechag}"/>
+                        </apex:outputText> /-
+                    </td>
+                </tr >
+                <tr>
+                    <td align="center" style="width:10%" class = "tableborder">2</td>
+                    <td align="left" style="width:50%" class = "tableborder">Corpus Fund contribution</td>
+                    <td align="center" style="width:20%" class = "tableborder">
+                    <apex:outputText value="{0, number, ###,##0}">
+                            <apex:param value="{!corpuschag}"/>
+                        </apex:outputText> /-
+                    </td>
+                </tr >
+                <tr>
+                        <td align="center" style="width:7%" class = "tableborder">3</td>
+                        <td align="left" style="width:53%" class = "tableborder">Proportionate share of taxes and other charges/levies in respectof the Society and Apex Body (taxes to be paid separately by me / us at applicable rates)</td>
+                    <td align="center" style="width:20%" class = "tableborder" rowspan="2">
+                    <apex:outputText value="{0, number, ###,##0}">
+                     <apex:param value="{!munciplechag}" />
+                           </apex:outputText>/-
+                    </td>
+                        
+                    </tr> 
+                <tr>
+                        <td align="center"  style="width:7%" class = "tableborder">4</td>
+                        <td align="left" style="width:53%" class = "tableborder">Deposit  towards  provisional  monthly  contribution  towardsoutgoings  of  the  Society  and Apex  Body  (taxes  to  be  paid separately by me / us at applicable rates)</td>
+                        
+                       
+                    </tr> 
+                
+                
+            </table>
+    </p>
+             </div>
+        
+       
+  
+
+</apex:page>

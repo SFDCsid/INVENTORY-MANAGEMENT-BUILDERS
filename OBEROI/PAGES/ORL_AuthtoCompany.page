@@ -1,0 +1,49 @@
+<apex:page standardController="Booking__c" action="{!savePDF}" extensions="BookingFormHandler" showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" renderAs="pdf">
+  <head>
+<style type= "text/css">
+@page {
+  size: A4;
+  margin: 5 px;
+  font-face:Times;
+      font-size:8px;
+      
+}
+
+</style>
+</head>
+<div style="font-size:8px;">
+    <center><b><u>TDS- Self Pay Declaration Letter</u></b></center>
+    <p>
+Date: {!todaydate}<br/><br/>
+<b>To,</b><br/>
+<b>Incline Realty Private Limited</b><br/>
+ Commerz, 3rd Floor, <br/>International Business Park,<br/> Oberoi Garden City, <br/>Off. Western Express Highway, <br/>Goregaon (East),<br/> Mumbai - 400 063. 
+<br/>
+<br/>
+<b>Dear Sir/Madam,</b>
+<br/>
+<p>
+We are authorising you or any of your employees or representative/s or person/s appointed by you to do the following acts, deeds, matters and things required to be done/undertaken to comply with the provisions of Section 194-IA of the Income Tax Act, 1961, (the “Act”) including but not limited to:
+</p>
+(a)  file requisite forms, challan/s, pay taxes as applicable pursuant to Section 194-IA of the Act;<br/>
+<br/>
+<p>
+(b)  discharge the liability of payment of tax under Section 194-IA of the Act on our behalf and deposit the same with the Government, subject to and to the extent of the payment made by us on account of TDS under Section 194-IA of the Act, to you before the due date thereof; I/We are aware that the aforesaid process of deduction/payment of TDS is a manual and a complex process and is subject to human errors and/or technical problems that may be encountered. I/We unconditionally and unequivocally agree and undertake that I/We will not hold you/your employees or representative/s responsible or liable in any manner howsoever for the unintentional errors in filling up the forms online and/ or errors or stoppage of web site due to technical reasons and waive my/our right (if any) to claim any costs, compensation or damages in respect thereof. In the event of occurrence of such errors, I/we will fully assist you to correct and rectify the same, through Income Tax Department. I/We shall sign, execute the necessary applications, forms etc., and make myself/ourselves available to attend the office of the Income Tax Department, as may be required to correct and rectify any errors in the forms.
+</p>
+
+<p>
+I/We shall provide you the duly signed copy of Form 16B within 15 days from the due date for furnishing the challan-cum-statement in Form No.26QB.
+
+</p>
+<p>
+Permanent Account Number of the first owner is ( {!booking.primary_Applicant__r.PAN__c} ) and we request you to kindly make the payment of TDS on behalf of the first owner only. We are
+ enclosing herewith copy of the PAN card for your ready reference.</p>
+<br/>
+Thanking you,<br/>
+Yours sincerely<br/><br/>
+Name of the Customer: {!booking.Primary_Applicant__r.name}<br/><br/>
+Flat No.: {!booking.Booking_Flat_No__c} Tower: {!booking.Tower__r.Tower_Name__c}<br/><br/>
+Project: {!booking.Project__r.Name}
+</p>
+</div>
+</apex:page>

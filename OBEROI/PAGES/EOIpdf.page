@@ -1,0 +1,394 @@
+<apex:page Controller="EOIPDFController" renderAs="PDF" showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false">
+    <html>
+        <head>
+            <style type="text/css" media="print">
+                @page {
+                size: A4;
+                @bottom-center {          
+                content: "Page " counter(page) " of " counter(pages);
+                
+                }
+                }
+                body{
+                margin:0;
+                padding:0; 
+                font-family: Georgia;
+                font-size:12px !important;
+                } 
+                @page {                
+                margin-bottom: 45px;
+                margin-top: 45px;
+                
+                @top-center {
+                content: element(header,first-except);
+                }
+                @bottom-center {
+                content: element(footer,first-except);
+                }
+                }            
+                .header{
+                position: running(header);
+                }
+                .footer {
+                display:block;
+                position: running(footer);
+                z-index:-999;
+                }            
+                table{
+                width:100%;
+                }
+                table tr td{
+                padding:10px 10px 0 10px;
+                }
+            </style>  
+        </head>
+        <apex:form >
+            <body >
+                <!--------------------------------- Pages 1 - ------------------------------------>
+                <div style="page-break-after:always;">
+                    <div style="border:2px solid #0E0E0E;">
+                        <div style="background:#D0D0D0;margin:0;padding:2px 10px;margin-top:10px;">
+                            <h4 style="margin:0;">CUSTOMER DETAILS</h4>
+                        </div>
+                        <table width="100%"  style="margin:0;">
+                            <tr>
+                                <td width="25%;">
+                                    Name:
+                                </td>
+                                <td width="75%;" style="border-bottom:1px solid #0e0e0e;">
+                                    1.<span>{!eo.Salutation_1__c}{!eo.Applicant_Name_1__c}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="25%;">
+                                    &nbsp;
+                                </td>
+                                <td width="75%;" style="border-bottom:1px solid #0e0e0e;">
+                                    2.<span>{!eo.Salutation_2__c}{!eo.Applicant_Name_2__c}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="25%;">
+                                    &nbsp;
+                                </td>
+                                <td width="75%;" style="border-bottom:1px solid #0e0e0e;">
+                                    3.<span>{!eo.Salutation_3__c}{!eo.Applicant_Name_3__c}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="25%;">
+                                    &nbsp;
+                                </td>
+                                <td width="75%;" style="border-bottom:1px solid #0e0e0e;">
+                                    4.<span>{!eo.Salutation_4__c}{!eo.Applicant_Name_4__c}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="25%;">
+                                    &nbsp;
+                                </td>
+                                <td width="75%;" style="border-bottom:1px solid #0e0e0e;">
+                                    5.<span>{!eo.Salutation_5__c}{!eo.Applicant_Name_5__c}</span>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%"  style="margin:0;">
+                            <tr>
+                                <td width="25%;">
+                                    Nationality:
+                                </td>
+                                <td width="30%;" style="border-bottom:1px solid #0e0e0e;">
+                                    <span>{!eo.Nationality__c}</span>
+                                </td>
+                                <td width="17%;">Resident Status:</td>
+                                <td width="28%;" style="border-bottom:1px solid #0e0e0e;"> {!eo.Resident_Status__c}</td>
+                            </tr>                    
+                        </table>
+                        <table width="100%"  style="margin:0;">
+                            <tr>
+                                <td width="25%;">
+                                    Residential Address:
+                                </td>
+                                <td width="75%;" style="border-bottom:1px solid #0e0e0e;">
+                                    House No.: {!eo.House_No__c} &nbsp;&nbsp; 
+                                    <span style="position:relative;left:140px;">Street: {!eo.Street_1__c}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="25%;">
+                                    &nbsp;
+                                </td>
+                                <td width="75%;" style="border-bottom:1px solid #0e0e0e;">
+                                    Street 2: {!eo.Street_2__c}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="25%;">
+                                    &nbsp;
+                                </td>
+                                <td width="75%;" style="border-bottom:1px solid #0e0e0e;">
+                                    Street 3: {!eo.Street_3__c}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="25%;">
+                                    &nbsp;
+                                </td>
+                                <td width="75%;" style="border-bottom:1px solid #0e0e0e;">
+                                    City: {!eo.City__c}<span style="position:relative;left:140px;"> &nbsp;  Pincode: {!eo.Pincode1__c}</span>                                
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%"  style="margin:0;">
+                            <tr>
+                                <td width="25%;">
+                                    Occupation:
+                                </td>
+                                <td width="30%;" style="border-bottom:1px solid #0e0e0e;">
+                                    {!eo.Occupation__c}
+                                </td>
+                                <td width="17%;">Others:</td>
+                                <td width="28%;" style="border-bottom:1px solid #0e0e0e;">{!eo.Other_Occupation__c}</td>
+                            </tr>                    
+                        </table>
+                        <table width="100%"  style="margin:0;">
+                            <tr>
+                                <td width="25%;">
+                                    Company you are Working for:
+                                </td>
+                                <td width="75%;" style="border-bottom:1px solid #0e0e0e;">
+                                     {!eo.Company_Name__c}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="25%;">
+                                    Designation:
+                                </td>
+                                <td width="75%;" style="border-bottom:1px solid #0e0e0e;">
+                                     {!eo.Designation__c}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="25%;">
+                                    Company Address:
+                                </td>
+                                <td width="75%;" style="border-bottom:1px solid #0e0e0e;">
+                                     {!eo.Company_Address__c}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="25%;">
+                                    &nbsp;
+                                </td>
+                                <td width="75%;" style="border-bottom:1px solid #0e0e0e;">
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="25%;">
+                                    &nbsp;
+                                </td>
+                                <td width="75%;" style="border-bottom:1px solid #0e0e0e;">
+                                    City: {!eo.Company_City__c} <span style="position:relative;left:184px;">Pin Code: {!eo.Company_Pincode__c}</span>                                
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="25%;">
+                                    Telephone No:
+                                </td>
+                                <td width="75%;" style="border-bottom:1px solid #0e0e0e;">
+                                    (Residence) &nbsp; &nbsp;{!eo.Country_Code_Residense__c}{!eo.Telephone_No_Residence__c}
+                                    <span style="position:relative;left:120px;">(Office) &nbsp; &nbsp;{!eo.Country_Code_Office__c}{!eo.Telephone_No_Office__c}</span>                                
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="25%;">
+                                    Mobile No:
+                                </td>
+                                <td width="75%;" style="border-bottom:1px solid #0e0e0e;">
+                                    1. &nbsp; &nbsp;{!eo.Country_Code_Mobile_1__c}{!eo.Mobile_No_1__c}
+                                    <span style="position:relative;left:120px;">2. &nbsp; &nbsp;{!eo.Country_Code_Mobile_2__c}{!eo.Mobile_No_2__c}</span>                                
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="25%;">
+                                    Email:
+                                </td>
+                                <td width="75%;" style="border-bottom:1px solid #0e0e0e;">
+                                    {!eo.Email__c}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="25%;">
+                                    Contact Person: 
+                                </td>
+                                <td width="75%;" style="border-bottom:1px solid #0e0e0e;">
+                                    Details same as Applicant-1
+                                    <span style="position:relative;left:40px;">{!eo.Contact_Person_Same_as_applicant_1__c}</span>                                
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="25%;">
+                                    Name:
+                                </td>
+                                <td width="75%;" style="border-bottom:1px solid #0e0e0e;">
+                                    {!eo.Contact_Person_Name__c}
+                                    <span style="position:relative;left:145px;">Relation /Designation: {!eo.Contact_Person_Relation_Designation__c}</span>                                
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="25%;">
+                                    Telephone:
+                                </td>
+                                <td width="75%;" style="border-bottom:1px solid #0e0e0e;">
+                                    {!eo.Country_Code_Contact_Person_Telephone__c}{!eo.Contact_Person_Telephone__c}
+                                    <span style="position:relative;left:188px;">Mobile: {!eo.Country_Code_Contact_Person_Mobile__c}{!eo.Contact_Person_Mobile__c}</span>                                
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="25%;">
+                                    Email:
+                                </td>
+                                <td width="75%;" style="border-bottom:1px solid #0e0e0e;">
+                                    {!eo.Contact_Person_Email__c}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="25%;">
+                                    Customer Category: 
+                                </td>
+                                <td width="75%;" style="border-bottom:1px solid #0e0e0e;">
+                                    {!eo.Customer_Category__c}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="25%;">
+                                    How did you hear about us: 
+                                </td>
+                                <td width="75%;" style="border-bottom:1px solid #0e0e0e;">
+                                    {!eo.How_did_you_hear_about_us__c}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="25%;">
+                                    Budget:
+                                </td>
+                                <td width="75%;" style="border-bottom:1px solid #0e0e0e;">
+                                    {!eo.Budget__c}
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td width="25%;">
+                                    Requirements:
+                                </td>
+                                <td width="75%;" style="border-bottom:1px solid #0e0e0e;">
+                                    {!eo.Requirements__c}
+                                </td>
+                            </tr><tr>
+                            <td width="25%;">
+                                Carpet Area(in sq. ft.): 
+                            </td>
+                            <td width="75%;" style="border-bottom:1px solid #0e0e0e;">
+                                {!eo.Carpet_Area__c}
+                            </td>
+                            </tr>
+                            <tr>
+                                <td width="25%;">
+                                    Source of Booking:
+                                </td>
+                                <td width="75%;" style="border-bottom:1px solid #0e0e0e;">
+                                    {!eo.Source_of_EOI__c}
+                                </td>
+                            </tr>
+                            
+                        </table>
+                        
+                        <br/>
+                    </div>
+                    <apex:outputfield value="{!eo.CreatedDate}"/> {!eo.UniqueEOInumber__c} {!eo.Project__r.Name}
+                </div>
+                
+                <!--------------------------------- Pages 2 - ------------------------------------>
+                <div>
+                    <div style="border:2px solid #0E0E0E;">
+                        <div style="background:#D0D0D0;margin:0;padding:2px 10px;margin-top:10px;">
+                            <h4 style="margin:0;">PROPERTY CONSULTANT DETAILS (Please attach your business card)</h4>
+                        </div>
+                        <table width="100%"  style="margin:0;">
+                            <tr>
+                                <td width="30%;">
+                                    Property Consultant’s Firm Name: 
+                                </td>
+                                <td width="70%;" style="border-bottom:1px solid #0e0e0e;">
+                                    {!eo.Property_Consultant_s_Firm_Name__c}
+                                </td>
+                            </tr> 
+                            <tr>
+                                <td width="30%;">
+                                    Property Consultant’s Name: 
+                                </td>
+                                <td width="70%;" style="border-bottom:1px solid #0e0e0e;">
+                                    {!eo.Property_Consultant_s_Name__c}
+                                </td>
+                            </tr> 
+                            <tr>
+                                <td width="30%;">
+                                    RERA Registration No: 
+                                </td>
+                                <td width="70%;" style="border-bottom:1px solid #0e0e0e;">
+                                    {!eo.RERA_Registration_No__c}
+                                </td>
+                            </tr> 
+                            <tr>
+                                <td width="30%;">
+                                    Contact: 
+                                </td>
+                                <td width="70%;" style="border-bottom:1px solid #0e0e0e;">
+                                    (Mobile) &nbsp; &nbsp;{!eo.Country_Code_Property_Consultant_Mobile__c}{!eo.Property_Consultant_s_Telephone_Mobile__c} 
+                                    <span style="position:relative;left:140px;">(Office) &nbsp; &nbsp;{!eo.Country_Code_Property_Consult_Telephone__c}{!eo.Property_Consultant_s_Telephone_Office__c}</span>                                
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="30%;">
+                                    Email: 
+                                </td>
+                                <td width="70%;" style="border-bottom:1px solid #0e0e0e;">
+                                    {!eo.Property_Consultant_s_Email__c}
+                                </td>
+                            </tr> 
+                        </table>
+                        <br/>
+                        <div style="background:#D0D0D0;margin:0;padding:2px 10px;margin-top:10px;">
+                            <h4 style="margin:0;">EXISTING CUSTOMER / REFERRAL DETAILS</h4>
+                        </div>
+                        <table width="100%">
+                            <tr>
+                                <td width="31%;">
+                                    Name of Existing Customer / Referral: 
+                                </td>
+                                <td width="69%;" style="border-bottom:1px solid #0e0e0e;">
+                                    {!eo.Name_of_Existing_Customer_Referral__c}
+                                </td>
+                            </tr>    
+                        </table>
+                        <table width="100%">
+                            <tr>
+                                <td width="10%">Project: </td>
+                                <td style="border-bottom:1px solid #0e0e0e">{!eo.Project_Name_of_Existing_Customer__c}</td>
+                                <td width="10%">Tower:</td>
+                                <td style="border-bottom:1px solid #0e0e0e">{!eo.Tower_Name_of_Existing_Customer__c}</td>
+                                <td width="10%">Flat:{!eo.Flat_No_of_Existing_Customer__c}</td>
+                                <td style="border-bottom:1px solid #0e0e0e">{!eo.Flat_No_of_Existing_Customer__c}</td>
+                            </tr>
+                        </table>
+                        
+                        <br/>
+                    </div>
+                    <apex:outputfield value="{!eo.CreatedDate}"/> {!eo.UniqueEOInumber__c} {!eo.Project__r.Name}   
+                </div>  
+                
+            </body>
+        </apex:form>
+    </html>
+</apex:page>

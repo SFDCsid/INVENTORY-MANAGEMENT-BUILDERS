@@ -1,0 +1,93 @@
+<apex:page standardController="Booking__c" action="{!savePDF}" extensions="BookingFormHandler" showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" renderAs="pdf">
+    <head>
+        <style type= "text/css">             
+            .chkBox {border: 1px black solid; padding-left: 15px;  }
+            .tablepad {padding-top: 40px;padding-bottom: 40px}
+            .tableborderInside {border: 1px solid black;}
+            .tableborder {border: 1px solid black;border-collapse: collapse;padding-left:10px;font-family: Times New Roman;}
+            .border {border: 1px solid black; padding: 2px;}
+            .pgborder {border: 1px solid black; padding: 10px;}
+            @page {
+            size: A4;
+            margin: 5 px;
+            font-face:Times;
+            font-size:8px;
+            }
+        </style>
+    </head>
+    <br/><br/>
+    <div style="font-family:Times New Roman ;font-size:11px;">
+        <p>
+            (Declaration to be given in case of PIO or OCI Customers)<br/> 
+            Date :{!today}<br/><br/>            
+            <div style="text-align:center"><b><u>TO WHOMSOEVER IT MAY CONCERN</u></b></div><br/>
+        
+        I/ WE 1) {!booking.Title__c} {!booking.Contact_Name__c} aged {!age} years permanently residing at&nbsp;{!booking.C_o_Name_Billing_Address__c},&nbsp;{!booking.Billing_Street__c},&nbsp;{!booking.Billing_Str_Suppl2__c},&nbsp;{!booking.Billing_Str_Suppl3__c},&nbsp;{!booking.Billing_Location__c},&nbsp;
+        {!booking.Billing_City__c},&nbsp;{!booking.Billing_Country__c},&nbsp;{!booking.Billing_Post_Code__c}&nbsp;and presently residing at,&nbsp;{!booking.C_o_Name_Mailing_Address__c},&nbsp;{!booking.Mailing_Street__c},&nbsp;{!booking.Mailing_Str_Suppl2__c},&nbsp;{!booking.Mailing_Str_Suppl3__c},&nbsp;{!booking.Mailing_Location__c},&nbsp;
+        {!booking.Mailing_City__c},&nbsp;{!booking.Mailing_Country__c},&nbsp;{!booking.Mailing_Post_Code__c}&nbsp; 
+        <br/><br/>
+        A. I/We say that I/We am/are citizen/s of India having Indian Passport bearing the following No/s. My/our Pan No/s are as follows;
+        <br/><br/>       
+        <table width="100%" style="border-collapse: collapse;border: 1px solid black;font-size: 12px" >                
+            <tr  style="background: #D3D3D3;">
+                <th align="left" height = '25px' style="font-size: 13px;border: 1px solid black" width="14%"> Name of Customer</th>
+                <th align="left" height = '25px' style="font-size: 13px;border: 1px solid black" width="14%">Passport No and Expiry Date</th>
+                <th align="left" height = '25px' style="font-size: 13px;border: 1px solid black" width="5%">Pan Card No.</th>
+            </tr> 
+            <tr>
+                <td align="left" height = '25px' style="font-size: 13px;border: 1px solid black" width="14%">{!booking.Title__c} {!booking.Contact_Name__c}</td>
+                <td align="left" height = '25px' style="font-size: 13px;border: 1px solid black" width="14%"></td>
+                <td align="left" height = '25px' style="font-size: 13px;border: 1px solid black" width="5%"></td>
+            </tr> 
+        </table>
+        <br/><br/>
+        <b>OR</b><br/><br/>        
+        A. I/We am/are Persons of Indian origin having PIO Card the details whereof are as follows;<br/><br/>
+        <table width="100%" style="border-collapse: collapse;border: 1px solid black;font-size: 12px" >                
+            <tr  style="background: #D3D3D3;">
+                <th align="left" height = '25px' style="font-size: 13px;border: 1px solid black" width="10%"> Name of Customer</th>
+                <th align="left" height = '25px' style="font-size: 13px;border: 1px solid black" width="10%">PIO Card No </th>
+                <th align="left" height = '25px' style="font-size: 13px;border: 1px solid black" width="15%">Date of issue of PIO Card</th>
+                <th align="left" height = '25px' style="font-size: 13px;border: 1px solid black" width="15%">Date till when the card is valid</th>
+            </tr> 
+            <tr>
+                <td align="left" height = '25px' style="font-size: 12px;border: 1px solid black" width="10%">{!booking.Title__c} {!booking.Contact_Name__c} </td>
+                <td align="left" height = '25px' style="font-size: 12px;border: 1px solid black" width="10%"></td>
+                <td align="left" height = '25px' style="font-size: 12px;border: 1px solid black" width="15%"></td>
+                <th align="left" height = '25px' style="font-size: 12px;border: 1px solid black" width="15%"></th>
+            </tr> 
+        </table>            
+        <br/><br/>
+        <b>OR</b><br/><br/>        
+        A.  I/We am/are the Overseas Citizen of India having Overseas Citizen of India Certificate, the details whereof are as follows;<br/><br/>
+        <table width="100%" style="border-collapse: collapse;  border: 1px solid black;font-size: 12px; " >                
+            <tr style="background: #D3D3D3;">
+                <th align="left" height = '25px' style="font-size: 13px;border: 1px solid black" width="7%"> Name of Customer</th>
+                <th align="left" height = '25px' style="font-size: 13px;border: 1px solid black" width="14%">Overseas Citizen of India Certificate No.</th>
+                <th align="left" height = '25px' style="font-size: 13px;border: 1px solid black" width="14%">Date of issue of the Overseas Citizen of India Certificate</th>
+            </tr> 
+            <tr>
+                <td align="left" height = '25px' style="font-size: 13px;border: 1px solid black" width="7%">{!booking.Title__c} {!booking.Contact_Name__c}</td>
+                <td align="left" height = '25px' style="font-size: 13px;border: 1px solid black" width="14%"></td>
+                <td align="left" height = '25px' style="font-size: 13px;border: 1px solid black" width="14%"></td>
+            </tr> 
+        </table>
+        <br/>     
+        
+        B.  I/We am/are not citizen/citizens of Pakistan, Bangladesh, Sri Lanka, Afghanistan, China, Iran, Nepal or Bhutan.
+        <br/><br/>
+        C.  All inward remittances made by me / us will be for the purchase of Flat no.{!booking.Booking_Flat_No__c} admeasuring {!booking.Property__r.Carpet_Area__c} sq.ft. (carpet area) in Tower {!booking.Tower__r.Tower_Name__c} on the {!Booking.Property__r.Floor__r.Floor_Number__c} Floor (" the Said Premises" ) in the residential project and building known as {!booking.Project_Name__c} and not for purchase of agricultural land/ plantation / farm house.
+        <br/><br/>
+        D.  Further all the inward remittance/s made by me / us will be for purchase of the Said Premises and not for lease.
+        <br/><br/>
+        <br/>
+        Thanking You,<br/><br/>
+        
+        Signature of the Applicant /s<br/><br/><br/>
+        
+        
+        1.  __________________________<br/>
+        
+    </p>
+</div>
+</apex:page>

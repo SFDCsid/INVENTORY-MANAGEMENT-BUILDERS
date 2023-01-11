@@ -1,0 +1,22 @@
+<apex:page standardController="Campaign" >
+<apex:form >
+    <apex:includeLightning />
+    <apex:includeScript value="/lightning/lightning.out.js" />
+  <apex:pageMessages ></apex:pageMessages>
+    <div id="lightning" />
+</apex:form>
+   <script>
+        var CampaignNumber= "{!$CurrentPage.parameters.lid}";
+        <!--var caseId= "{!$CurrentPage.parameters.cid}";-->
+        $Lightning.use("c:OCS_CaseTeamApplication", function() {
+          $Lightning.createComponent("c:OCS_CaseTeam",
+                { "caseId" : caseId 
+                  <!-- "caseNumber": caseNumber-->
+                   },
+                  "lightning",
+                  function(cmp) {                     
+                    // do some stuff
+               });
+        });
+    </script>
+</apex:page>

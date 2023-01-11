@@ -1,0 +1,13 @@
+<apex:page controller="FlowCustomerToSAP" action="{!flow}" lightningStylesheets="True">
+    <apex:form id="fm1">
+        <apex:pageMessages >
+        </apex:pageMessages> 
+        <!-- <apex:pagemessage summary="Customer Flown to SAP successfully!!" severity="CONFIRM" strength="3" rendered="{!i == 0}" >
+        </apex:pagemessage>
+        <apex:pagemessage summary="{!errorMsg}" severity="ERROR" strength="3" rendered="{!i == 1}" >
+        </apex:pagemessage> -->
+          <apex:actionPoller action="{!incrementCounter}" interval="500" rendered="{!IF(status == true, true, false)}"/>
+        <br/>
+        <apex:commandButton action="{!BackToBooking}" value="Go to Booking"/>
+    </apex:form>
+</apex:page>

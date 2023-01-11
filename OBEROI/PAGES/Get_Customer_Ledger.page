@@ -1,0 +1,32 @@
+<apex:page controller="GetCustomerLedger" action="{!GetDocument}" lightningStylesheets="True" sidebar="false" showHeader="false">
+    <apex:form >
+        <apex:iframe id="theFrame"/>
+        
+        <center id="Sendbtn">
+            <apex:commandButton action="{!BackToBooking}" value="Go to Opportunity"/>&nbsp;
+            <!--- <apex:commandButton action="{!SaveToBooking}" value="Save to Booking"/> -->
+        </center>
+        
+        
+    </apex:form>
+    <script>
+            var base64String = "{!BlobBody}";
+    
+            const byteCharacters = atob(base64String);
+    
+            const byteNumbers = new Array(byteCharacters.length);
+            for (let i = 0; i < byteCharacters.length; i++) {
+                byteNumbers[i] = byteCharacters.charCodeAt(i);
+            }    
+    
+            const byteArray = new Uint8Array(byteNumbers);
+    
+            const blob = new Blob([byteArray], {type: 'application/pdf'});
+    
+            const blobUrl = URL.createObjectURL(blob);
+    
+            document.getElementById('theFrame').setAttribute('src', blobUrl);
+            
+            document.getElementById('theFrame').height = window.innerHeight - 40;
+        </script>
+</apex:page>

@@ -1,0 +1,207 @@
+<apex:page renderAs="pdf" standardController="Opportunity" extensions="CostSheetController">
+  <head>
+<style type= "text/css">
+@page {
+  size: A4;
+  margin: 0;
+  font-face:Times;
+      font-size:8px;
+      
+}
+
+</style>
+</head>
+<div>
+ <apex:image url="{!$Resource.ologo}" style="float:right;" />
+</div>
+<br/>
+<br/>
+<br/>
+<br/>
+<center >
+    <div class="page" style="font-size:8pt">
+ <table >
+ <tr><td>
+ <table style="border:1px solid black;width:100%;text-align:left;" cellpadding="5">
+ <tr>
+         <td>{!prop.Project_Name__r.Name}, {!prop.Property_Type__r.Name__c}, (<apex:outputText value="{0,number,#,##0}">
+     <apex:param value="{!prop.Carpet_Area__c}"/>
+</apex:outputText> - Carpet area) along with right to park in {!prop.Project_Name__r.Default_Car_Parking__c} Car Park</td>
+         <td>Date: &nbsp;<apex:outputText value="{0,date,dd/MM/yy}"> 
+                      <apex:param value="{!TODAY()}" />
+                      </apex:outputText>
+         </td>
+ </tr>
+ </table>
+ </td>
+ </tr>
+     <tr>
+         <td>
+             <table style="border:1px solid black;width:100%;text-align:left;" cellpadding="5">
+                 <tr><td style="vertical-align:Center;padding:10px;border:1px solid black;" colspan="2" align="center"><b>Flat Details</b></td></tr>
+                 <tr>
+                     <td style="border:1px solid black;">Floor:</td>
+                     <td style="border:1px solid black;">{!prop.Floor__r.Floor_Number__c}</td>
+                 </tr>
+                 <tr>
+                 <td style="border:1px solid black;">Flat No :</td>
+                 <td style="border:1px solid black;">{!prop.House_Unit_No__c}</td>
+                 </tr>
+                 <tr>
+                 <td style="border:1px solid black;">Tower :</td>
+                 <td style="border:1px solid black;">{!prop.Tower__r.Tower_Name__c}</td>
+                 </tr>
+                 <tr>
+                 <td style="border:1px solid black;"><apex:outputLabel value="Sale Price:" for="salesPrice"/></td>
+                                  <td style="border:1px solid black;"><apex:outputField value="{!prop.Total_Sales_Price__c}" id="salesPrice"/></td>
+                 </tr>
+             </table>
+          </td>
+     </tr>
+     <tr>
+         <td>
+              <table style="border:1px solid black;width:100%;text-align:left;" cellpadding="5">
+                 <tr><td style="border:1px solid black;"><b>Payment Schedule</b></td>
+                     <td style="border:1px solid black;"><b>% Payable</b></td>
+                     <td style="border:1px solid black;"><b>Amount on Sale Price (Rs.)</b></td>
+                     <td style="border:1px solid black;"><b>Amount Incl S.Tax (Rs.)</b></td>
+                 </tr>
+                 <apex:repeat id="paySch" value="{!paySchedule}" var="pay">
+                     <tr>
+                         <td style="border:1px solid black;">{!pay.Name}</td>
+                         <td style="border:1px solid black;">{!pay.Percentage_Of_Value_To_Be_Invoiced__c}</td>
+                         <td style="border:1px solid black;">{!pay.Amount__c}</td>
+                         <td style="border:1px solid black;">{!pay.Amount_Incl_S_Tax__c}</td>
+                     </tr>
+                 </apex:repeat>   
+                 <tr>
+                     <td style="border:1px solid black;">Total Cost excluding applicable taxes as on today</td>
+                     <td style="border:1px solid black;"></td>
+                     <td style="border:1px solid black;"></td>
+                     <td style="border:1px solid black;">{!sum}</td>
+                 </tr>    
+                 <tr>
+                     <td style="border:1px solid black;" colspan="4">Cheque to be issued favoring "{!prop.Project_Name__r.Company_name__c}"</td>
+                 </tr>          
+             </table>
+         </td>
+     </tr>
+     <tr>
+         <td style="border:1px solid black;text-align:left;">
+             <p>
+             <b>Kindly Note:</b>  <br/>
+             1. The above mentioned costing is being produced as per your request <br/>
+             2. The said flat offered is subject to availability and Booking will be considered at the prevailing rate at the time of booking. <br/>
+             3. Government taxes would be charged extra as per applicable rates 4.TDS to be deducted @ 1% of the Agreement Value.<br/>
+
+             </p>
+         </td>
+     </tr>
+     <tr>
+         <td>
+             <table style="border:1px solid black;width:100%;text-align:left;" cellpadding="5">
+                 <tr><td style="border:1px solid black;"><b>**Details of Government Taxes (as applicable)</b></td>
+                     <td style="border:1px solid black;"><b>Rate</b></td>
+                     <td style="border:1px solid black;"><b>Amount (Rs.) </b></td>
+
+                 </tr>
+                 <tr>
+                     <td style="border:1px solid black;">Stamp Duty (Approx.)</td>
+                     <td style="border:1px solid black;">20121</td>
+                     <td style="border:1px solid black;">20121</td>
+                 </tr>
+                 <tr>
+                     <td style="border:1px solid black;">Registration </td>
+                     <td style="border:1px solid black;">asdasd</td>
+                     <td style="border:1px solid black;">20121</td>
+                 </tr>
+                 <tr>
+                     <td style="border:1px solid black;">VAT :</td>
+                     <td style="border:1px solid black;">asdasdasd</td>
+                     <td style="border:1px solid black;">20121</td>
+                 </tr>
+                 <tr>
+                 <td style="border:1px solid black;">Service Tax to be paid proportionately with each installment (PLC at 15%, if any)</td>
+                    <td style="border:1px solid black;">asdsad</td>
+                     <td style="border:1px solid black;">asdsad</td>
+
+                 </tr>
+                <tr>
+                 <td style="border:1px solid black;">Service Tax on additional expenses (Approx.) </td>
+                    <td style="border:1px solid black;">asdsad</td>
+                     <td style="border:1px solid black;">asdsad</td>
+
+                 </tr> 
+                 <tr>
+                 <td style="border:1px solid black;"> Cost towards Applicable taxes  </td>
+                    <td style="border:1px solid black;">asdsad</td>
+                     <td style="border:1px solid black;">asdsad</td>
+
+                 </tr>  
+                
+                 
+             </table>
+         
+         </td>
+     </tr>
+    <tr><td>              <div style="page-break-before:always;"/></td></tr>
+      <tr>
+         <td>
+
+          <table style="border:1px solid black;width:100%;text-align:left;" cellpadding="5">
+                 <tr><td colspan="3"><b>Additional Expenses</b></td>
+                    
+
+                 </tr>
+                  <tr><td><b>Particulars</b></td>
+                    <td><b>Amounts </b></td>
+
+                 </tr>
+                 <tr><td style="border:1px solid black;"><b>Municipal Taxes and Outgoings</b></td>
+                     <td style="border:1px solid black;"><b>Rate</b></td>
+
+
+                 </tr>
+                 <tr>
+                     <td style="border:1px solid black;">Share Application Charges </td>
+                     <td style="border:1px solid black;">20121</td>
+
+                 </tr>
+                 <tr>
+                     <td style="border:1px solid black;">Corpus Fund  </td>
+                     <td style="border:1px solid black;">asdasd</td>
+
+                 </tr>
+                 <tr>
+                     <td style="border:1px solid black;">Legal Charges </td>
+                     <td style="border:1px solid black;">asdasdasd</td>
+
+                 </tr>
+                 <tr>
+                 <td style="border:1px solid black;">Society Formation Charges </td>
+                    <td style="border:1px solid black;">asdsad</td>
+
+
+                 </tr>
+                <tr>
+                 <td style="border:1px solid black;">Development Charges  </td>
+                    <td style="border:1px solid black;">asdsad</td>
+
+
+                 </tr> 
+                 <tr>
+                 <td style="border:1px solid black;"> Club House Membership Fees  </td>
+                    <td style="border:1px solid black;">asdsad</td>
+
+
+                 </tr>  
+                
+                 
+             </table>
+         
+         </td>
+     </tr>
+ </table>
+ </div>
+ </center>
+</apex:page>

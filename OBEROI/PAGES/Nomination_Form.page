@@ -1,0 +1,116 @@
+<apex:page controller="NominationController" renderAs="PDF" showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false">
+    <head>
+          <style type="text/css" media="print">
+                @page {
+                
+                
+                
+                size:4in 4in;
+                margin:20mm 20mm 60mm 20mm;
+                
+                }
+                body{
+                margin:0;
+                padding:0;
+                font-family: SansSerif;
+                font-size:18px;
+                line-height:1.5;
+                }
+                @page {
+                size: 8.26in 11.69in;
+                margin:12mm;
+                
+                }
+                
+                table {
+        		page-break-inside: auto;
+      			}
+                
+                tr{
+                page-break-inside: avoid;
+        		page-break-after: auto;
+                }
+                
+                .maintable {
+                border:1px solid black;       
+                border-collapse: collapse;
+                margin:0;
+                
+                }
+                .maintable tr td {
+                
+                border:1px solid black;
+                border-collapse: collapse;
+                }
+              hr.class-1 {
+              margin-bottom:0px;
+            border-top: 10px solid #a52a2a;
+        		}
+              hr.class-2 {
+            	solid #a52a2a;
+        		}
+               
+            </style>  
+        </head>
+    <body>
+        
+        <p style='font-size:12pt;text-align:center;margin-top: 0px;margin-bottom: 0px;font-family:SansSerif;color:#4b4b4b;'><b style ="color:black;">Annexure B</b></p><br/>
+        <p style='font-size:10pt;text-align:center;margin-top: 0px;margin-bottom: 0px;font-family:SansSerif;color:#4b4b4b;'><b style ="color:black;">NOMINATION DETAILS AND ADDRESS CONFIRMATION FORM FOR AGREEMENT REGISTRATION PROCESS</b></p>
+        <hr class="class-2"/>
+        <hr class="class-1"/><br/>
+        
+        <table width = "100%" class="maintable" border="background-color:black;border-collapse: collapse;"> 
+                    
+                    <tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;margin-bottom:4px;color:black;font-weight: bold;width:35%;text-align: left !important; padding:5px;">PROJECT / PREMISES NO. / TOWER</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 13px;color:black;text-align: left !important; padding:5px;">{!bk.Project__r.Name} / _______ / {!bk.Tower__r.Name}</td>
+                    </tr>
+            <apex:repeat value="{!appList}" var="apli" rendered="{!ISNULL(appList) == false && appList.size > 0}">
+            		<tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;color:black;font-weight: bold;width:38%;text-align: left !important; padding:5px;">FULL NAME OF THE APPLICANT</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 13px;color:black;text-align: left !important; padding:5px;">Salutation: {!apli.Salutation__c}&nbsp;&nbsp;Name:{!apli.Name} </td>
+                    </tr>
+                	<tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;margin-top: 0px;color:black;width:40%;height:50;text-align: justify !important; padding:5px;"><b>FULL ADDRESS OF THE APPLICANT</b>
+                            (Applicant to provide permanent address in India only, this address will be incorporated in the Agreement for Sale of Premises (“agreement”) <br/><br/><br/><br/><br/><br/></td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 13px;color:black;text-align: left !important; padding:5px;">Add: ___________________________________________________<br/><br/>
+                        Add: ___________________________________________________<br/><br/>
+                        City: ______________________ State: _______________________<br/><br/>
+                        Pin Code: _____________________<br/><br/>
+                            Email : ________________________________________________<br/><br/>
+                            Phone no:  _____________________   Fax: _____________________<br/><br/>
+                        </td>
+                    </tr>
+            </apex:repeat>
+            		<tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;color:black;font-weight: bold;width:38%;text-align: left !important; padding:5px;">FULL NAME OF THE NOMINEE (Only major)</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 13px;color:black;text-align: left !important; padding:5px;">Salutation: &nbsp;&nbsp;Name: </td>
+                    </tr>
+            		<tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;color:black;font-weight: bold;width:38%;text-align: left !important; padding:5px;">DATE OF BIRTH OF THE NOMINEE</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 13px;color:black;text-align: left !important; padding:5px;">_________/___________/_________ (DD/MM/YYYY) </td>
+                    </tr>
+            		<tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;color:black;font-weight: bold;width:38%;text-align: left !important; padding:5px;">NOMINEES RELATIONSHIP WITH APPLICANT</td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 13px;color:black;text-align: left !important; padding:5px;">__________________________________________________________</td>
+                    </tr>
+            		<tr >
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 10pt;margin-top: 0px;color:black;width:40%;height:50;text-align: justify !important; padding:5px;"><b>FULL ADDRESS OF THE NOMINEE</b><br/><br/><br/><br/><br/><br/></td>
+                        <td style = "font-family:SansSerif;border-collapse: collapse;font-size: 13px;color:black;text-align: left !important; padding:5px;">Add: ___________________________________________________<br/><br/>
+                        Add: ___________________________________________________<br/><br/>
+                        City: ______________________ State: _______________________<br/><br/>
+                        Pin Code: _____________________<br/><br/>
+                		</td>
+            		</tr>
+            
+        </table>
+        <br/>
+        <p style='font-size:11pt;text-align:justify;margin-top: 0px;margin-bottom: 0px;font-family:SansSerif;color:#4b4b4b;'><b style ="color:black;">I/We, hereby confirm that I/ we have read and understood the present form and I/we declare and confirm that all the details provided by me/us hereinabove are true and correct, and the said details should be incorporated in my/our agreement and registration of the agreement should be proceeded with on the basis of the above details.</b></p><br/>
+        <p style='font-size:10pt;text-align:left;margin-top: 0px;margin-bottom: 0px;font-family:SansSerif;color:#4b4b4b;'><b style ="color:black;">Important Note: </b></p>
+        <p style='font-size:10pt;text-align:left;margin-top: 0px;margin-bottom: 0px;font-family:SansSerif;color:#4b4b4b;'><b style ="color:black;">1. Only one person can be nominated and the nominee cannot be a minor or a co-applicant. <br/>
+																																					 2. Original PAN Card of the applicant, co-applicant is mandatory at the time of registration.<br/> 
+																																					 3. A copy of PAN card and nationality proof is required to be submitted. 
+</b></p><br/>
+    </body>
+    
+</apex:page>

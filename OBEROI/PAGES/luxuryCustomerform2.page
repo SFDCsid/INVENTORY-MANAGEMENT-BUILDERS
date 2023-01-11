@@ -1,0 +1,100 @@
+<apex:page docType="html-5.0"  controller="luxuryCustomerCont1" sidebar="false" showHeader="false" applyHtmlTag="false" standardStylesheets="true" >
+    <apex:form id="form1" >
+        <html lang="en">
+            <head>
+                <meta charset="utf-8"/> 
+                <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                <meta http-equiv="X-UA-Compatible" content="ie=edge"   />  
+                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+                <title>ORL</title>
+                <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" />
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+                <style>
+                    html {
+                    scroll-behavior: smooth;
+                    }
+                    body{
+                    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+                    font-size:16px !important;
+                    }
+                    .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+                    max-width: 1000px;
+                    } 
+                    .navbar {
+                    border-bottom:1px solid #927653;
+                    }
+                    .navbar>.container{
+                    justify-content: center;
+                    }
+                   .btn{
+                    background: none !important;
+                    background-image:none !important;
+                    background-color: #937554 !important;
+                    color: #FFF !important;                    
+                    padding: 6px 10px !important;
+                    font-size: 14px;                    
+                    border: 1px solid #88724d !important;
+                    border-radius: 0px !important;
+                    letter-spacing:2px;
+                    font-size:16px !important;
+                    transition:0.5s all;
+                    }
+                    .btn:hover{
+                    background-color: #FFFFFF !important;
+                    color: #937554 !important; 
+                    border: 1px solid #937554 !important;
+                    }   
+                    .Main {
+                    margin: 7% auto;
+                    width: calc(100% - 40%);
+                    background-color: #FFF;
+                    border:2px solid #937554;
+                    color:#937554;
+                    border-radius: 30px 30px;
+                    box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%);
+                    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+                    display: flex;
+                    flex-flow: column;
+                    align-items: center;
+                    }
+                    .Main:hover {
+                    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+                    }
+                    .Text-Center{
+                    font-size: 2.6vw;            
+                    }
+                    .Head-Text{
+                    padding: 10px 0px;
+                    }            
+                    .image{
+                    width:5.6vw;
+                    }  
+                    @media screen and (man-width: 480px) {
+                    .Main {
+                    margin: 7% auto;
+                    width: calc(100% - 10%) !important;
+                    }
+                    }
+                </style>
+                
+            </head>
+            <body style="background-color: #FFF;color:#947753;z-index:-999;">
+                <nav class="navbar justify-content-center p-0">
+                    <div class="container ">
+                        <a class="navbar-brand" href="#">
+                            <apex:image url="{!$Resource.TSWLogo}" alt="TSW-logo" width="240" />
+                        </a>                        
+                    </div>                    
+                </nav> 
+                <div class="container" >
+                    <div class="Main p-3">
+                        <p class="Head-Text Text-Center  ">Submitted Successfully</p>
+                        <apex:image url="{!$Resource.Success}"  styleClass="image" />                        
+                        <p class="Head-Text Text-Center  ">Thank You !</p>
+                        <apex:commandButton id="new_Datasheet" styleClass="btn" value="Submit New Form" action="{!NewDataSheetButton}"/>                        
+                    </div>
+                </div>
+            </body>
+        </html>
+    </apex:form>
+</apex:page>

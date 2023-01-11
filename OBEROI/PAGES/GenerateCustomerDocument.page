@@ -1,0 +1,333 @@
+<apex:page controller="GenerateCustomerDocument" docType="html-5.0" showHeader="false" sidebar="false" standardStylesheets="false" lightningStylesheets="true">
+    <html
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink">
+        <head>
+            <title>Generate Documents </title>
+            <apex:stylesheet value="{!URLFOR($Resource.SLDS090, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+            <script type="text/javascript">__sfdcSessionId = '{!$Api.Session_Id}';</script>
+            <link href="https://fonts.googleapis.com/css?family=Lato:400,700&subset=latin,latin-ext" rel="stylesheet" type="text/css" />
+            <script src="/soap/ajax/9.0/connection.js"></script>
+            <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+            <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+            <!-- <link href="{!$Resource.bootstrap}" rel="stylesheet" type="text/css" media="all" /> 
+<link href="{!$Resource.style}" rel="stylesheet" type="text/css" media="all" /> -->
+        </head>
+        <style>
+            .slds h1, .slds h2, .slds h3, .slds h4, .slds h5, .slds h6, .slds th, .slds td {
+            font-family: 'Lato';
+            }
+            .slds h1, .slds h2, .slds h3, .slds h4, .slds h5, .slds h6, .slds th {
+            text-align: center;
+            }
+            .slds .slds-theme--shade {
+            background-color: aliceblue;
+            }
+            .slds .slds-button {
+            background-color:#191970;
+            line-height: 10px;
+            min-height: 22px;
+            color:white;
+            font-weight:normal;
+            border:1px solid black;
+            padding-left: 5px;
+            padding-right: 5px;
+            }
+            .slds .slds-form-element__label {
+            font-size: 11px;
+            font-weight: bold;
+            }
+            body .bPageBlock .pbBody .pbSubheader {
+            background-color: #A9C1D9;
+            border-color: black;
+            color:white;
+            font-weight:bold;
+            font-size:15px;
+            }
+            
+            .topTable table {
+            font-family: Lato,verdana, arial, sans-serif;
+            font-size: 11px;
+            border-collapse: collapse;
+            empty-cells:show;
+            border:1px solid #E8D5B9;
+            
+            
+            }
+            
+            .topTable  th {
+            background-color:#fff7f8;
+            color:black;
+            font-size: 11px;
+            text-align: center;
+            
+            }
+            
+            .topTable  td {
+            border-collapse: collapse;
+            background-color:aliceblue;
+            border:1px solid #E8E8E8;
+            color:#778899;
+            font-size:11px
+            }
+            .color1 {
+            background-color: #F5F5F5;
+            }
+            .color2 {
+            background-color: #DCDCDC;
+            } 
+            
+            div.fadeMe {
+            opacity:    0.5; 
+            background: #D9E9FF; 
+            width:      100%;
+            height:     100%; 
+            z-index:    1000;
+            top:        0; 
+            left:       0; 
+            position:   fixed; 
+            }
+            
+            .messageTable {
+            font-family: Lato,verdana, arial, sans-serif;
+            font-weight:700;
+            color: #BE2625;
+            width:100%;
+            background-color:#EEB4B4; !important
+            }
+            .slds .slds-icon-action-edit {
+            background-color: #111625;
+            }
+            .ui-accordion {
+            width: 100%;
+            }
+            
+            .ui-accordion .ui-accordion-content {
+            width: 100%;
+            color: #16325c;
+            }
+            .ui-accordion  h4 {
+            background: #fff7f8;
+            color: black;
+            font-family: Lato,verdana, arial, sans-serif;
+            collapsible: true;
+            autoHeight: true;
+            navigation: true;
+            }
+            
+            .ui-accordion .accordion-body p {
+            text-transform: uppercase;
+            font-weight:500;
+            font-family: Lato,verdana, arial, sans-serif;
+            }
+            
+            .hidden {
+            display: none;
+            }
+            
+            .error {
+            padding: 2em 0 1em;
+            min-height: 100%;
+            }
+            
+        </style>
+        <body>
+            <!-- REQUIRED SLDS WRAPPER -->
+            <div class="slds">
+                <!-- PRIMARY CONTENT WRAPPER -->
+                <div class="myapp">
+                    <!-- SEARCH DEMANDS-->
+                    <div aria-labelledby="DSform">
+                        <!-- BOXED AREA -->
+                        <fieldset class="slds-box slds-theme--shade slds-container--large slds-container--center slds-grid--align-spread">
+                            <legend id="dsForm" class="slds-text-heading--medium slds-p-vertical--medium">Generate Documents</legend>
+                            <apex:form id="demandsform">
+                                <apex:actionStatus id="status">
+                                    <apex:facet name="start">
+                                        <div class="fadeMe">
+                                            &nbsp;
+                                        </div>
+                                        <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 15% 50%">
+                                            <div style="display: inline-block; padding: 2px; background-color: #fff; width: 125px;">
+                                                <img src="{!$Resource.spinner}" style="float: left; margin: 0px;" />
+                                                <span style="display: inline-block;">Please Wait...</span>
+                                            </div>
+                                        </div>
+                                    </apex:facet>
+                                </apex:actionStatus>
+                                <apex:outputPanel id="messages" >
+                                    <apex:PageMessages id="pageMsgs" />
+                                </apex:outputPanel>
+                                <apex:actionFunction name="projectchange" action="{!projectchange}" reRender="custId,messages" status="status"/>
+                                <apex:actionFunction name="towerchange" action="{!towerchange}" reRender="custId,messages" status="status"/>
+                                <apex:actionFunction name="documentchange" action="{!documentchange}" reRender="custId,messages" status="status"/> 
+                                <apex:actionFunction name="genrateDoc" action="{!generateDocument}" reRender="custId,messages" status="status"/>
+                                <apex:actionFunction name="getSelectedValue" action="{!onRadioChange}" reRender="messages,custId" status="status"/>
+                                <apex:pageBlock >
+                                    <apex:PageBlockSection title="Project and Documents Details" columns="3" collapsible="false"/>
+                                    <div class="error">
+                                        <div class="container">
+                                            <div align="center" style="font-size:1em;">
+                                                <apex:selectList id="abc" value="{!selectedVal}" size="1"> 
+                                                    <apex:selectOptions value="{!getProjects}" /> 
+                                                    <apex:actionSupport event="onchange">
+                                                        <apex:param name="selectedVal" value="{!getProjects}" assignTo="{!selectedVal}"/> 
+                                                    </apex:actionSupport> 
+                                                </apex:selectList>
+                                                <label></label>
+                                                <apex:selectList id="def" value="{!selectedTower}" size="1"> 
+                                                    <apex:selectOptions value="{!getTowers}" /> 
+                                                    <apex:actionSupport event="onchange">
+                                                        <apex:param name="selectedTower" value="{!getTowers}" assignTo="{!selectedTower}"/>
+                                                    </apex:actionSupport>    
+                                                </apex:selectList>
+                                                <label></label>
+                                                <apex:selectList id="ghi" value="{!selectedDocument}" size="1" onchange="documentchange();"> 
+                                                    <apex:selectOptions value="{!getDocumentNames}" /> 
+                                                    <apex:actionSupport event="onchange">
+                                                        <apex:param name="selectedDocument" value="{!getDocumentNames}" assignTo="{!selectedDocument}"/>
+                                                    </apex:actionSupport>    
+                                                </apex:selectList>
+                                                
+                                            </div>
+                                        </div> 
+                                    </div>    
+                                    <apex:outputPanel id="custId">
+                                        <apex:outputPanel id="batchStatus">
+                                            <apex:pageBlockSection title="Documents are being generated please wait....." rendered="{!batchStatusBool}">
+                                                <center> <h1 style="background-color:#fff7f8;color:#0C0C0B;font-size:15px;"> Status of Document generation is {!batchStatus}</h1> </center>
+                                                <apex:actionPoller interval="5" action="{!checkBatchStatus}" enabled="{!pollerBool}" reRender="custId" status="status"/>
+                                            </apex:pageBlockSection> 
+                                            <apex:pageBlockSection rendered="{!approvedocStatus}">
+                                                <center style="background-color:#fff7f8;color:#0C0C0B;"> <h1 style="background-color:#fff7f8;color:#0C0C0B;font-size:15px;"> Once the document is approved then you can not generate it again. !!!</h1> </center>
+                                            </apex:pageBlockSection> <br/>
+                                            <apex:pageBlockSection rendered="{!isComplete}">
+                                                <center style="background-color:#fff7f8;color:#0C0C0B;"> <h1 style="background-color:#fff7f8;color:#0C0C0B;font-size:15px;"> Documents are generated for selected customers !!!</h1> </center>
+                                            </apex:pageBlockSection> <br/>
+                                        </apex:outputPanel>
+                                        
+                                        <apex:outputPanel id="tableDe">
+                                            <apex:selectRadio onchange="getSelectedValue();" value="{!selectedRadio}" rendered="{!selectedVal != null && selectedTower != null && selectedDocument != null}">
+                                                <apex:selectOption itemLabel="Booking With Tagged Template" itemValue="tagged"/>
+                                                <apex:selectOption itemLabel="Booking Without Tagged Template" itemValue="unTagged"/>           
+                                            </apex:selectRadio>
+                                            <apex:pageBlockSection title="Customers Details" columns="1"  collapsible="false" rendered="{!selectedRadio == 'tagged' && taggedCustomerList <> null && NOT(isError)}">
+                                                <apex:variable var="index" value="{!0}"/>
+                                                <apex:pageBlockTable id="custDetailsTable" value="{!taggedCustomerList}" var="cust" width="100%" styleClass="topTable">
+                                                    <apex:column style="text-align:center;">
+                                                        <apex:facet name="header">
+                                                            <apex:inputCheckbox onclick="selectAllCheckboxes(this,'selectId')">
+                                                                <apex:actionSupport event="onchange" action="{!checkInput}" reRender="selectId"/>
+                                                            </apex:inputCheckbox>
+                                                        </apex:facet>
+                                                        <apex:inputCheckbox id="selectId" value="{!cust.Selected}">
+                                                            <apex:actionSupport event="onchange" action="{!checkInput}" reRender="selectId"/>
+                                                        </apex:inputCheckbox>
+                                                    </apex:column>
+                                                    <apex:column headerValue="Customer Name" style="background-color:aliceblue;text-align:center;"><apex:outputText value="{!cust.applicantName}"/></apex:column>
+                                                    <apex:column headerValue="Unit Name" style="background-color:aliceblue;text-align:center;"><apex:outputField value="{!cust.o.Property__c}"/></apex:column>
+                                                    <apex:column headerValue="Booking Name" style="background-color:aliceblue;text-align:center;"><apex:outputField value="{!cust.o.Booking__c}"/></apex:column>
+                                                    <apex:column headerValue="Customer Email" style="background-color:aliceblue;text-align:center;"><apex:outputText value="{!cust.applicantEmail}"/></apex:column>
+                                                    <apex:column headerValue="Preview" style="background-color:aliceblue;text-align:center;">
+                                                        <apex:outputPanel rendered="{!IF(ProfileName!=null&&ProfileName!='System Administrator',true,false)}">
+                                                            <b>Preview Not Available for your Profile</b>
+                                                        </apex:outputPanel>
+                                                       <apex:outputPanel rendered="{!IF(ProfileName!=null&&ProfileName=='System Administrator',true,false)}">
+                                                        <apex:commandLink value="Click Here" onclick="previewDocument('{!cust.o.Id}','{!selectedDocument}','{!cust.o.Booking__R[0].Acceptance_Form_Template__c}');return false;" rendered="{!selectedDocument == 'Acceptance Form'}"/>
+                                                        <apex:commandLink value="Click Here" onclick="previewDocumentAgree('{!cust.o.Id}','{!selectedDocument}','{!cust.o.Booking__R[0].Agreement_Form_Template__c}');return false;" rendered="{!selectedDocument == 'Agreement Form'}"/>
+                                                        <apex:commandLink value="Click Here" onclick="previewDocument('{!cust.o.Id}','{!selectedDocument}','{!cust.o.Booking__R[0].Allotment_Form_Template__c}');return false;" rendered="{!selectedDocument == 'Allotment Form'}"/>
+                                                        <apex:commandLink value="Click Here" onclick="previewDocument('{!cust.o.Id}','{!selectedDocument}','{!cust.o.Booking__R[0].NRI_Declaration_Template__c}');return false;" rendered="{!selectedDocument == 'NRI Declaration Form'}"/>
+                                                        <apex:commandLink value="Click Here" onclick="previewDocument('{!cust.o.Id}','{!selectedDocument}','{!cust.o.Booking__R[0].Mortgage_Release_Request_Letter__c}');return false;" rendered="{!selectedDocument == 'Mortgage Release Request Letter'}"/>
+                                                        <apex:commandLink value="Click Here" onclick="previewDocument('{!cust.o.Id}','{!selectedDocument}','{!cust.o.Booking__R[0].Agreement_Signing_undertaking__c}');return false;" rendered="{!selectedDocument == 'Agreement signing undertaking'}"/>
+                                                        <apex:commandLink value="Click Here" onclick="previewDocument('{!cust.o.Id}','{!selectedDocument}','{!cust.o.Booking__R[0].Annexure_B_Nomination_Form__c}');return false;" rendered="{!selectedDocument == 'Annexure B - Nomination Form'}"/>
+                                                        <apex:commandLink value="Click Here" onclick="previewDocument('{!cust.o.Id}','{!selectedDocument}','{!cust.o.Booking__R[0].TPA__c}');return false;" rendered="{!selectedDocument == 'TPA'}"/>
+                                                        <apex:commandLink value="Click Here" onclick="previewDocument('{!cust.o.Id}','{!selectedDocument}','{!cust.o.Booking__R[0].Bank_NOC__c}');return false;" rendered="{!selectedDocument == 'Bank NOC'}"/>
+                                                        <apex:commandLink value="Click Here" onclick="previewDocument('{!cust.o.Id}','{!selectedDocument}','{!cust.o.Booking__R[0].Provisional_NOC__c}');return false;" rendered="{!selectedDocument == 'Provisional NOC'}"/>
+                                                        <apex:commandLink value="Click Here" onclick="previewDocument('{!cust.o.Id}','{!selectedDocument}','{!cust.o.Booking__R[0].L_L_NOC__c}');return false;" rendered="{!selectedDocument == 'L&L NOC'}"/>
+                                                        <apex:commandLink value="Click Here" onclick="previewDocument('{!cust.o.Id}','{!selectedDocument}','{!cust.o.Booking__R[0].Car_Park_Allotment_Letter__c}');return false;" rendered="{!selectedDocument == 'Car Park Allotment Letter'}"/>
+                                                        <apex:commandLink value="Click Here" onclick="previewDocument('{!cust.o.Id}','{!selectedDocument}','{!cust.o.Booking__R[0].Possession_Undertaking_Letter__c}');return false;" rendered="{!selectedDocument == 'Possession Undertaking Letter'}"/>
+                                                        <apex:commandLink value="Click Here" onclick="previewDocument('{!cust.o.Id}','{!selectedDocument}','{!cust.o.Booking__R[0].Possession_Letter__c}');return false;" rendered="{!selectedDocument == 'Possession Letter'}"/>
+                                                        <apex:commandLink value="Click Here" onclick="previewDocument('{!cust.o.Id}','{!selectedDocument}','{!cust.o.Booking__R[0].Electricity_Meter_transfer_NOC__c}');return false;" rendered="{!selectedDocument == 'Electricity Meter transfer NOC'}"/>
+                                                        <apex:commandLink value="Click Here" onclick="previewDocument('{!cust.o.Id}','{!selectedDocument}','{!cust.o.Booking__R[0].Rejection_Notice_Pre_Possession__c}');return false;" rendered="{!selectedDocument == 'Rejection Notice - Pre Possession'}"/>
+                                                        <apex:commandLink value="Click Here" onclick="previewDocument('{!cust.o.Id}','{!selectedDocument}','{!cust.o.Booking__R[0].Rejection_Notice_Post_Possession__c}');return false;" rendered="{!selectedDocument == 'Rejection Notice - Post Possession'}"/>
+                                                        <apex:commandLink value="Click Here" onclick="previewDocument('{!cust.o.Id}','{!selectedDocument}','{!cust.o.Booking__R[0].ROFR_NOC_Loan_case__c}');return false;" rendered="{!selectedDocument == 'ROFR NOC Loan case'}"/>
+                                                        <apex:commandLink value="Click Here" onclick="previewDocument('{!cust.o.Id}','{!selectedDocument}','{!cust.o.Booking__R[0].Agreement_Request_Template__c}');return false;" rendered="{!selectedDocument == 'Agreement Generation Request'}"/>
+
+                                                       </apex:outputPanel>
+                                                    </apex:column>
+                                                    
+                                                    <apex:outputPanel >
+                                                        <apex:facet name="footer">Showing Page # {!pageNumber} of {!totalPages}</apex:facet>
+                                                    </apex:outputPanel>
+                                                </apex:pageBlockTable> 
+                                            </apex:pageBlockSection> 
+                                            <apex:outputPanel rendered="{!selectedRadio == 'tagged' && taggedCustomerList <> null && NOT(isError)}">
+                                                <apex:commandButton styleClass="slds-button slds-button--brand slds-button--small" action="{!Beginning}" title="Beginning" value="<<" disabled="{!disablePrevious}" reRender="tableDe" status="status" rendered="{!customerList != null && customerList.size > 0}"/>
+                                                <apex:commandButton styleClass="slds-button slds-button--brand slds-button--small" action="{!Previous}" title="Previous" value="<" disabled="{!disablePrevious}" reRender="tableDe" status="status" rendered="{!customerList != null && customerList.size > 0}"/>        
+                                                <apex:commandButton styleClass="slds-button slds-button--brand slds-button--small" action="{!Next}" title="Next" value=">" disabled="{!disableNext}" reRender="tableDe" status="status" rendered="{!customerList != null && customerList.size > 0}"/>
+                                                <apex:commandButton styleClass="slds-button slds-button--brand slds-button--small" action="{!End}" title="End" value=">>" disabled="{!disableNext}" reRender="tableDe" status="status" rendered="{!customerList != null && customerList.size > 0}"/>
+                                                <br/> <br/>
+                                                <center>
+                                                    <apex:commandButton styleClass="slds-button slds-button--brand slds-button--small" style="font-size:11px;" value="Generate Document" status="status" onclick="genrateDoc();return false;" rendered="{!customerList != null && customerList.size > 0}"/>
+                                                </center>  
+                                            </apex:outputPanel>
+                                            <!------------------------------- Below panel shows the untagged booking list on UI ----------------------------------------->
+                                            <apex:pageBlockSection title="Customers Details" columns="1"  collapsible="false" rendered="{!selectedRadio == 'unTagged' && unTaggedCustomerList <> null && NOT(isError)}">
+                                                <apex:variable var="index" value="{!0}"/>
+                                                <apex:pageBlockTable id="custDetailsTable" value="{!unTaggedCustomerList}" var="cust" width="100%" styleClass="topTable">
+                                                    <!-- <apex:column style="text-align:center;">
+<apex:facet name="header">
+<apex:inputCheckbox onclick="selectAllCheckboxes(this,'selectId')">
+<apex:actionSupport event="onchange" action="{!checkInput}" reRender="selectId"/>
+</apex:inputCheckbox>
+</apex:facet>
+<apex:inputCheckbox id="selectId" value="{!cust.Selected}">
+<apex:actionSupport event="onchange" action="{!checkInput}" reRender="selectId"/>
+</apex:inputCheckbox>
+</apex:column> -->
+                                                    <apex:column headerValue="Customer Name" style="background-color:aliceblue;text-align:center;"><apex:outputText value="{!cust.applicantName}"/></apex:column>
+                                                    <apex:column headerValue="Unit Name" style="background-color:aliceblue;text-align:center;"><apex:outputField value="{!cust.o.Property__c}"/></apex:column>
+                                                    <apex:column headerValue="Booking Name" style="background-color:aliceblue;text-align:center;"><apex:outputField value="{!cust.o.Booking__c}"/></apex:column>
+                                                    <apex:column headerValue="Customer Email" style="background-color:aliceblue;text-align:center;"><apex:outputText value="{!cust.applicantEmail}"/></apex:column>
+                                                    <!-- <apex:column headerValue="Preview" style="background-color:aliceblue;text-align:center;">
+<apex:commandLink value="Click Here" onclick="previewDocument('{!cust.o.Id}','{!selectedDocument}');return false;"/>
+</apex:column> -->
+                                                    
+                                                    <apex:outputPanel >
+                                                        <apex:facet name="footer">Showing Page # {!pageNumber} of {!totalPages}</apex:facet>
+                                                    </apex:outputPanel>
+                                                </apex:pageBlockTable> 
+                                            </apex:pageBlockSection> 
+                                        </apex:outputPanel>
+                                    </apex:outputPanel>
+                                </apex:pageBlock>   
+                            </apex:form>
+                        </fieldset>
+                    </div>
+                </div>                
+            </div> 
+        </body>
+        
+        
+        <script>
+        function selectAllCheckboxes(obj,receivedInputID){
+            // alert('hhhhiiiii');
+            //  alert('obj:' + obj.id);
+            var inputCheckBox = document.getElementsByTagName("input");                  
+            for(var i=0; i<inputCheckBox.length; i++){          
+                if(inputCheckBox[i].id.indexOf(receivedInputID)!=-1){                                     
+                    inputCheckBox[i].checked = obj.checked;
+                }
+            }
+        }
+        function previewDocument(oppId,docType,docName){
+            window.open('/apex/View_Document?oppId='+ oppId + '&docType='+docType + '&docName='+docName ,'_blank');
+        }
+        function previewDocumentAgree(oppId,docType,docName){
+            window.open('/apex/View_Document_Schedule11?oppId='+ oppId + '&docType='+docType + '&docName='+docName ,'_blank');
+        }
+        </script>       
+        
+    </html>
+</apex:page>

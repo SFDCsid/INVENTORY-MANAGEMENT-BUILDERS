@@ -1,0 +1,1444 @@
+<apex:page standardcontroller="Lead" showHeader="false" standardStylesheets="false" docType="html-5.0" id="thepage">
+    
+    <html lang="en">
+        <head>
+            <meta charset="utf-8"/>
+            <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+            <title></title>
+            <meta name="keywords" content=""/>
+            <meta name="description" content=""/>
+            <apex:stylesheet value="{!$Resource.IntellCSS}"/>
+            <!-- [if  IE ]>
+<script src="http://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="http://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+[endif]  -->
+            <apex:includescript value="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"/>
+            <apex:includescript value="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"/>
+            
+            <style type="text/css">
+                
+                body{font-family:Verdana, Arial, Helvetica, sans-serif;font-size:14px;line-height:18px;color:#7c7c7c;}
+                .col-4{width:33.33333333333333%;}
+                .col-5{width:41.66666666666667%;}
+                .col-6{width:50%;}
+                .col-3, .col-4, .col-5, .col-6{float:left;}
+                .container
+                {
+                max-width: 1200px;
+                padding: 0 5px;
+                width: 96%;
+                margin: auto
+                }
+                .FieldTitle{color: #000; padding: 10px; font-weight: bold; margin-bottom: 15px;
+                text-align: center;
+                color: #000;
+                font-size: 17px;
+                font-weight: bold;
+                margin-bottom: 15px;
+                }
+                body{
+                font-size: 16px;
+                }   
+                td {
+                padding-top: 5px;
+                padding-bottom: 25px;
+                position: relative;
+                }
+                input[type='text']{
+                width: 95%;
+                }
+                input[type='text'],select {
+                display: block;
+                width: 100%;
+                height: 28px;
+                line-height: 1.42857143;
+                background-color: #ffffff;
+                background-image: none;
+                border: 1px solid #cccccc;
+                border-radius: 4px;
+                -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+                box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+                -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+                transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+                padding: 1px 0px;
+                }   
+                .btn{
+                background-color: #ec6810 !important;
+                color: #fff !important;
+                padding: 7px 25px;
+                font-size: 16px;
+                border:0px;
+                cursor: pointer;
+                }
+                label.error {
+                color: #f00;
+                position: absolute;
+                bottom: 10px;
+                left: 0;
+                line-height: 14px;
+                font-size: 12px;
+                }
+                
+                table td:first-child{
+                width: 25%;
+                padding-left: 0px;
+                }
+                table td:last-child{
+                width: 75%;
+                }
+                .subCatExCustomer, .subCatNewCustomer,.categoryOther,.subCatProCons,.sub_categoryOther,.subCatBanker{
+                display: none;
+                }
+                input[type='text'], select{
+                margin-top: 7px;
+                }
+                .showDetails{
+                display: none;
+                }
+                input[type="radio"]{
+                margin: 0px;
+                margin-right: 5px;
+                vertical-align: middle;
+                margin-top: -4px;
+                }
+                .radioBtn td{
+                padding-top: 0px;
+                padding-bottom: 5px;
+                }
+                .IPadShowBr{display: none;}
+                @media (max-width:1024px){
+                .IPadShowBr{display: block;}
+                }
+                .sub_categoryOther input{
+                width: 99%;
+                }
+                
+                .iti-flag {
+                
+                background-image: url({!$Resource.images});
+                
+                }
+                
+                body{font-family:Verdana, Arial, Helvetica, sans-serif;font-size:14px;color:#7c7c7c;line-height:18px}
+                
+                .col-4{width:33.33333333333333%;}
+                .col-5{width:41.66666666666667%;}
+                .col-6{width:50%;}
+                .col-3, .col-4, .col-5, .col-6{float:left;}
+                .container
+                {
+                max-width: 1200px;
+                padding: 0 5px;
+                width: 96%;
+                margin: auto
+                }
+                .formTitle{text-align: center; color: #000; font-size: 17px; font-weight: bold; margin-bottom: 15px;}
+                .FieldTitle{ color: #000;  font-weight: bold; margin-bottom: 15px;}
+                .red{color: #a94442;}
+                
+                .btn {
+                background-color: #ec6810 !important;
+                color: #fff !important;
+                padding: 7px 25px;
+                font-size: 16px;
+                border: 0px;
+                cursor: pointer;
+                }
+                
+                #nameFieldPlus,.nameFieldMinus{
+                cursor: pointer;
+                }
+                .nameFiledPlusIcon{
+                font-size: 24px;
+                border: 1px solid #999;
+                color: #000;
+                display: inline-block;
+                border-radius: 50px;
+                vertical-align: middle;
+                width: 20px;
+                height: 20px;
+                text-align: center;
+                }
+                
+                label.error {
+                color: #f00;
+                position: absolute;
+                top: 75%;
+                left: 10px;
+                line-height: 14px;
+                font-size: 12px;
+                }
+                td {
+                padding-top: 5px;
+                padding-bottom: 25px;
+                position: relative;
+                padding-left: 10px;
+                padding-right: 10px;
+                }
+                input[type='text']{
+                width: 100%;
+                }
+                input[type='text'],select {
+                display: block;
+                width: 100%;
+                height: 28px;
+                line-height: 1.42857143;
+                background-color: #ffffff;
+                background-image: none;
+                border: 1px solid #cccccc;
+                border-radius: 4px;
+                -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+                box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+                -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+                transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+                padding: 1px 0px;
+                }
+                input[type='text'], select{
+                margin-top: 7px;
+                }
+                .otherIndustry{
+                display: none;
+                }
+                .contactPersonDetail{
+                display: none;
+                }   
+                .eliteClubMember,.propertyConsultant,.otherOccupation{
+                display: none;
+                }
+                input[type="radio"]{
+                margin-right: 5px;
+                vertical-align: middle;
+                margin-top: -4px;
+                }
+                
+                @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+                .iti-flag {
+                background-image: url({!$Resource.images});
+                }
+                }
+            </style>
+            
+        </head>
+        
+        <body>
+            <div class="container">
+                <table style="border-radius: 10px; padding: 20px 15px;  font-size: 14px;width: 100%;">
+                    <tr>
+                        <td align="right" colspan="2">
+                            <!--<img src="http://oberoirealty.com/images/oberoi_logo.png"> -->
+                            <apex:image url="http://oberoirealty.com/images/oberoi_logo.png"/>
+                        </td>
+                    </tr>
+                </table>
+                <div class="form1">
+                    <!--<form accept-charset='UTF-8' action='/site/customer_contact' id='customerFeedback' method='post' novalidate='novalidate'> -->
+                    <apex:form id="frm">
+                        
+                        <input type="hidden" name="customer_feedback[id]" value=""/>
+                        <table style="border-radius: 10px; padding: 20px 15px; font-size: 14px;width: 100%;">
+                            <th class="formTitle" colspan="4"><b>EXPRESSION OF INTEREST</b></th>
+                            <!-- <div id='form_fields'> -->
+                            
+                            <tr>
+                                <td colspan="4">
+                                    <!--<div class="FieldTitle"><br/><br/>CUSTOMER DETAILS</div> -->
+                                    <br/><br/>
+                                    <b> CUSTOMER DETAILS  </b>
+                                </td>
+                            </tr>
+                            
+                            
+                            <tr>
+                                <td style="width:10%;">
+                                    <span class="red">*</span>Project of Interest:                          
+                                </td>
+                                <td style="width:20%;"  valign="top">
+                                    <!--<apex:inputtext value="{!ProjectName}" id="prjIntrst" disabled="true"/> -->
+                                    <!-- <input type='text' class='required' id='project_of_interest'  value="" name='customer_feedback[project]'/> -->
+                                    <apex:inputField value="{!Lead.Project_List__c}" />
+                                </td>
+                                
+                                <!-- <td style="width:10%;" align="right">
+<span class="red">*</span>Lead ID:
+</td>
+<td style="width:20%;"  valign="top">
+<input type='text' class='required' id='leadId' name='customer_feedback[lead_id]' value=""/>
+</td>  -->
+                                
+                            </tr>
+                            <!-- <tr>
+<td colspan="1" >
+<span class="red">*</span>Date of Lead Creation:                        
+</td> 
+<td colspan="3" >                           
+<apex:outputText value="{0,date,dd/MM/yyyy HH:mm:ss}">
+<apex:param value="{!NOW()}"/>
+</apex:outputText>                
+</td>
+</tr> -->
+                            <tr>
+                                <td>
+                                    <span class="red">*</span>Budget ₹:
+                                </td>
+                                <td colspan="3">
+                                    <div class="radioWrap">
+                                        <apex:selectRadio value="{!Lead.Budget__c}" required="true"  legendInvisible="false">
+                                            
+                                            <apex:selectOption itemLabel="1.5cr - 2.5cr" itemValue="1.5 cr - 2.5 cr"   ></apex:selectOption>
+                                            <apex:selectOption itemLabel="2.5cr - 3.5cr" itemValue="2.5 cr - 3.5 cr"></apex:selectOption>
+                                            <apex:selectOption itemLabel="3.5cr - 4.5cr" itemValue="3.5 cr - 4.5 cr"></apex:selectOption>
+                                        </apex:selectRadio>
+                                        <apex:selectRadio value="{!Lead.Budget__c}" required="true"  legendInvisible="false">
+                                            <apex:selectOption itemLabel="4.5cr - 6cr" itemValue="4.5 cr - 6 cr"></apex:selectOption>
+                                            <apex:selectOption itemLabel="6cr - 8cr" itemValue="6 cr - 8 cr"></apex:selectOption>
+                                            <apex:selectOption itemLabel="Above 8cr" itemValue="Above 8 cr"></apex:selectOption> 
+                                            
+                                        </apex:selectRadio>
+                                    </div> 
+                                    <!--  <apex:selectRadio value="{!Lead.Budget__c}">
+
+<div class="radioWrap">
+<div class="col-4"><selectOption type="radio" name="customer_feedback[budget]" value="1.5 cr - 2.5 cr" class='required'/> 1.5 cr - 2.5 cr</div>                     
+<div class="col-4"><selectOption type="radio" name="customer_feedback[budget]" value="2.5 cr - 3.5 cr" class='required'/> 2.5 cr - 3.5 cr</div>    
+<div class="col-4"><selectOption type="radio" name="customer_feedback[budget]" value="3.5 cr - 4.5 cr" class='required'/> 3.5 cr - 4.5 cr</div>    
+<div class="col-4"><selectOption type="radio" name="customer_feedback[budget]" value="4.5 cr - 6 cr" class='required'/> 4.5 cr - 6 cr</div>    
+<div class="col-4"><selectOption type="radio" name="customer_feedback[budget]" value="6 cr - 8 cr" class='required'/> 6 cr - 8 cr</div>
+<div class="col-4"><selectOption type="radio" name="customer_feedback[budget]" value="Above 8 cr" class='required'/> Above 8 cr</div>
+</div>
+</apex:selectRadio> -->
+                                </td>
+                            </tr>
+                            
+                            <!--  <tr>
+<td colspan="1">
+<span class="red">*</span>Requirement:
+</td>
+<td colspan="3">
+<apex:selectRadio value="{!Lead.Requirement__c}">
+<div class="radioWrap">
+<div class="col-4"><selectOption type="checkbox" name="customer_feedback[requirement][]" value="2 BHK" class='FeedbackRequired' /> 2 BHK</div>
+<div class="col-4"><selectOption type="checkbox" name="customer_feedback[requirement][]" value="2.5 BHK" class='FeedbackRequired'/> 2.5 BHK</div>
+<div class="col-4"><selectOption type="checkbox" name="customer_feedback[requirement][]" value="3 BHK" class='FeedbackRequired'/> 3 BHK</div>
+<div class="col-4"><selectOption type="checkbox" name="customer_feedback[requirement][]" value="4 BHK" class='FeedbackRequired'/> 4 BHK</div>
+<div class="col-4"><selectOption type="checkbox" name="customer_feedback[requirement][]" value="5 BHK" class='FeedbackRequired'/> 5 BHK</div>
+<div class="col-4"><selectOption type="checkbox" name="customer_feedback[requirement][]" value="Duplex" class='FeedbackRequired'/> Duplex</div>
+<div class="col-4"><selectOption type="checkbox" name="customer_feedback[requirement][]" value="Penthouse" class='FeedbackRequired'/> Penthouse</div>
+</div> 
+</apex:selectRadio>
+<apex:selectCheckboxes value="{!sctPrtylst}" >
+<apex:selectOptions value="{!prtTypelst}"></apex:selectOptions>
+</apex:selectCheckboxes>  
+
+</td>
+
+</tr> -->
+                            <tr>
+                                <td colspan="1" >
+                                    Carpet Area(in sq. ft.):
+                                    <!--   </td>
+<td colspan="3">
+<apex:selectRadio value="{!Lead.Carpet_Area__c}">
+<div class="radioWrap">
+<div class="col-4"><selectOption type="checkbox" name="customer_feedback[carpet_area][]" value="Below 800" class='FeedbackCarpet'/> Below  800</div>
+<div class="col-4"><selectOption type="checkbox" name="customer_feedback[carpet_area][]" value="801–1200" class='FeedbackCarpet'/> 801–1200</div>
+<div class="col-4"><selectOption type="checkbox" name="customer_feedback[carpet_area][]" value="1201–1600" class='FeedbackCarpet'/> 1201–1600</div>
+<div class="col-4"><selectOption type="checkbox" name="customer_feedback[carpet_area][]" value="1601-2200" class='FeedbackCarpet'/> 1601 - 2200</div>
+<div class="col-4"><selectOption type="checkbox" name="customer_feedback[carpet_area][]" value="2201 & Above" class='FeedbackCarpet'/> 2201 &amp; Above</div>
+</div>  
+</apex:selectRadio>-->
+                                </td>
+                                
+                            </tr>
+                            <tr>
+                                <td colspan="1" >
+                                    <span class="red">*</span>How Did You Hear About Us:
+                                    
+                                    
+                                </td>
+                                <td colspan="3">
+                                    <!--  <apex:selectRadio value="{!Lead.How_did_you_hear_about_us__c}">
+<div class="radioWrap">
+<div class="col-4"><selectOption type="radio" name="customer_feedback[about_oberoi]" value="Print Media" class='required'/> Print Media</div>
+<div class="col-4"><selectOption type="radio" name="customer_feedback[about_oberoi]" value="Website" class='required'/> Print Media</div>
+<div class="col-4"><selectOption type="radio" name="customer_feedback[about_oberoi]" value="Digital" class='required'/> Digital</div>
+<div class="col-4"><selectOption type="radio" name="customer_feedback[about_oberoi]" value="Hoardings" class='required'/> Hoardings</div>
+<div class="col-4"><selectOption type="radio" name="customer_feedback[about_oberoi]" value="Friends & Relatives" class='required'/> Friends &amp; Relatives</div>
+<div class="col-4"><selectOption type="radio" name="customer_feedback[about_oberoi]" value="Property Consultant" class='required'/> Property Consultant</div>
+
+<div class="col-4"><selectOption type="radio" name="customer_feedback[about_oberoi]" value="Direct Walk-In" class='required'/> Direct Walk-In</div>
+</div>
+</apex:selectRadio>-->
+                                    
+                                    <apex:selectRadio value="{!Lead.How_did_you_hear_about_us__c}">
+                                        <apex:selectOption itemLabel="Newspaper" itemValue="Newspaper" ></apex:selectOption>
+                                        <apex:selectOption itemLabel="Website" itemValue="Website"></apex:selectOption>
+                                        <apex:selectOption itemLabel="Hoardings" itemValue="Hoardings"></apex:selectOption><br/>
+                                        <apex:selectOption itemLabel="Friend & Relative" itemValue="Friend & Relative"></apex:selectOption>
+                                        <apex:selectOption itemLabel="Property Consultant" itemValue="Property Consultant"></apex:selectOption>
+                                        <apex:selectOption itemLabel="Elite Member" itemValue="Elite Member"></apex:selectOption>
+                                        <apex:selectOption itemLabel="Walk-In" itemValue="Walk-In"></apex:selectOption>
+                                    </apex:selectRadio>  
+                                    
+                                </td>
+                                
+                            </tr>
+                            <tr>
+                                <td colspan="1">
+                                    <span class="red">*</span>How Soon Do You Want To Buy:
+                                </td>
+                                <td colspan="3">
+                                    <!--    <apex:selectRadio value="{!Lead.How_Soon_Do_You_Want_To_Buy__c}">
+<div class="radioWrap">
+<div class="col-4"><selectOption type="radio" name="customer_feedback[time_limit][]" value="immediately" class='required'/> Immediately</div>
+<div class="col-4"><selectOption type="radio" name="customer_feedback[time_limit][]" value="3-6 months" class='required'/> 3-6 Month</div>
+<div class="col-4"><selectOption type="radio" name="customer_feedback[time_limit][]" value="> 6 Months" class='required'/> > 6 Months</div>
+</div>
+</apex:selectRadio> -->
+                                    <apex:selectRadio value="{!Lead.How_Soon_Do_You_Want_To_Buy__c}">
+                                        <apex:selectOption itemLabel="Immediately" itemValue="Immediately" ></apex:selectOption>
+                                        <apex:selectOption itemLabel="3-6 Month" itemValue="3-6 Month"></apex:selectOption>
+                                        <apex:selectOption itemLabel="6 Months" itemValue="6 Months"></apex:selectOption><br/>
+                                        
+                                    </apex:selectRadio>  
+                                    
+                                </td>
+                                
+                            </tr>
+                            <tr>
+                                <td colspan="1" >
+                                    <span class="red">*</span>Purpose of Buying:
+                                </td>
+                                <td colspan="3">
+                                    <!--  <apex:selectRadio value="{!Lead.Purpose_of_Buying__c}">
+<div class="radioWrap">
+<div class="col-4"><selectOption type="radio" name="customer_feedback[purpose]" value="End Use" class='required'/> End Use</div>
+<div class="col-4"><selectOption type="radio" name="customer_feedback[purpose]" value="Investment" class='required'/> Investment</div>
+<div class="col-4"><selectOption type="radio" name="customer_feedback[purpose]" value="Second Home" class='required'/> Second Home</div>
+</div>
+</apex:selectRadio>-->
+                                    <apex:selectRadio value="{!Lead.Purpose_of_Buying__c}">
+                                        <apex:selectOption itemLabel="End User" itemValue="End User" ></apex:selectOption>
+                                        <apex:selectOption itemLabel="Investor" itemValue="Investor"></apex:selectOption>
+                                        <apex:selectOption itemLabel="Second Home" itemValue="Second Home"></apex:selectOption><br/>
+                                        
+                                    </apex:selectRadio> 
+                                    
+                                </td>
+                                
+                            </tr>
+                            <tr>
+                                <td colspan="1" >
+                                    <span class="red">*</span>Decision Making Factors<br/><span class="red" style="color: #fff;">*</span>
+                                </td>
+                                <td colspan="3">
+                                    <!--    <apex:selectRadio value="{!Lead.Decision_Making_Factors__c}">
+<div class="radioWrap">
+<div class="col-4"><apex:selectOption type="checkbox" name="customer_feedback[opinion][]" value="Brand" class='OptionRequired'/> Brand</div>
+<div class="col-4"><apex:selectOption type="checkbox" name="customer_feedback[opinion][]" value="Location" class='OptionRequired'/> Location</div>
+<div class="col-4"><apex:selectOption type="checkbox" name="customer_feedback[opinion][]" value="Accessibility" class='OptionRequired'/> Accessibility</div>
+<div class="col-4"><apex:selectOption type="checkbox" name="customer_feedback[opinion][]" value="Ambience" class='OptionRequired'/> Ambience</div>
+<div class="col-4"><apex:selectOption type="checkbox" name="customer_feedback[opinion][]" value="Amenities" class='OptionRequired'/> Amenities</div>
+<div class="col-4"><apex:selectOption type="checkbox" name="customer_feedback[opinion][]" value="Comfort" class='OptionRequired'/> Comfort</div>
+<div class="col-4"><apex:selectOption type="checkbox" name="customer_feedback[opinion][]" value="Price" class='OptionRequired'/> Price</div>
+</div>
+</apex:selectRadio> -->
+                                    <apex:selectCheckboxes value="{!Lead.Decision_Making_Factors__c}" >
+                                        
+                                        <apex:selectOption itemLabel="Brand" itemValue="Brand"></apex:selectOption>
+                                        <apex:selectOption itemLabel="Location" itemValue="Location"></apex:selectOption>
+                                        <apex:selectOption itemLabel="Accessibility" itemValue="Accessibility"></apex:selectOption>
+                                        <apex:selectOption itemLabel="Ambience" itemValue="Ambience"></apex:selectOption>
+                                        <apex:selectOption itemLabel="Amenities" itemValue="Amenities"></apex:selectOption>
+                                        <apex:selectOption itemLabel="Comfort" itemValue="Comfort"></apex:selectOption>
+                                        <apex:selectOption itemLabel="Price" itemValue="Price"></apex:selectOption>
+                                    </apex:selectCheckboxes> 
+                                    
+                                    
+                                </td>
+                                
+                            </tr>
+                            <tr>
+                                <td colspan="">
+                                    <span class="red">*</span>Possession Timeliness:
+                                </td>
+                                <td colspan="3">
+                                    
+                                    <div class="radioWrap">
+                                        <div class="col-4"><input type="radio" name="customer_feedback[timeliness][]" value="Ready Possession" class='required'/> Ready Possession</div>
+                                        <div class="col-4"><input type="radio" name="customer_feedback[timeliness][]" value="within a year" class='required'/> within a year</div>
+                                        <div class="col-4"><input type="radio" name="customer_feedback[timeliness][]" value="2 to 3 years" class='required'/> 2 to 3 years</div>
+                                        <div class="col-4"><input type="radio" name="customer_feedback[timeliness][]" value="above 3 years" class='required'/> above 3 years</div>
+                                    </div>
+                                    
+                                </td>
+                                
+                            </tr> 
+                            <!--    <tr>
+<td colspan="">
+<span class="red">*</span>Possession Timeline:
+</td>
+<td colspan="3">
+<div class="radioWrap">
+<div class="col-4"><apex:selectOption type="checkbox" name="customer_feedback[timeliness][]" value="Ready Possession" class='feedbackReady'/> Ready Possession</div>
+<div class="col-4"><apex:selectOption type="checkbox" name="customer_feedback[timeliness][]" value="within a year" class='feedbackReady'/> Within a year</div>
+<div class="col-4"><apex:selectOption type="checkbox" name="customer_feedback[timeliness][]" value="2 to 3 years" class='feedbackReady'/> 2 to 3 years</div>
+<div class="col-4"><apex:selectOption type="checkbox" name="customer_feedback[timeliness][]" value="above 3 years" class='feedbackReady'/> Above 3 years</div>
+</div>  
+</td>
+
+</tr>-->
+                            
+                            <tr>
+                                <td colspan="1" valign="top">
+                                    <span class="red">*</span>Name:
+                                </td>
+                                
+                                <td colspan="3">
+                                    <apex:pageBlock id="blc"> 
+                                        <!--  <apex:pageBlockSection columns="1" id="sect"> -->
+                                        <table width="100%" cellpadding="5" >
+                                            
+                                            <!--   <tr>
+
+<td style="float:left;width:40%"><span class="red">*</span>First Name</td>
+
+<td style="float:middle;width:30%">Middle Name</td>
+<td style="width:30%"><span class="red">*</span>Last Name</td>                
+
+</tr> -->
+                                            
+                                            <tr id="nameFieldAdd">
+                                                <td style="padding-left:0;width:37%;"><span class="red">*</span>First Name</td>
+                                                <td style="width:32%;"><!--<input type='text' id='' name='customer_feedback[middle_name]' value=""/>--> Middle Name</td>
+                                                <td style="width:32%;"><!--<input type='text' id='name_3' name='customer_feedback[last_name]'  value=""/>--><span class="red">*</span>Last Name</td>                
+                                                
+                                            </tr>
+                                            
+                                            <apex:repeat value="{!lead.Name}" var="abc">
+                                                <tr id="nameFieldAdd">
+                                                    
+                                                    <td style="padding-left:0;width:37%;">
+                                                        <apex:inputField value="{!Lead.Salutation}" style="float:left;width:30%;"/>
+                                                        <apex:inputField value="{!Lead.FirstName}" style="float:left;width:58%" /> 
+                                                        <!-- <input type='text' class='required' id='' name='customer_feedback[first_name]' value="" style="float:left;width:70%" /> --></td>
+                                                    <td style="width:32%;"><!--<input type='text' id='' name='customer_feedback[middle_name]' value=""/>--> <apex:inputText value="{!Lead.MiddleName}" style="width:70%;" maxlength="70"/></td>
+                                                    <td style="width:32%;"><!--<input type='text' id='name_3' name='customer_feedback[last_name]'  value=""/>--> <apex:inputText value="{!Lead.LastName}" style="width:70%;" maxlength="70"/>
+                                                        
+                                                    </td>                
+                                                    
+                                                    
+                                                    
+                                                </tr>
+                                                <!-- <tr id="nameFieldAdd">
+
+<td style="padding-left:0;width:37%;">
+
+</td>
+<td style="width:32%;"></td>
+<td style="width:32%;">
+<apex:commandLink value="Del" action="{!doRem}" reRender="blc">
+<apex:param value="{!abc.count}" assignTo="{!prmVal}" name=""/>
+</apex:commandLink>
+</td>                
+
+</tr> -->
+                                                
+                                                
+                                            </apex:repeat>
+                                            
+                                            
+                                            
+                                        </table>
+                                        <!-- </apex:pageBlockSection> -->
+                                    </apex:pageBlock>
+                                </td>
+                            </tr>
+                            
+                            
+                            <tr>
+                                <td >
+                                    Nationality:
+                                </td>
+                                <td style="width:25%;">
+                                    <!--<input type='text' class='' id='nationality' name='customer_feedback[nationality]' /> -->
+                                    <apex:inputField value="{!Lead.Nationality__c}"/>
+                                </td>
+                                <td style="width:20%;" align="right">
+                                    <span class="red">*</span>Resident Status:
+                                </td>
+                                <td style="width:30%;">
+                                    <!-- <div>
+<apex:selectRadio value="{!Lead.Resident_Status__c}">
+<selectOption type="radio" name="customer_feedback[resident_status]" value="Indian" class="required"/> Indian<br/>
+<apex:selectOption type="radio" name="customer_feedback[resident_status]" value="NRI" class="required"/> NRI
+</apex:selectRadio>
+</div>-->
+                                    <apex:selectRadio value="{!Lead.Resident_Status__c}">
+                                        <apex:selectOption itemLabel="Indian" itemValue="Indian" ></apex:selectOption>
+                                        <apex:selectOption itemLabel="NRI" itemValue="NRI"></apex:selectOption>
+                                    </apex:selectRadio> 
+                                </td>
+                                
+                            </tr>
+                            <!--  <tr><td colspan="4">Residential Address:</td></tr>
+<tr>
+<td style="width:25%;">
+
+</td>
+<td style="width:25%;">
+<!--<input type='text' class='' id='house_number' name='customer_feedback[residence_address_1]' /> -->
+                            <!--    House No.<br/>
+<apex:inputField value="{!conObj.House_No__c}"/>
+</td>
+<td style="width:25%;" align="right">
+
+</td>
+<td style="width:25%;">
+<input type='text' class='' id='street_1' name='customer_feedback[street_1]' /> 
+Street 1.<br/>
+<apex:inputfield value="{!conObj.Street3__c}"/>
+</td>
+
+</tr>
+<tr>
+<td colspan="1" >
+
+</td>
+<td colspan="3" >
+<input type='text' class='' id='street_2' name='customer_feedback[street_2]' /> 
+Street 2.<br/>
+<apex:inputfield value="{!conObj.Street_2__c}"/>
+</td>
+
+</tr>
+<tr>
+<td style="width:25%;">
+
+</td>
+<td style="width:25%;">
+<!--<input type='text' class='' id='street_3' name='customer_feedback[street_3]' /> 
+Street 3.<br/>
+<apex:inputfield value="{!conObj.Street3_other__c}"/>
+</td>
+<td style="width:25%;"  align="right">
+
+</td>
+<td style="width:25%;">
+<span class="red">*</span>Locality:
+<br/>
+<apex:inputfield value="{!conObj.Locality__c}"/>
+<!--<input type='text' class='' id='locality' name='customer_feedback[locality]' /> 
+</td>
+</tr>
+<tr>
+<td style="width:25%;">
+
+</td>
+<td style="width:25%;">
+<!--<input type='text' class='required' id='city' name='customer_feedback[city]' /> 
+<span class="red">*</span>City: <br/>
+<apex:inputField value="{!conObj.City__c}"/>
+</td>
+<td style="width:25%;"  align="right">
+
+</td>
+<td style="width:25%;">
+<!--<input type='text' class='required' id='pincode' name='customer_feedback[pincode]' /> -->
+                            <!-- <span class="red">*</span>Pincode: 
+Pincode:
+<br/>
+<apex:inputField value="{!conObj.Pincode__c}" id="pncode" onkeyup="checkIsNumeric('{!$Component.pncode}');"/>
+</td>
+</tr>
+
+<tr>
+<td style="width:25%;">
+
+</td>
+<td style="width:25%;">
+<!--<input type='text' class='required' id='city' name='customer_feedback[city]' />
+<span class="red">*</span>Country: <br/>
+<apex:inputField value="{!conObj.Country__c}"/>
+</td>
+<td style="width:25%;"  align="right">
+
+</td>
+<td style="width:25%;">
+
+</td>
+</tr> -->
+                            <tr>
+                                <td colspan="1">
+                                    <span class="red">*</span>Occupation:
+                                </td>
+                                <td colspan="3">
+                                    
+                                    <apex:selectRadio value="{!Lead.Occupation__c}">
+                                        <apex:selectOption itemLabel="Business" itemValue="Business" ></apex:selectOption>
+                                        <apex:selectOption itemLabel="Service" itemValue="Service"></apex:selectOption>
+                                        <apex:selectOption itemLabel="Profession" itemValue="Profession"></apex:selectOption>
+                                        <apex:selectOption itemLabel="Others" itemValue="Others"></apex:selectOption>
+                                    </apex:selectRadio> 
+                                    <!--     <div class="radioWrap">
+<apex:selectRadio value="{!Lead.Occupation__c}">
+<div class="col-4"><apex:selectOption type="radio" name="customer_feedback[occupation]" value="Business" class="required"/> Business</div>                              
+<div class="col-4"><apex:selectOption type="radio" name="customer_feedback[occupation]" value="Service" class="required"/> Service</div>
+<div class="col-4"><apex:selectOption type="radio" name="customer_feedback[occupation]" value="Professional" class="required"/> Professional</div>
+<div class="col-4"><apex:selectOption type="radio" name="customer_feedback[occupation]" value="Others" class="required"/> Others</div>
+</apex:selectRadio>                             
+</div>-->
+                                    <div class="clear-fix"></div>
+                                    <div class="otherOccupation">
+                                        <br/>Please Specify<br/>
+                                        
+                                        <apex:inputText value="{!Lead.Occupation_in_case_of_other__c}" id="otherOccupation"/>
+                                        <!--<input type='text'  id='other_occupation' name='customer_feedback[other_occupation]' class="required"  /> --></div>
+                                    <!-- <div class="FieldTitle">
+<apex:inputText value="{!conObj.Occupstion_in_case_of_other__c}" id="otheroccupation"/>
+</div> -->
+                                    
+                                    <!-- <td colspan = "4">
+<div class="FieldTitle"><span style="color:#000; font-size:11px;float: right;">*If Occuption is Other Mention Here</span></div>
+<apex:inputtext value="{!Lead.Occupation_in_case_of_other__c}" /></td>  -->
+                                </td> 
+                            </tr>
+                            <tr>
+                                <td colspan="1">
+                                    <span class="red">*</span>Company You Are Working for:
+                                </td>
+                                <td colspan="3">
+                                    <!-- <input type='text'  id='' name='customer_feedback[company_name]' class="required" /> -->
+                                    <apex:inputfield value="{!Lead.Company}"/>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td colspan="1">
+                                    Industry:
+                                </td>
+                                <td colspan="3">
+                                    <div class="radioWrap">
+                                        <apex:selectRadio value="{!Lead.Industry}">
+                                            <apex:selectOption itemLabel="Banking and Financial Services" itemvalue="Banking and Financial Services" />                             
+                                            <apex:selectOption itemLabel="Automobiles" itemvalue="Automobiles"/>       
+                                            <apex:selectOption itemLabel="Real Estate" itemvalue="Real Estate"/>            
+                                            <apex:selectOption itemLabel="Gem & Jewellery" itemvalue="Gem & Jewellery"/> 
+                                            <apex:selectOption itemLabel="Retail" itemvalue="Retail"/> 
+                                            <apex:selectOption itemLabel="Other" itemvalue="Other"/> 
+                                        </apex:selectRadio>
+                                    </div>  
+                                    <div class="otherIndustry">
+                                        
+                                        <input type='text' class='' id='other_industry' name='customer_feedback[other_industry]' />
+                                    </div>
+                                    
+                                    
+                                </td>
+                            </tr> 
+                            <!--  <tr>
+<td colspan="1" valign="top">
+Industry:
+</td>
+<td colspan="3" valign="top">
+<div class="radioWrap">
+<apex:selectRadio value="{!Lead.Industry}">
+<div class="col-4"><apex:selectOption type="radio" name="customer_feedback[industry]" value="Automobiles" /> Automobiles</div>                               
+<div class="col-4"><apex:selectOption type="radio" name="customer_feedback[industry]" value="Banking and Financial Services"/> Banking and Financial Services</div>      
+<div class="col-4"><apex:selectOption type="radio" name="customer_feedback[industry]" value="Gem & Jewellery"/> Gem &amp; Jewellery</div>          
+<div class="col-4 ipad-clear"><apex:selectOption type="radio" name="customer_feedback[industry]" value="Real Estate"/> Real Estate</div>
+<div class="col-4"><apex:selectOption type="radio" name="customer_feedback[industry]" value="Retail"/> Retail</div>
+<div class="col-4"><apex:selectOption type="radio" name="customer_feedback[industry]" value="other"/> Other</div>
+</apex:selectRadio>
+</div>  
+<div class="clear-fix"></div>
+<div class="otherIndustry">
+<br/>Please Specify<br/>
+<apex:inputText value="{!Lead.Industry_if_other__c}"/>
+</div>
+</td>
+</tr>
+-->
+                            
+                            <!--  <tr>
+<td colspan="1">
+Designation:
+</td>
+<td colspan="3">
+<apex:inputField value="{!Lead.Designation__c}"/>
+</td>
+</tr>
+-->
+                            <tr>
+                                <td colspan="1">
+                                    Company Address:
+                                </td>
+                                <td colspan="3">
+                                    <!-- <input type='text' class='' id='company_address' name='customer_feedback[company_address]' /> -->
+                                    <apex:inputField value="{!Lead.Company_Address__c}" style="width:70%;"/>
+                                </td>
+                            </tr>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <tr>
+                                <td colspan="1">
+                                    <span class="red">*</span>Email:
+                                </td>
+                                <td colspan="3">
+                                    <apex:inputField value="{!Lead.Email}" id="emlc" onblur="ValidateEmail('{!$Component.emlc}');" style="width:850px;"/>
+                                    <!--  <input type='text' class='required' id='second_applicant_email' name='customer_feedback[contact_person_email]' /> -->
+                                </td>
+                            </tr>
+                            
+                            
+                            <tr>
+                                <td colspan="2" valign="top">
+                                    <!-- rerender="mndtpanel" -->
+                                    
+                                    <!--<apex:commandButton styleClass="btn" id="cmdid" value="Register" action="{!expressionsave}" oncomplete="validateUserInput();" rerender="mndtpanel"/> -->
+                                    
+                                    <apex:actionStatus id="loadingA" style="align:left;">
+                                        <apex:facet name="start">
+                                            <apex:outputPanel >
+                                                <apex:commandButton value="Processing.." styleClass="btn" disabled="true"/>
+                                                &nbsp;&nbsp;
+                                                <img src="/img/loading.gif"/>
+                                            </apex:outputPanel>
+                                        </apex:facet>
+                                        <apex:facet name="stop">
+                                            <!--<apex:commandButton value="Search" action="{!queryData}" reRender="form"  status="loadingA"/> -->
+                                            <!--<apex:commandButton value="Submit" action="{!doSubmit}"  title="First Page" style="float:center;" reRender="sectbl" status="loadingA"/> -->
+                                            <apex:commandButton styleClass="btn" id="cmdid" value="Register" action="{!Save}" oncomplete="validateUserInput();" rerender="mndtpanel" status="loadingA"/>
+                                        </apex:facet>
+                                    </apex:actionStatus>
+                                </td>
+                                <td colspan="2" valign="top" align="right">
+                                    
+                                </td>
+                                
+                            </tr>
+                            
+                            
+                            <!-- </div> -->
+                        </table>
+                        <apex:outputPanel id="abc">
+                            <apex:pageMessages ></apex:pageMessages>
+                        </apex:outputPanel>
+                        
+                        
+                        
+                        
+                        <!--
+<apex:inputHidden value="{!Walkinsource}"  id="subcat"/>
+<apex:inputHidden value="{!bdgt}"  id="bdgt"/>
+<apex:inputHidden value="{!slctRequment}" id="req"/>
+<apex:inputHidden value="{!carpetArea}" id="carArea"/>
+<apex:inputHidden value="{!hear}" id="hra"/>
+<apex:inputHidden value="{!howSoon}" id="hwson"/>
+<apex:inputHidden value="{!purposeOfBuying}" id="pbyng"/>
+<apex:inputHidden value="{!whtlkng}" id="lkng"/>
+<apex:inputHidden value="{!possesionTime}" id="psgnTm"/>
+<apex:inputHidden value="{!occupation}" id="occp"/>
+<apex:inputHidden value="{!industry}" id="Indr"/>
+<apex:inputHidden value="{!contactVal}" id="cnls"/>
+<apex:inputHidden value="{!CorAdress}" id="cradd"/>
+<apex:inputHidden value="{!sameApplicant}" id="smApp"/>
+<apex:inputHidden value="{!residentStatus}" id="resdnt"/>-->
+                        <!--    <apex:outputPanel id="mndtpanel">
+<apex:inputHidden value="{!mndtTrue}"  id="mndtTrue11"/>
+<apex:inputHidden value="{!checkMbNumber}"  id="mdtMobile"/>
+
+</apex:outputPanel>
+-->  
+                        
+                        <!--</form> -->
+                        <!-- <apex:actionFunction name="checkMnd" action="{!checkValidate}" reRender="abc"/> -->
+                        
+                        
+                        
+                    </apex:form>
+                    
+                </div>
+                
+                <div style="line-height: 16px;font-size: 12px;">
+                    Head Office: Commerz, 3rd Floor, International Business Park, Oberoi Garden City, Off Western Express Highway, Goregaon (East),  Mumbai-400 063. India. 
+                    T: +91 22 6677 3333 (Board) F: +91 22 6677 3334 (Corporate) <!-- <a href="www.oberoirealty.com" target="_blank" style="color: #ec6810;text-decoration: none"> -->www.oberoirealty.com
+                </div>
+                
+                
+                
+                <div class="footerline"  style="bottom: 0px;border-bottom: 7px solid #ec6810;width: 100%;background-color: #fff;padding: 10px 10px;left:0;line-height: 16px;font-size: 12px;">
+                </div>
+                
+                
+                <div class="form1_thankyou" style="display: none; text-align:center;  padding: 25% 15px; width: 100%; font-size: 24px;   font-weight: bold; line-height: 36px;">
+                    Thank you for submitting the details.<br/> We look forward to assisting you.
+                    
+                </div>
+            </div>
+            
+            
+            
+            
+            <!--<script type="text/javascript" src="http://oberoirealty.com/elite_club/js/jquery.min.js"></script>
+
+<script type="text/javascript" src="http://oberoirealty.com/elite_club/js/jquery.validate.js"></script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.js"></script>-->
+            
+            <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"/>
+            <apex:includeScript value="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.js"/>
+            <!--<apex:includeScript value="{!$Resource.CSS}"/> -->
+            <apex:includeScript value="https://code.jquery.com/jquery-1.12.4.js"/>
+            <apex:includeScript value="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.js"/>
+            <apex:includeScript value="{!$Resource.intlTelInput}"/>
+            
+            
+            
+            
+            <script type="text/javascript">
+            
+            
+            
+            
+            var selectedCat ;
+            $(document).ready(function($){  
+                $("input[name='customer_feedback[category]']").change(function() {
+                    $('.showDetails').show();
+                    var val = $("input[type='radio'][name='customer_feedback[category]']:checked").val();
+                    
+                    // alert('+++Calte+++{!$Component.frm.cat}');
+                    // alert(selectedCat  + '===='+ val);
+                    selectedCat = val;
+                    var cmpID = '{!$Component.frm.cat}';
+                    document.getElementById(cmpID).value = val;
+                    
+                    $('.subCatExCustomer,.subCatNewCustomer,.subCatProCons,.subCatBanker,.categoryOther').hide();
+                    if(val=='Existing Customer'){
+                        $('.subCatExCustomer').show();
+                    }
+                    if(val=='New Customer'){
+                        $('.subCatNewCustomer').show();
+                    }
+                    if(val=='Property Consultant'){
+                        $('.subCatProCons').show();
+                    }
+                    if(val=='Banker'){
+                        $('.subCatBanker').show();
+                    }
+                    if(val=='Others'){
+                        $('.categoryOther').show();
+                    }
+                    $("input[name='customer_feedback[sub_category]']").attr("checked" , false);     
+                });
+                
+                $("input[name='customer_feedback[sub_category]']").change(function() {
+                    var val = $("input[type='radio'][name='customer_feedback[sub_category]']:checked").val();
+                    var cmpID = '{!$Component.frm.subcat}';
+                    document.getElementById(cmpID).value = val;
+                    if(val=='Other'){
+                        $('.sub_categoryOther').show();
+                    }else{
+                        $('.sub_categoryOther').hide();
+                    }
+                    
+                });
+                
+                
+                
+                $.validator.setDefaults({
+                    submitHandler: function() {
+                        
+                        $('.btn').attr("disabled", "true");
+                        $.ajax({
+                            type:"POST",
+                            dataType:"json",
+                            url:$("#customerFeedback").attr("action"),
+                            data:$("#customerFeedback").serialize(),
+                            success: function(resp, status, xhr){
+                                console.log(resp);
+                                if(status == "success"){
+                                    // console.log(resp.data.customer_feedback["category"]);
+                                    if (($("input[type='radio'][name='customer_feedback[category]']:checked").val() == "New Customer") || ($("input[type='radio'][name='customer_feedback[sub_category]']:checked").val() =="Enquiry for New Flat"))
+                                    {             
+                                        if (resp.already_exist) {
+                                            $('.form1').hide();
+                                            $('.form1_thankyou').show();                
+                                            //$('.form1_thankyou').html("Thank you for submitting the details. We look forward to assisting you.");
+                                            $('.btn').attr("disabled", "false");
+                                        }else{
+                                            $('.form1_thankyou').html("Please wait ...");
+                                            window.location.href = "/site/customer_data_sheet_details?id="+resp.data.customer_feedback["id"];
+                                        }
+                                        
+                                    }else{
+                                        $('.form1').hide();
+                                        $('.form1_thankyou').show();
+                                        $('.btn').attr("disabled", "false");
+                                    }
+                                    
+                                    
+                                }else{}
+                            },
+                            error: function(resp, status, xhr){
+                            }
+                        });
+                    }
+                });
+                
+                $("#customerFeedback").validate();
+                
+                $(".phone_field").intlTelInput({
+                    defaultCountry: "in",
+                    preferredCountries:['in', 'gb'],
+                    autoHideDialCode: false
+                });
+                
+            });
+            
+            var selectedCat ;
+            $(document).ready(function($){  
+                
+                
+                
+                $("input[name='customer_feedback[contact_person_same_as_applicant]']").change(function() {
+                    var val = $("input[type='radio'][name='customer_feedback[contact_person_same_as_applicant]']:checked").val();
+                    if(val=='yes'){
+                        $('.contactPersonDetail').hide();
+                    }else{
+                        $('.contactPersonDetail').show();
+                    }     
+                });
+                
+                $("input[name='customer_feedback[budget]']").change(function() {
+                    var valbud = $("input[type='radio'][name='customer_feedback[budget]']:checked").val();
+                    
+                    var cmpID = '{!$Component.frm.bdgt}';
+                    
+                    document.getElementById(cmpID).value = valbud;
+                });
+                
+                
+                $("input[name='customer_feedback[opinion][]']").change(function() {
+                    var valbud;
+                    //alert('check');
+                    
+                    valbud //= $("input[type='checkbox'][name='customer_feedback[opinion][]']:checked").val();
+                    //alert(valbud);
+                    var cmpID = '{!$Component.frm.lkng}';
+                    //alert(cmpID);
+                    document.getElementById(cmpID).value ='';
+                    //alert('Test');
+                    valbud = document.getElementsByClassName('OptionRequired');
+                    for(var i=0;i<valbud.length;i++){
+                        if(valbud[i].checked){
+                            //   alert(valbud[i].value);
+                            
+                            if(document.getElementById(cmpID).value==''){
+                                document.getElementById(cmpID).value = valbud[i].value;
+                            }
+                            else{
+                                document.getElementById(cmpID).value =document.getElementById(cmpID).value+','+valbud[i].value;
+                            }
+                        }
+                    }
+                    //alert(document.getElementById(cmpID).value); 
+                });    
+                
+                $("input[name='customer_feedback[contact_option]']").change(function() {
+                    var valbud;
+                    //alert('check');
+                    
+                    // valbud = $("input[type='checkbox'][name='customer_feedback[contact_option]']:checked").val();
+                    
+                    valbud = document.getElementsByClassName('contactOption'); 
+                    
+                    var cmpID = '{!$Component.frm.cnls}';
+                    
+                    document.getElementById(cmpID).value ='';
+                    for(var i=0;i<valbud.length;i++){
+                        if(valbud[i].checked){
+                            //  alert(valbud[i].value);
+                            
+                            if(document.getElementById(cmpID).value==''){
+                                document.getElementById(cmpID).value = valbud[i].value;
+                            }
+                            else{
+                                document.getElementById(cmpID).value =document.getElementById(cmpID).value+','+valbud[i].value;
+                            }
+                        }
+                    } 
+                    
+                    // alert(document.getElementById(cmpID).value); 
+                    
+                });    
+                
+                
+                $("input[name='customer_feedback[requirement][]']").change(function() {
+                    var valbud;
+                    
+                    valbud = $("input[type='checkbox'][name='customer_feedback[requirement][]']:checked").val();
+                    var cmpID = '{!$Component.frm.req}';
+                    var valbudTest;
+                    Testvalbud = document.getElementsByClassName('FeedbackRequired'); 
+                    
+                    document.getElementById(cmpID).value='';
+                    for(var i=0;i<Testvalbud.length;i++){
+                        if(Testvalbud[i].checked){
+                            // alert(Testvalbud[i].value);
+                            
+                            if(document.getElementById(cmpID).value==''){
+                                document.getElementById(cmpID).value = Testvalbud[i].value;
+                            }
+                            else{
+                                document.getElementById(cmpID).value =document.getElementById(cmpID).value+','+Testvalbud[i].value;
+                            }
+                        }
+                    }
+                    
+                });
+                
+                $("input[name='customer_feedback[carpet_area][]']").change(function() {
+                    var valbud;
+                    //alert('check');
+                    
+                    valbud = $("input[type='checkbox'][name='customer_feedback[carpet_area][]']:checked").val();
+                    var valbudTest;
+                    Testvalbud = document.getElementsByClassName('FeedbackCarpet'); 
+                    
+                    
+                    //alert(valbud);
+                    var cmpID = '{!$Component.frm.carArea}';
+                    //alert(cmpID);
+                    document.getElementById(cmpID).value='';
+                    // document.getElementById(cmpID).value = valbud;  
+                    //alert('Test');
+                    
+                    for(var i=0;i<Testvalbud.length;i++){
+                        if(Testvalbud[i].checked){
+                            
+                            
+                            if(document.getElementById(cmpID).value==''){
+                                document.getElementById(cmpID).value = Testvalbud[i].value;
+                            }
+                            else{
+                                document.getElementById(cmpID).value =document.getElementById(cmpID).value+','+Testvalbud[i].value;
+                            }
+                        }
+                    }
+                    // alert(document.getElementById(cmpID).value);
+                    
+                });
+                
+                $("input[name='customer_feedback[about_oberoi]']").change(function() {
+                    var valbud;
+                    //alert('check');
+                    
+                    valbud = $("input[type='radio'][name='customer_feedback[about_oberoi]']:checked").val();
+                    //alert(valbud);
+                    var cmpID = '{!$Component.frm.hra}';
+                    //alert(cmpID);
+                    document.getElementById(cmpID).value = valbud;  
+                    //alert('Test');
+                    
+                });
+                
+                $("input[name='customer_feedback[time_limit][]']").change(function() {
+                    var valbud;
+                    //alert('check');
+                    
+                    valbud = $("input[type='radio'][name='customer_feedback[time_limit][]']:checked").val();
+                    //alert(valbud);
+                    var cmpID = '{!$Component.frm.hwson}';
+                    //alert(cmpID);
+                    document.getElementById(cmpID).value = valbud;  
+                    //alert('Test');
+                    
+                });  
+                
+                $("input[name='customer_feedback[purpose]']").change(function() {
+                    var valbud;
+                    //alert('check');
+                    
+                    valbud = $("input[type='radio'][name='customer_feedback[purpose]']:checked").val();
+                    //alert(valbud);
+                    var cmpID = '{!$Component.frm.pbyng}';
+                    //alert(cmpID);
+                    document.getElementById(cmpID).value = valbud;  
+                    //alert('Test');
+                    
+                });
+                
+                $("input[name='customer_feedback[timeliness][]']").change(function() {
+                    var valbud;
+                    //alert('check');
+                    
+                    valbud = $("input[type='checkbox'][name='customer_feedback[timeliness][]']:checked").val();
+                    //alert(valbud);
+                    //var cmpID = '{!$Component.frm.psgnTm}';
+                    //alert(cmpID);
+                    // document.getElementById(cmpID).value = valbud;  
+                    //alert('Test');
+                    
+                    var valbudTest;
+                    Testvalbud = document.getElementsByClassName('feedbackReady'); 
+                    
+                    
+                    //alert(valbud);
+                    var cmpID = '{!$Component.frm.psgnTm}';
+                    //alert(cmpID);
+                    document.getElementById(cmpID).value='';
+                    // document.getElementById(cmpID).value = valbud;  
+                    //alert('Test');
+                    
+                    for(var i=0;i<Testvalbud.length;i++){
+                        if(Testvalbud[i].checked){
+                            
+                            
+                            if(document.getElementById(cmpID).value==''){
+                                document.getElementById(cmpID).value = Testvalbud[i].value;
+                            }
+                            else{
+                                document.getElementById(cmpID).value =document.getElementById(cmpID).value+','+Testvalbud[i].value;
+                            }
+                        }
+                    }
+                    //alert(document.getElementById(cmpID).value);  
+                    
+                    
+                }); 
+                
+                $("input[name='customer_feedback[occupation]']").change(function() {
+                    var valbud;
+                    //alert('check');
+                    
+                    valbud = $("input[type='radio'][name='customer_feedback[occupation]']:checked").val();
+                    //alert(valbud);
+                    var cmpID = '{!$Component.frm.occp}';
+                    //alert(cmpID);
+                    document.getElementById(cmpID).value = valbud;  
+                    //alert('Test');
+                    
+                });
+                
+                $("input[name='customer_feedback[industry]']").change(function() {
+                    var valbud;
+                    //alert('check');
+                    
+                    valbud = $("input[type='radio'][name='customer_feedback[industry]']:checked").val();
+                    //alert(valbud);
+                    var cmpID = '{!$Component.frm.Indr}';
+                    //alert(cmpID);
+                    document.getElementById(cmpID).value = valbud;  
+                    //alert('Test');
+                    
+                }); 
+                
+                
+                $("input[name='customer_feedback[correspondence_address]']").change(function() {
+                    var valbud;
+                    //alert('check');
+                    
+                    valbud = $("input[type='radio'][name='customer_feedback[correspondence_address]']:checked").val();
+                    //alert(valbud);
+                    var cmpID = '{!$Component.frm.cradd}';
+                    //alert(cmpID);
+                    document.getElementById(cmpID).value = valbud;  
+                    //alert('Test');
+                    
+                });
+                
+                $("input[name='customer_feedback[contact_person_same_as_applicant]']").change(function() {
+                    var valbud;
+                    //alert('check');
+                    
+                    valbud = $("input[type='radio'][name='customer_feedback[contact_person_same_as_applicant]']:checked").val();
+                    //alert(valbud);
+                    var cmpID = '{!$Component.frm.smApp}';
+                    //alert(cmpID);
+                    document.getElementById(cmpID).value = valbud;  
+                    //alert('Test');
+                    
+                });
+                
+                $("input[name='customer_feedback[resident_status]']").change(function() {
+                    var valbud;
+                    //alert('check');
+                    
+                    valbud = $("input[type='radio'][name='customer_feedback[resident_status]']:checked").val();
+                    //alert(valbud);
+                    var cmpID = '{!$Component.frm.resdnt}';
+                    //alert(cmpID);
+                    document.getElementById(cmpID).value = valbud;  
+                    //alert('Test');
+                    
+                });
+                
+                
+                $("input[name='customer_feedback[walkin_source]']").change(function() {
+                    var val = $("input[type='radio'][name='customer_feedback[walkin_source]']:checked").val();
+                    selectedCat = val;
+                    
+                    var cmpID = '{!$Component.frm.subcat}';
+                    document.getElementById(cmpID).value = selectedCat;
+                    
+                    if(val=='Property Consultant'){
+                        $('.propertyConsultant').show();
+                        $('.eliteClubMember').hide();
+                    }else if(val=='Elite Member'){
+                        $('.eliteClubMember').show();
+                        $('.propertyConsultant').hide();
+                    }else{
+                        $('.eliteClubMember').hide();
+                        $('.propertyConsultant').hide();
+                    }    
+                });
+                
+                
+                
+                $("input[name='customer_feedback[industry]']").change(function() {
+                    var val = $("input[type='radio'][name='customer_feedback[industry]']:checked").val();
+                    
+                    $('.otherIndustry').hide();
+                    
+                    if(val=='other'){
+                        $('.otherIndustry').show();
+                    }
+                    
+                });
+                
+                $("input[name='customer_feedback[occupation]").change(function() {
+                    var val = $("input[type='radio'][name='customer_feedback[occupation]']:checked").val();
+                    $('.otherOccupation').hide();
+                    if(val=='Others'){
+                        $('.otherOccupation').show();
+                    }
+                    
+                });
+                
+                
+                
+                $.validator.setDefaults({
+                    submitHandler: function() {
+                        jQuery('.form1').hide();
+                        jQuery('.form1_thankyou').show();
+                        $.ajax({
+                            type:"POST",
+                            dataType:"json",
+                            url:$("#customerFeedback").attr("action"),
+                            data:$("#customerFeedback").serialize(),
+                            success: function(resp, status, xhr){
+                                if(resp.status == "success"){
+                                }
+                                else{
+                                }
+                            },
+                            error: function(resp, status, xhr){
+                            }
+                        });
+                    }
+                });
+                
+                
+                $("#customerFeedback").validate();
+                
+                
+            });
+            
+            </script>
+            
+            <script>    
+            
+            
+            function validateUserInput() {
+                console.log('--------1----------------');
+                var mnt = document.getElementById('thepage:frm:mndtTrue11').value;
+                console.log('------------2-----------'+mnt);
+                var mntmb = document.getElementById('thepage:frm:mdtMobile').value;
+                
+                if(mntmb=='true'){
+                    alert('Mobile Number should be 10 digit');
+                }
+                else if (mnt=='false'){
+                    alert('Please select all Required Fields');
+                }
+                    else if (document.getElementById('right_terms').checked){
+                        alert('Thankyou for your interest our sales/front  office will guide further. Please Click OK', 'Please select the checkbox.');
+                        top.location.href= 'http://oberoirealty--oberoidev.my.salesforce.com/expression';<!-- for instance change changed URL'http://sandbox-orl.cs31.force.com/expression';-->
+                        document.getElementById("thepage:frm").reset();
+                        
+                    }
+                
+                
+            }
+            
+            
+            function checkIsNumeric(textId)
+            {
+                
+                var textIdText =  (document.getElementById(textId).value);
+                
+                var ValidChars = "0123456789";
+                var IsNumber=true;
+                var Char;
+                
+                
+                for (i = 0; i < textIdText.length && IsNumber == true; i++)
+                {
+                    Char = textIdText.charAt(i);
+                    if (ValidChars.indexOf(Char) == -1)
+                    {
+                        IsNumber = false;
+                        
+                    }
+                }
+                if (IsNumber == false)
+                {
+                    alert("Please enter a numeric value.");
+                    document.getElementById(textId).value = '';
+                    return false;
+                }
+            }
+            
+            function ValidateEmail(inputText)  
+            {  
+                
+                
+                var textIdText = (document.getElementById(inputText).value);
+                //alert('textIdText==='+textIdText);
+                if(textIdText!=''){
+                    var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;  
+                    if(textIdText.match(mailformat))  
+                    {  
+                        document.form1.text1.focus();  
+                        return true;  
+                    }  
+                    else  
+                    {  
+                        alert("You have entered an invalid email address!");
+                        document.getElementById(inputText).value ='';  
+                        document.form1.text1.focus();  
+                        return false;  
+                    }
+                }  
+                
+            }  
+            
+            
+            
+            </script>
+            
+            
+        </body>
+    </html>
+</apex:page>

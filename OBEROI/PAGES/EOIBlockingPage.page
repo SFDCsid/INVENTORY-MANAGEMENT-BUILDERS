@@ -1,0 +1,124 @@
+<apex:page controller="EOIBlockingExtension" action="{!updateUnit}">
+<apex:form >
+<html
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink">
+<head>
+<title>EOI Block Unit</title>
+</head>
+
+<style>
+    .slds h1, .slds h2, .slds h3, .slds h4, .slds h5, .slds h6, .slds th, .slds td {
+        font-family: 'Lato';
+    }
+    .slds .slds-theme--shade {
+    background-color: aliceblue;
+    }
+    .slds .slds-button {
+        background-color: #838B8B;
+        
+    }
+    body .bPageBlock .pbBody .pbSubheader {
+        background-color:#ffffff ;
+        border-color:#838B8B;
+               
+    }
+    .slds table {
+        font-size: 16px;
+        empty-cells:show;
+        
+    }
+    .slds td {
+        text-align:left;
+        padding-left: 120px;
+        padding-bottom: 10px;
+        padding-top: 10px;
+    }
+    div.fadeMe {
+      opacity:    0.5; 
+      background: #D9E9FF; 
+      width:      100%;
+      height:     100%; 
+      z-index:    1000;
+      top:        0; 
+      left:       0; 
+      position:   fixed; 
+    }
+    .readOnly {
+        background-color: aliceblue;
+        border-color: #003F87;
+        padding: 2.5px;
+        color: #333366;
+    }
+    .penalties {
+        background-color: aliceblue;
+        border-color: #003F87;
+        padding: 2.5px;
+        color: #FC1501 !important;
+    }
+    .Edit {
+        border-color:#ff69b4;
+        border-width: 1px;
+        border-style: dotted dotted dotted dotted;
+    }.error {
+        border-color: red !important;
+        background-color: light blue;
+        border-width: 2px;
+    }
+    .settled {
+        color: green;
+        font-weight:bold;
+    }
+    .due {
+        color: red;
+        font-weight:bold;
+    }
+    .info {
+        color: green; font-weight: strong;
+        border-color: green !important;
+    }
+    .styled-button-5 {
+    background-color:#ed8223;
+    color:#fff;
+    font-size:10px;
+    line-height:30px;
+    border-radius:20px;
+    -webkit-border-radius:20px;
+    -moz-border-radius:20px;
+    border:0;
+    text-shadow:#C17C3A 0 -1px 0;
+    width:120px;
+    height:32px
+    }              
+    </style>
+        <body>
+        <br/><br/>
+            <!-- REQUIRED SLDS WRAPPER -->
+            <div class="slds">
+                <!-- PRIMARY CONTENT WRAPPER -->
+                <div class="myapp">
+                    <!-- CREATE RECEIPT -->
+                    <div aria-labelledby="newreceiptform">
+                        <!-- BOXED AREA -->
+                        <fieldset class="slds-box slds-theme--shade slds-container--large slds-container--center slds-grid--align-spread">
+                            <legend id="newreceiptform" class="slds-text-heading--medium slds-p-vertical--medium"><b>EOI Block Unit</b></legend>
+                                <apex:outputText id="successmsg" value="{!SuccessMsg}" style="color:green;font-weight:bold;"/>
+                                 
+                           </fieldset>
+                        <!-- / BOXED AREA -->
+                        <br/>
+                        <apex:outputText rendered="{!if(act == 'Blocked',True,False)}">
+                        <apex:commandButton action="{!BackToOpportunity}" value="Go to Opportunity"/>&nbsp;&nbsp;
+                        <apex:commandButton action="{!BackToProperty}" value="Go to Inventory"/>
+                        </apex:outputText>
+                    </div>
+                    <!-- / CREATE RECEIPT -->
+                </div>
+                <!-- / PRIMARY CONTENT WRAPPER -->
+            </div>
+            <!-- / REQUIRED SLDS WRAPPER -->
+            
+        </body>
+    </html>
+   </apex:form>
+</apex:page>

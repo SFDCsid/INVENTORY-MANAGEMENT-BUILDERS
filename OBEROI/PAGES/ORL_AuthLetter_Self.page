@@ -1,0 +1,50 @@
+<apex:page standardController="Booking__c" action="{!savePDF}" extensions="BookingFormHandler" showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" renderAs="pdf">
+    <head>
+        <style type= "text/css">
+            @page {
+            size: A4;
+            margin: 5 px;
+            font-face:Times;
+            font-size:8px;
+            }
+        </style>
+    </head>
+    <div style="font-size:12px;">
+    <p>
+         <b>Date: {!todaydate}</b><br/><br/>
+         <b>To,</b><br/><br/>
+         <b>Incline Realty Private Limited</b><br/>
+         Commerz, 3rd Floor,<br/> International Business Park,<br/> Oberoi Garden City, <br/>Off. Western Express Highway,<br/> Goregaon (E), <br/>Mumbai - 400063.<br/>
+         India.<br/><br/>
+         <b>Dear Sir/Madam,</b><br/>
+         <p>
+         I/We are aware that the Government of India has amended the Income Tax Act, 1961 and introduced Section 194-IA vide Finance Bill, 2013 
+         as well as the Central Board of Direct Taxes (CBDT) – Ministry of Finance has issued Notification dated May 31, 2013, whereby on or after
+         1st June, 2013 the purchasers of the units (whose consideration value is Rs.50 Lakhs and above) are required to deduct a sum of 1% as tax
+         at source (TDS) out of the consideration value or part thereof paid by such purchasers.
+         </p>
+         <p>
+         In connection with our booking for a flat with you, I/We hereby would like to confirm you that we ourselves will take care of all the 
+         compliance to be done and will be responsible for all acts, deeds, matters and things required to be done/undertaken to comply with the 
+         provisions of Section 194-IA of the Income Tax Act, 1961, (the “Act”) including but not limited to:
+         </p>
+         <p>
+         (a)  file requisite forms, challan/s, pay taxes as applicable pursuant to Section 194-IA of the Act;
+         </p>
+         <p>
+         (b)  discharge the liability of payment of tax under Section 194-IA of the Act and deposit the same with the Government, subject to and to the extent of the payment made by us on account of TDS under Section 194-IA of the Act, before the due date thereof.
+         </p>
+         <p>
+         I/We shall provide you the duly signed copy of Form 16B within 15 days from the due date for furnishing the challan-cum-statement in Form No.26QB.
+         </p>
+         <p>
+         Permanent Account Number of the first owner is ({!booking.PAN__c}) and we will make the payment of TDS on our own and on behalf of the first owner only. We are enclosing herewith copy of the PAN card of first owner for your ready reference.
+         </p>
+         Thanking you,<br/><br/>
+         Yours sincerely <br/><br/>
+         Name of the Customer: {!booking.Title__c} {!booking.Contact_Name__c}<br/><br/>
+         Flat No.: {!booking.Booking_Flat_No__c} Tower: {!booking.Tower__r.Tower_Name__c}<br/><br/>
+         Project: {!booking.Project__r.Name}
+    </p>
+    </div>
+</apex:page>

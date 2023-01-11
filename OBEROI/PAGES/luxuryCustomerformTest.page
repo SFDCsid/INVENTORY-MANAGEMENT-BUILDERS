@@ -1,0 +1,306 @@
+<apex:page sidebar="false" standardController="Lead" extensions="luxuryCustomerCont" showHeader="false" applyHtmlTag="true" standardStylesheets="false" id="page" >
+    
+        <html lang="en">
+            <head>
+                <meta charset="utf-8"/> 
+                <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                <meta http-equiv="X-UA-Compatible" content="ie=edge"   />  
+                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+                <title>ORL</title>
+                <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" />
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+                <style>
+                    html {
+                    scroll-behavior: smooth;
+                    }
+                    body{
+                    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+                    font-size: 15px;
+                    line-height: 1.42857143;
+                    color: #cac3c1;
+                    }
+                    .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+                    max-width: 1000px;
+                    }
+                    .navbar-brand img {
+                    max-height: 80px;
+                    padding:10px 0;
+                    }
+                    .navbar {
+                    box-shadow: 0 1px 5px #f79621;
+                    background-color:rgba(43,15,5,0.9);
+                    z-index:999;
+                    }
+                    .psgContainer{
+                    padding:20px 40px;
+                    }
+                    .psgContainer p{
+                    padding-top:8px;
+                    }
+                    .Note p{
+                    font-size:11px;
+                    padding:8px 0;
+                    }
+                    Span.Note{
+                    font-size:11px;
+                    }
+                    .btn-info {
+                    color: #cac3c1;
+                    background-color: #5bc0de;
+                    border-color: #46b8da;
+                    }
+                    .btn {
+                    display: inline-block;
+                    padding: 6px 12px;
+                    margin-bottom: 0;
+                    font-size: 14px;
+                    font-weight: 400;
+                    line-height: 1.42857143;
+                    text-align: center;
+                    white-space: nowrap;
+                    vertical-align: middle;
+                    cursor: pointer;
+                    -webkit-user-select: none;
+                    -moz-user-select: none;
+                    -ms-user-select: none;
+                    user-select: none;
+                    background-image: none;
+                    border: 1px solid transparent;
+                    border-radius: 4px;
+                    }
+                    .btn-info:hover, .btn-info:focus, .btn-info:active, .btn-info.active, .open>.dropdown-toggle.btn-info {
+                    color: #cac3c1;
+                    background-color: #31b0d5;
+                    border-color: #269abc;
+                    }
+                    .btn:hover, .btn:focus {
+                    color: #cac3c1;
+                    text-decoration: none;
+                    }
+                    .btn:focus, .btn:active:focus, .btn.active:focus {
+                    outline: thin dotted;
+                    outline: 5px auto -webkit-focus-ring-color;
+                    outline-offset: -2px;
+                    }
+                    .panel{
+                    border-color: #bce8f1;
+                    margin-bottom: 20px;
+                    border-radius: 4px;
+                    -webkit-box-shadow: 0 1px 1px rgb(0 0 0 / 5%);
+                    box-shadow: 0 1px 1px rgb(0 0 0 / 5%);
+                    }
+                    .panel-info h3 {
+                    margin-top:20px;
+                    padding: 20px 15px 0 15px;
+                    border-bottom: 1px solid transparent;
+                    border-top-left-radius: 3px;
+                    border-top-right-radius: 3px;
+                    height: 43px;
+                    font-size:14px ;
+                    color: #31708f;
+                    background-color: #d9edf7;
+                    border-color: #bce8f1;
+                    }
+                    .col-form-label {
+                    padding-bottom: 0;
+                    }
+                    .radioButton fieldset table tbody tr td label {
+                    padding: 0 5px
+                    
+                    }
+                    .radioButton fieldset table tbody tr td {
+                    -webkit-appearance: listbox;
+                    color: #cac3c1;
+                    }
+                                       
+                    .btn{
+                    background: none !important;
+                    background-image:none !important;
+                    background-color: #88724dba !important;
+                    color: #cac3c1 !important;                    
+                    padding: 10px 18px !important;
+                    font-size: 14px;                    
+                    border: 1px solid #88724d !important;
+                    border-radius: 4px;
+                    width:120px;
+                    letter-spacing:2px;
+                    font-size:16px !important;
+                    transition:1s all;
+                    }
+                    .btn:hover{
+                    background-color: #2b0f05 !important;
+                    color: #88724d !important; 
+                    border: 1px solid #FFF !important;
+                    }
+                    .form-check-input[type=checkbox] {
+                    border-radius: .25em;
+                    height: 25px;
+                    position: relative;
+                    bottom: 6px;
+                    left:10px;
+                    }
+                    .radioButton {
+                    padding-top: 5px;
+                    color: #cac3c1;
+                    }
+                    label.col-md-3.col-form-label.fixedlabel {
+                    position: relative;
+                    top: 30px;
+                    }
+                    .form-control:focus {
+                    color: #cac3c1;
+                    background-color:rgba(102,102,102,0.6);
+                    border-color: #88724d;
+                    outline: 0;
+                    box-shadow: 0 0 0 2px rgb(136 114 77 / 63%);
+                    trasition:0.5s;
+                    }
+                    .form-control::placeholder {
+                    color: #cac3c1;
+                    }
+                    .form-control{
+                    background-color:rgba(102,102,102,0.6);
+                    border:1px solid #88724d;
+                        color: #cac3c1;
+                    }
+                    body .btn, body .btnDisabled, body .btnCancel, body .menuButton .menuButtonButton {
+                    color: #fff;
+                    margin: 1px;
+                    padding: 6px 10px !important;
+                    border: 1px solid #f79621;
+                    border-bottom-color: #333333;
+                    }
+                    .dateField .requiredInput .dateInput {
+                    display: flex;
+                    }
+                    .dateOnlyInput input {
+                    width: 80%;
+                    }
+                    .dateFormat {
+                    padding: 8px 10px;
+                    color:#d0700d;
+                    }
+                    .dateFormat a {
+                    color:#a6631f;
+                    }
+                    .dateFormat a:hover {
+                    color:#a6631f;
+                    }
+                    
+                    
+                </style>
+                
+            </head>
+            <body style="background-color: #2b0f05;color:#cac3c1;z-index:-999;">
+                
+                <nav class="navbar navbar-default fixed-top">
+                    <div class="container text-center">
+                        <a class="navbar-brand" href="#">
+                            <img src="https://threesixtywest.com/threesixtywest/wp-content/uploads/360W-Logo-NavBar.png" alt="logo"/>
+                        </a>                        
+                    </div>                    
+                </nav>
+                <br/><br/><br/><br/> 
+               
+                <div class="container">
+                    <apex:pageMessages id="showmsg"></apex:pageMessages>
+                    <div class="panel mt-3">
+                        <apex:form styleClass="row g-3 needs-validation" >
+                            <div class="col-md-4">
+                                <label for="validationCustom01" class="form-label">First name</label>
+                                <input type="text" class="form-control" id="validationCustom01" value="Mark"  required="true"/>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="validationCustom02" class="form-label">Last name</label>
+                                <input type="text" class="form-control" id="validationCustom02" value="Otto"  required="true"/>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="validationCustomUsername" class="form-label">Username</label>
+                                <div class="input-group has-validation">
+                                    <span class="input-group-text" id="inputGroupPrepend">@</span>
+                                    <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend"  required="true"/>
+                                    <div class="invalid-feedback">
+                                        Please choose a username.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="validationCustom03" class="form-label">City</label>
+                                <input type="text" class="form-control" id="validationCustom03"  required="true"/>
+                                <div class="invalid-feedback">
+                                    Please provide a valid city.
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="validationCustom04" class="form-label">State</label>
+                                <select class="form-select" id="validationCustom04"  required="true">
+                                    <option required="true">Choose...</option>
+                                    <option>...</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please select a valid state.
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="validationCustom05" class="form-label">Zip</label>
+                                <input type="text" class="form-control" id="validationCustom05"  required="true"/>
+                                <div class="invalid-feedback">
+                                    Please provide a valid zip.
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required="true"/>
+                                    <label class="form-check-label" for="invalidCheck">
+                                        Agree to terms and conditions
+                                    </label>
+                                    <div class="invalid-feedback">
+                                        You must agree before submitting.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-primary" type="submit">Submit form</button>
+                            </div>
+                        
+                        <center class="mt-3 mb-3"> 
+                            <apex:outputPanel id="submitButton" >
+                                <apex:commandButton action="{!save}" value="Submit" reRender="showmsg,payButton,skipButton,submitButton" disabled="{!IF((sucessmsg == true),true,false)}" styleClass="btn btn-default" onclick="this.style.display = 'none'"/>&nbsp;&nbsp;
+                            </apex:outputPanel>
+                        </center> 
+                            </apex:form>
+                  </div>
+                  
+            </div>
+                   <script>
+                // Example starter JavaScript for disabling form submissions if there are invalid fields
+(function () {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  var forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+    })
+})()
+</script>
+            </body>
+        </html>
+    
+</apex:page>

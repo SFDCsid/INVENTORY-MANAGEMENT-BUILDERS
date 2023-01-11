@@ -1,0 +1,80 @@
+<apex:page sidebar="false" controller="Payment_Response_Controller" action="{!insertPayment}" showHeader="false" applyHtmlTag="true" standardStylesheets="false" id="page">
+    <apex:form id="form1">
+        <html lang="en">
+            <head>
+                <meta charset="utf-8"/> 
+                <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                <meta http-equiv="X-UA-Compatible" content="ie=edge"   />  
+                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+                <title>ORL</title>
+                <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" />
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+                <style type="text/css">
+                    body {
+                    width: 64%;
+                    margin: 2% auto;
+                    padding: 10px;
+                    box-shadow: 0px 0px 27px -7px rgba(130,112,130,.5);
+                    }
+                    
+                    .ctr{
+                    padding:20px;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="ctr">
+                    
+                    <center><apex:image width="160px;" url="{!$Resource.logoOberoi}"/><hr/></center>
+                    <br/><!--img width="120px;" src='https://oberoirealty--oberoidev--c.documentforce.com/sfc/dist/version/renditionDownload?rendition=ORIGINAL_Gif&versionId=068p0000001tOb1&operationContext=DELIVERY&contentId=05Tp0000008PPgs&page=0&d=/a/p00000008jem/V2nDfnc4sZB9sFoq11BM0wzDTn6fTvr9N3lRqPs5C_U&oid=00Dp0000000Dm6N&dpt=null&viewId=' alt='confirm img'/><br/><br/-->
+                    <div>
+                        <apex:outputPanel rendered="{!iscp}">
+                            <center>
+                                <h6 class="p-2"><b>Thank You for registering your Interest</b></h6>
+                                <p class="p-2 pt-4">Your Unique id is {!peoinum}</p>
+                            </center>
+                            <p>(Submission of details and generation of unique code is merely the generation of identification number and
+                                does not constitute any offer for sale)
+                            </p>
+                            <div style="padding:5px 20px;">
+                                <b>NOTE:</b>
+                                <ul>
+                                    <li>Generated Unique id will be sent to your and the prospects registered email id and
+                                        registered mobile number.</li>
+                                    <li>You and the prospect shall receive a PDF of the submitted details on your registered email id
+                                        along with the list of documents to be carried on the day of booking</li>
+                                    <li> On the date of booking, please display the Unique id, the original and self-attested copied of
+                                        the listed documents.</li>
+                                </ul>
+                            </div>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!isrp}">
+                            <center>
+                                <h6 class="p-2"><b>Thank You for registering your Interest</b></h6>
+                                <p class="p-2 pt-4">Your Unique id is {!peoinum}</p>
+                            </center>
+                            <p>(Submission of details and generation of unique code is merely the generation of identification number and
+                                does not constitute any offer for sale)</p>
+                            <div style="padding:5px 20px;">
+                                <b>NOTE:</b>
+                                <ul>
+                                    <li>Generated Unique id will be sent to your registered email id and registered mobile number.</li>
+                                    <li>You will also receive a PDF of the submitted details on your registered email id along with the
+                                        list of documents to be carried on the day of booking</li>
+                                    <li>On the date of booking, please display the Unique id, the original and self-attested copied of
+                                        the listed documents.</li>
+                                </ul>
+                            </div>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!ispayFail}">
+                            <center>
+                                <h6 class="p-2"><b>The transaction has failed, please try again.</b></h6>
+                            </center>
+                            <p>In case of any assistance required, kindly contact us at - {!contemail}.</p>
+                        </apex:outputPanel>
+                    </div>
+                </div>
+            </body>
+        </html>
+    </apex:form>
+</apex:page>
