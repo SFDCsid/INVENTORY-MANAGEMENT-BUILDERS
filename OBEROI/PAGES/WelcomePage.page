@@ -1,0 +1,121 @@
+<apex:page sidebar="false" showHeader="false" applyHtmlTag="true" standardStylesheets="false">
+    <apex:form >
+        <html lang="en">
+            <head>
+                <meta charset="utf-8"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                <meta http-equiv="X-UA-Compatible" content="ie=edge"   />  
+                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+                <title>ORL</title>
+                <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" />
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+                <style>
+                    body{
+                    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+                    font-size: 15px;
+                    line-height: 1.42857143;
+                    color: #333;
+                    background-color: #fff;
+                    }
+                    .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+                    max-width: 1024px;
+                    }
+                    .navbar-brand img {
+                    height: 39px;
+                    width: 85px;
+                    }
+                    .navbar {
+                    padding:0;
+                    border-bottom: 7px solid #F79621;
+                    }
+                    .psgContainer{
+                    padding:20px 40px;
+                    }
+                    .psgContainer p{
+                    padding-top:8px;
+                    }
+                    .Note p{
+                    font-size:11px;
+                    padding:8px 0;
+                    }
+                    Span.Note{
+                    font-size:11px;
+                    }
+                    .btn-info {
+                    color: #fff;
+                    background-color: #5bc0de;
+                    border-color: #46b8da;
+                    }
+                    .btn {
+                    display: inline-block;
+                    padding: 6px 12px;
+                    margin-bottom: 0;
+                    font-size: 14px;
+                    font-weight: 400;
+                    line-height: 1.42857143;
+                    text-align: center;
+                    white-space: nowrap;
+                    vertical-align: middle;
+                    cursor: pointer;
+                    -webkit-user-select: none;
+                    -moz-user-select: none;
+                    -ms-user-select: none;
+                    user-select: none;
+                    background-image: none;
+                    border: 1px solid transparent;
+                    border-radius: 4px;
+                    }
+                    .btn-info:hover, .btn-info:focus, .btn-info:active, .btn-info.active, .open>.dropdown-toggle.btn-info {
+                    color: #fff;
+                    background-color: #31b0d5;
+                    border-color: #269abc;
+                    }
+                    .btn:hover, .btn:focus {
+                    color: #fff;
+                    text-decoration: none;
+                    }
+                    .btn:focus, .btn:active:focus, .btn.active:focus {
+                    outline: thin dotted;
+                    outline: 5px auto -webkit-focus-ring-color;
+                    outline-offset: -2px;
+                    }
+                </style>
+                
+            </head>
+            <body>
+                <apex:pageMessages ></apex:pageMessages>
+                <nav class="navbar navbar-default navbar-fixed-top">
+                    <div class="container">
+                        <a class="navbar-brand" href="#">
+                            <img src="https://sim.oberoirealty.net/img/logo.png" alt="Logo"/>
+                        </a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>                        
+                    </div>
+                </nav>
+                <div class="container psgContainer">
+                    <p>Thank you for your interest. We request you to kindly follow the below mentioned steps in order for us to serve you better.</p>
+                    <p><b> STEP1: &nbsp;</b> Read and fill out  the details with correct information.</p>
+                    <p><b> STEP2: &nbsp;</b> Kindly read the terms and conditions carefully.</p>
+                    <p><b> STEP3: &nbsp;</b> Review and confirm the details before submitting.</p>
+                    <p><b> STEP4: &nbsp;</b> On submission of details, a Unique Code will be generated and sent to your registered email address/mobile number. </p>
+                    <p><b> STEP5: &nbsp;</b> On the date of booking, carry the  <b>'' Unique Code, the Original and Self-attested copies of the listed documents ''</b> mentioned in the email for faster processing of any of your respective applications.</p>
+                    <div class="Note">
+                        <p style="padding-top:8px;margin:0;"><b>NOTE:</b> &nbsp;Data Filled and Submitted is non editable later. Channel Partners are requested to fill out the details of their clients in order to generate the Unique Code.<br/><center><span class="Note">(Best Viewed in Google Chrome or Mozilla Firefox.)</span></center></p>
+                    </div>
+                    <center>      
+                        <button type="button" class="btn btn-info" id="welcome">NEXT</button>
+                    </center>                    
+                </div>                
+                
+                
+                <!-- Option 1: Bootstrap Bundle with Popper -->
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+                <script></script>
+            </body>
+        </html>
+    </apex:form>
+</apex:page>

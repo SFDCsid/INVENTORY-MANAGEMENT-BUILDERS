@@ -1,0 +1,2 @@
+<apex:page standardController="Booking__c" action="{!getRedir}" extensions="WrapperBookingFormHandler" showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" >
+</apex:page>

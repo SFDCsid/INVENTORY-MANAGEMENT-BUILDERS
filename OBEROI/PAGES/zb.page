@@ -1,0 +1,9 @@
+<apex:page > 
+    <apex:form >    
+        
+        <apex:commandButton value="Do you want to send this email for verification?" action="{!doSomething}"/>
+        <input type="radio" name="Yes" value="Yes" onclick="radioScript(this)"/>
+    	<input type="radio" name="rad" value="No" onclick="radioScript(this)"/>  
+        
+    </apex:form>
+</apex:page>
