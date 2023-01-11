@@ -1,0 +1,3034 @@
+@isTest
+public class TestDocumentGenerationFramework1 {
+  @isTest
+    public static void TestDocumentGeneration1(){ 
+        Map<String,Id> dataMap = TestDataFactory1.createData();
+        Account ac = new Account(firstName = 'Bhagyashree',lastName='test', recordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Customer').getRecordTypeId(),
+                     personEmail = 'handsome@stetig.in', personMobilePhone = '1111122222');
+        insert ac;
+        
+        Opportunity opp = new Opportunity(Name = 'Mr Bhagyashree Test Stetig',StageName = 'New',CloseDate = System.today().AddDays(15),
+                                         AccountId = ac.id);
+        insert opp; 
+        
+        BillingPlanLineItemGroupingController.createBillingLineItemsFuture(dataMap.get('BILLING_PLAN'));
+        Id unitId = dataMap.get('PROPERTY');
+        Id projectId = dataMap.get('PROJECT');
+        Id proprtyId = dataMap.get('PROPERTY_TYPE');
+        Id towerId = dataMap.get('TOWER');
+        Id planId = dataMap.get('BILLING_PLAN');
+        
+        Document_Template__c dt = new Document_Template__c();
+        dt.Name = 'Acceptance Form';
+        dt.Document_Type__c = 'Acceptance Form';
+        dt.Project__c = projectId; 
+        dt.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        dt.Clause_1__c = '{!OtherApplicantDetails.Second Applicant Salutation} {!OtherApplicantDetails.Third Applicant Salutation} {!OtherApplicantDetails.Fourth Applicant Salutation} {!OtherApplicantDetails.Fifth Applicant Salutation} {!AllApplicantDetails.All Applicant Names} {!AllApplicantDetails.All Applicant Signatures} {!AllApplicantDetails.All Applicant Names with Index} {!AllApplicantDetails.All Applicant Names Inline} {!AllApplicantDetails.All Applicant Names with Index and Linebreak} {!AllApplicantDetails.All Applicant Names with Allottees} {!ReferenceNo.refno} {!FloorNo.FloorNo}';
+        dt.Clause_2__c = '{!OtherApplicantDetails.Second Applicant Name} {!OtherApplicantDetails.Third Applicant Name} {!OtherApplicantDetails.Fourth Applicant Name} {!OtherApplicantDetails.Fifth Applicant Name} {!AllApplicantDetails.All Applicant Names} {!AllApplicantDetails.All Applicant Signatures} {!PageBreak.sPageBreak} {!Justify.sJustify} {!Justify.eJustify} {!lineBreak.lineBreak}';
+        dt.Clause_3__c = '{!Schedule-Bare Shell.First Schedule} {!Schedule-Bare Shell.Second Schedule} {!Schedule-Bare Shell.Third Schedule} {!Schedule-Bare Shell.Fourth Schedule} {!Schedule-Bare Shell.Fifth Schedule}';
+        dt.Clause_4__c = '{!Schedule-Typical(Multi Tower Project).First Schedule} {!Schedule-Typical(Multi Tower Project).Second Schedule} {!Schedule-Typical(Multi Tower Project).Third Schedule} {!Schedule-Typical(Multi Tower Project).Fourth Schedule} {!Schedule-Typical(Multi Tower Project).Fifth Schedule}';
+        dt.Clause_5__c = '{!Schedule-Typical (Tower as Seprate Project).First Schedule} {!Schedule-Typical (Tower as Seprate Project).Second Schedule} {!Schedule-Typical (Tower as Seprate Project).Third Schedule} {!Schedule-Typical (Tower as Seprate Project).Fourth Schedule} {!Schedule-Typical (Tower as Seprate Project).Fifth Schedule}';
+        dt.Clause_6__c = '{!Schedule-Penthouse.First Schedule} {!Schedule-Penthouse.Second Schedule} {!Schedule-Penthouse.Third Schedule} {!Schedule-Penthouse.Fourth Schedule} {!Schedule-Penthouse.Fifth Schedule}';
+        dt.Clause_7__c = '{!Property__c.Name} {!Tower__c.Name} {!TPA Signature.TPASign} {!AllApplicantDetails.All Applicant Names with Index AFS} {!opportunity.Name} {!Account.Name} {!Quotation__c.Name} {!Project__c.Name} {!Schedule-Duplex.Fifth Schedule} {!Addresses.Bank NOC Address} {!Addresses.Provisional Bank NOC Address} {!Addresses.Primary Applicant Mailing Address} {!Addresses.Primary Applicant Billing Address} {!Booking__c.Possession_Schedule_Date__c}';
+        //insert dt;
+        
+        Document_Template__c dt1 = new Document_Template__c();
+        dt1.Name = 'Agreement Form';
+        dt1.Document_Type__c = 'Agreement Form';
+        dt1.Project__c = projectId; 
+        dt1.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        dt1.Clause_1__c = '{!OtherApplicantDetails.Second Applicant Salutation} {!OtherApplicantDetails.Third Applicant Salutation} {!OtherApplicantDetails.Fourth Applicant Salutation} {!OtherApplicantDetails.Fifth Applicant Salutation} {!AllApplicantDetails.All Applicant Names} {!AllApplicantDetails.All Applicant Signatures} {!ReferenceNo.refno} {!FloorNo.FloorNo}';
+        dt1.Clause_2__c = '{!OtherApplicantDetails.Second Applicant Name} {!OtherApplicantDetails.Third Applicant Name} {!OtherApplicantDetails.Fourth Applicant Name} {!OtherApplicantDetails.Fifth Applicant Name} {!AllApplicantDetails.All Applicant Names} {!AllApplicantDetails.All Applicant Signatures}';
+        dt1.Clause_3__c = '{!Schedule-Bare Shell.First Schedule} {!Schedule-Bare Shell.Second Schedule} {!Schedule-Bare Shell.Third Schedule} {!Schedule-Bare Shell.Fourth Schedule} {!Schedule-Bare Shell.Fifth Schedule}';
+        dt1.Clause_4__c = '{!Schedule-Typical(Multi Tower Project).First Schedule} {!Schedule-Typical(Multi Tower Project).Second Schedule} {!Schedule-Typical(Multi Tower Project).Third Schedule} {!Schedule-Typical(Multi Tower Project).Fourth Schedule} {!Schedule-Typical(Multi Tower Project).Fifth Schedule}';
+        dt1.Clause_5__c = '{!Schedule-Typical (Tower as Seprate Project).First Schedule} {!Schedule-Typical (Tower as Seprate Project).Second Schedule} {!Schedule-Typical (Tower as Seprate Project).Third Schedule} {!Schedule-Typical (Tower as Seprate Project).Fourth Schedule} {!Schedule-Typical (Tower as Seprate Project).Fifth Schedule}';
+        dt1.Clause_6__c = '{!Schedule-Penthouse.First Schedule} {!Schedule-Penthouse.Second Schedule} {!Schedule-Penthouse.Third Schedule} {!Schedule-Penthouse.Fourth Schedule} {!Schedule-Penthouse.Fifth Schedule}';
+        dt1.Clause_7__c = '{!Property__c.Name} {!Tower__c.Name} {!TPA Signature.TPASign} {!AllApplicantDetails.All Applicant Names with Index AFS} {!opportunity.Name} {!Account.Name} {!Quotation__c.Name} {!Project__c.Name} {!Schedule-Duplex.Fifth Schedule}';
+        //insert dt;
+        
+        Document_Template__c dt2 = new Document_Template__c();
+        dt2.Name = 'Allotment Form';
+        dt2.Document_Type__c = 'Allotment Form';
+        dt2.Project__c = projectId; 
+        dt2.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        dt1.Clause_1__c = '{!OtherApplicantDetails.Second Applicant Salutation} {!OtherApplicantDetails.Third Applicant Salutation} {!OtherApplicantDetails.Fourth Applicant Salutation} {!OtherApplicantDetails.Fifth Applicant Salutation} {!AllApplicantDetails.All Applicant Names} {!AllApplicantDetails.All Applicant Signatures} {!ReferenceNo.refno} {!FloorNo.FloorNo}';
+        dt1.Clause_2__c = '{!OtherApplicantDetails.Second Applicant Name} {!OtherApplicantDetails.Third Applicant Name} {!OtherApplicantDetails.Fourth Applicant Name} {!OtherApplicantDetails.Fifth Applicant Name} {!AllApplicantDetails.All Applicant Names} {!AllApplicantDetails.All Applicant Signatures}';
+        dt1.Clause_3__c = '{!Schedule-Bare Shell.First Schedule} {!Schedule-Bare Shell.Second Schedule} {!Schedule-Bare Shell.Third Schedule} {!Schedule-Bare Shell.Fourth Schedule} {!Schedule-Bare Shell.Fifth Schedule}';
+        dt1.Clause_4__c = '{!Schedule-Typical(Multi Tower Project).First Schedule} {!Schedule-Typical(Multi Tower Project).Second Schedule} {!Schedule-Typical(Multi Tower Project).Third Schedule} {!Schedule-Typical(Multi Tower Project).Fourth Schedule} {!Schedule-Typical(Multi Tower Project).Fifth Schedule}';
+        dt1.Clause_5__c = '{!Schedule-Typical (Tower as Seprate Project).First Schedule} {!Schedule-Typical (Tower as Seprate Project).Second Schedule} {!Schedule-Typical (Tower as Seprate Project).Third Schedule} {!Schedule-Typical (Tower as Seprate Project).Fourth Schedule} {!Schedule-Typical (Tower as Seprate Project).Fifth Schedule}';
+        dt1.Clause_6__c = '{!Schedule-Penthouse.First Schedule} {!Schedule-Penthouse.Second Schedule} {!Schedule-Penthouse.Third Schedule} {!Schedule-Penthouse.Fourth Schedule} {!Schedule-Penthouse.Fifth Schedule}';
+        dt1.Clause_7__c = '{!Property__c.Name} {!Tower__c.Name} {!TPA Signature.TPASign} {!AllApplicantDetails.All Applicant Names with Index AFS} {!opportunity.Name} {!Account.Name} {!Quotation__c.Name} {!Project__c.Name} {!Schedule-Duplex.Fifth Schedule}';
+        
+        /*Document_Template__c dt3 = new Document_Template__c();
+        dt3.Name = 'NRI Declaration Form';
+        dt3.Document_Type__c = 'NRI Declaration Form';
+        dt3.Project__c = projectId; 
+        dt3.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt4 = new Document_Template__c();
+        dt4.Name = 'Agreement signing undertaking';
+        dt4.Document_Type__c = 'Agreement signing undertaking';
+        dt4.Project__c = projectId; 
+        dt4.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt5 = new Document_Template__c();
+        dt5.Name = 'Annexure B - Nomination Form';
+        dt5.Document_Type__c = 'Annexure B - Nomination Form';
+        dt5.Project__c = projectId; 
+        dt5.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt6 = new Document_Template__c();
+        dt6.Name = 'TPA';
+        dt6.Document_Type__c = 'TPA';
+        dt6.Project__c = projectId; 
+        dt6.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt7 = new Document_Template__c();
+        dt7.Name = 'Bank NOC';
+        dt7.Document_Type__c = 'Bank NOC';
+        dt7.Project__c = projectId; 
+        dt7.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt8 = new Document_Template__c();
+        dt8.Name = 'Provisional NOC';
+        dt8.Document_Type__c = 'Provisional NOC';
+        dt8.Project__c = projectId; 
+        dt8.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt9 = new Document_Template__c();
+        dt9.Name = 'L&L NOC';
+        dt9.Document_Type__c = 'L&L NOC';
+        dt9.Project__c = projectId; 
+        dt9.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt10 = new Document_Template__c();
+        dt10.Name = 'Car Park Allotment Letter';
+        dt10.Document_Type__c = 'Car Park Allotment Letter';
+        dt10.Project__c = projectId; 
+        dt10.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt11 = new Document_Template__c();
+        dt11.Name = 'Possession Undertaking Letter';
+        dt11.Document_Type__c = 'Possession Undertaking Letter';
+        dt11.Project__c = projectId; 
+        dt11.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt12 = new Document_Template__c();
+        dt12.Name = 'Possession Letter';
+        dt12.Document_Type__c = 'Possession Letter';
+        dt12.Project__c = projectId; 
+        dt12.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt13 = new Document_Template__c();
+        dt13.Name = 'Electricity Meter transfer NOC';
+        dt13.Document_Type__c = 'Electricity Meter transfer NOC';
+        dt13.Project__c = projectId; 
+        dt13.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt14 = new Document_Template__c();
+        dt14.Name = 'Rejection Notice - Pre Possession';
+        dt14.Document_Type__c = 'Rejection Notice - Pre Possession';
+        dt14.Project__c = projectId; 
+        dt14.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt15 = new Document_Template__c();
+        dt15.Name = 'Rejection Notice - Post Possession';
+        dt15.Document_Type__c = 'Rejection Notice - Post Possession';
+        dt15.Project__c = projectId; 
+        dt15.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt16 = new Document_Template__c();
+        dt16.Name = 'ROFR NOC Loan case';
+        dt16.Document_Type__c = 'ROFR NOC Loan case';
+        dt16.Project__c = projectId; 
+        dt16.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        */
+        
+        PageReference pageRef = Page.Quotation;
+        Test.setCurrentPage(pageRef);
+        pageRef.getParameters().put('unitId', unitId);
+        pageRef.getParameters().put('oppId', opp.Id);
+        
+        //Property__c property = Quotation.getProperty(unitId);
+       // Opportunity op = Quotation.getOpportunity(opp.Id);
+        
+        //List<QuotationManagmentServices.AdditionalChargesWrapper> additionalCharges = Quotation.getAdditionChargsList(proprtyId);
+        string othercharges_serialize = '[]';//JSON.serialize(additionalCharges);
+        
+        List<QuotationManagmentServices.SAPPricingWrapper> SAPChrges = Quotation.getSAPPricingList(unitId, false, 0);
+        
+        string sap_serialize = JSON.serialize(SAPChrges);
+
+        List<QuotationManagmentServices.PlanDetailsWrapper> planDetails = Quotation.getPlanDetail(sap_serialize,planId,unitId);
+        string planDetails_serialize = JSON.serialize(planDetails);
+        
+        string discountList_serialize = '[]'; // = JSON.serialize(discountList);
+        string carParKList = '[]'; //= '["TANDEM",1,100000]'; 
+        string fieldSet = '[{"label":"unitId","value":"' + unitId +'"},{"label":"editschedule","value":false},{"label":"oppId","value":"' + opp.id +'"},{"label":"additionalComments","value":""},{"label":"selectedPlan","value":"' + planId + '"},{"label":"changeInSource","value":false},{"label":"revisedBookingSource","value":null},{"label":"referredBy","value":null},{"label":"referProject","value":null},{"label":"referTower","value":null},{"label":"referFlat","value":null},{"label":"referEmpCode","value":null}]';
+        string qId = Quotation.saveQuotation(sap_serialize, othercharges_serialize, discountList_serialize, planDetails_serialize, carParKList, fieldSet);
+        
+        string st1 = QuotationManagmentServices.INFormat(10);
+        
+        Booking__c b = new Booking__C();
+        b.Opportunity__c = opp.id;
+        b.Booking_Date__c = system.today();
+        b.Acceptance_Form_Template__c = 'Acceptance_Form';
+        b.Agreement_Form_Template__c = 'Agreement_Form';
+        b.Allotment_Form_Template__c = 'Allotment Form';
+        /*b.NRI_Declaration_Template__c = 'NRI Declaration Form';
+        b.Mortgage_Release_Request_Letter__c = 'Mortgage Release Request Letter';
+        b.Agreement_Signing_undertaking__c = 'Agreement signing undertaking';
+        b.Annexure_B_Nomination_Form__c = 'Annexure B - Nomination Form';
+        b.TPA__c = 'TPA';
+        b.Bank_NOC__c = 'Bank NOC';
+        b.Provisional_NOC__c = 'Provisional NOC';
+        b.L_L_NOC__c = 'L&L NOC';
+        b.Car_Park_Allotment_Letter__c = 'Car Park Allotment Letter';
+        b.Possession_Undertaking_Letter__c = 'Possession Undertaking Letter';
+        b.Possession_Letter__c = 'Possession Letter';
+        b.Electricity_Meter_transfer_NOC__c = 'Electricity Meter transfer NOC';
+        b.Rejection_Notice_Pre_Possession__c = 'Rejection Notice - Pre Possession';
+        b.Rejection_Notice_Post_Possession__c = 'Rejection Notice - Post Possession';
+        b.ROFR_NOC_Loan_case__c = 'ROFR NOC Loan case';*/
+        b.Status__c = 'Booking In Process';
+        //b.Booking_Through__c = 'Direct';
+        if(qId!=null&&qId.contains(',')){
+            qId = qId.substring(0, qId.indexOf(','));
+        }
+        b.Quotation__c = qId;
+        b.Default_Address_of__c = '1st Applicant';
+        b.Project__c = projectId;
+        b.Tower__c = towerId;
+        b.Property__c = unitId;
+        insert b;
+        
+        /*quotation__c q = new quotation__c();
+        q.id = qid;
+        
+        Project__c p = new Project__c();
+        p.id = unitId;
+        
+        Tower__c t = new Tower__c();
+        t.id = towerId;
+        */
+        List<Applicant__c> aplist = new List<Applicant__c>();
+        Applicant__c ap = new Applicant__c();
+        ap.Booking__C = b.id;
+        ap.Applicant_Number__c = 'Primary Applicant';
+        ap.Opportunity__c = opp.id;
+        ap.Type_Of_Applicant__c = 'Individual Buyer';
+        ap.PancardNo__c = 'ABCDE1234E';
+        ap.Salutation__c = 'Capt.';
+        ap.Applicant_Type__c = 'Primary';
+        ap.Name = 'Primary Applicant';
+        ap.Mobile_Number__c = '1234567890';
+        ap.Nationality__c = 'Indian';
+        ap.Subtype_Of_Applicant__c = 'Indian National';
+        ap.Mailing_Address_same_as_PermanentAddress__c = true;
+        ap.House_No__c = 'House';
+        ap.Street_1__c = 'Street1';
+        ap.Street_2__c = 'Street2';
+        ap.City__c = 'Mumbai';
+        insert ap;
+        aplist.add(ap);
+        
+        Applicant__c ap2 = new Applicant__c();
+        ap2.Booking__C = b.id;
+        ap2.Applicant_Number__c = 'Second Applicant';
+        ap2.Opportunity__c = opp.id;
+        ap2.Type_Of_Applicant__c = 'Individual Buyer';
+        ap2.PancardNo__c = 'ABCDE1234E';
+        ap2.Salutation__c = 'Capt.';
+        ap2.Applicant_Type__c = 'Second';
+        ap2.Name = 'Second Applicant';
+        ap2.Mobile_Number__c = '1234567890';
+        ap2.Nationality__c = 'Indian';
+        ap2.Subtype_Of_Applicant__c = 'Indian National';
+        ap2.Mailing_Address_same_as_PermanentAddress__c = true;
+        ap2.House_No__c = 'House';
+        ap2.Street_1__c = 'Street1';
+        ap2.Street_2__c = 'Street2';
+        ap2.City__c = 'Mumbai';
+        insert ap2;
+         aplist.add(ap2);
+        
+        Applicant__c ap3 = new Applicant__c();
+        ap3.Booking__C = b.id;
+        ap3.Applicant_Number__c = 'Third Applicant';
+        ap3.Opportunity__c = opp.id;
+        ap3.Type_Of_Applicant__c = 'Individual Buyer';
+        ap3.PancardNo__c = 'ABCDE1234E';
+        ap3.Salutation__c = 'Capt.';
+        ap3.Applicant_Type__c = 'Third';
+        ap3.Name = 'Third Applicant';
+        ap3.Mobile_Number__c = '1234567890';
+        ap3.Nationality__c = 'Indian';
+        ap3.Subtype_Of_Applicant__c = 'Indian National';
+        ap3.Mailing_Address_same_as_PermanentAddress__c = true;
+        ap3.House_No__c = 'House';
+        ap3.Street_1__c = 'Street1';
+        ap3.Street_2__c = 'Street2';
+        ap3.City__c = 'Mumbai';
+        insert ap3;
+         aplist.add(ap3);
+        
+        Applicant__c ap4 = new Applicant__c();
+        ap4.Booking__C = b.id;
+        ap4.Applicant_Number__c = 'Fourth Applicant';
+        ap4.Opportunity__c = opp.id;
+        ap4.Type_Of_Applicant__c = 'Individual Buyer';
+        ap4.PancardNo__c = 'ABCDE1234E';
+        ap4.Salutation__c = 'Capt.';
+        ap4.Applicant_Type__c = 'Fourth';
+        ap4.Name = 'Fourth Applicant';
+        ap4.Mobile_Number__c = '1234567890';
+        ap4.Nationality__c = 'Indian';
+        ap4.Subtype_Of_Applicant__c = 'Indian National';
+        ap4.Mailing_Address_same_as_PermanentAddress__c = true;
+        ap4.House_No__c = 'House';
+        ap4.Street_1__c = 'Street1';
+        ap4.Street_2__c = 'Street2';
+        ap4.City__c = 'Mumbai';
+        insert ap4;
+         aplist.add(ap4);
+        Applicant__c ap5 = new Applicant__c();
+        ap5.Booking__C = b.id;
+        ap5.Applicant_Number__c = 'Fifth Applicant';
+        ap5.Opportunity__c = opp.id;
+        ap5.Type_Of_Applicant__c = 'Individual Buyer';
+        ap5.PancardNo__c = 'ABCDE1234E';
+        ap5.Salutation__c = 'Capt.';
+        ap5.Applicant_Type__c = 'Fifth';
+        ap5.Name = 'Fifth Applicant';
+        ap5.Mobile_Number__c = '1234567890';
+        ap5.Nationality__c = 'Indian';
+        ap5.Subtype_Of_Applicant__c = 'Indian National';
+        ap5.Mailing_Address_same_as_PermanentAddress__c = true;
+        ap5.House_No__c = 'House';
+        ap5.Street_1__c = 'Street1';
+        ap5.Street_2__c = 'Street2';
+        ap5.City__c = 'Mumbai';
+        insert ap5;
+        aplist.add(ap5);
+        
+        opportunity opr = new Opportunity();
+        opr.id = opp.id;
+        opr.Booking__c = b.id;
+        opr.Property__c = unitId;
+        opr.project__c = projectId;
+        update opr;
+        
+        Property__c pr = new Property__c();
+        pr.id = unitId;
+        pr.status__C = 'Booked';
+        pr.Tower__c=towerId;
+         update pr;
+        
+        opp.Property__c=pr.id;
+        update opp;
+        Test.StartTest();
+        PageReference pageRef2 = Page.DocumentUploadPage;
+        Test.setCurrentPage(pageRef2);
+        //pageRef2.getParameters().put('id', dt.id);
+        ApexPages.StandardController sc2 = new ApexPages.StandardController(dt);
+        DocumentUpload ts = new DocumentUpload(sc2);
+        //ts.selectedObject = 'UnitCost';
+        //ts.prepareFieldList();
+        ts.selectedObject = 'OtherApplicantDetails';
+        ts.prepareFieldList();
+        ts.selectedObject = 'AllApplicantDetails';
+        ts.prepareFieldList();
+        ts.selectedObject = 'Schedule-Typical(Multi Tower Project)';
+        ts.prepareFieldList();
+        ts.selectedObject = 'Schedule-Typical (Tower as Seprate Project)';
+        ts.prepareFieldList();
+        ts.selectedObject = 'Schedule-Duplex';
+        ts.prepareFieldList();
+        ts.selectedObject = 'Schedule-Penthouse';
+        ts.prepareFieldList(); 
+        ts.selectedObject = 'Schedule-Bare Shell';
+        ts.prepareFieldList(); 
+        ts.selectedObject = 'SeventhTable1';
+        ts.prepareFieldList();
+        ts.selectedObject = 'Morgage NOC';
+        ts.prepareFieldList();
+        ts.selectedObject = 'Contact Details Update';
+        ts.prepareFieldList();
+        ts.selectedObject = 'Possesion';
+        ts.prepareFieldList();
+        ts.selectedObject = 'PageBreak';
+        ts.preparemergefield();
+        ts.selectedObject = 'Justify';
+        ts.preparemergefield();
+        ts.selectedObject = 'lineBreak';
+        ts.preparemergefield();
+        ts.selectedObject = 'ol';
+        ts.preparemergefield();
+        ts.selectedObject = 'olDecimal';
+        ts.preparemergefield();
+        ts.selectedObject = 'p';
+        ts.preparemergefield();
+        ts.selectedObject = 'Id';
+        ts.preparemergefield();
+        ts.save();
+        ts.saveAndPriview();
+        ts.addRow();
+        
+        PageReference pRef3 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef3);
+        //ApexPages.currentPage().getParameters().put('oppId',oppId);
+        GenerateCustomerDocument gd = new GenerateCustomerDocument();
+        List<SelectOption> projectList = gd.getProjects;
+        gd.selectedVal = projectId;
+        //List<SelectOption> clusterList = gd.getClusterNames ;
+        //gd.SelectedClusterId = clusterId;
+        List<SelectOption> towerList = gd.getTowers ;
+        gd.selectedTower = towerId;
+        List<SelectOption> docList = gd.getDocumentNames;         
+        gd.selectedDocument = 'Acceptance Form'; 
+        gd.checkInput();
+        gd.CustomerListNew();
+        gd.customerList[0].selected = true;
+        gd.generateDocument();
+        gd.getDisablePrevious();
+        gd.getDisableNext();
+        gd.getTotal_size();
+        gd.getPageNumber();
+        gd.getTotalPages();
+        gd.getNextCustomers();
+        gd.projectchange();
+        gd.towerchange();
+        gd.documentchange();
+        
+        /*PageReference pRef8 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef8);
+        //ApexPages.currentPage().getParameters().put('oppId',oppId);
+        GenerateCustomerDocument gd8 = new GenerateCustomerDocument();
+        List<SelectOption> projectList8 = gd8.getProjects;
+        gd8.selectedVal = projectId;
+        //List<SelectOption> clusterList8 = gd8.getClusterNames ;
+        //gd.SelectedClusterId = clusterId;
+        List<SelectOption> towerList8 = gd8.getTowers ;
+        gd8.selectedTower = towerId;
+        List<SelectOption> docList8 = gd8.getDocumentNames;         
+        gd8.selectedDocument = 'Mortgage Release Request Letter'; 
+        gd8.checkInput();
+        gd8.CustomerListNew();
+        //gd8.customerList[0].selected = true;
+        gd8.generateDocument();
+        gd8.getDisablePrevious();
+        gd8.getDisableNext();
+        gd8.getTotal_size();
+        gd8.getPageNumber();
+        gd8.getTotalPages();
+        gd8.getNextCustomers();
+        gd8.projectchange();
+        gd8.towerchange();
+        gd8.documentchange();
+        
+        PageReference pRef9 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef9);
+        GenerateCustomerDocument gd9 = new GenerateCustomerDocument();
+        List<SelectOption> projectList9 = gd9.getProjects;
+        gd9.selectedVal = projectId;
+        List<SelectOption> towerList9 = gd9.getTowers ;
+        gd9.selectedTower = towerId;
+        List<SelectOption> docList9 = gd9.getDocumentNames;         
+        gd9.selectedDocument = 'Agreement signing undertaking';  
+        gd9.checkInput();
+        gd9.CustomerListNew();
+        gd9.generateDocument();
+        gd9.getDisablePrevious();
+        gd9.getDisableNext();
+        gd9.getTotal_size();
+        gd9.getPageNumber();
+        gd9.getTotalPages();
+        gd9.getNextCustomers();
+        gd9.projectchange();
+        gd9.towerchange();
+        gd9.documentchange();
+        
+        PageReference pRef10 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef10);
+        GenerateCustomerDocument gd10 = new GenerateCustomerDocument();
+        List<SelectOption> projectList10 = gd9.getProjects;
+        gd9.selectedVal = projectId;
+        List<SelectOption> towerList10 = gd10.getTowers ;
+        gd10.selectedTower = towerId;
+        List<SelectOption> docList10 = gd10.getDocumentNames;         
+        gd10.selectedDocument = 'TPA'; 
+        gd10.checkInput();
+        gd10.CustomerListNew();
+        gd10.generateDocument();
+        gd10.getDisablePrevious();
+        gd10.getDisableNext();
+        gd10.getTotal_size();
+        gd10.getPageNumber();
+        gd10.getTotalPages();
+        gd10.getNextCustomers();
+        gd10.projectchange();
+        gd10.towerchange();
+        gd10.documentchange();
+        
+        PageReference pRef11 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef11);
+        GenerateCustomerDocument gd11 = new GenerateCustomerDocument();
+        List<SelectOption> projectList11 = gd11.getProjects;
+        gd11.selectedVal = projectId;
+        List<SelectOption> towerList11 = gd11.getTowers ;
+        gd11.selectedTower = towerId;
+        List<SelectOption> docList11 = gd11.getDocumentNames;         
+        gd11.selectedDocument = 'Bank NOC'; 
+        gd11.checkInput();
+        gd11.CustomerListNew();
+        gd11.generateDocument();
+        gd11.getDisablePrevious();
+        gd11.getDisableNext();
+        gd11.getTotal_size();
+        gd11.getPageNumber();
+        gd11.getTotalPages();
+        gd11.getNextCustomers();
+        gd11.projectchange();
+        gd11.towerchange();
+        gd11.documentchange();
+        
+        PageReference pRef12 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef12);
+        GenerateCustomerDocument gd12 = new GenerateCustomerDocument();
+        List<SelectOption> projectList12 = gd12.getProjects;
+        gd12.selectedVal = projectId;
+        List<SelectOption> towerList12 = gd12.getTowers ;
+        gd12.selectedTower = towerId;
+        List<SelectOption> docList12 = gd12.getDocumentNames;         
+        gd12.selectedDocument = 'Provisional NOC'; 
+        gd12.checkInput();
+        gd12.CustomerListNew();
+        gd12.generateDocument();
+        gd12.getDisablePrevious();
+        gd12.getDisableNext();
+        gd12.getTotal_size();
+        gd12.getPageNumber();
+        gd12.getTotalPages();
+        gd12.getNextCustomers();
+        gd12.projectchange();
+        gd12.towerchange();
+        gd12.documentchange();
+        
+        PageReference pRef13 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef13);
+        GenerateCustomerDocument gd13 = new GenerateCustomerDocument();
+        List<SelectOption> projectList13 = gd13.getProjects;
+        gd13.selectedVal = projectId;
+        List<SelectOption> towerList13 = gd13.getTowers ;
+        gd13.selectedTower = towerId;
+        List<SelectOption> docList13 = gd13.getDocumentNames;         
+        gd13.selectedDocument = 'L&L NOC';  
+        gd13.checkInput();
+        gd13.CustomerListNew();
+        gd13.generateDocument();
+        gd13.getDisablePrevious();
+        gd13.getDisableNext();
+        gd13.getTotal_size();
+        gd13.getPageNumber();
+        gd13.getTotalPages();
+        gd13.getNextCustomers();
+        gd13.projectchange();
+        gd13.towerchange();
+        gd13.documentchange();
+        
+        PageReference pRef14 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef14);
+        GenerateCustomerDocument gd14 = new GenerateCustomerDocument();
+        List<SelectOption> projectList14 = gd14.getProjects;
+        gd14.selectedVal = projectId;
+        List<SelectOption> towerList14 = gd14.getTowers ;
+        gd14.selectedTower = towerId;
+        List<SelectOption> docList14 = gd14.getDocumentNames;         
+        gd14.selectedDocument = 'Annexure B - Nomination Form'; 
+        gd14.checkInput();
+        gd14.CustomerListNew();
+        gd14.generateDocument();
+        gd14.getDisablePrevious();
+        gd14.getDisableNext();
+        gd14.getTotal_size();
+        gd14.getPageNumber();
+        gd14.getTotalPages();
+        gd14.getNextCustomers();
+        gd14.projectchange();
+        gd14.towerchange();
+        gd14.documentchange();
+        
+        PageReference pRef15 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef15);
+        GenerateCustomerDocument gd15 = new GenerateCustomerDocument();
+        List<SelectOption> projectList15 = gd15.getProjects;
+        gd15.selectedVal = projectId;
+        List<SelectOption> towerList15 = gd15.getTowers ;
+        gd15.selectedTower = towerId;
+        List<SelectOption> docList15 = gd15.getDocumentNames;         
+        gd15.selectedDocument = 'Car Park Allotment Letter'; 
+        gd15.checkInput();
+        gd15.CustomerListNew();
+        gd15.generateDocument();
+        gd15.getDisablePrevious();
+        gd15.getDisableNext();
+        gd15.getTotal_size();
+        gd15.getPageNumber();
+        gd15.getTotalPages();
+        gd15.getNextCustomers();
+        gd15.projectchange();
+        gd15.towerchange();
+        gd15.documentchange();
+        
+        PageReference pRef16 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef16);
+        GenerateCustomerDocument gd16 = new GenerateCustomerDocument();
+        List<SelectOption> projectList16 = gd16.getProjects;
+        gd16.selectedVal = projectId;
+        List<SelectOption> towerList16 = gd16.getTowers ;
+        gd16.selectedTower = towerId;
+        List<SelectOption> docList16 = gd16.getDocumentNames;         
+        gd16.selectedDocument = 'Possession Undertaking Letter'; 
+        gd16.checkInput();
+        gd16.CustomerListNew();
+        gd16.generateDocument();
+        gd16.getDisablePrevious();
+        gd16.getDisableNext();
+        gd16.getTotal_size();
+        gd16.getPageNumber();
+        gd16.getTotalPages();
+        gd16.getNextCustomers();
+        gd16.projectchange();
+        gd16.towerchange();
+        gd16.documentchange();
+        
+        PageReference pRef17 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef17);
+        GenerateCustomerDocument gd17 = new GenerateCustomerDocument();
+        List<SelectOption> projectList17 = gd17.getProjects;
+        gd17.selectedVal = projectId;
+        List<SelectOption> towerList17 = gd17.getTowers ;
+        gd17.selectedTower = towerId;
+        List<SelectOption> docList17 = gd17.getDocumentNames;         
+        gd17.selectedDocument = 'Possession Letter'; 
+        gd17.checkInput();
+        gd17.CustomerListNew();
+        gd17.generateDocument();
+        gd17.getDisablePrevious();
+        gd17.getDisableNext();
+        gd17.getTotal_size();
+        gd17.getPageNumber();
+        gd17.getTotalPages();
+        gd17.getNextCustomers();
+        gd17.projectchange();
+        gd17.towerchange();
+        gd17.documentchange();
+        
+        PageReference pRef18 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef18);
+        GenerateCustomerDocument gd18 = new GenerateCustomerDocument();
+        List<SelectOption> projectList18 = gd18.getProjects;
+        gd18.selectedVal = projectId;
+        List<SelectOption> towerList18 = gd18.getTowers ;
+        gd18.selectedTower = towerId;
+        List<SelectOption> docList18 = gd18.getDocumentNames;         
+        gd18.selectedDocument = 'Electricity Meter transfer NOC'; 
+        gd18.checkInput();
+        gd18.CustomerListNew();
+        gd18.generateDocument();
+        gd18.getDisablePrevious();
+        gd18.getDisableNext();
+        gd18.getTotal_size();
+        gd18.getPageNumber();
+        gd18.getTotalPages();
+        gd18.getNextCustomers();
+        gd18.projectchange();
+        gd18.towerchange();
+        gd18.documentchange();
+        
+        PageReference pRef19 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef19);
+        GenerateCustomerDocument gd19 = new GenerateCustomerDocument();
+        List<SelectOption> projectList19 = gd19.getProjects;
+        gd19.selectedVal = projectId;
+        List<SelectOption> towerList19 = gd19.getTowers ;
+        gd19.selectedTower = towerId;
+        List<SelectOption> docList19 = gd19.getDocumentNames;         
+        gd19.selectedDocument = 'Rejection Notice - Pre Possession'; 
+        gd19.checkInput();
+        gd19.CustomerListNew();
+        gd19.generateDocument();
+        gd19.getDisablePrevious();
+        gd19.getDisableNext();
+        gd19.getTotal_size();
+        gd19.getPageNumber();
+        gd19.getTotalPages();
+        gd19.getNextCustomers();
+        gd19.projectchange();
+        gd19.towerchange();
+        gd19.documentchange();
+        
+        PageReference pRef20 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef20);
+        GenerateCustomerDocument gd20 = new GenerateCustomerDocument();
+        List<SelectOption> projectList20 = gd20.getProjects;
+        gd20.selectedVal = projectId;
+        List<SelectOption> towerList20 = gd20.getTowers ;
+        gd20.selectedTower = towerId;
+        List<SelectOption> docList20 = gd20.getDocumentNames;         
+        gd20.selectedDocument = 'Rejection Notice - Post Possession'; 
+        gd20.checkInput();
+        gd20.CustomerListNew();
+        gd20.generateDocument();
+        gd20.getDisablePrevious();
+        gd20.getDisableNext();
+        gd20.getTotal_size();
+        gd20.getPageNumber();
+        gd20.getTotalPages();
+        gd20.getNextCustomers();
+        gd20.projectchange();
+        gd20.towerchange();
+        gd20.documentchange();
+        
+        PageReference pRef21 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef21);
+        GenerateCustomerDocument gd21 = new GenerateCustomerDocument();
+        List<SelectOption> projectList21 = gd21.getProjects;
+        gd21.selectedVal = projectId;
+        List<SelectOption> towerList21 = gd21.getTowers ;
+        gd21.selectedTower = towerId;
+        List<SelectOption> docList21 = gd21.getDocumentNames;         
+        gd21.selectedDocument = 'ROFR NOC Loan case'; 
+        gd21.checkInput();
+        gd21.CustomerListNew();
+        gd21.generateDocument();
+        gd21.getDisablePrevious();
+        gd21.getDisableNext();
+        gd21.getTotal_size();
+        gd21.getPageNumber();
+        gd21.getTotalPages();
+        gd21.getNextCustomers();
+        gd21.projectchange();
+        gd21.towerchange();
+        gd21.documentchange();*/
+
+        PageReference pRef6 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef6);
+        //ApexPages.currentPage().getParameters().put('oppId',oppId);
+        GenerateCustomerDocument gd1 = new GenerateCustomerDocument();
+        List<SelectOption> projectList1 = gd1.getProjects;
+        gd1.selectedVal = projectId;
+        //List<SelectOption> clusterList = gd.getClusterNames ;
+        //gd.SelectedClusterId = clusterId;
+        List<SelectOption> towerList1 = gd1.getTowers ;
+        gd1.selectedTower = towerId;
+        List<SelectOption> docList1 = gd1.getDocumentNames;         
+        gd1.selectedDocument = 'Agreement Form'; 
+        gd1.checkInput();
+        gd1.CustomerListNew();
+        //gd1.customerList[0].selected = true;
+        gd1.generateDocument();
+        gd1.getDisablePrevious();
+        gd1.getDisableNext();
+        gd1.getTotal_size();
+        gd1.getPageNumber();
+        gd1.getTotalPages();
+        gd1.getNextCustomers();
+        gd1.projectchange();
+        gd1.towerchange();
+        gd1.documentchange();
+        gd1.Beginning();
+        
+        PageReference pRef7 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef7);
+        //ApexPages.currentPage().getParameters().put('oppId',oppId);
+        GenerateCustomerDocument gd2 = new GenerateCustomerDocument();
+        List<SelectOption> projectList2 = gd2.getProjects;
+        gd2.selectedVal = projectId;
+        //List<SelectOption> clusterList = gd.getClusterNames ;
+        //gd.SelectedClusterId = clusterId;
+        List<SelectOption> towerList2 = gd2.getTowers ;
+        gd2.selectedTower = towerId;
+        List<SelectOption> docList2 = gd2.getDocumentNames;         
+        gd2.selectedDocument = 'Allotment Form'; 
+        gd2.checkInput();
+        gd2.CustomerListNew();
+        //gd2.customerList[0].selected = true;
+        gd2.generateDocument();
+        gd2.getDisablePrevious();
+        gd2.getDisableNext();
+        gd2.getTotal_size();
+        gd2.getPageNumber();
+        gd2.getTotalPages();
+        gd2.onRadioChange();
+        gd2.projectchange();
+        gd2.towerchange();
+        gd2.documentchange();
+        
+        
+        PageReference pRef4 = Page.View_Document;
+        Test.setCurrentPage(pRef4);
+        ApexPages.currentPage().getParameters().put('oppId',opp.Id);
+        ApexPages.currentPage().getParameters().put('docType','Acceptance Form'); 
+        ApexPages.currentPage().getParameters().put('docName','Acceptance Form');
+        ViewDocument adf = new ViewDocument();
+        PaginationController.PaginationWrapper pc = new PaginationController.PaginationWrapper(10,10,10);
+        PaginationController.Beginning(pc);
+        PaginationController.Previous(pc);
+        PaginationController.Next(pc);
+        PaginationController.End(pc);
+      /*  
+        PageReference pRef5 = Page.View_Document;
+        Test.setCurrentPage(pRef5);
+        ApexPages.currentPage().getParameters().put('oppId',opp.Id);
+        ApexPages.currentPage().getParameters().put('docType','Agreement Form'); 
+        ApexPages.currentPage().getParameters().put('docName','Agreement Form');
+        ViewDocument adf1 = new ViewDocument();
+        PaginationController.PaginationWrapper pc1 = new PaginationController.PaginationWrapper(10,9,10);
+        PaginationController.Beginning(pc1);
+        PaginationController.Previous(pc1);
+        PaginationController.Next(pc1);
+        PaginationController.End(pc1);
+        
+        PageReference pRef22 = Page.View_Document;
+        Test.setCurrentPage(pRef22);
+        ApexPages.currentPage().getParameters().put('oppId',opp.Id);
+        ApexPages.currentPage().getParameters().put('docType','Allotment Form'); 
+        ApexPages.currentPage().getParameters().put('docName','Allotment Form');
+        ViewDocument adf2 = new ViewDocument();
+        PaginationController.PaginationWrapper pc2 = new PaginationController.PaginationWrapper(10,10,10);
+        PaginationController.Beginning(pc2);
+        PaginationController.Previous(pc2);
+        PaginationController.Next(pc2);
+        PaginationController.End(pc2);
+        
+        PageReference pRef23 = Page.View_Document;
+        Test.setCurrentPage(pRef23);
+        ApexPages.currentPage().getParameters().put('oppId',opp.Id);
+        ApexPages.currentPage().getParameters().put('docType','NRI Declaration Form'); 
+        ApexPages.currentPage().getParameters().put('docName','NRI Declaration Form');
+        ViewDocument adf3 = new ViewDocument();
+        PaginationController.PaginationWrapper pc3 = new PaginationController.PaginationWrapper(10,10,10);
+        PaginationController.Beginning(pc3);
+        PaginationController.Previous(pc3);
+        PaginationController.Next(pc3);
+        PaginationController.End(pc3);
+        */
+        Test.StopTest();
+        
+        String str = DocumentGenerationServices.getAllApplicantAllotmentSignature(aplist,'test');
+        //system.debug('str='+str);
+        //DocumentGenerationServices dgs = new DocumentGenerationServices(); 
+        //string aaa = dgs.getSeventhScheduleDetails(b,q,p,ap,t,'SeventhTable1');
+        
+    }
+      @isTest
+    public static void TestDocumentGeneration3(){
+        Map<String,Id> dataMap = TestDataFactory1.createData();
+        Account ac = new Account(firstName = 'Bhagyashree',lastName='test', recordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Customer').getRecordTypeId(),
+                     personEmail = 'handsome@stetig.in', personMobilePhone = '1111122222');
+        insert ac;
+        
+        Opportunity opp = new Opportunity(Name = 'Mr Bhagyashree Test Stetig',StageName = 'New',CloseDate = System.today().AddDays(15),
+                                         AccountId = ac.id);
+        insert opp;
+        
+        BillingPlanLineItemGroupingController.createBillingLineItemsFuture(dataMap.get('BILLING_PLAN'));
+        Id unitId = dataMap.get('PROPERTY');
+        Id projectId = dataMap.get('PROJECT');
+        Id proprtyId = dataMap.get('PROPERTY_TYPE');
+        Id towerId = dataMap.get('TOWER');
+        Id planId = dataMap.get('BILLING_PLAN');
+        
+        Document_Template__c dt = new Document_Template__c();
+        dt.Name = 'Acceptance Form';
+        dt.Document_Type__c = 'Acceptance Form';
+        dt.Project__c = projectId; 
+        dt.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        dt.Clause_1__c = '{!OtherApplicantDetails.Second Applicant Salutation} {!OtherApplicantDetails.Third Applicant Salutation} {!OtherApplicantDetails.Fourth Applicant Salutation} {!OtherApplicantDetails.Fifth Applicant Salutation} {!AllApplicantDetails.All Applicant Names} {!AllApplicantDetails.All Applicant Signatures} {!AllApplicantDetails.All Applicant Names with Index} {!AllApplicantDetails.All Applicant Names Inline} {!AllApplicantDetails.All Applicant Names with Index and Linebreak} {!AllApplicantDetails.All Applicant Names with Allottees} {!ReferenceNo.refno} {!FloorNo.FloorNo}';
+        dt.Clause_2__c = '{!OtherApplicantDetails.Second Applicant Name} {!OtherApplicantDetails.Third Applicant Name} {!OtherApplicantDetails.Fourth Applicant Name} {!OtherApplicantDetails.Fifth Applicant Name} {!AllApplicantDetails.All Applicant Names} {!AllApplicantDetails.All Applicant Signatures} {!PageBreak.sPageBreak} {!Justify.sJustify} {!Justify.eJustify} {!lineBreak.lineBreak}';
+        dt.Clause_3__c = '{!Schedule-Bare Shell.First Schedule} {!Schedule-Bare Shell.Second Schedule} {!Schedule-Bare Shell.Third Schedule} {!Schedule-Bare Shell.Fourth Schedule} {!Schedule-Bare Shell.Fifth Schedule}';
+        dt.Clause_4__c = '{!Schedule-Typical(Multi Tower Project).First Schedule} {!Schedule-Typical(Multi Tower Project).Second Schedule} {!Schedule-Typical(Multi Tower Project).Third Schedule} {!Schedule-Typical(Multi Tower Project).Fourth Schedule} {!Schedule-Typical(Multi Tower Project).Fifth Schedule}';
+        dt.Clause_5__c = '{!Schedule-Typical (Tower as Seprate Project).First Schedule} {!Schedule-Typical (Tower as Seprate Project).Second Schedule} {!Schedule-Typical (Tower as Seprate Project).Third Schedule} {!Schedule-Typical (Tower as Seprate Project).Fourth Schedule} {!Schedule-Typical (Tower as Seprate Project).Fifth Schedule}';
+        dt.Clause_6__c = '{!Schedule-Penthouse.First Schedule} {!Schedule-Penthouse.Second Schedule} {!Schedule-Penthouse.Third Schedule} {!Schedule-Penthouse.Fourth Schedule} {!Schedule-Penthouse.Fifth Schedule}';
+        dt.Clause_7__c = '{!Property__c.Name} {!Tower__c.Name} {!opportunity.Name} {!Account.Name} {!Quotation__c.Name} {!Project__c.Name} {!Schedule-Duplex.Fifth Schedule}';
+        //insert dt;
+        
+        Document_Template__c dt1 = new Document_Template__c();
+        dt1.Name = 'Agreement Form';
+        dt1.Document_Type__c = 'Agreement Form';
+        dt1.Project__c = projectId; 
+        dt1.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        dt1.Clause_1__c = '{!OtherApplicantDetails.Second Applicant Salutation} {!OtherApplicantDetails.Third Applicant Salutation} {!OtherApplicantDetails.Fourth Applicant Salutation} {!OtherApplicantDetails.Fifth Applicant Salutation} {!AllApplicantDetails.All Applicant Names} {!AllApplicantDetails.All Applicant Signatures} {!ReferenceNo.refno} {!FloorNo.FloorNo}';
+        dt1.Clause_2__c = '{!OtherApplicantDetails.Second Applicant Name} {!OtherApplicantDetails.Third Applicant Name} {!OtherApplicantDetails.Fourth Applicant Name} {!OtherApplicantDetails.Fifth Applicant Name} {!AllApplicantDetails.All Applicant Names} {!AllApplicantDetails.All Applicant Signatures}';
+        dt1.Clause_3__c = '{!Schedule-Bare Shell.First Schedule} {!Schedule-Bare Shell.Second Schedule} {!Schedule-Bare Shell.Third Schedule} {!Schedule-Bare Shell.Fourth Schedule} {!Schedule-Bare Shell.Fifth Schedule}';
+        dt1.Clause_4__c = '{!Schedule-Typical(Multi Tower Project).First Schedule} {!Schedule-Typical(Multi Tower Project).Second Schedule} {!Schedule-Typical(Multi Tower Project).Third Schedule} {!Schedule-Typical(Multi Tower Project).Fourth Schedule} {!Schedule-Typical(Multi Tower Project).Fifth Schedule}';
+        dt1.Clause_5__c = '{!Schedule-Typical (Tower as Seprate Project).First Schedule} {!Schedule-Typical (Tower as Seprate Project).Second Schedule} {!Schedule-Typical (Tower as Seprate Project).Third Schedule} {!Schedule-Typical (Tower as Seprate Project).Fourth Schedule} {!Schedule-Typical (Tower as Seprate Project).Fifth Schedule}';
+        dt1.Clause_6__c = '{!Schedule-Penthouse.First Schedule} {!Schedule-Penthouse.Second Schedule} {!Schedule-Penthouse.Third Schedule} {!Schedule-Penthouse.Fourth Schedule} {!Schedule-Penthouse.Fifth Schedule}';
+        dt1.Clause_7__c = '{!Property__c.Name} {!Tower__c.Name} {!opportunity.Name} {!Account.Name} {!Quotation__c.Name} {!Project__c.Name} {!Schedule-Duplex.Fifth Schedule}';
+        //insert dt;
+        
+        Document_Template__c dt2 = new Document_Template__c();
+        dt2.Name = 'Allotment Form';
+        dt2.Document_Type__c = 'Allotment Form';
+        dt2.Project__c = projectId; 
+        dt2.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        dt1.Clause_1__c = '{!OtherApplicantDetails.Second Applicant Salutation} {!OtherApplicantDetails.Third Applicant Salutation} {!OtherApplicantDetails.Fourth Applicant Salutation} {!OtherApplicantDetails.Fifth Applicant Salutation} {!AllApplicantDetails.All Applicant Names} {!AllApplicantDetails.All Applicant Signatures} {!ReferenceNo.refno} {!FloorNo.FloorNo}';
+        dt1.Clause_2__c = '{!OtherApplicantDetails.Second Applicant Name} {!OtherApplicantDetails.Third Applicant Name} {!OtherApplicantDetails.Fourth Applicant Name} {!OtherApplicantDetails.Fifth Applicant Name} {!AllApplicantDetails.All Applicant Names} {!AllApplicantDetails.All Applicant Signatures}';
+        dt1.Clause_3__c = '{!Schedule-Bare Shell.First Schedule} {!Schedule-Bare Shell.Second Schedule} {!Schedule-Bare Shell.Third Schedule} {!Schedule-Bare Shell.Fourth Schedule} {!Schedule-Bare Shell.Fifth Schedule}';
+        dt1.Clause_4__c = '{!Schedule-Typical(Multi Tower Project).First Schedule} {!Schedule-Typical(Multi Tower Project).Second Schedule} {!Schedule-Typical(Multi Tower Project).Third Schedule} {!Schedule-Typical(Multi Tower Project).Fourth Schedule} {!Schedule-Typical(Multi Tower Project).Fifth Schedule}';
+        dt1.Clause_5__c = '{!Schedule-Typical (Tower as Seprate Project).First Schedule} {!Schedule-Typical (Tower as Seprate Project).Second Schedule} {!Schedule-Typical (Tower as Seprate Project).Third Schedule} {!Schedule-Typical (Tower as Seprate Project).Fourth Schedule} {!Schedule-Typical (Tower as Seprate Project).Fifth Schedule}';
+        dt1.Clause_6__c = '{!Schedule-Penthouse.First Schedule} {!Schedule-Penthouse.Second Schedule} {!Schedule-Penthouse.Third Schedule} {!Schedule-Penthouse.Fourth Schedule} {!Schedule-Penthouse.Fifth Schedule}';
+        dt1.Clause_7__c = '{!Property__c.Name} {!Tower__c.Name} {!opportunity.Name} {!Account.Name} {!Quotation__c.Name} {!Project__c.Name} {!Schedule-Duplex.Fifth Schedule}';
+        
+        /*Document_Template__c dt3 = new Document_Template__c();
+        dt3.Name = 'NRI Declaration Form';
+        dt3.Document_Type__c = 'NRI Declaration Form';
+        dt3.Project__c = projectId; 
+        dt3.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt4 = new Document_Template__c();
+        dt4.Name = 'Agreement signing undertaking';
+        dt4.Document_Type__c = 'Agreement signing undertaking';
+        dt4.Project__c = projectId; 
+        dt4.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt5 = new Document_Template__c();
+        dt5.Name = 'Annexure B - Nomination Form';
+        dt5.Document_Type__c = 'Annexure B - Nomination Form';
+        dt5.Project__c = projectId; 
+        dt5.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt6 = new Document_Template__c();
+        dt6.Name = 'TPA';
+        dt6.Document_Type__c = 'TPA';
+        dt6.Project__c = projectId; 
+        dt6.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt7 = new Document_Template__c();
+        dt7.Name = 'Bank NOC';
+        dt7.Document_Type__c = 'Bank NOC';
+        dt7.Project__c = projectId; 
+        dt7.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt8 = new Document_Template__c();
+        dt8.Name = 'Provisional NOC';
+        dt8.Document_Type__c = 'Provisional NOC';
+        dt8.Project__c = projectId; 
+        dt8.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt9 = new Document_Template__c();
+        dt9.Name = 'L&L NOC';
+        dt9.Document_Type__c = 'L&L NOC';
+        dt9.Project__c = projectId; 
+        dt9.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt10 = new Document_Template__c();
+        dt10.Name = 'Car Park Allotment Letter';
+        dt10.Document_Type__c = 'Car Park Allotment Letter';
+        dt10.Project__c = projectId; 
+        dt10.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt11 = new Document_Template__c();
+        dt11.Name = 'Possession Undertaking Letter';
+        dt11.Document_Type__c = 'Possession Undertaking Letter';
+        dt11.Project__c = projectId; 
+        dt11.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt12 = new Document_Template__c();
+        dt12.Name = 'Possession Letter';
+        dt12.Document_Type__c = 'Possession Letter';
+        dt12.Project__c = projectId; 
+        dt12.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt13 = new Document_Template__c();
+        dt13.Name = 'Electricity Meter transfer NOC';
+        dt13.Document_Type__c = 'Electricity Meter transfer NOC';
+        dt13.Project__c = projectId; 
+        dt13.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt14 = new Document_Template__c();
+        dt14.Name = 'Rejection Notice - Pre Possession';
+        dt14.Document_Type__c = 'Rejection Notice - Pre Possession';
+        dt14.Project__c = projectId; 
+        dt14.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt15 = new Document_Template__c();
+        dt15.Name = 'Rejection Notice - Post Possession';
+        dt15.Document_Type__c = 'Rejection Notice - Post Possession';
+        dt15.Project__c = projectId; 
+        dt15.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt16 = new Document_Template__c();
+        dt16.Name = 'ROFR NOC Loan case';
+        dt16.Document_Type__c = 'ROFR NOC Loan case';
+        dt16.Project__c = projectId; 
+        dt16.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        */
+        
+        PageReference pageRef = Page.Quotation;
+        Test.setCurrentPage(pageRef);
+        pageRef.getParameters().put('unitId', unitId);
+        pageRef.getParameters().put('oppId', opp.Id);
+        
+        //Property__c property = Quotation.getProperty(unitId);
+       // Opportunity op = Quotation.getOpportunity(opp.Id);
+        
+        //List<QuotationManagmentServices.AdditionalChargesWrapper> additionalCharges = Quotation.getAdditionChargsList(proprtyId);
+        string othercharges_serialize = '[]';//JSON.serialize(additionalCharges);
+        
+        List<QuotationManagmentServices.SAPPricingWrapper> SAPChrges = Quotation.getSAPPricingList(unitId, false, 0);
+        
+        string sap_serialize = JSON.serialize(SAPChrges);
+
+        List<QuotationManagmentServices.PlanDetailsWrapper> planDetails = Quotation.getPlanDetail(sap_serialize,planId,unitId);
+        string planDetails_serialize = JSON.serialize(planDetails);
+        
+        string discountList_serialize = '[]'; // = JSON.serialize(discountList);
+        string carParKList = '[]'; //= '["TANDEM",1,100000]'; 
+        string fieldSet = '[{"label":"unitId","value":"' + unitId +'"},{"label":"editschedule","value":false},{"label":"oppId","value":"' + opp.id +'"},{"label":"additionalComments","value":""},{"label":"selectedPlan","value":"' + planId + '"},{"label":"changeInSource","value":false},{"label":"revisedBookingSource","value":null},{"label":"referredBy","value":null},{"label":"referProject","value":null},{"label":"referTower","value":null},{"label":"referFlat","value":null},{"label":"referEmpCode","value":null}]';
+        string qId = Quotation.saveQuotation(sap_serialize, othercharges_serialize, discountList_serialize, planDetails_serialize, carParKList, fieldSet);
+        
+        string st1 = QuotationManagmentServices.INFormat(10);
+        
+        Booking__c b = new Booking__C();
+        b.Opportunity__c = opp.id;
+        b.Booking_Date__c = system.today();
+        b.Acceptance_Form_Template__c = 'Acceptance_Form';
+        b.Agreement_Form_Template__c = 'Agreement_Form';
+        b.Allotment_Form_Template__c = 'Allotment Form';
+        /*b.NRI_Declaration_Template__c = 'NRI Declaration Form';
+        b.Mortgage_Release_Request_Letter__c = 'Mortgage Release Request Letter';
+        b.Agreement_Signing_undertaking__c = 'Agreement signing undertaking';
+        b.Annexure_B_Nomination_Form__c = 'Annexure B - Nomination Form';
+        b.TPA__c = 'TPA';
+        b.Bank_NOC__c = 'Bank NOC';
+        b.Provisional_NOC__c = 'Provisional NOC';
+        b.L_L_NOC__c = 'L&L NOC';
+        b.Car_Park_Allotment_Letter__c = 'Car Park Allotment Letter';
+        b.Possession_Undertaking_Letter__c = 'Possession Undertaking Letter';
+        b.Possession_Letter__c = 'Possession Letter';
+        b.Electricity_Meter_transfer_NOC__c = 'Electricity Meter transfer NOC';
+        b.Rejection_Notice_Pre_Possession__c = 'Rejection Notice - Pre Possession';
+        b.Rejection_Notice_Post_Possession__c = 'Rejection Notice - Post Possession';
+        b.ROFR_NOC_Loan_case__c = 'ROFR NOC Loan case';*/
+        b.Status__c = 'Booking In Process';
+        //b.Booking_Through__c = 'Direct';
+         if(qId!=null&&qId.contains(',')){
+            qId = qId.substring(0, qId.indexOf(','));
+        }
+        b.Quotation__c = qId;
+        b.Default_Address_of__c = '1st Applicant';
+        b.Project__c = projectId;
+        b.Tower__c = towerId;
+        b.Property__c = unitId;
+        insert b;
+        
+        /*quotation__c q = new quotation__c();
+        q.id = qid;
+        
+        Project__c p = new Project__c();
+        p.id = unitId;
+        
+        Tower__c t = new Tower__c();
+        t.id = towerId;
+        */
+        List<Applicant__c> aplist = new List<Applicant__c>();
+        Applicant__c ap = new Applicant__c();
+        ap.Booking__C = b.id;
+        ap.Applicant_Number__c = 'Primary Applicant';
+        ap.Opportunity__c = opp.id;
+        ap.Type_Of_Applicant__c = 'Individual Buyer';
+        ap.PancardNo__c = 'ABCDE1234E';
+        ap.Salutation__c = 'Capt.';
+        ap.Applicant_Type__c = 'Primary';
+        ap.Name = 'Primary Applicant';
+        ap.Mobile_Number__c = '1234567890';
+        ap.Nationality__c = 'Indian';
+        ap.Subtype_Of_Applicant__c = 'Indian National';
+        ap.Mailing_Address_same_as_PermanentAddress__c = true;
+        ap.House_No__c = 'House';
+        ap.Street_1__c = 'Street1';
+        ap.Street_2__c = 'Street2';
+        ap.City__c = 'Mumbai';
+        insert ap;
+        aplist.add(ap);
+        
+        Applicant__c ap2 = new Applicant__c();
+        ap2.Booking__C = b.id;
+        ap2.Applicant_Number__c = 'Second Applicant';
+        ap2.Opportunity__c = opp.id;
+        ap2.Type_Of_Applicant__c = 'Individual Buyer';
+        ap2.PancardNo__c = 'ABCDE1234E';
+        ap2.Salutation__c = 'Capt.';
+        ap2.Applicant_Type__c = 'Second';
+        ap2.Name = 'Second Applicant';
+        ap2.Mobile_Number__c = '1234567890';
+        ap2.Nationality__c = 'Indian';
+        ap2.Subtype_Of_Applicant__c = 'Indian National';
+        ap2.Mailing_Address_same_as_PermanentAddress__c = true;
+        ap2.House_No__c = 'House';
+        ap2.Street_1__c = 'Street1';
+        ap2.Street_2__c = 'Street2';
+        ap2.City__c = 'Mumbai';
+        insert ap2;
+         aplist.add(ap2);
+        
+        Applicant__c ap3 = new Applicant__c();
+        ap3.Booking__C = b.id;
+        ap3.Applicant_Number__c = 'Third Applicant';
+        ap3.Opportunity__c = opp.id;
+        ap3.Type_Of_Applicant__c = 'Individual Buyer';
+        ap3.PancardNo__c = 'ABCDE1234E';
+        ap3.Salutation__c = 'Capt.';
+        ap3.Applicant_Type__c = 'Third';
+        ap3.Name = 'Third Applicant';
+        ap3.Mobile_Number__c = '1234567890';
+        ap3.Nationality__c = 'Indian';
+        ap3.Subtype_Of_Applicant__c = 'Indian National';
+        ap3.Mailing_Address_same_as_PermanentAddress__c = true;
+        ap3.House_No__c = 'House';
+        ap3.Street_1__c = 'Street1';
+        ap3.Street_2__c = 'Street2';
+        ap3.City__c = 'Mumbai';
+        insert ap3;
+         aplist.add(ap3);
+        
+        Applicant__c ap4 = new Applicant__c();
+        ap4.Booking__C = b.id;
+        ap4.Applicant_Number__c = 'Fourth Applicant';
+        ap4.Opportunity__c = opp.id;
+        ap4.Type_Of_Applicant__c = 'Individual Buyer';
+        ap4.PancardNo__c = 'ABCDE1234E';
+        ap4.Salutation__c = 'Capt.';
+        ap4.Applicant_Type__c = 'Fourth';
+        ap4.Name = 'Fourth Applicant';
+        ap4.Mobile_Number__c = '1234567890';
+        ap4.Nationality__c = 'Indian';
+        ap4.Subtype_Of_Applicant__c = 'Indian National';
+        ap4.Mailing_Address_same_as_PermanentAddress__c = true;
+        ap4.House_No__c = 'House';
+        ap4.Street_1__c = 'Street1';
+        ap4.Street_2__c = 'Street2';
+        ap4.City__c = 'Mumbai';
+        insert ap4;
+         aplist.add(ap4);
+        Applicant__c ap5 = new Applicant__c();
+        ap5.Booking__C = b.id;
+        ap5.Applicant_Number__c = 'Fifth Applicant';
+        ap5.Opportunity__c = opp.id;
+        ap5.Type_Of_Applicant__c = 'Individual Buyer';
+        ap5.PancardNo__c = 'ABCDE1234E';
+        ap5.Salutation__c = 'Capt.';
+        ap5.Applicant_Type__c = 'Fifth';
+        ap5.Name = 'Fifth Applicant';
+        ap5.Mobile_Number__c = '1234567890';
+        ap5.Nationality__c = 'Indian';
+        ap5.Subtype_Of_Applicant__c = 'Indian National';
+        ap5.Mailing_Address_same_as_PermanentAddress__c = true;
+        ap5.House_No__c = 'House';
+        ap5.Street_1__c = 'Street1';
+        ap5.Street_2__c = 'Street2';
+        ap5.City__c = 'Mumbai';
+        insert ap5;
+        aplist.add(ap5);
+        
+        opportunity opr = new Opportunity();
+        opr.id = opp.id;
+        opr.Booking__c = b.id;
+        opr.Property__c = unitId;
+        opr.project__c = projectId;
+        update opr;
+        
+        Property__c pr = new Property__c();
+        pr.id = unitId;
+        pr.status__C = 'Booked';
+        pr.Tower__c=towerId;
+         update pr;
+        
+        opp.Property__c=pr.id;
+        update opp;
+        Test.StartTest();
+        PageReference pageRef2 = Page.DocumentUploadPage;
+        Test.setCurrentPage(pageRef2);
+        //pageRef2.getParameters().put('id', dt.id);
+        ApexPages.StandardController sc2 = new ApexPages.StandardController(dt);
+        DocumentUpload ts = new DocumentUpload(sc2);
+        //ts.selectedObject = 'UnitCost';
+        //ts.prepareFieldList();
+        ts.selectedObject = 'OtherApplicantDetails';
+        ts.prepareFieldList();
+        ts.selectedObject = 'AllApplicantDetails';
+        ts.prepareFieldList();
+        ts.selectedObject = 'Schedule-Typical(Multi Tower Project)';
+        ts.prepareFieldList();
+        ts.selectedObject = 'Schedule-Typical (Tower as Seprate Project)';
+        ts.prepareFieldList();
+        ts.selectedObject = 'Schedule-Duplex';
+        ts.prepareFieldList();
+        ts.selectedObject = 'Schedule-Penthouse';
+        ts.prepareFieldList(); 
+        ts.selectedObject = 'Schedule-Bare Shell';
+        ts.prepareFieldList(); 
+        ts.selectedObject = 'SeventhTable1';
+        ts.prepareFieldList();
+        ts.selectedObject = 'Morgage NOC';
+        ts.prepareFieldList();
+        ts.selectedObject = 'Contact Details Update';
+        ts.prepareFieldList();
+        ts.selectedObject = 'Possesion';
+        ts.prepareFieldList();
+        ts.selectedObject = 'PageBreak';
+        ts.preparemergefield();
+        ts.selectedObject = 'Justify';
+        ts.preparemergefield();
+        ts.selectedObject = 'lineBreak';
+        ts.preparemergefield();
+        ts.selectedObject = 'ol';
+        ts.preparemergefield();
+        ts.selectedObject = 'olDecimal';
+        ts.preparemergefield();
+        ts.selectedObject = 'p';
+        ts.preparemergefield();
+        ts.selectedObject = 'Id';
+        ts.preparemergefield();
+        ts.save();
+        ts.saveAndPriview();
+        ts.addRow();
+        
+        PageReference pRef3 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef3);
+        //ApexPages.currentPage().getParameters().put('oppId',oppId);
+        GenerateCustomerDocument gd = new GenerateCustomerDocument();
+        List<SelectOption> projectList = gd.getProjects;
+        gd.selectedVal = projectId;
+        //List<SelectOption> clusterList = gd.getClusterNames ;
+        //gd.SelectedClusterId = clusterId;
+        List<SelectOption> towerList = gd.getTowers ;
+        gd.selectedTower = towerId;
+        List<SelectOption> docList = gd.getDocumentNames;         
+        gd.selectedDocument = 'Acceptance Form'; 
+        gd.checkInput();
+        gd.CustomerListNew();
+        gd.customerList[0].selected = true;
+        gd.generateDocument();
+        gd.getDisablePrevious();
+        gd.getDisableNext();
+        gd.getTotal_size();
+        gd.getPageNumber();
+        gd.getTotalPages();
+        gd.getNextCustomers();
+        gd.projectchange();
+        gd.towerchange();
+        gd.documentchange();
+        
+        /*PageReference pRef8 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef8);
+        //ApexPages.currentPage().getParameters().put('oppId',oppId);
+        GenerateCustomerDocument gd8 = new GenerateCustomerDocument();
+        List<SelectOption> projectList8 = gd8.getProjects;
+        gd8.selectedVal = projectId;
+        //List<SelectOption> clusterList8 = gd8.getClusterNames ;
+        //gd.SelectedClusterId = clusterId;
+        List<SelectOption> towerList8 = gd8.getTowers ;
+        gd8.selectedTower = towerId;
+        List<SelectOption> docList8 = gd8.getDocumentNames;         
+        gd8.selectedDocument = 'Mortgage Release Request Letter'; 
+        gd8.checkInput();
+        gd8.CustomerListNew();
+        //gd8.customerList[0].selected = true;
+        gd8.generateDocument();
+        gd8.getDisablePrevious();
+        gd8.getDisableNext();
+        gd8.getTotal_size();
+        gd8.getPageNumber();
+        gd8.getTotalPages();
+        gd8.getNextCustomers();
+        gd8.projectchange();
+        gd8.towerchange();
+        gd8.documentchange();
+        
+        PageReference pRef9 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef9);
+        GenerateCustomerDocument gd9 = new GenerateCustomerDocument();
+        List<SelectOption> projectList9 = gd9.getProjects;
+        gd9.selectedVal = projectId;
+        List<SelectOption> towerList9 = gd9.getTowers ;
+        gd9.selectedTower = towerId;
+        List<SelectOption> docList9 = gd9.getDocumentNames;         
+        gd9.selectedDocument = 'Agreement signing undertaking';  
+        gd9.checkInput();
+        gd9.CustomerListNew();
+        gd9.generateDocument();
+        gd9.getDisablePrevious();
+        gd9.getDisableNext();
+        gd9.getTotal_size();
+        gd9.getPageNumber();
+        gd9.getTotalPages();
+        gd9.getNextCustomers();
+        gd9.projectchange();
+        gd9.towerchange();
+        gd9.documentchange();
+        
+        PageReference pRef10 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef10);
+        GenerateCustomerDocument gd10 = new GenerateCustomerDocument();
+        List<SelectOption> projectList10 = gd9.getProjects;
+        gd9.selectedVal = projectId;
+        List<SelectOption> towerList10 = gd10.getTowers ;
+        gd10.selectedTower = towerId;
+        List<SelectOption> docList10 = gd10.getDocumentNames;         
+        gd10.selectedDocument = 'TPA'; 
+        gd10.checkInput();
+        gd10.CustomerListNew();
+        gd10.generateDocument();
+        gd10.getDisablePrevious();
+        gd10.getDisableNext();
+        gd10.getTotal_size();
+        gd10.getPageNumber();
+        gd10.getTotalPages();
+        gd10.getNextCustomers();
+        gd10.projectchange();
+        gd10.towerchange();
+        gd10.documentchange();
+        
+        PageReference pRef11 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef11);
+        GenerateCustomerDocument gd11 = new GenerateCustomerDocument();
+        List<SelectOption> projectList11 = gd11.getProjects;
+        gd11.selectedVal = projectId;
+        List<SelectOption> towerList11 = gd11.getTowers ;
+        gd11.selectedTower = towerId;
+        List<SelectOption> docList11 = gd11.getDocumentNames;         
+        gd11.selectedDocument = 'Bank NOC'; 
+        gd11.checkInput();
+        gd11.CustomerListNew();
+        gd11.generateDocument();
+        gd11.getDisablePrevious();
+        gd11.getDisableNext();
+        gd11.getTotal_size();
+        gd11.getPageNumber();
+        gd11.getTotalPages();
+        gd11.getNextCustomers();
+        gd11.projectchange();
+        gd11.towerchange();
+        gd11.documentchange();
+        
+        PageReference pRef12 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef12);
+        GenerateCustomerDocument gd12 = new GenerateCustomerDocument();
+        List<SelectOption> projectList12 = gd12.getProjects;
+        gd12.selectedVal = projectId;
+        List<SelectOption> towerList12 = gd12.getTowers ;
+        gd12.selectedTower = towerId;
+        List<SelectOption> docList12 = gd12.getDocumentNames;         
+        gd12.selectedDocument = 'Provisional NOC'; 
+        gd12.checkInput();
+        gd12.CustomerListNew();
+        gd12.generateDocument();
+        gd12.getDisablePrevious();
+        gd12.getDisableNext();
+        gd12.getTotal_size();
+        gd12.getPageNumber();
+        gd12.getTotalPages();
+        gd12.getNextCustomers();
+        gd12.projectchange();
+        gd12.towerchange();
+        gd12.documentchange();
+        
+        PageReference pRef13 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef13);
+        GenerateCustomerDocument gd13 = new GenerateCustomerDocument();
+        List<SelectOption> projectList13 = gd13.getProjects;
+        gd13.selectedVal = projectId;
+        List<SelectOption> towerList13 = gd13.getTowers ;
+        gd13.selectedTower = towerId;
+        List<SelectOption> docList13 = gd13.getDocumentNames;         
+        gd13.selectedDocument = 'L&L NOC';  
+        gd13.checkInput();
+        gd13.CustomerListNew();
+        gd13.generateDocument();
+        gd13.getDisablePrevious();
+        gd13.getDisableNext();
+        gd13.getTotal_size();
+        gd13.getPageNumber();
+        gd13.getTotalPages();
+        gd13.getNextCustomers();
+        gd13.projectchange();
+        gd13.towerchange();
+        gd13.documentchange();
+        
+        PageReference pRef14 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef14);
+        GenerateCustomerDocument gd14 = new GenerateCustomerDocument();
+        List<SelectOption> projectList14 = gd14.getProjects;
+        gd14.selectedVal = projectId;
+        List<SelectOption> towerList14 = gd14.getTowers ;
+        gd14.selectedTower = towerId;
+        List<SelectOption> docList14 = gd14.getDocumentNames;         
+        gd14.selectedDocument = 'Annexure B - Nomination Form'; 
+        gd14.checkInput();
+        gd14.CustomerListNew();
+        gd14.generateDocument();
+        gd14.getDisablePrevious();
+        gd14.getDisableNext();
+        gd14.getTotal_size();
+        gd14.getPageNumber();
+        gd14.getTotalPages();
+        gd14.getNextCustomers();
+        gd14.projectchange();
+        gd14.towerchange();
+        gd14.documentchange();
+        
+        PageReference pRef15 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef15);
+        GenerateCustomerDocument gd15 = new GenerateCustomerDocument();
+        List<SelectOption> projectList15 = gd15.getProjects;
+        gd15.selectedVal = projectId;
+        List<SelectOption> towerList15 = gd15.getTowers ;
+        gd15.selectedTower = towerId;
+        List<SelectOption> docList15 = gd15.getDocumentNames;         
+        gd15.selectedDocument = 'Car Park Allotment Letter'; 
+        gd15.checkInput();
+        gd15.CustomerListNew();
+        gd15.generateDocument();
+        gd15.getDisablePrevious();
+        gd15.getDisableNext();
+        gd15.getTotal_size();
+        gd15.getPageNumber();
+        gd15.getTotalPages();
+        gd15.getNextCustomers();
+        gd15.projectchange();
+        gd15.towerchange();
+        gd15.documentchange();
+        
+        PageReference pRef16 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef16);
+        GenerateCustomerDocument gd16 = new GenerateCustomerDocument();
+        List<SelectOption> projectList16 = gd16.getProjects;
+        gd16.selectedVal = projectId;
+        List<SelectOption> towerList16 = gd16.getTowers ;
+        gd16.selectedTower = towerId;
+        List<SelectOption> docList16 = gd16.getDocumentNames;         
+        gd16.selectedDocument = 'Possession Undertaking Letter'; 
+        gd16.checkInput();
+        gd16.CustomerListNew();
+        gd16.generateDocument();
+        gd16.getDisablePrevious();
+        gd16.getDisableNext();
+        gd16.getTotal_size();
+        gd16.getPageNumber();
+        gd16.getTotalPages();
+        gd16.getNextCustomers();
+        gd16.projectchange();
+        gd16.towerchange();
+        gd16.documentchange();
+        
+        PageReference pRef17 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef17);
+        GenerateCustomerDocument gd17 = new GenerateCustomerDocument();
+        List<SelectOption> projectList17 = gd17.getProjects;
+        gd17.selectedVal = projectId;
+        List<SelectOption> towerList17 = gd17.getTowers ;
+        gd17.selectedTower = towerId;
+        List<SelectOption> docList17 = gd17.getDocumentNames;         
+        gd17.selectedDocument = 'Possession Letter'; 
+        gd17.checkInput();
+        gd17.CustomerListNew();
+        gd17.generateDocument();
+        gd17.getDisablePrevious();
+        gd17.getDisableNext();
+        gd17.getTotal_size();
+        gd17.getPageNumber();
+        gd17.getTotalPages();
+        gd17.getNextCustomers();
+        gd17.projectchange();
+        gd17.towerchange();
+        gd17.documentchange();
+        
+        PageReference pRef18 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef18);
+        GenerateCustomerDocument gd18 = new GenerateCustomerDocument();
+        List<SelectOption> projectList18 = gd18.getProjects;
+        gd18.selectedVal = projectId;
+        List<SelectOption> towerList18 = gd18.getTowers ;
+        gd18.selectedTower = towerId;
+        List<SelectOption> docList18 = gd18.getDocumentNames;         
+        gd18.selectedDocument = 'Electricity Meter transfer NOC'; 
+        gd18.checkInput();
+        gd18.CustomerListNew();
+        gd18.generateDocument();
+        gd18.getDisablePrevious();
+        gd18.getDisableNext();
+        gd18.getTotal_size();
+        gd18.getPageNumber();
+        gd18.getTotalPages();
+        gd18.getNextCustomers();
+        gd18.projectchange();
+        gd18.towerchange();
+        gd18.documentchange();
+        
+        PageReference pRef19 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef19);
+        GenerateCustomerDocument gd19 = new GenerateCustomerDocument();
+        List<SelectOption> projectList19 = gd19.getProjects;
+        gd19.selectedVal = projectId;
+        List<SelectOption> towerList19 = gd19.getTowers ;
+        gd19.selectedTower = towerId;
+        List<SelectOption> docList19 = gd19.getDocumentNames;         
+        gd19.selectedDocument = 'Rejection Notice - Pre Possession'; 
+        gd19.checkInput();
+        gd19.CustomerListNew();
+        gd19.generateDocument();
+        gd19.getDisablePrevious();
+        gd19.getDisableNext();
+        gd19.getTotal_size();
+        gd19.getPageNumber();
+        gd19.getTotalPages();
+        gd19.getNextCustomers();
+        gd19.projectchange();
+        gd19.towerchange();
+        gd19.documentchange();
+        
+        PageReference pRef20 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef20);
+        GenerateCustomerDocument gd20 = new GenerateCustomerDocument();
+        List<SelectOption> projectList20 = gd20.getProjects;
+        gd20.selectedVal = projectId;
+        List<SelectOption> towerList20 = gd20.getTowers ;
+        gd20.selectedTower = towerId;
+        List<SelectOption> docList20 = gd20.getDocumentNames;         
+        gd20.selectedDocument = 'Rejection Notice - Post Possession'; 
+        gd20.checkInput();
+        gd20.CustomerListNew();
+        gd20.generateDocument();
+        gd20.getDisablePrevious();
+        gd20.getDisableNext();
+        gd20.getTotal_size();
+        gd20.getPageNumber();
+        gd20.getTotalPages();
+        gd20.getNextCustomers();
+        gd20.projectchange();
+        gd20.towerchange();
+        gd20.documentchange();
+        
+        PageReference pRef21 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef21);
+        GenerateCustomerDocument gd21 = new GenerateCustomerDocument();
+        List<SelectOption> projectList21 = gd21.getProjects;
+        gd21.selectedVal = projectId;
+        List<SelectOption> towerList21 = gd21.getTowers ;
+        gd21.selectedTower = towerId;
+        List<SelectOption> docList21 = gd21.getDocumentNames;         
+        gd21.selectedDocument = 'ROFR NOC Loan case'; 
+        gd21.checkInput();
+        gd21.CustomerListNew();
+        gd21.generateDocument();
+        gd21.getDisablePrevious();
+        gd21.getDisableNext();
+        gd21.getTotal_size();
+        gd21.getPageNumber();
+        gd21.getTotalPages();
+        gd21.getNextCustomers();
+        gd21.projectchange();
+        gd21.towerchange();
+        gd21.documentchange();*/
+
+        PageReference pRef6 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef6);
+        //ApexPages.currentPage().getParameters().put('oppId',oppId);
+        GenerateCustomerDocument gd1 = new GenerateCustomerDocument();
+        List<SelectOption> projectList1 = gd1.getProjects;
+        gd1.selectedVal = projectId;
+        //List<SelectOption> clusterList = gd.getClusterNames ;
+        //gd.SelectedClusterId = clusterId;
+        List<SelectOption> towerList1 = gd1.getTowers ;
+        gd1.selectedTower = towerId;
+        List<SelectOption> docList1 = gd1.getDocumentNames;         
+        gd1.selectedDocument = 'Agreement Form'; 
+        gd1.checkInput();
+        gd1.CustomerListNew();
+        //gd1.customerList[0].selected = true;
+        gd1.generateDocument();
+        gd1.getDisablePrevious();
+        gd1.getDisableNext();
+        gd1.getTotal_size();
+        gd1.getPageNumber();
+        gd1.getTotalPages();
+        gd1.getNextCustomers();
+        gd1.projectchange();
+        gd1.towerchange();
+        gd1.documentchange();
+        gd1.Beginning();
+        
+        PageReference pRef7 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef7);
+        //ApexPages.currentPage().getParameters().put('oppId',oppId);
+        GenerateCustomerDocument gd2 = new GenerateCustomerDocument();
+        List<SelectOption> projectList2 = gd2.getProjects;
+        gd2.selectedVal = projectId;
+        //List<SelectOption> clusterList = gd.getClusterNames ;
+        //gd.SelectedClusterId = clusterId;
+        List<SelectOption> towerList2 = gd2.getTowers ;
+        gd2.selectedTower = towerId;
+        List<SelectOption> docList2 = gd2.getDocumentNames;         
+        gd2.selectedDocument = 'Allotment Form'; 
+        gd2.checkInput();
+        gd2.CustomerListNew();
+        //gd2.customerList[0].selected = true;
+        gd2.generateDocument();
+        gd2.getDisablePrevious();
+        gd2.getDisableNext();
+        gd2.getTotal_size();
+        gd2.getPageNumber();
+        gd2.getTotalPages();
+        gd2.onRadioChange();
+        gd2.projectchange();
+        gd2.towerchange();
+        gd2.documentchange();
+        
+        PageReference pRef4 = Page.View_Document;
+        Test.setCurrentPage(pRef4);
+        ApexPages.currentPage().getParameters().put('oppId',opp.Id);
+        ApexPages.currentPage().getParameters().put('docType','Agreement Form'); 
+        ApexPages.currentPage().getParameters().put('docName','Agreement Form');
+        ViewDocument adf = new ViewDocument();
+        PaginationController.PaginationWrapper pc = new PaginationController.PaginationWrapper(10,10,10);
+        PaginationController.Beginning(pc);
+        PaginationController.Previous(pc);
+        PaginationController.Next(pc);
+        PaginationController.End(pc);
+        
+        PageReference pRef22 = Page.View_Document;
+        Test.setCurrentPage(pRef22);
+        ApexPages.currentPage().getParameters().put('oppId',opp.Id);
+        ApexPages.currentPage().getParameters().put('docType','NRI Declaration Form'); 
+        ApexPages.currentPage().getParameters().put('docName','NRI Declaration Form');
+        ViewDocument adf2 = new ViewDocument();
+        PaginationController.PaginationWrapper pc2 = new PaginationController.PaginationWrapper(10,10,10);
+        PaginationController.Beginning(pc2);
+        PaginationController.Previous(pc2);
+        PaginationController.Next(pc2);
+        PaginationController.End(pc2);
+        
+        PageReference pRef5 = Page.View_Document;
+        Test.setCurrentPage(pRef5);
+        ApexPages.currentPage().getParameters().put('oppId',opp.Id);
+        ApexPages.currentPage().getParameters().put('docType','Allotment Form'); 
+        ApexPages.currentPage().getParameters().put('docName','Allotment Form');
+        ViewDocument adf1 = new ViewDocument();
+        PaginationController.PaginationWrapper pc1 = new PaginationController.PaginationWrapper(10,9,10);
+        PaginationController.Beginning(pc1);
+        PaginationController.Previous(pc1);
+        PaginationController.Next(pc1);
+        PaginationController.End(pc1);
+        
+        
+        PageReference pRef23 = Page.View_Document;
+        Test.setCurrentPage(pRef23);
+        ApexPages.currentPage().getParameters().put('oppId',opp.Id);
+        ApexPages.currentPage().getParameters().put('docType','Mortgage Release Request Letter'); 
+        ApexPages.currentPage().getParameters().put('docName','Mortgage Release Request Letter');
+        ViewDocument adf3 = new ViewDocument();
+        PaginationController.PaginationWrapper pc3 = new PaginationController.PaginationWrapper(10,10,10);
+        PaginationController.Beginning(pc3);
+        PaginationController.Previous(pc3);
+        PaginationController.Next(pc3);
+        PaginationController.End(pc3);
+        
+          PageReference pRef24 = Page.View_Document;
+        Test.setCurrentPage(pRef24);
+        ApexPages.currentPage().getParameters().put('oppId',opp.Id);
+        ApexPages.currentPage().getParameters().put('docType','Agreement signing undertaking'); 
+        ApexPages.currentPage().getParameters().put('docName','Agreement signing undertaking');
+        ViewDocument adf4 = new ViewDocument();
+        PaginationController.PaginationWrapper pc4 = new PaginationController.PaginationWrapper(10,10,10);
+        PaginationController.Beginning(pc4);
+        PaginationController.Previous(pc4);
+        PaginationController.Next(pc4);
+        PaginationController.End(pc4);
+        
+          PageReference pRef25 = Page.View_Document;
+        Test.setCurrentPage(pRef25);
+        ApexPages.currentPage().getParameters().put('oppId',opp.Id);
+        ApexPages.currentPage().getParameters().put('docType','Annexure B - Nomination Form'); 
+        ApexPages.currentPage().getParameters().put('docName','Annexure B - Nomination Form');
+        ViewDocument adf5 = new ViewDocument();
+        PaginationController.PaginationWrapper pc5 = new PaginationController.PaginationWrapper(10,10,10);
+        PaginationController.Beginning(pc5);
+        PaginationController.Previous(pc5);
+        PaginationController.Next(pc5);
+        PaginationController.End(pc5);
+        
+          PageReference pRef26 = Page.View_Document;
+        Test.setCurrentPage(pRef26);
+        ApexPages.currentPage().getParameters().put('oppId',opp.Id);
+        ApexPages.currentPage().getParameters().put('docType','TPA'); 
+        ApexPages.currentPage().getParameters().put('docName','TPA');
+        ViewDocument adf6 = new ViewDocument();
+        PaginationController.PaginationWrapper pc6 = new PaginationController.PaginationWrapper(10,10,10);
+        PaginationController.Beginning(pc6);
+        PaginationController.Previous(pc6);
+        PaginationController.Next(pc6);
+        PaginationController.End(pc6);
+        
+   
+      /*  
+        PageReference pRef5 = Page.View_Document;
+        Test.setCurrentPage(pRef5);
+        ApexPages.currentPage().getParameters().put('oppId',opp.Id);
+        ApexPages.currentPage().getParameters().put('docType','Agreement Form'); 
+        ApexPages.currentPage().getParameters().put('docName','Agreement Form');
+        ViewDocument adf1 = new ViewDocument();
+        PaginationController.PaginationWrapper pc1 = new PaginationController.PaginationWrapper(10,9,10);
+        PaginationController.Beginning(pc1);
+        PaginationController.Previous(pc1);
+        PaginationController.Next(pc1);
+        PaginationController.End(pc1);
+        
+        
+        
+        PageReference pRef23 = Page.View_Document;
+        Test.setCurrentPage(pRef23);
+        ApexPages.currentPage().getParameters().put('oppId',opp.Id);
+        ApexPages.currentPage().getParameters().put('docType','NRI Declaration Form'); 
+        ApexPages.currentPage().getParameters().put('docName','NRI Declaration Form');
+        ViewDocument adf3 = new ViewDocument();
+        PaginationController.PaginationWrapper pc3 = new PaginationController.PaginationWrapper(10,10,10);
+        PaginationController.Beginning(pc3);
+        PaginationController.Previous(pc3);
+        PaginationController.Next(pc3);
+        PaginationController.End(pc3);
+        */
+        Test.StopTest();
+        
+        String str = DocumentGenerationServices.getAllApplicantAllotmentSignature(aplist,'test');
+        //system.debug('str='+str);
+        //DocumentGenerationServices dgs = new DocumentGenerationServices(); 
+        //string aaa = dgs.getSeventhScheduleDetails(b,q,p,ap,t,'SeventhTable1');
+        
+    }
+        @isTest
+    public static void TestDocumentGeneration2(){
+        Map<String,Id> dataMap = TestDataFactory1.createData();
+        Account ac = new Account(firstName = 'Bhagyashree',lastName='test', recordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Customer').getRecordTypeId(),
+                     personEmail = 'handsome@stetig.in', personMobilePhone = '1111122222');
+        insert ac;
+        
+        Opportunity opp = new Opportunity(Name = 'Mr Bhagyashree Test Stetig',StageName = 'New',CloseDate = System.today().AddDays(15),
+                                         AccountId = ac.id);
+        insert opp;
+        
+        BillingPlanLineItemGroupingController.createBillingLineItemsFuture(dataMap.get('BILLING_PLAN'));
+        Id unitId = dataMap.get('PROPERTY');
+        Id projectId = dataMap.get('PROJECT');
+        Id proprtyId = dataMap.get('PROPERTY_TYPE');
+        Id towerId = dataMap.get('TOWER');
+        Id planId = dataMap.get('BILLING_PLAN');
+        
+        Document_Template__c dt = new Document_Template__c();
+        dt.Name = 'Acceptance Form';
+        dt.Document_Type__c = 'Acceptance Form';
+        dt.Project__c = projectId; 
+        dt.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        dt.Clause_1__c = '{!OtherApplicantDetails.Second Applicant Salutation} {!OtherApplicantDetails.Third Applicant Salutation} {!OtherApplicantDetails.Fourth Applicant Salutation} {!OtherApplicantDetails.Fifth Applicant Salutation} {!AllApplicantDetails.All Applicant Names} {!AllApplicantDetails.All Applicant Signatures} {!AllApplicantDetails.All Applicant Names with Index} {!AllApplicantDetails.All Applicant Names Inline} {!AllApplicantDetails.All Applicant Names with Index and Linebreak} {!AllApplicantDetails.All Applicant Names with Allottees} {!ReferenceNo.refno} {!FloorNo.FloorNo}';
+        dt.Clause_2__c = '{!OtherApplicantDetails.Second Applicant Name} {!OtherApplicantDetails.Third Applicant Name} {!OtherApplicantDetails.Fourth Applicant Name} {!OtherApplicantDetails.Fifth Applicant Name} {!AllApplicantDetails.All Applicant Names} {!AllApplicantDetails.All Applicant Signatures} {!PageBreak.sPageBreak} {!Justify.sJustify} {!Justify.eJustify} {!lineBreak.lineBreak}';
+        dt.Clause_3__c = '{!Schedule-Bare Shell.First Schedule} {!Schedule-Bare Shell.Second Schedule} {!Schedule-Bare Shell.Third Schedule} {!Schedule-Bare Shell.Fourth Schedule} {!Schedule-Bare Shell.Fifth Schedule}';
+        dt.Clause_4__c = '{!Schedule-Typical(Multi Tower Project).First Schedule} {!Schedule-Typical(Multi Tower Project).Second Schedule} {!Schedule-Typical(Multi Tower Project).Third Schedule} {!Schedule-Typical(Multi Tower Project).Fourth Schedule} {!Schedule-Typical(Multi Tower Project).Fifth Schedule}';
+        dt.Clause_5__c = '{!Schedule-Typical (Tower as Seprate Project).First Schedule} {!Schedule-Typical (Tower as Seprate Project).Second Schedule} {!Schedule-Typical (Tower as Seprate Project).Third Schedule} {!Schedule-Typical (Tower as Seprate Project).Fourth Schedule} {!Schedule-Typical (Tower as Seprate Project).Fifth Schedule}';
+        dt.Clause_6__c = '{!Schedule-Penthouse.First Schedule} {!Schedule-Penthouse.Second Schedule} {!Schedule-Penthouse.Third Schedule} {!Schedule-Penthouse.Fourth Schedule} {!Schedule-Penthouse.Fifth Schedule}';
+        dt.Clause_7__c = '{!Property__c.Name} {!Tower__c.Name} {!opportunity.Name} {!Account.Name} {!Quotation__c.Name} {!Project__c.Name} {!Schedule-Duplex.Fifth Schedule}';
+        //insert dt;
+        
+        Document_Template__c dt1 = new Document_Template__c();
+        dt1.Name = 'Agreement Form';
+        dt1.Document_Type__c = 'Agreement Form';
+        dt1.Project__c = projectId; 
+        dt1.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        dt1.Clause_1__c = '{!OtherApplicantDetails.Second Applicant Salutation} {!OtherApplicantDetails.Third Applicant Salutation} {!OtherApplicantDetails.Fourth Applicant Salutation} {!OtherApplicantDetails.Fifth Applicant Salutation} {!AllApplicantDetails.All Applicant Names} {!AllApplicantDetails.All Applicant Signatures} {!ReferenceNo.refno} {!FloorNo.FloorNo}';
+        dt1.Clause_2__c = '{!OtherApplicantDetails.Second Applicant Name} {!OtherApplicantDetails.Third Applicant Name} {!OtherApplicantDetails.Fourth Applicant Name} {!OtherApplicantDetails.Fifth Applicant Name} {!AllApplicantDetails.All Applicant Names} {!AllApplicantDetails.All Applicant Signatures}';
+        dt1.Clause_3__c = '{!Schedule-Bare Shell.First Schedule} {!Schedule-Bare Shell.Second Schedule} {!Schedule-Bare Shell.Third Schedule} {!Schedule-Bare Shell.Fourth Schedule} {!Schedule-Bare Shell.Fifth Schedule}';
+        dt1.Clause_4__c = '{!Schedule-Typical(Multi Tower Project).First Schedule} {!Schedule-Typical(Multi Tower Project).Second Schedule} {!Schedule-Typical(Multi Tower Project).Third Schedule} {!Schedule-Typical(Multi Tower Project).Fourth Schedule} {!Schedule-Typical(Multi Tower Project).Fifth Schedule}';
+        dt1.Clause_5__c = '{!Schedule-Typical (Tower as Seprate Project).First Schedule} {!Schedule-Typical (Tower as Seprate Project).Second Schedule} {!Schedule-Typical (Tower as Seprate Project).Third Schedule} {!Schedule-Typical (Tower as Seprate Project).Fourth Schedule} {!Schedule-Typical (Tower as Seprate Project).Fifth Schedule}';
+        dt1.Clause_6__c = '{!Schedule-Penthouse.First Schedule} {!Schedule-Penthouse.Second Schedule} {!Schedule-Penthouse.Third Schedule} {!Schedule-Penthouse.Fourth Schedule} {!Schedule-Penthouse.Fifth Schedule}';
+        dt1.Clause_7__c = '{!Property__c.Name} {!Tower__c.Name} {!opportunity.Name} {!Account.Name} {!Quotation__c.Name} {!Project__c.Name} {!Schedule-Duplex.Fifth Schedule}';
+        //insert dt;
+        
+        Document_Template__c dt2 = new Document_Template__c();
+        dt2.Name = 'Allotment Form';
+        dt2.Document_Type__c = 'Allotment Form';
+        dt2.Project__c = projectId; 
+        dt2.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        dt1.Clause_1__c = '{!OtherApplicantDetails.Second Applicant Salutation} {!OtherApplicantDetails.Third Applicant Salutation} {!OtherApplicantDetails.Fourth Applicant Salutation} {!OtherApplicantDetails.Fifth Applicant Salutation} {!AllApplicantDetails.All Applicant Names} {!AllApplicantDetails.All Applicant Signatures} {!ReferenceNo.refno} {!FloorNo.FloorNo}';
+        dt1.Clause_2__c = '{!OtherApplicantDetails.Second Applicant Name} {!OtherApplicantDetails.Third Applicant Name} {!OtherApplicantDetails.Fourth Applicant Name} {!OtherApplicantDetails.Fifth Applicant Name} {!AllApplicantDetails.All Applicant Names} {!AllApplicantDetails.All Applicant Signatures}';
+        dt1.Clause_3__c = '{!Schedule-Bare Shell.First Schedule} {!Schedule-Bare Shell.Second Schedule} {!Schedule-Bare Shell.Third Schedule} {!Schedule-Bare Shell.Fourth Schedule} {!Schedule-Bare Shell.Fifth Schedule}';
+        dt1.Clause_4__c = '{!Schedule-Typical(Multi Tower Project).First Schedule} {!Schedule-Typical(Multi Tower Project).Second Schedule} {!Schedule-Typical(Multi Tower Project).Third Schedule} {!Schedule-Typical(Multi Tower Project).Fourth Schedule} {!Schedule-Typical(Multi Tower Project).Fifth Schedule}';
+        dt1.Clause_5__c = '{!Schedule-Typical (Tower as Seprate Project).First Schedule} {!Schedule-Typical (Tower as Seprate Project).Second Schedule} {!Schedule-Typical (Tower as Seprate Project).Third Schedule} {!Schedule-Typical (Tower as Seprate Project).Fourth Schedule} {!Schedule-Typical (Tower as Seprate Project).Fifth Schedule}';
+        dt1.Clause_6__c = '{!Schedule-Penthouse.First Schedule} {!Schedule-Penthouse.Second Schedule} {!Schedule-Penthouse.Third Schedule} {!Schedule-Penthouse.Fourth Schedule} {!Schedule-Penthouse.Fifth Schedule}';
+        dt1.Clause_7__c = '{!Property__c.Name} {!Tower__c.Name} {!opportunity.Name} {!Account.Name} {!Quotation__c.Name} {!Project__c.Name} {!Schedule-Duplex.Fifth Schedule}';
+        
+        /*Document_Template__c dt3 = new Document_Template__c();
+        dt3.Name = 'NRI Declaration Form';
+        dt3.Document_Type__c = 'NRI Declaration Form';
+        dt3.Project__c = projectId; 
+        dt3.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt4 = new Document_Template__c();
+        dt4.Name = 'Agreement signing undertaking';
+        dt4.Document_Type__c = 'Agreement signing undertaking';
+        dt4.Project__c = projectId; 
+        dt4.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt5 = new Document_Template__c();
+        dt5.Name = 'Annexure B - Nomination Form';
+        dt5.Document_Type__c = 'Annexure B - Nomination Form';
+        dt5.Project__c = projectId; 
+        dt5.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt6 = new Document_Template__c();
+        dt6.Name = 'TPA';
+        dt6.Document_Type__c = 'TPA';
+        dt6.Project__c = projectId; 
+        dt6.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt7 = new Document_Template__c();
+        dt7.Name = 'Bank NOC';
+        dt7.Document_Type__c = 'Bank NOC';
+        dt7.Project__c = projectId; 
+        dt7.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt8 = new Document_Template__c();
+        dt8.Name = 'Provisional NOC';
+        dt8.Document_Type__c = 'Provisional NOC';
+        dt8.Project__c = projectId; 
+        dt8.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt9 = new Document_Template__c();
+        dt9.Name = 'L&L NOC';
+        dt9.Document_Type__c = 'L&L NOC';
+        dt9.Project__c = projectId; 
+        dt9.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt10 = new Document_Template__c();
+        dt10.Name = 'Car Park Allotment Letter';
+        dt10.Document_Type__c = 'Car Park Allotment Letter';
+        dt10.Project__c = projectId; 
+        dt10.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt11 = new Document_Template__c();
+        dt11.Name = 'Possession Undertaking Letter';
+        dt11.Document_Type__c = 'Possession Undertaking Letter';
+        dt11.Project__c = projectId; 
+        dt11.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt12 = new Document_Template__c();
+        dt12.Name = 'Possession Letter';
+        dt12.Document_Type__c = 'Possession Letter';
+        dt12.Project__c = projectId; 
+        dt12.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt13 = new Document_Template__c();
+        dt13.Name = 'Electricity Meter transfer NOC';
+        dt13.Document_Type__c = 'Electricity Meter transfer NOC';
+        dt13.Project__c = projectId; 
+        dt13.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt14 = new Document_Template__c();
+        dt14.Name = 'Rejection Notice - Pre Possession';
+        dt14.Document_Type__c = 'Rejection Notice - Pre Possession';
+        dt14.Project__c = projectId; 
+        dt14.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt15 = new Document_Template__c();
+        dt15.Name = 'Rejection Notice - Post Possession';
+        dt15.Document_Type__c = 'Rejection Notice - Post Possession';
+        dt15.Project__c = projectId; 
+        dt15.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt16 = new Document_Template__c();
+        dt16.Name = 'ROFR NOC Loan case';
+        dt16.Document_Type__c = 'ROFR NOC Loan case';
+        dt16.Project__c = projectId; 
+        dt16.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        */
+        
+        PageReference pageRef = Page.Quotation;
+        Test.setCurrentPage(pageRef);
+        pageRef.getParameters().put('unitId', unitId);
+        pageRef.getParameters().put('oppId', opp.Id);
+        
+        //Property__c property = Quotation.getProperty(unitId);
+       // Opportunity op = Quotation.getOpportunity(opp.Id);
+        
+        //List<QuotationManagmentServices.AdditionalChargesWrapper> additionalCharges = Quotation.getAdditionChargsList(proprtyId);
+        string othercharges_serialize = '[]';//JSON.serialize(additionalCharges);
+        
+        List<QuotationManagmentServices.SAPPricingWrapper> SAPChrges = Quotation.getSAPPricingList(unitId, false, 0);
+        
+        string sap_serialize = JSON.serialize(SAPChrges);
+
+        List<QuotationManagmentServices.PlanDetailsWrapper> planDetails = Quotation.getPlanDetail(sap_serialize,planId,unitId);
+        string planDetails_serialize = JSON.serialize(planDetails);
+        
+        string discountList_serialize = '[]'; // = JSON.serialize(discountList);
+        string carParKList = '[]'; //= '["TANDEM",1,100000]'; 
+        string fieldSet = '[{"label":"unitId","value":"' + unitId +'"},{"label":"editschedule","value":false},{"label":"oppId","value":"' + opp.id +'"},{"label":"additionalComments","value":""},{"label":"selectedPlan","value":"' + planId + '"},{"label":"changeInSource","value":false},{"label":"revisedBookingSource","value":null},{"label":"referredBy","value":null},{"label":"referProject","value":null},{"label":"referTower","value":null},{"label":"referFlat","value":null},{"label":"referEmpCode","value":null}]';
+        string qId = Quotation.saveQuotation(sap_serialize, othercharges_serialize, discountList_serialize, planDetails_serialize, carParKList, fieldSet);
+        
+        string st1 = QuotationManagmentServices.INFormat(10);
+        
+        Booking__c b = new Booking__C();
+        b.Opportunity__c = opp.id;
+        b.Booking_Date__c = system.today();
+        b.Acceptance_Form_Template__c = 'Acceptance_Form';
+        b.Agreement_Form_Template__c = 'Agreement_Form';
+        b.Allotment_Form_Template__c = 'Allotment Form';
+        /*b.NRI_Declaration_Template__c = 'NRI Declaration Form';
+        b.Mortgage_Release_Request_Letter__c = 'Mortgage Release Request Letter';
+        b.Agreement_Signing_undertaking__c = 'Agreement signing undertaking';
+        b.Annexure_B_Nomination_Form__c = 'Annexure B - Nomination Form';
+        b.TPA__c = 'TPA';
+        b.Bank_NOC__c = 'Bank NOC';
+        b.Provisional_NOC__c = 'Provisional NOC';
+        b.L_L_NOC__c = 'L&L NOC';
+        b.Car_Park_Allotment_Letter__c = 'Car Park Allotment Letter';
+        b.Possession_Undertaking_Letter__c = 'Possession Undertaking Letter';
+        b.Possession_Letter__c = 'Possession Letter';
+        b.Electricity_Meter_transfer_NOC__c = 'Electricity Meter transfer NOC';
+        b.Rejection_Notice_Pre_Possession__c = 'Rejection Notice - Pre Possession';
+        b.Rejection_Notice_Post_Possession__c = 'Rejection Notice - Post Possession';
+        b.ROFR_NOC_Loan_case__c = 'ROFR NOC Loan case';*/
+        b.Status__c = 'Booking In Process';
+        //b.Booking_Through__c = 'Direct';
+        if(qId!=null&&qId.contains(',')){
+            qId = qId.substring(0, qId.indexOf(','));
+        }
+        b.Quotation__c = qId;
+        b.Default_Address_of__c = '1st Applicant';
+        b.Project__c = projectId;
+        b.Tower__c = towerId;
+        b.Property__c = unitId;
+        insert b;
+        
+        /*quotation__c q = new quotation__c();
+        q.id = qid;
+        
+        Project__c p = new Project__c();
+        p.id = unitId;
+        
+        Tower__c t = new Tower__c();
+        t.id = towerId;
+        */
+        List<Applicant__c> aplist = new List<Applicant__c>();
+        Applicant__c ap = new Applicant__c();
+        ap.Booking__C = b.id;
+        ap.Applicant_Number__c = 'Primary Applicant';
+        ap.Opportunity__c = opp.id;
+        ap.Type_Of_Applicant__c = 'Individual Buyer';
+        ap.PancardNo__c = 'ABCDE1234E';
+        ap.Salutation__c = 'Capt.';
+        ap.Applicant_Type__c = 'Primary';
+        ap.Name = 'Primary Applicant';
+        ap.Mobile_Number__c = '1234567890';
+        ap.Nationality__c = 'Indian';
+        ap.Subtype_Of_Applicant__c = 'Indian National';
+        ap.Mailing_Address_same_as_PermanentAddress__c = true;
+        ap.House_No__c = 'House';
+        ap.Street_1__c = 'Street1';
+        ap.Street_2__c = 'Street2';
+        ap.City__c = 'Mumbai';
+        insert ap;
+        aplist.add(ap);
+        
+        Applicant__c ap2 = new Applicant__c();
+        ap2.Booking__C = b.id;
+        ap2.Applicant_Number__c = 'Second Applicant';
+        ap2.Opportunity__c = opp.id;
+        ap2.Type_Of_Applicant__c = 'Individual Buyer';
+        ap2.PancardNo__c = 'ABCDE1234E';
+        ap2.Salutation__c = 'Capt.';
+        ap2.Applicant_Type__c = 'Second';
+        ap2.Name = 'Second Applicant';
+        ap2.Mobile_Number__c = '1234567890';
+        ap2.Nationality__c = 'Indian';
+        ap2.Subtype_Of_Applicant__c = 'Indian National';
+        ap2.Mailing_Address_same_as_PermanentAddress__c = true;
+        ap2.House_No__c = 'House';
+        ap2.Street_1__c = 'Street1';
+        ap2.Street_2__c = 'Street2';
+        ap2.City__c = 'Mumbai';
+        insert ap2;
+         aplist.add(ap2);
+        
+        Applicant__c ap3 = new Applicant__c();
+        ap3.Booking__C = b.id;
+        ap3.Applicant_Number__c = 'Third Applicant';
+        ap3.Opportunity__c = opp.id;
+        ap3.Type_Of_Applicant__c = 'Individual Buyer';
+        ap3.PancardNo__c = 'ABCDE1234E';
+        ap3.Salutation__c = 'Capt.';
+        ap3.Applicant_Type__c = 'Third';
+        ap3.Name = 'Third Applicant';
+        ap3.Mobile_Number__c = '1234567890';
+        ap3.Nationality__c = 'Indian';
+        ap3.Subtype_Of_Applicant__c = 'Indian National';
+        ap3.Mailing_Address_same_as_PermanentAddress__c = true;
+        ap3.House_No__c = 'House';
+        ap3.Street_1__c = 'Street1';
+        ap3.Street_2__c = 'Street2';
+        ap3.City__c = 'Mumbai';
+        insert ap3;
+         aplist.add(ap3);
+        
+        Applicant__c ap4 = new Applicant__c();
+        ap4.Booking__C = b.id;
+        ap4.Applicant_Number__c = 'Fourth Applicant';
+        ap4.Opportunity__c = opp.id;
+        ap4.Type_Of_Applicant__c = 'Individual Buyer';
+        ap4.PancardNo__c = 'ABCDE1234E';
+        ap4.Salutation__c = 'Capt.';
+        ap4.Applicant_Type__c = 'Fourth';
+        ap4.Name = 'Fourth Applicant';
+        ap4.Mobile_Number__c = '1234567890';
+        ap4.Nationality__c = 'Indian';
+        ap4.Subtype_Of_Applicant__c = 'Indian National';
+        ap4.Mailing_Address_same_as_PermanentAddress__c = true;
+        ap4.House_No__c = 'House';
+        ap4.Street_1__c = 'Street1';
+        ap4.Street_2__c = 'Street2';
+        ap4.City__c = 'Mumbai';
+        insert ap4;
+         aplist.add(ap4);
+        Applicant__c ap5 = new Applicant__c();
+        ap5.Booking__C = b.id;
+        ap5.Applicant_Number__c = 'Fifth Applicant';
+        ap5.Opportunity__c = opp.id;
+        ap5.Type_Of_Applicant__c = 'Individual Buyer';
+        ap5.PancardNo__c = 'ABCDE1234E';
+        ap5.Salutation__c = 'Capt.';
+        ap5.Applicant_Type__c = 'Fifth';
+        ap5.Name = 'Fifth Applicant';
+        ap5.Mobile_Number__c = '1234567890';
+        ap5.Nationality__c = 'Indian';
+        ap5.Subtype_Of_Applicant__c = 'Indian National';
+        ap5.Mailing_Address_same_as_PermanentAddress__c = true;
+        ap5.House_No__c = 'House';
+        ap5.Street_1__c = 'Street1';
+        ap5.Street_2__c = 'Street2';
+        ap5.City__c = 'Mumbai';
+        insert ap5;
+        aplist.add(ap5);
+        
+        opportunity opr = new Opportunity();
+        opr.id = opp.id;
+        opr.Booking__c = b.id;
+        opr.Property__c = unitId;
+        opr.project__c = projectId;
+        update opr;
+        
+        Property__c pr = new Property__c();
+        pr.id = unitId;
+        pr.status__C = 'Booked';
+        pr.Tower__c=towerId;
+         update pr;
+        
+        opp.Property__c=pr.id;
+        update opp;
+        Test.StartTest();
+        PageReference pageRef2 = Page.DocumentUploadPage;
+        Test.setCurrentPage(pageRef2);
+        //pageRef2.getParameters().put('id', dt.id);
+        ApexPages.StandardController sc2 = new ApexPages.StandardController(dt);
+        DocumentUpload ts = new DocumentUpload(sc2);
+        //ts.selectedObject = 'UnitCost';
+        //ts.prepareFieldList();
+        ts.selectedObject = 'OtherApplicantDetails';
+        ts.prepareFieldList();
+        ts.selectedObject = 'AllApplicantDetails';
+        ts.prepareFieldList();
+        ts.selectedObject = 'Schedule-Typical(Multi Tower Project)';
+        ts.prepareFieldList();
+        ts.selectedObject = 'Schedule-Typical (Tower as Seprate Project)';
+        ts.prepareFieldList();
+        ts.selectedObject = 'Schedule-Duplex';
+        ts.prepareFieldList();
+        ts.selectedObject = 'Schedule-Penthouse';
+        ts.prepareFieldList(); 
+        ts.selectedObject = 'Schedule-Bare Shell';
+        ts.prepareFieldList(); 
+        ts.selectedObject = 'SeventhTable1';
+        ts.prepareFieldList();
+        ts.selectedObject = 'Morgage NOC';
+        ts.prepareFieldList();
+        ts.selectedObject = 'Contact Details Update';
+        ts.prepareFieldList();
+        ts.selectedObject = 'Possesion';
+        ts.prepareFieldList();
+        ts.selectedObject = 'PageBreak';
+        ts.preparemergefield();
+        ts.selectedObject = 'Justify';
+        ts.preparemergefield();
+        ts.selectedObject = 'lineBreak';
+        ts.preparemergefield();
+        ts.selectedObject = 'ol';
+        ts.preparemergefield();
+        ts.selectedObject = 'olDecimal';
+        ts.preparemergefield();
+        ts.selectedObject = 'p';
+        ts.preparemergefield();
+        ts.selectedObject = 'Id';
+        ts.preparemergefield();
+        ts.save();
+        ts.saveAndPriview();
+        ts.addRow();
+        
+        PageReference pRef3 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef3);
+        //ApexPages.currentPage().getParameters().put('oppId',oppId);
+        GenerateCustomerDocument gd = new GenerateCustomerDocument();
+        List<SelectOption> projectList = gd.getProjects;
+        gd.selectedVal = projectId;
+        //List<SelectOption> clusterList = gd.getClusterNames ;
+        //gd.SelectedClusterId = clusterId;
+        List<SelectOption> towerList = gd.getTowers ;
+        gd.selectedTower = towerId;
+        List<SelectOption> docList = gd.getDocumentNames;         
+        gd.selectedDocument = 'Acceptance Form'; 
+        gd.checkInput();
+        gd.CustomerListNew();
+        gd.customerList[0].selected = true;
+        gd.generateDocument();
+        gd.getDisablePrevious();
+        gd.getDisableNext();
+        gd.getTotal_size();
+        gd.getPageNumber();
+        gd.getTotalPages();
+        gd.getNextCustomers();
+        gd.projectchange();
+        gd.towerchange();
+        gd.documentchange();
+        
+        /*PageReference pRef8 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef8);
+        //ApexPages.currentPage().getParameters().put('oppId',oppId);
+        GenerateCustomerDocument gd8 = new GenerateCustomerDocument();
+        List<SelectOption> projectList8 = gd8.getProjects;
+        gd8.selectedVal = projectId;
+        //List<SelectOption> clusterList8 = gd8.getClusterNames ;
+        //gd.SelectedClusterId = clusterId;
+        List<SelectOption> towerList8 = gd8.getTowers ;
+        gd8.selectedTower = towerId;
+        List<SelectOption> docList8 = gd8.getDocumentNames;         
+        gd8.selectedDocument = 'Mortgage Release Request Letter'; 
+        gd8.checkInput();
+        gd8.CustomerListNew();
+        //gd8.customerList[0].selected = true;
+        gd8.generateDocument();
+        gd8.getDisablePrevious();
+        gd8.getDisableNext();
+        gd8.getTotal_size();
+        gd8.getPageNumber();
+        gd8.getTotalPages();
+        gd8.getNextCustomers();
+        gd8.projectchange();
+        gd8.towerchange();
+        gd8.documentchange();
+        
+        PageReference pRef9 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef9);
+        GenerateCustomerDocument gd9 = new GenerateCustomerDocument();
+        List<SelectOption> projectList9 = gd9.getProjects;
+        gd9.selectedVal = projectId;
+        List<SelectOption> towerList9 = gd9.getTowers ;
+        gd9.selectedTower = towerId;
+        List<SelectOption> docList9 = gd9.getDocumentNames;         
+        gd9.selectedDocument = 'Agreement signing undertaking';  
+        gd9.checkInput();
+        gd9.CustomerListNew();
+        gd9.generateDocument();
+        gd9.getDisablePrevious();
+        gd9.getDisableNext();
+        gd9.getTotal_size();
+        gd9.getPageNumber();
+        gd9.getTotalPages();
+        gd9.getNextCustomers();
+        gd9.projectchange();
+        gd9.towerchange();
+        gd9.documentchange();
+        
+        PageReference pRef10 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef10);
+        GenerateCustomerDocument gd10 = new GenerateCustomerDocument();
+        List<SelectOption> projectList10 = gd9.getProjects;
+        gd9.selectedVal = projectId;
+        List<SelectOption> towerList10 = gd10.getTowers ;
+        gd10.selectedTower = towerId;
+        List<SelectOption> docList10 = gd10.getDocumentNames;         
+        gd10.selectedDocument = 'TPA'; 
+        gd10.checkInput();
+        gd10.CustomerListNew();
+        gd10.generateDocument();
+        gd10.getDisablePrevious();
+        gd10.getDisableNext();
+        gd10.getTotal_size();
+        gd10.getPageNumber();
+        gd10.getTotalPages();
+        gd10.getNextCustomers();
+        gd10.projectchange();
+        gd10.towerchange();
+        gd10.documentchange();
+        
+        PageReference pRef11 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef11);
+        GenerateCustomerDocument gd11 = new GenerateCustomerDocument();
+        List<SelectOption> projectList11 = gd11.getProjects;
+        gd11.selectedVal = projectId;
+        List<SelectOption> towerList11 = gd11.getTowers ;
+        gd11.selectedTower = towerId;
+        List<SelectOption> docList11 = gd11.getDocumentNames;         
+        gd11.selectedDocument = 'Bank NOC'; 
+        gd11.checkInput();
+        gd11.CustomerListNew();
+        gd11.generateDocument();
+        gd11.getDisablePrevious();
+        gd11.getDisableNext();
+        gd11.getTotal_size();
+        gd11.getPageNumber();
+        gd11.getTotalPages();
+        gd11.getNextCustomers();
+        gd11.projectchange();
+        gd11.towerchange();
+        gd11.documentchange();
+        
+        PageReference pRef12 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef12);
+        GenerateCustomerDocument gd12 = new GenerateCustomerDocument();
+        List<SelectOption> projectList12 = gd12.getProjects;
+        gd12.selectedVal = projectId;
+        List<SelectOption> towerList12 = gd12.getTowers ;
+        gd12.selectedTower = towerId;
+        List<SelectOption> docList12 = gd12.getDocumentNames;         
+        gd12.selectedDocument = 'Provisional NOC'; 
+        gd12.checkInput();
+        gd12.CustomerListNew();
+        gd12.generateDocument();
+        gd12.getDisablePrevious();
+        gd12.getDisableNext();
+        gd12.getTotal_size();
+        gd12.getPageNumber();
+        gd12.getTotalPages();
+        gd12.getNextCustomers();
+        gd12.projectchange();
+        gd12.towerchange();
+        gd12.documentchange();
+        
+        PageReference pRef13 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef13);
+        GenerateCustomerDocument gd13 = new GenerateCustomerDocument();
+        List<SelectOption> projectList13 = gd13.getProjects;
+        gd13.selectedVal = projectId;
+        List<SelectOption> towerList13 = gd13.getTowers ;
+        gd13.selectedTower = towerId;
+        List<SelectOption> docList13 = gd13.getDocumentNames;         
+        gd13.selectedDocument = 'L&L NOC';  
+        gd13.checkInput();
+        gd13.CustomerListNew();
+        gd13.generateDocument();
+        gd13.getDisablePrevious();
+        gd13.getDisableNext();
+        gd13.getTotal_size();
+        gd13.getPageNumber();
+        gd13.getTotalPages();
+        gd13.getNextCustomers();
+        gd13.projectchange();
+        gd13.towerchange();
+        gd13.documentchange();
+        
+        PageReference pRef14 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef14);
+        GenerateCustomerDocument gd14 = new GenerateCustomerDocument();
+        List<SelectOption> projectList14 = gd14.getProjects;
+        gd14.selectedVal = projectId;
+        List<SelectOption> towerList14 = gd14.getTowers ;
+        gd14.selectedTower = towerId;
+        List<SelectOption> docList14 = gd14.getDocumentNames;         
+        gd14.selectedDocument = 'Annexure B - Nomination Form'; 
+        gd14.checkInput();
+        gd14.CustomerListNew();
+        gd14.generateDocument();
+        gd14.getDisablePrevious();
+        gd14.getDisableNext();
+        gd14.getTotal_size();
+        gd14.getPageNumber();
+        gd14.getTotalPages();
+        gd14.getNextCustomers();
+        gd14.projectchange();
+        gd14.towerchange();
+        gd14.documentchange();
+        
+        PageReference pRef15 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef15);
+        GenerateCustomerDocument gd15 = new GenerateCustomerDocument();
+        List<SelectOption> projectList15 = gd15.getProjects;
+        gd15.selectedVal = projectId;
+        List<SelectOption> towerList15 = gd15.getTowers ;
+        gd15.selectedTower = towerId;
+        List<SelectOption> docList15 = gd15.getDocumentNames;         
+        gd15.selectedDocument = 'Car Park Allotment Letter'; 
+        gd15.checkInput();
+        gd15.CustomerListNew();
+        gd15.generateDocument();
+        gd15.getDisablePrevious();
+        gd15.getDisableNext();
+        gd15.getTotal_size();
+        gd15.getPageNumber();
+        gd15.getTotalPages();
+        gd15.getNextCustomers();
+        gd15.projectchange();
+        gd15.towerchange();
+        gd15.documentchange();
+        
+        PageReference pRef16 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef16);
+        GenerateCustomerDocument gd16 = new GenerateCustomerDocument();
+        List<SelectOption> projectList16 = gd16.getProjects;
+        gd16.selectedVal = projectId;
+        List<SelectOption> towerList16 = gd16.getTowers ;
+        gd16.selectedTower = towerId;
+        List<SelectOption> docList16 = gd16.getDocumentNames;         
+        gd16.selectedDocument = 'Possession Undertaking Letter'; 
+        gd16.checkInput();
+        gd16.CustomerListNew();
+        gd16.generateDocument();
+        gd16.getDisablePrevious();
+        gd16.getDisableNext();
+        gd16.getTotal_size();
+        gd16.getPageNumber();
+        gd16.getTotalPages();
+        gd16.getNextCustomers();
+        gd16.projectchange();
+        gd16.towerchange();
+        gd16.documentchange();
+        
+        PageReference pRef17 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef17);
+        GenerateCustomerDocument gd17 = new GenerateCustomerDocument();
+        List<SelectOption> projectList17 = gd17.getProjects;
+        gd17.selectedVal = projectId;
+        List<SelectOption> towerList17 = gd17.getTowers ;
+        gd17.selectedTower = towerId;
+        List<SelectOption> docList17 = gd17.getDocumentNames;         
+        gd17.selectedDocument = 'Possession Letter'; 
+        gd17.checkInput();
+        gd17.CustomerListNew();
+        gd17.generateDocument();
+        gd17.getDisablePrevious();
+        gd17.getDisableNext();
+        gd17.getTotal_size();
+        gd17.getPageNumber();
+        gd17.getTotalPages();
+        gd17.getNextCustomers();
+        gd17.projectchange();
+        gd17.towerchange();
+        gd17.documentchange();
+        
+        PageReference pRef18 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef18);
+        GenerateCustomerDocument gd18 = new GenerateCustomerDocument();
+        List<SelectOption> projectList18 = gd18.getProjects;
+        gd18.selectedVal = projectId;
+        List<SelectOption> towerList18 = gd18.getTowers ;
+        gd18.selectedTower = towerId;
+        List<SelectOption> docList18 = gd18.getDocumentNames;         
+        gd18.selectedDocument = 'Electricity Meter transfer NOC'; 
+        gd18.checkInput();
+        gd18.CustomerListNew();
+        gd18.generateDocument();
+        gd18.getDisablePrevious();
+        gd18.getDisableNext();
+        gd18.getTotal_size();
+        gd18.getPageNumber();
+        gd18.getTotalPages();
+        gd18.getNextCustomers();
+        gd18.projectchange();
+        gd18.towerchange();
+        gd18.documentchange();
+        
+        PageReference pRef19 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef19);
+        GenerateCustomerDocument gd19 = new GenerateCustomerDocument();
+        List<SelectOption> projectList19 = gd19.getProjects;
+        gd19.selectedVal = projectId;
+        List<SelectOption> towerList19 = gd19.getTowers ;
+        gd19.selectedTower = towerId;
+        List<SelectOption> docList19 = gd19.getDocumentNames;         
+        gd19.selectedDocument = 'Rejection Notice - Pre Possession'; 
+        gd19.checkInput();
+        gd19.CustomerListNew();
+        gd19.generateDocument();
+        gd19.getDisablePrevious();
+        gd19.getDisableNext();
+        gd19.getTotal_size();
+        gd19.getPageNumber();
+        gd19.getTotalPages();
+        gd19.getNextCustomers();
+        gd19.projectchange();
+        gd19.towerchange();
+        gd19.documentchange();
+        
+        PageReference pRef20 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef20);
+        GenerateCustomerDocument gd20 = new GenerateCustomerDocument();
+        List<SelectOption> projectList20 = gd20.getProjects;
+        gd20.selectedVal = projectId;
+        List<SelectOption> towerList20 = gd20.getTowers ;
+        gd20.selectedTower = towerId;
+        List<SelectOption> docList20 = gd20.getDocumentNames;         
+        gd20.selectedDocument = 'Rejection Notice - Post Possession'; 
+        gd20.checkInput();
+        gd20.CustomerListNew();
+        gd20.generateDocument();
+        gd20.getDisablePrevious();
+        gd20.getDisableNext();
+        gd20.getTotal_size();
+        gd20.getPageNumber();
+        gd20.getTotalPages();
+        gd20.getNextCustomers();
+        gd20.projectchange();
+        gd20.towerchange();
+        gd20.documentchange();
+        
+        PageReference pRef21 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef21);
+        GenerateCustomerDocument gd21 = new GenerateCustomerDocument();
+        List<SelectOption> projectList21 = gd21.getProjects;
+        gd21.selectedVal = projectId;
+        List<SelectOption> towerList21 = gd21.getTowers ;
+        gd21.selectedTower = towerId;
+        List<SelectOption> docList21 = gd21.getDocumentNames;         
+        gd21.selectedDocument = 'ROFR NOC Loan case'; 
+        gd21.checkInput();
+        gd21.CustomerListNew();
+        gd21.generateDocument();
+        gd21.getDisablePrevious();
+        gd21.getDisableNext();
+        gd21.getTotal_size();
+        gd21.getPageNumber();
+        gd21.getTotalPages();
+        gd21.getNextCustomers();
+        gd21.projectchange();
+        gd21.towerchange();
+        gd21.documentchange();*/
+
+        PageReference pRef6 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef6);
+        //ApexPages.currentPage().getParameters().put('oppId',oppId);
+        GenerateCustomerDocument gd1 = new GenerateCustomerDocument();
+        List<SelectOption> projectList1 = gd1.getProjects;
+        gd1.selectedVal = projectId;
+        //List<SelectOption> clusterList = gd.getClusterNames ;
+        //gd.SelectedClusterId = clusterId;
+        List<SelectOption> towerList1 = gd1.getTowers ;
+        gd1.selectedTower = towerId;
+        List<SelectOption> docList1 = gd1.getDocumentNames;         
+        gd1.selectedDocument = 'Agreement Form'; 
+        gd1.checkInput();
+        gd1.CustomerListNew();
+        //gd1.customerList[0].selected = true;
+        gd1.generateDocument();
+        gd1.getDisablePrevious();
+        gd1.getDisableNext();
+        gd1.getTotal_size();
+        gd1.getPageNumber();
+        gd1.getTotalPages();
+        gd1.getNextCustomers();
+        gd1.projectchange();
+        gd1.towerchange();
+        gd1.documentchange();
+        gd1.Beginning();
+        
+        PageReference pRef7 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef7);
+        //ApexPages.currentPage().getParameters().put('oppId',oppId);
+        GenerateCustomerDocument gd2 = new GenerateCustomerDocument();
+        List<SelectOption> projectList2 = gd2.getProjects;
+        gd2.selectedVal = projectId;
+        //List<SelectOption> clusterList = gd.getClusterNames ;
+        //gd.SelectedClusterId = clusterId;
+        List<SelectOption> towerList2 = gd2.getTowers ;
+        gd2.selectedTower = towerId;
+        List<SelectOption> docList2 = gd2.getDocumentNames;         
+        gd2.selectedDocument = 'Allotment Form'; 
+        gd2.checkInput();
+        gd2.CustomerListNew();
+        //gd2.customerList[0].selected = true;
+        gd2.generateDocument();
+        gd2.getDisablePrevious();
+        gd2.getDisableNext();
+        gd2.getTotal_size();
+        gd2.getPageNumber();
+        gd2.getTotalPages();
+        gd2.onRadioChange();
+        gd2.projectchange();
+        gd2.towerchange();
+        gd2.documentchange();
+        
+             
+          PageReference pRef27 = Page.View_Document;
+        Test.setCurrentPage(pRef27);
+        ApexPages.currentPage().getParameters().put('oppId',opp.Id);
+        ApexPages.currentPage().getParameters().put('docType','Bank NOC'); 
+        ApexPages.currentPage().getParameters().put('docName','Bank NOC');
+        ViewDocument adf7 = new ViewDocument();
+        PaginationController.PaginationWrapper pc7 = new PaginationController.PaginationWrapper(10,10,10);
+        PaginationController.Beginning(pc7);
+        PaginationController.Previous(pc7);
+        PaginationController.Next(pc7);
+        PaginationController.End(pc7);
+        
+         PageReference pRef28 = Page.View_Document;
+        Test.setCurrentPage(pRef28);
+        ApexPages.currentPage().getParameters().put('oppId',opp.Id);
+        ApexPages.currentPage().getParameters().put('docType','Bank NOC'); 
+        ApexPages.currentPage().getParameters().put('docName','Bank NOC');
+        ViewDocument adf8 = new ViewDocument();
+        PaginationController.PaginationWrapper pc8 = new PaginationController.PaginationWrapper(10,10,10);
+        PaginationController.Beginning(pc8);
+        PaginationController.Previous(pc8);
+        PaginationController.Next(pc8);
+        PaginationController.End(pc8);
+        
+         PageReference pRef29 = Page.View_Document;
+        Test.setCurrentPage(pRef29);
+        ApexPages.currentPage().getParameters().put('oppId',opp.Id);
+        ApexPages.currentPage().getParameters().put('docType','Provisional NOC'); 
+        ApexPages.currentPage().getParameters().put('docName','Provisional NOC');
+        ViewDocument adf9 = new ViewDocument();
+        PaginationController.PaginationWrapper pc9 = new PaginationController.PaginationWrapper(10,10,10);
+        PaginationController.Beginning(pc9);
+        PaginationController.Previous(pc9);
+        PaginationController.Next(pc9);
+        PaginationController.End(pc9);
+        
+        
+         PageReference pRef10 = Page.View_Document;
+        Test.setCurrentPage(pRef10);
+        ApexPages.currentPage().getParameters().put('oppId',opp.Id);
+        ApexPages.currentPage().getParameters().put('docType','L&L NOC'); 
+        ApexPages.currentPage().getParameters().put('docName','L&L NOC');
+        ViewDocument adf10 = new ViewDocument();
+        PaginationController.PaginationWrapper pc10 = new PaginationController.PaginationWrapper(10,10,10);
+        PaginationController.Beginning(pc10);
+        PaginationController.Previous(pc10);
+        PaginationController.Next(pc10);
+        PaginationController.End(pc10);
+        
+        
+         PageReference pRef11 = Page.View_Document;
+        Test.setCurrentPage(pRef11);
+        ApexPages.currentPage().getParameters().put('oppId',opp.Id);
+        ApexPages.currentPage().getParameters().put('docType','Car Park Allotment Letter'); 
+        ApexPages.currentPage().getParameters().put('docName','Car Park Allotment Letter');
+        ViewDocument adf11 = new ViewDocument();
+        PaginationController.PaginationWrapper pc11 = new PaginationController.PaginationWrapper(10,10,10);
+        PaginationController.Beginning(pc11);
+        PaginationController.Previous(pc11);
+        PaginationController.Next(pc11);
+        PaginationController.End(pc11);
+        
+        
+         PageReference pRef12 = Page.View_Document;
+        Test.setCurrentPage(pRef12);
+        ApexPages.currentPage().getParameters().put('oppId',opp.Id);
+        ApexPages.currentPage().getParameters().put('docType','Possession Undertaking Letter'); 
+        ApexPages.currentPage().getParameters().put('docName','Possession Undertaking Letter');
+        ViewDocument adf12 = new ViewDocument();
+        PaginationController.PaginationWrapper pc12 = new PaginationController.PaginationWrapper(10,10,10);
+        PaginationController.Beginning(pc12);
+        PaginationController.Previous(pc12);
+        PaginationController.Next(pc12);
+        PaginationController.End(pc12);
+         
+         Test.StopTest();
+        
+        String str = DocumentGenerationServices.getAllApplicantAllotmentSignature(aplist,'test');
+        //system.debug('str='+str);
+        //DocumentGenerationServices dgs = new DocumentGenerationServices(); 
+        //string aaa = dgs.getSeventhScheduleDetails(b,q,p,ap,t,'SeventhTable1');
+        
+    }
+     
+           @isTest
+    public static void generateDocumentMethod(){
+        Map<String,Id> dataMap = TestDataFactory1.createData();
+        Account ac = new Account(firstName = 'Bhagyashree',lastName='test', recordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Customer').getRecordTypeId(),
+                     personEmail = 'handsome@stetig.in', personMobilePhone = '1111122222');
+        insert ac;
+        
+        Opportunity opp = new Opportunity(Name = 'Mr Bhagyashree Test Stetig',StageName = 'New',CloseDate = System.today().AddDays(15),
+                                         AccountId = ac.id);
+        insert opp;
+        
+        BillingPlanLineItemGroupingController.createBillingLineItemsFuture(dataMap.get('BILLING_PLAN'));
+        Id unitId = dataMap.get('PROPERTY');
+        Id projectId = dataMap.get('PROJECT');
+        Id proprtyId = dataMap.get('PROPERTY_TYPE');
+        Id towerId = dataMap.get('TOWER');
+        Id planId = dataMap.get('BILLING_PLAN');
+        
+        Document_Template__c dt = new Document_Template__c();
+        dt.Name = 'NRI Declaration Form';
+        dt.Document_Type__c = 'NRI Declaration Form';
+        dt.Project__c = projectId; 
+        dt.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        dt.Clause_1__c = '{!OtherApplicantDetails.Second Applicant Salutation} {!OtherApplicantDetails.Third Applicant Salutation} {!OtherApplicantDetails.Fourth Applicant Salutation} {!OtherApplicantDetails.Fifth Applicant Salutation} {!AllApplicantDetails.All Applicant Names} {!AllApplicantDetails.All Applicant Signatures} {!AllApplicantDetails.All Applicant Names with Index} {!AllApplicantDetails.All Applicant Names Inline} {!AllApplicantDetails.All Applicant Names with Index and Linebreak} {!AllApplicantDetails.All Applicant Names with Allottees} {!ReferenceNo.refno} {!FloorNo.FloorNo}';
+        dt.Clause_2__c = '{!OtherApplicantDetails.Second Applicant Name} {!OtherApplicantDetails.Third Applicant Name} {!OtherApplicantDetails.Fourth Applicant Name} {!OtherApplicantDetails.Fifth Applicant Name} {!AllApplicantDetails.All Applicant Names} {!AllApplicantDetails.All Applicant Signatures} {!PageBreak.sPageBreak} {!Justify.sJustify} {!Justify.eJustify} {!lineBreak.lineBreak}';
+        dt.Clause_3__c = '{!Schedule-Bare Shell.First Schedule} {!Schedule-Bare Shell.Second Schedule} {!Schedule-Bare Shell.Third Schedule} {!Schedule-Bare Shell.Fourth Schedule} {!Schedule-Bare Shell.Fifth Schedule}';
+        dt.Clause_4__c = '{!Schedule-Typical(Multi Tower Project).First Schedule} {!Schedule-Typical(Multi Tower Project).Second Schedule} {!Schedule-Typical(Multi Tower Project).Third Schedule} {!Schedule-Typical(Multi Tower Project).Fourth Schedule} {!Schedule-Typical(Multi Tower Project).Fifth Schedule}';
+        dt.Clause_5__c = '{!Schedule-Typical (Tower as Seprate Project).First Schedule} {!Schedule-Typical (Tower as Seprate Project).Second Schedule} {!Schedule-Typical (Tower as Seprate Project).Third Schedule} {!Schedule-Typical (Tower as Seprate Project).Fourth Schedule} {!Schedule-Typical (Tower as Seprate Project).Fifth Schedule}';
+        dt.Clause_6__c = '{!Schedule-Penthouse.First Schedule} {!Schedule-Penthouse.Second Schedule} {!Schedule-Penthouse.Third Schedule} {!Schedule-Penthouse.Fourth Schedule} {!Schedule-Penthouse.Fifth Schedule}';
+        dt.Clause_7__c = '{!Property__c.Name} {!Tower__c.Name} {!opportunity.Name} {!Account.Name} {!Quotation__c.Name} {!Project__c.Name} {!Schedule-Duplex.Fifth Schedule}';
+        //insert dt;
+        
+        Document_Template__c dt1 = new Document_Template__c();
+        dt1.Name = 'Agreement Form';
+        dt1.Document_Type__c = 'Agreement Form';
+        dt1.Project__c = projectId; 
+        dt1.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        dt1.Clause_1__c = '{!OtherApplicantDetails.Second Applicant Salutation} {!OtherApplicantDetails.Third Applicant Salutation} {!OtherApplicantDetails.Fourth Applicant Salutation} {!OtherApplicantDetails.Fifth Applicant Salutation} {!AllApplicantDetails.All Applicant Names} {!AllApplicantDetails.All Applicant Signatures} {!ReferenceNo.refno} {!FloorNo.FloorNo}';
+        dt1.Clause_2__c = '{!OtherApplicantDetails.Second Applicant Name} {!OtherApplicantDetails.Third Applicant Name} {!OtherApplicantDetails.Fourth Applicant Name} {!OtherApplicantDetails.Fifth Applicant Name} {!AllApplicantDetails.All Applicant Names} {!AllApplicantDetails.All Applicant Signatures}';
+        dt1.Clause_3__c = '{!Schedule-Bare Shell.First Schedule} {!Schedule-Bare Shell.Second Schedule} {!Schedule-Bare Shell.Third Schedule} {!Schedule-Bare Shell.Fourth Schedule} {!Schedule-Bare Shell.Fifth Schedule}';
+        dt1.Clause_4__c = '{!Schedule-Typical(Multi Tower Project).First Schedule} {!Schedule-Typical(Multi Tower Project).Second Schedule} {!Schedule-Typical(Multi Tower Project).Third Schedule} {!Schedule-Typical(Multi Tower Project).Fourth Schedule} {!Schedule-Typical(Multi Tower Project).Fifth Schedule}';
+        dt1.Clause_5__c = '{!Schedule-Typical (Tower as Seprate Project).First Schedule} {!Schedule-Typical (Tower as Seprate Project).Second Schedule} {!Schedule-Typical (Tower as Seprate Project).Third Schedule} {!Schedule-Typical (Tower as Seprate Project).Fourth Schedule} {!Schedule-Typical (Tower as Seprate Project).Fifth Schedule}';
+        dt1.Clause_6__c = '{!Schedule-Penthouse.First Schedule} {!Schedule-Penthouse.Second Schedule} {!Schedule-Penthouse.Third Schedule} {!Schedule-Penthouse.Fourth Schedule} {!Schedule-Penthouse.Fifth Schedule}';
+        dt1.Clause_7__c = '{!Property__c.Name} {!Tower__c.Name} {!opportunity.Name} {!Account.Name} {!Quotation__c.Name} {!Project__c.Name} {!Schedule-Duplex.Fifth Schedule}';
+        //insert dt;
+        
+        Document_Template__c dt2 = new Document_Template__c();
+        dt2.Name = 'Allotment Form';
+        dt2.Document_Type__c = 'Allotment Form';
+        dt2.Project__c = projectId; 
+        dt2.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        dt1.Clause_1__c = '{!OtherApplicantDetails.Second Applicant Salutation} {!OtherApplicantDetails.Third Applicant Salutation} {!OtherApplicantDetails.Fourth Applicant Salutation} {!OtherApplicantDetails.Fifth Applicant Salutation} {!AllApplicantDetails.All Applicant Names} {!AllApplicantDetails.All Applicant Signatures} {!ReferenceNo.refno} {!FloorNo.FloorNo}';
+        dt1.Clause_2__c = '{!OtherApplicantDetails.Second Applicant Name} {!OtherApplicantDetails.Third Applicant Name} {!OtherApplicantDetails.Fourth Applicant Name} {!OtherApplicantDetails.Fifth Applicant Name} {!AllApplicantDetails.All Applicant Names} {!AllApplicantDetails.All Applicant Signatures}';
+        dt1.Clause_3__c = '{!Schedule-Bare Shell.First Schedule} {!Schedule-Bare Shell.Second Schedule} {!Schedule-Bare Shell.Third Schedule} {!Schedule-Bare Shell.Fourth Schedule} {!Schedule-Bare Shell.Fifth Schedule}';
+        dt1.Clause_4__c = '{!Schedule-Typical(Multi Tower Project).First Schedule} {!Schedule-Typical(Multi Tower Project).Second Schedule} {!Schedule-Typical(Multi Tower Project).Third Schedule} {!Schedule-Typical(Multi Tower Project).Fourth Schedule} {!Schedule-Typical(Multi Tower Project).Fifth Schedule}';
+        dt1.Clause_5__c = '{!Schedule-Typical (Tower as Seprate Project).First Schedule} {!Schedule-Typical (Tower as Seprate Project).Second Schedule} {!Schedule-Typical (Tower as Seprate Project).Third Schedule} {!Schedule-Typical (Tower as Seprate Project).Fourth Schedule} {!Schedule-Typical (Tower as Seprate Project).Fifth Schedule}';
+        dt1.Clause_6__c = '{!Schedule-Penthouse.First Schedule} {!Schedule-Penthouse.Second Schedule} {!Schedule-Penthouse.Third Schedule} {!Schedule-Penthouse.Fourth Schedule} {!Schedule-Penthouse.Fifth Schedule}';
+        dt1.Clause_7__c = '{!Property__c.Name} {!Tower__c.Name} {!opportunity.Name} {!Account.Name} {!Quotation__c.Name} {!Project__c.Name} {!Schedule-Duplex.Fifth Schedule}';
+        
+        /*Document_Template__c dt3 = new Document_Template__c();
+        dt3.Name = 'NRI Declaration Form';
+        dt3.Document_Type__c = 'NRI Declaration Form';
+        dt3.Project__c = projectId; 
+        dt3.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt4 = new Document_Template__c();
+        dt4.Name = 'Agreement signing undertaking';
+        dt4.Document_Type__c = 'Agreement signing undertaking';
+        dt4.Project__c = projectId; 
+        dt4.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt5 = new Document_Template__c();
+        dt5.Name = 'Annexure B - Nomination Form';
+        dt5.Document_Type__c = 'Annexure B - Nomination Form';
+        dt5.Project__c = projectId; 
+        dt5.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt6 = new Document_Template__c();
+        dt6.Name = 'TPA';
+        dt6.Document_Type__c = 'TPA';
+        dt6.Project__c = projectId; 
+        dt6.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt7 = new Document_Template__c();
+        dt7.Name = 'Bank NOC';
+        dt7.Document_Type__c = 'Bank NOC';
+        dt7.Project__c = projectId; 
+        dt7.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt8 = new Document_Template__c();
+        dt8.Name = 'Provisional NOC';
+        dt8.Document_Type__c = 'Provisional NOC';
+        dt8.Project__c = projectId; 
+        dt8.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt9 = new Document_Template__c();
+        dt9.Name = 'L&L NOC';
+        dt9.Document_Type__c = 'L&L NOC';
+        dt9.Project__c = projectId; 
+        dt9.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt10 = new Document_Template__c();
+        dt10.Name = 'Car Park Allotment Letter';
+        dt10.Document_Type__c = 'Car Park Allotment Letter';
+        dt10.Project__c = projectId; 
+        dt10.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt11 = new Document_Template__c();
+        dt11.Name = 'Possession Undertaking Letter';
+        dt11.Document_Type__c = 'Possession Undertaking Letter';
+        dt11.Project__c = projectId; 
+        dt11.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt12 = new Document_Template__c();
+        dt12.Name = 'Possession Letter';
+        dt12.Document_Type__c = 'Possession Letter';
+        dt12.Project__c = projectId; 
+        dt12.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt13 = new Document_Template__c();
+        dt13.Name = 'Electricity Meter transfer NOC';
+        dt13.Document_Type__c = 'Electricity Meter transfer NOC';
+        dt13.Project__c = projectId; 
+        dt13.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt14 = new Document_Template__c();
+        dt14.Name = 'Rejection Notice - Pre Possession';
+        dt14.Document_Type__c = 'Rejection Notice - Pre Possession';
+        dt14.Project__c = projectId; 
+        dt14.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt15 = new Document_Template__c();
+        dt15.Name = 'Rejection Notice - Post Possession';
+        dt15.Document_Type__c = 'Rejection Notice - Post Possession';
+        dt15.Project__c = projectId; 
+        dt15.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        
+        Document_Template__c dt16 = new Document_Template__c();
+        dt16.Name = 'ROFR NOC Loan case';
+        dt16.Document_Type__c = 'ROFR NOC Loan case';
+        dt16.Project__c = projectId; 
+        dt16.Clause_0__c = '{!Booking__c.Booking_Date__c} {!Applicant__c.Salutation__c} {!Applicant__c.Name} {!olDecimal.sOLDecimal} {!olDecimal.eOLDecimal} {!olDecimal.sDecimalList} {!olDecimal.eDecimalList} {!p.pStart} {!p.pEnd} {!ol.sOL} {!ol.eOL} {!ol.sLId} {!ol.eLId} {!ol.sLIa} {!ol.eLIa} {!ol.sLIUA} {!ol.eLIUA} {!ol.sLIr} {!ol.eLIr} {!Table.TableStart} {!Table.TableEnd} {!Table.TRowStart} {!Table.TRowEnd} {!Table.TCellStart} {!Table.TCellEnd} {!Table.THeaderStart} {!Table.THeaderEnd}';
+        */
+        
+        PageReference pageRef = Page.Quotation;
+        Test.setCurrentPage(pageRef);
+        pageRef.getParameters().put('unitId', unitId);
+        pageRef.getParameters().put('oppId', opp.Id);
+        
+        //Property__c property = Quotation.getProperty(unitId);
+       // Opportunity op = Quotation.getOpportunity(opp.Id);
+        
+        //List<QuotationManagmentServices.AdditionalChargesWrapper> additionalCharges = Quotation.getAdditionChargsList(proprtyId);
+        string othercharges_serialize = '[]';//JSON.serialize(additionalCharges);
+        
+        List<QuotationManagmentServices.SAPPricingWrapper> SAPChrges = Quotation.getSAPPricingList(unitId, false, 0);
+        
+        string sap_serialize = JSON.serialize(SAPChrges);
+
+        List<QuotationManagmentServices.PlanDetailsWrapper> planDetails = Quotation.getPlanDetail(sap_serialize,planId,unitId);
+        string planDetails_serialize = JSON.serialize(planDetails);
+        
+        string discountList_serialize = '[]'; // = JSON.serialize(discountList);
+        string carParKList = '[]'; //= '["TANDEM",1,100000]'; 
+        string fieldSet = '[{"label":"unitId","value":"' + unitId +'"},{"label":"editschedule","value":false},{"label":"oppId","value":"' + opp.id +'"},{"label":"additionalComments","value":""},{"label":"selectedPlan","value":"' + planId + '"},{"label":"changeInSource","value":false},{"label":"revisedBookingSource","value":null},{"label":"referredBy","value":null},{"label":"referProject","value":null},{"label":"referTower","value":null},{"label":"referFlat","value":null},{"label":"referEmpCode","value":null}]';
+        string qId = Quotation.saveQuotation(sap_serialize, othercharges_serialize, discountList_serialize, planDetails_serialize, carParKList, fieldSet);
+        
+        string st1 = QuotationManagmentServices.INFormat(10);
+        
+        Booking__c b = new Booking__C();
+        b.Opportunity__c = opp.id;
+        b.Booking_Date__c = system.today();
+        b.Acceptance_Form_Template__c = 'Acceptance_Form';
+        b.Agreement_Form_Template__c = 'Agreement_Form';
+        b.Allotment_Form_Template__c = 'Allotment Form';
+ 
+        b.Status__c = 'Booking In Process';
+        //b.Booking_Through__c = 'Direct';
+       if(qId!=null&&qId.contains(',')){
+            qId = qId.substring(0, qId.indexOf(','));
+        }
+        b.Quotation__c = qId;
+        b.Default_Address_of__c = '1st Applicant';
+        b.Project__c = projectId;
+        b.Tower__c = towerId;
+        b.Property__c = unitId;
+        insert b;
+     
+        List<Applicant__c> aplist = new List<Applicant__c>();
+        Applicant__c ap = new Applicant__c();
+        ap.Booking__C = b.id;
+        ap.Applicant_Number__c = 'Primary Applicant';
+        ap.Opportunity__c = opp.id;
+        ap.Type_Of_Applicant__c = 'Individual Buyer';
+        ap.PancardNo__c = 'ABCDE1234E';
+        ap.Salutation__c = 'Capt.';
+        ap.Applicant_Type__c = 'Primary';
+        ap.Name = 'Primary Applicant';
+        ap.Mobile_Number__c = '1234567890';
+        ap.Nationality__c = 'Indian';
+        ap.Subtype_Of_Applicant__c = 'Indian National';
+        ap.Mailing_Address_same_as_PermanentAddress__c = true;
+        ap.House_No__c = 'House';
+        ap.Street_1__c = 'Street1';
+        ap.Street_2__c = 'Street2';
+        ap.City__c = 'Mumbai';
+        insert ap;
+        aplist.add(ap);
+        
+        Applicant__c ap2 = new Applicant__c();
+        ap2.Booking__C = b.id;
+        ap2.Applicant_Number__c = 'Second Applicant';
+        ap2.Opportunity__c = opp.id;
+        ap2.Type_Of_Applicant__c = 'Individual Buyer';
+        ap2.PancardNo__c = 'ABCDE1234E';
+        ap2.Salutation__c = 'Capt.';
+        ap2.Applicant_Type__c = 'Second';
+        ap2.Name = 'Second Applicant';
+        ap2.Mobile_Number__c = '1234567890';
+        ap2.Nationality__c = 'Indian';
+        ap2.Subtype_Of_Applicant__c = 'Indian National';
+        ap2.Mailing_Address_same_as_PermanentAddress__c = true;
+        ap2.House_No__c = 'House';
+        ap2.Street_1__c = 'Street1';
+        ap2.Street_2__c = 'Street2';
+        ap2.City__c = 'Mumbai';
+        insert ap2;
+         aplist.add(ap2);
+        
+        Applicant__c ap3 = new Applicant__c();
+        ap3.Booking__C = b.id;
+        ap3.Applicant_Number__c = 'Third Applicant';
+        ap3.Opportunity__c = opp.id;
+        ap3.Type_Of_Applicant__c = 'Individual Buyer';
+        ap3.PancardNo__c = 'ABCDE1234E';
+        ap3.Salutation__c = 'Capt.';
+        ap3.Applicant_Type__c = 'Third';
+        ap3.Name = 'Third Applicant';
+        ap3.Mobile_Number__c = '1234567890';
+        ap3.Nationality__c = 'Indian';
+        ap3.Subtype_Of_Applicant__c = 'Indian National';
+        ap3.Mailing_Address_same_as_PermanentAddress__c = true;
+        ap3.House_No__c = 'House';
+        ap3.Street_1__c = 'Street1';
+        ap3.Street_2__c = 'Street2';
+        ap3.City__c = 'Mumbai';
+        insert ap3;
+         aplist.add(ap3);
+        
+        Applicant__c ap4 = new Applicant__c();
+        ap4.Booking__C = b.id;
+        ap4.Applicant_Number__c = 'Fourth Applicant';
+        ap4.Opportunity__c = opp.id;
+        ap4.Type_Of_Applicant__c = 'Individual Buyer';
+        ap4.PancardNo__c = 'ABCDE1234E';
+        ap4.Salutation__c = 'Capt.';
+        ap4.Applicant_Type__c = 'Fourth';
+        ap4.Name = 'Fourth Applicant';
+        ap4.Mobile_Number__c = '1234567890';
+        ap4.Nationality__c = 'Indian';
+        ap4.Subtype_Of_Applicant__c = 'Indian National';
+        ap4.Mailing_Address_same_as_PermanentAddress__c = true;
+        ap4.House_No__c = 'House';
+        ap4.Street_1__c = 'Street1';
+        ap4.Street_2__c = 'Street2';
+        ap4.City__c = 'Mumbai';
+        insert ap4;
+         aplist.add(ap4);
+        Applicant__c ap5 = new Applicant__c();
+        ap5.Booking__C = b.id;
+        ap5.Applicant_Number__c = 'Fifth Applicant';
+        ap5.Opportunity__c = opp.id;
+        ap5.Type_Of_Applicant__c = 'Individual Buyer';
+        ap5.PancardNo__c = 'ABCDE1234E';
+        ap5.Salutation__c = 'Capt.';
+        ap5.Applicant_Type__c = 'Fifth';
+        ap5.Name = 'Fifth Applicant';
+        ap5.Mobile_Number__c = '1234567890';
+        ap5.Nationality__c = 'Indian';
+        ap5.Subtype_Of_Applicant__c = 'Indian National';
+        ap5.Mailing_Address_same_as_PermanentAddress__c = true;
+        ap5.House_No__c = 'House';
+        ap5.Street_1__c = 'Street1';
+        ap5.Street_2__c = 'Street2';
+        ap5.City__c = 'Mumbai';
+        insert ap5;
+        aplist.add(ap5);
+        
+        opportunity opr = new Opportunity();
+        opr.id = opp.id;
+        opr.Booking__c = b.id;
+        opr.Property__c = unitId;
+        opr.project__c = projectId;
+        update opr;
+        
+        Property__c pr = new Property__c();
+        pr.id = unitId;
+        pr.status__C = 'Booked';
+        pr.Tower__c=towerId;
+         update pr;
+        
+        opp.Property__c=pr.id;
+        update opp;
+        Test.StartTest();
+        PageReference pageRef2 = Page.DocumentUploadPage;
+        Test.setCurrentPage(pageRef2);
+        //pageRef2.getParameters().put('id', dt.id);
+        ApexPages.StandardController sc2 = new ApexPages.StandardController(dt);
+        DocumentUpload ts = new DocumentUpload(sc2);
+        //ts.selectedObject = 'UnitCost';
+        //ts.prepareFieldList();
+        ts.selectedObject = 'OtherApplicantDetails';
+        ts.prepareFieldList();
+        ts.selectedObject = 'AllApplicantDetails';
+        ts.prepareFieldList();
+        ts.selectedObject = 'Schedule-Typical(Multi Tower Project)';
+        ts.prepareFieldList();
+        ts.selectedObject = 'Schedule-Typical (Tower as Seprate Project)';
+        ts.prepareFieldList();
+        ts.selectedObject = 'Schedule-Duplex';
+        ts.prepareFieldList();
+        ts.selectedObject = 'Schedule-Penthouse';
+        ts.prepareFieldList(); 
+        ts.selectedObject = 'Schedule-Bare Shell';
+        ts.prepareFieldList(); 
+        ts.selectedObject = 'SeventhTable1';
+        ts.prepareFieldList();
+        ts.selectedObject = 'Morgage NOC';
+        ts.prepareFieldList();
+        ts.selectedObject = 'Contact Details Update';
+        ts.prepareFieldList();
+        ts.selectedObject = 'Possesion';
+        ts.prepareFieldList();
+        ts.selectedObject = 'PageBreak';
+        ts.preparemergefield();
+        ts.selectedObject = 'Justify';
+        ts.preparemergefield();
+        ts.selectedObject = 'lineBreak';
+        ts.preparemergefield();
+        ts.selectedObject = 'ol';
+        ts.preparemergefield();
+        ts.selectedObject = 'olDecimal';
+        ts.preparemergefield();
+        ts.selectedObject = 'p';
+        ts.preparemergefield();
+        ts.selectedObject = 'Id';
+        ts.preparemergefield();
+        ts.save();
+        ts.saveAndPriview();
+        ts.addRow();
+        
+        PageReference pRef3 = Page.GenerateCustomerDocument;
+        Test.setCurrentPage(pRef3);
+        //ApexPages.currentPage().getParameters().put('oppId',oppId);
+        GenerateCustomerDocument gd = new GenerateCustomerDocument();
+        List<SelectOption> projectList = gd.getProjects;
+        gd.selectedVal = projectId;
+        //List<SelectOption> clusterList = gd.getClusterNames ;
+        //gd.SelectedClusterId = clusterId;
+        List<SelectOption> towerList = gd.getTowers ;
+        gd.selectedTower = towerId;
+        List<SelectOption> docList = gd.getDocumentNames;         
+        gd.selectedDocument = 'NRI Declaration Form'; 
+        gd.checkInput();
+        gd.CustomerListNew();
+        gd.customerList[0].selected = true;
+        gd.generateDocument(); 
+ 
+        gd.selectedDocument = 'Agreement Form'; 
+        gd.checkInput();
+        gd.CustomerListNew();
+        //gd.customerList[0].selected = true;
+        gd.generateDocument();
+        
+          gd.selectedDocument = 'Mortgage Release Request Letter'; 
+        gd.checkInput();
+        gd.CustomerListNew();
+        //gd.customerList[0].selected = true;
+        gd.generateDocument();
+        
+        gd.selectedDocument = 'Allotment Form'; 
+        gd.checkInput();
+        gd.CustomerListNew();
+        //gd.customerList[0].selected = true;
+        gd.generateDocument();
+        
+        gd.selectedDocument = 'TPA'; 
+        gd.checkInput();
+        gd.CustomerListNew();
+        //gd.customerList[0].selected = true;
+        gd.generateDocument();
+        
+          gd.selectedDocument = 'Agreement signing undertaking'; 
+        gd.checkInput();
+        gd.CustomerListNew();
+        //gd.customerList[0].selected = true;
+        gd.generateDocument();
+        
+          gd.selectedDocument = 'Annexure B - Nomination Form'; 
+        gd.checkInput();
+        gd.CustomerListNew();
+        //gd.customerList[0].selected = true;
+        gd.generateDocument();
+        
+          gd.selectedDocument = 'Bank NOC'; 
+        gd.checkInput();
+        gd.CustomerListNew();
+        //gd.customerList[0].selected = true;
+        gd.generateDocument();
+        
+        
+          gd.selectedDocument = 'Provisional NOC'; 
+        gd.checkInput();
+        gd.CustomerListNew();
+        //gd.customerList[0].selected = true;
+        gd.generateDocument();
+        
+        
+          gd.selectedDocument = 'L&L NOC'; 
+        gd.checkInput();
+        gd.CustomerListNew();
+        //gd.customerList[0].selected = true;
+        gd.generateDocument();
+        
+          gd.selectedDocument = 'Car Park Allotment Letter'; 
+        gd.checkInput();
+        gd.CustomerListNew();
+        //gd.customerList[0].selected = true;
+        gd.generateDocument();
+        
+          gd.selectedDocument = 'Possession Undertaking Letter'; 
+        gd.checkInput();
+        gd.CustomerListNew();
+        //gd.customerList[0].selected = true;
+        gd.generateDocument();
+
+            gd.selectedDocument = 'Possession Letter'; 
+        gd.checkInput();
+        gd.CustomerListNew();
+        //gd.customerList[0].selected = true;
+        gd.generateDocument();
+        
+            gd.selectedDocument = 'Electricity Meter transfer NOC'; 
+        gd.checkInput();
+        gd.CustomerListNew();
+        //gd.customerList[0].selected = true;
+        gd.generateDocument();
+        
+            gd.selectedDocument = 'Rejection Notice - Pre Possession'; 
+        gd.checkInput();
+        gd.CustomerListNew();
+        //gd.customerList[0].selected = true;
+        gd.generateDocument();
+        
+            gd.selectedDocument = 'Rejection Notice - Post Possession'; 
+        gd.checkInput();
+        gd.CustomerListNew();
+        //gd.customerList[0].selected = true;
+        gd.generateDocument();
+        
+            gd.selectedDocument = 'ROFR NOC Loan case'; 
+        gd.checkInput();
+        gd.CustomerListNew();
+        //gd.customerList[0].selected = true;
+        gd.generateDocument();
+         Test.StopTest();
+        
+        String str = DocumentGenerationServices.getAllApplicantAllotmentSignature(aplist,'test');
+        //system.debug('str='+str);
+        //DocumentGenerationServices dgs = new DocumentGenerationServices(); 
+        //string aaa = dgs.getSeventhScheduleDetails(b,q,p,ap,t,'SeventhTable1');
+        
+    }
+}
