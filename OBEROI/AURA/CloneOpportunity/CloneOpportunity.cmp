@@ -1,0 +1,36 @@
+<aura:component controller="CloneOpportunityWithSpecificFieldsCtrl"  
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" 
+                access="global" >
+    <aura:attribute name="opportunityName" type="string"/>
+    
+    <aura:handler name="init" value="{!this}"  action="{!c.handleinit}"/>
+    
+    
+    <aura:html tag="style">
+        .slds-modal__container{ 
+        height : auto; width: 80%; max-width: 70vh; 
+        } 
+        .modal-body{ 
+        height : 40vh !important; 
+        max-height: 40vh !important; 
+        } 
+    </aura:html>
+    
+    <header class="slds-modal__header">
+        <h2 class="slds-text-heading--medium"><b>Opportunity Clone</b></h2>
+    </header>
+    
+    
+    
+    <div class="slds-modal__content slds-p-around--medium">
+        <center>
+            <ui:inputText aura:id="oppName" label="Opportunity Name"
+                          class="slds-input"
+                          value="{!v.opportunityName}"/>
+        </center>
+    </div>
+    <footer class="slds-modal__footer">
+        <lightning:button name='Cancel' label='Cancel' onclick='{!c.handleCancel}'/>
+        <lightning:button variant="brand" name='Clone' label='Clone' onclick='{!c.handleClone}'/>
+    </footer>
+</aura:component>

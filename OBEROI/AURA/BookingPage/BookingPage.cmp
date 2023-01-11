@@ -1,0 +1,109 @@
+<aura:component controller="BlockingClass2" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    
+    <aura:attribute name="opp" type="Opportunity" default="{ 'sobjectType': 'Opportunity' }" />
+    <aura:attribute name="unit" type="Property__c" default="{ 'sobjectType': 'Property__c' }"/>
+    <aura:attribute name="Block" type="Blocking_Detail__c" default="{ 'sobjectType': 'Blocking_Detail__c',
+                                                                      'Comments__c':'',
+                                                                      'Instrument_Date__c':'',
+                                                                      'Cheque_Number__c':'',
+                                                                      'Token_Amount__c':''}"/>
+    <aura:attribute name="oppId" type="string"/>
+    <aura:attribute name="unitId" type="string"/>
+    <aura:attribute name="action" type="string"/>
+  
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <aura:if isTrue="{!!v.saved}">
+    <lightning:recordEditForm objectApiName="Opportunity">
+    <div class="slds slds-p-around_small" style="background-color:white;color:black;">
+  		<div class="slds-section slds-is-open ">
+    		<div class="slds-align_absolute-center">
+    			<lightning:button variant="brand" label="Save" title="Save Action" type="submit" onclick="{!c.save}" />
+    			<lightning:button variant="brand" label="Cancel" title="Cancel Action" onclick="{!c.cancel}" />
+    		</div>
+            <h3 class="slds-section__title slds-theme_shade">
+                <span class="slds-p-around_xxx-small" title="Property Unit Information">*Required Information<br/>Opportunity Details</span>
+			</h3>
+            <div class="slds-form-element">
+                	<label class="slds-form-element__label" for="Instrument Date">Opportunity Name</label>
+            		<ui:outputtext class="slds-input" value="{!v.opp.Name}" />
+        	</div>
+            <h4 class="slds-section__title slds-theme_shade">
+                <span class="slds-p-around_x-small" title="Property Unit Information">Blocked / Unblocked Details</span>
+			</h4>
+             <div class="slds-form-element"> 
+          		<div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-2">
+                        <label class="slds-form-element__label" for="unitno">Unit No</label>
+            			<ui:outputtext class="slds-input" value="{!v.unit.Material_No__c}" />
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <label class="slds-form-element__label" for="Account">Account</label>
+                        <ui:outputtext class="slds-input" value="{!v.opp.Account.Name}"/>
+                    </div>
+                 </div>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-2">
+                        <label class="slds-form-element__label" for="Mobileno">Customer Phone</label>
+                        <ui:outputtext class="slds-input" value="{!v.opp.Account.PersonMobilePhone}" />
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <label class="slds-form-element__label" for="Comments" required="true">Comments</label>
+                    	<ui:inputTextArea class="slds-input" rows="2" required="true" value="{!v.Block.Comments__c}"/>
+                    </div>
+                 </div>
+                 <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-2">
+                    	<label class="slds-form-element__label" for="Customer Email">Customer Email</label>
+                    	<ui:outputtext class="slds-input" value="{!v.opp.Account.PersonEmail}" />
+                    </div>
+          		</div>
+        	</div>
+            <h5 class="slds-section__title slds-theme_shade">
+                <span class="slds-p-around_xxx-small" title="Property Unit Information">Instrument Details</span>
+			</h5>
+            <div class="slds-form-element">
+                <aura:if isTrue="{!v.action=='Blocked'}">
+          		<div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-2">
+                    <label class="slds-form-element__label" for="Instrument Date">Instrument Date</label>
+            		<ui:inputText aura:id="Instrument Date" class="slds-input" value="{!v.Block.Instrument_Date__c}"/>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                    <label class="slds-form-element__label" for="Instrument Number">Instrument Number</label>
+                    <ui:inputText aura:id="Instrument Number" class="slds-input" value="{!v.Block.Cheque_Number__c}" />
+                    </div>
+                 </div>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-2">
+                    <label class="slds-form-element__label" for="Token Amount">Token Amount</label>
+                    <ui:inputText aura:id="Token Amount" class="slds-input" value="{!v.Block.Token_Amount__c}" />
+                    </div>
+                 </div>
+                </aura:if>
+            </div>
+            <div class="slds-form-element">
+                <aura:if isTrue="{!v.action == 'Released'}">
+          		<div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-2">
+                    <label class="slds-form-element__label" for="Instrument Date">Instrument Date</label>
+            		<ui:outputText aura:id="Instrument Date" class="slds-input" value="{!v.Block.Instrument_Date__c}" />
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                    <label class="slds-form-element__label" for="Instrument Number">Instrument Number</label>
+                    <ui:outputText aura:id="Instrument Number" class="slds-input" value="{!v.Block.Cheque_Number__c}"/>
+                    </div>
+                 </div>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-2">
+                    <label class="slds-form-element__label" for="Token Amount">Token Amount</label>
+                    <ui:outputText aura:id="Token Amount" class="slds-input" value="{!v.Block.Token_Amount__c}"/>
+                    </div>
+                 </div>
+                </aura:if>
+            </div>
+        </div>
+    </div>
+    </lightning:recordEditForm>
+    </aura:if>
+</aura:component>

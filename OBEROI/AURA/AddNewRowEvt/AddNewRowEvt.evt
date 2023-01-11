@@ -1,0 +1,3 @@
+<aura:event type="COMPONENT" description="Use For Add New Row">
+    <aura:attribute name="indexVar" type="Integer" description="Use For Add Row" />
+</aura:event>

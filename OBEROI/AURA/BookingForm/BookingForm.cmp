@@ -1,0 +1,6 @@
+<aura:component  implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+	<div class="Create Account">
+        <lightning:card iconName="action:new_Account" title="Create Account">
+        </lightning:card>
+    </div>
+</aura:component>

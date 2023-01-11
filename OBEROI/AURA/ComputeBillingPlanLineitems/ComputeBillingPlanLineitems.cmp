@@ -1,0 +1,23 @@
+<aura:component controller="ComputeBillingPlanLineItems" implements="force:lightningQuickAction,flexipage:availableForAllPageTypes,force:hasRecordId">
+    <aura:attribute name="recordId" type="id"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="Billing" type="Payment_Plan__c"/>
+    <aura:attribute name="msg" type="string" />
+    <aura:attribute name="severityM" type="string" default="Info"/>
+    <aura:attribute name="isSuccess" type="boolean" default="false"/>
+    
+    <div class="slds-form--stacked slds-p-around--medium slds-m-bottom--x-small">
+        <aura:if isTrue="{v.isSuccess}">
+            <h1 class="h1"> Please wait........ </h1>
+            <aura:set attribute="else">
+                <div style="background-color:LightBlue">
+                    <ui:message title="Info" severity="info" closable="false">
+                        <br/>
+                        {!v.msg}
+                    </ui:message>
+                </div>
+            </aura:set>
+        </aura:if>   
+        <br/>
+    </div>
+</aura:component>

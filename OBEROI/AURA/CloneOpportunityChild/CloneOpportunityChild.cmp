@@ -1,0 +1,5 @@
+<aura:component controller="CloneOpportunityWithSpecificFieldsCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}" /> 
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="oppName" type="String" />
+</aura:component>

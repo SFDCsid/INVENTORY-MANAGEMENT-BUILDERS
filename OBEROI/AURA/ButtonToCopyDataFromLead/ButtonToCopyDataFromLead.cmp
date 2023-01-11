@@ -1,0 +1,10 @@
+<aura:component controller="CopyLeadToTask"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="recordId" type="string" />
+    <aura:attribute name="tkId" type="Id" />    
+    
+   Activity created with mentioned Lead data.
+    
+</aura:component>

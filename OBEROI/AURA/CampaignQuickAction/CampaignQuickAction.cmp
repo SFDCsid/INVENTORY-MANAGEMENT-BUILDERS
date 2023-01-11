@@ -1,0 +1,32 @@
+<aura:component controller="CreateCampaignRecord" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+    <lightning:navigation aura:id="navLink"/>
+    <aura:handler name="init" value="{!this}" action="{!c.fetchListOfRecordTypes}"/>
+    <aura:attribute name="lstOfRecordType" type="list" />
+    <aura:attribute name="recordId" type="string" />
+    <aura:attribute name="cId" type="string" />
+    <aura:attribute name="RId" type="string" />
+    <aura:attribute name="flag" type="string" /> 
+    <aura:attribute name="test" type="string" /> 
+    <aura:if isTrue="{!v.flag}">
+    <div class="slds-grid slds-wrap">
+        <div class="slds-size--1-of-2 slds-large-size--1-of-2">
+            <div class="slds-align--absolute-center">Select a Record Type</div>                            
+        </div>        
+        <div class="slds-size--1-of-2 slds-large-size--1-of-2">
+           <!-- <ui:inputSelect aura:id="selectid">
+                <aura:iteration items="{!v.lstOfRecordType}" var="rt">                            
+                    <ui:inputSelectOption text="{!rt.Id}" label="{!rt.Name}"  />
+                </aura:iteration>
+            </ui:inputSelect>-->
+            <aura:iteration items="{!v.lstOfRecordType}" var="option" indexVar="idx"> 
+    <lightning:input aura:id="selectid" name="radioButtonGroup" label="{!option.Name}" type="radio" options="{!option.Name}" value="{!option.Id}" onchange="{! c.handleChangeButtonGroup }"/>
+</aura:iteration> 
+        </div>
+        <div class="slds-size--1-of-2 slds-large-size--1-of-2"></div>
+        <div class="slds-size--1-of-2 slds-large-size--1-of-2" style="margin-top:15px;text-align:right;">
+            <lightning:button class="slds-button slds-button--brand" onclick="{!c.createRecord}">Create</lightning:button>
+        
+        </div>
+    </div> 
+    </aura:if>
+</aura:component>

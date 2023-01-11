@@ -1,0 +1,27 @@
+<aura:component controller="BlockingClass2" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    
+    <aura:attribute name="opp" type="Opportunity" default="{ 'sobjectType': 'Opportunity' }" />
+    <aura:attribute name="unit" type="Property__c" default="{ 'sobjectType': 'Property__c' }"/>
+    <aura:attribute name="Block" type="Blocking_Detail__c" default="{ 'sobjectType': 'Blocking_Detail__c' }"/>
+  
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <lightning:recordEditForm objectApiName="Opportunity">
+        <div class="slds slds-p-around_small" style="background-color:white;color:black;">
+  		<div class="slds-section slds-is-open ">
+    		<div class="slds-align_absolute-center">
+    			<lightning:button variant="brand" label="Save" title="Save Action" type="submit" />
+    			<lightning:button variant="brand" label="Cancel" title="Cancel Action"/>
+    		</div>
+            <h3 class="slds-section__title slds-theme_shade">
+                <span class="slds-p-around_xxx-small" title="Property Unit Information">*Required Information<br/>Opportunity Details</span>
+			</h3>
+            <div class="slds-grid slds-gutters">
+				<div class="slds-col slds-size_1-of-2">
+					<lightning:outputField fieldName="Name" />
+				</div>
+            </div>
+         </div>
+        </div>
+    </lightning:recordEditForm>
+</aura:component>
